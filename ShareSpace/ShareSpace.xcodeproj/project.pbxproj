@@ -135,6 +135,8 @@
 		F1684BF5247AC6E800AA9A17 /* ShareSpace */ = {
 			isa = PBXGroup;
 			children = (
+				F1684C5B247AE63600AA9A17 /* Secrets */,
+				F1684C5A247AE54100AA9A17 /* Storyboards */,
 				F1684C38247AD61600AA9A17 /* SupportFiles */,
 				F1684C37247AD60C00AA9A17 /* FirebaseServices */,
 				F1684C36247AD60400AA9A17 /* Views */,
@@ -143,13 +145,8 @@
 				F1684C31247AD56300AA9A17 /* Extensions */,
 				F1684C30247AD55400AA9A17 /*  Models */,
 				F1684C1C247ACE9200AA9A17 /* ViewControllers */,
-				F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */,
-				F1684BF8247AC6E800AA9A17 /* SceneDelegate.swift */,
 				F1684BFA247AC6E800AA9A17 /* ViewController.swift */,
-				F1684BFC247AC6E800AA9A17 /* Main.storyboard */,
 				F1684C2A247AD37A00AA9A17 /* GoogleService-Info.plist */,
-				F1684BFF247AC6EC00AA9A17 /* Assets.xcassets */,
-				F1684C01247AC6EC00AA9A17 /* LaunchScreen.storyboard */,
 				F1684C04247AC6EC00AA9A17 /* Info.plist */,
 			);
 			path = ShareSpace;
@@ -227,8 +224,27 @@
 		F1684C38247AD61600AA9A17 /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */,
+				F1684BF8247AC6E800AA9A17 /* SceneDelegate.swift */,
+				F1684BFF247AC6EC00AA9A17 /* Assets.xcassets */,
 			);
 			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		F1684C5A247AE54100AA9A17 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				F1684BFC247AC6E800AA9A17 /* Main.storyboard */,
+				F1684C01247AC6EC00AA9A17 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		F1684C5B247AE63600AA9A17 /* Secrets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Secrets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
