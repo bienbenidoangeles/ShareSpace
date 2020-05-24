@@ -16,7 +16,7 @@
 		F1684C00247AC6EC00AA9A17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1684BFF247AC6EC00AA9A17 /* Assets.xcassets */; };
 		F1684C03247AC6EC00AA9A17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1684C01247AC6EC00AA9A17 /* LaunchScreen.storyboard */; };
 		F1684C0E247AC6EC00AA9A17 /* ShareSpaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C0D247AC6EC00AA9A17 /* ShareSpaceTests.swift */; };
-		F1684C1B247ACA3200AA9A17 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1684C1A247ACA3200AA9A17 /* GoogleService-Info.plist */; };
+		F1684C2B247AD37A00AA9A17 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1684C2A247AD37A00AA9A17 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +47,7 @@
 		F1684C09247AC6EC00AA9A17 /* ShareSpaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShareSpaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1684C0D247AC6EC00AA9A17 /* ShareSpaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSpaceTests.swift; sourceTree = "<group>"; };
 		F1684C0F247AC6EC00AA9A17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F1684C1A247ACA3200AA9A17 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F1684C2A247AD37A00AA9A17 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,11 +121,11 @@
 				F1684C1E247ACEC100AA9A17 /* Secrets */,
 				F1684C1D247ACEA700AA9A17 /* Extensions */,
 				F1684C1C247ACE9200AA9A17 /* ViewControllers */,
-				F1684C1A247ACA3200AA9A17 /* GoogleService-Info.plist */,
 				F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */,
 				F1684BF8247AC6E800AA9A17 /* SceneDelegate.swift */,
 				F1684BFA247AC6E800AA9A17 /* ViewController.swift */,
 				F1684BFC247AC6E800AA9A17 /* Main.storyboard */,
+				F1684C2A247AD37A00AA9A17 /* GoogleService-Info.plist */,
 				F1684BFF247AC6EC00AA9A17 /* Assets.xcassets */,
 				F1684C01247AC6EC00AA9A17 /* LaunchScreen.storyboard */,
 				F1684C04247AC6EC00AA9A17 /* Info.plist */,
@@ -316,7 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1684C03247AC6EC00AA9A17 /* LaunchScreen.storyboard in Resources */,
-				F1684C1B247ACA3200AA9A17 /* GoogleService-Info.plist in Resources */,
+				F1684C2B247AD37A00AA9A17 /* GoogleService-Info.plist in Resources */,
 				F1684C00247AC6EC00AA9A17 /* Assets.xcassets in Resources */,
 				F1684BFE247AC6E800AA9A17 /* Main.storyboard in Resources */,
 			);
