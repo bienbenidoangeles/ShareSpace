@@ -17,6 +17,7 @@
 		F1684C03247AC6EC00AA9A17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1684C01247AC6EC00AA9A17 /* LaunchScreen.storyboard */; };
 		F1684C0E247AC6EC00AA9A17 /* ShareSpaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C0D247AC6EC00AA9A17 /* ShareSpaceTests.swift */; };
 		F1684C2B247AD37A00AA9A17 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1684C2A247AD37A00AA9A17 /* GoogleService-Info.plist */; };
+		F1684C2D247AD42E00AA9A17 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C2C247AD42E00AA9A17 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		F1684C0D247AC6EC00AA9A17 /* ShareSpaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSpaceTests.swift; sourceTree = "<group>"; };
 		F1684C0F247AC6EC00AA9A17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1684C2A247AD37A00AA9A17 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F1684C2C247AD42E00AA9A17 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,10 +115,12 @@
 		F1684BF5247AC6E800AA9A17 /* ShareSpace */ = {
 			isa = PBXGroup;
 			children = (
+				F1684C2F247AD44500AA9A17 /* Views */,
+				F1684C2E247AD43F00AA9A17 /* Cells */,
 				F1684C23247ACEFC00AA9A17 /* Storyboards */,
 				F1684C22247ACEEA00AA9A17 /* Support */,
 				F1684C21247ACEDF00AA9A17 /* APIClients */,
-				F1684C20247ACED400AA9A17 /* DatabaseServices */,
+				F1684C20247ACED400AA9A17 /* FirebaseServices */,
 				F1684C1F247ACEC900AA9A17 /* Models */,
 				F1684C1E247ACEC100AA9A17 /* Secrets */,
 				F1684C1D247ACEA700AA9A17 /* Extensions */,
@@ -145,6 +149,7 @@
 		F1684C1C247ACE9200AA9A17 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				F1684C2C247AD42E00AA9A17 /* LoginViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -170,11 +175,11 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		F1684C20247ACED400AA9A17 /* DatabaseServices */ = {
+		F1684C20247ACED400AA9A17 /* FirebaseServices */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = DatabaseServices;
+			path = FirebaseServices;
 			sourceTree = "<group>";
 		};
 		F1684C21247ACEDF00AA9A17 /* APIClients */ = {
@@ -228,6 +233,20 @@
 			children = (
 			);
 			path = L;
+			sourceTree = "<group>";
+		};
+		F1684C2E247AD43F00AA9A17 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		F1684C2F247AD44500AA9A17 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -417,6 +436,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1684C2D247AD42E00AA9A17 /* LoginViewController.swift in Sources */,
 				F1684BFB247AC6E800AA9A17 /* ViewController.swift in Sources */,
 				F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */,
 				F1684BF9247AC6E800AA9A17 /* SceneDelegate.swift in Sources */,
