@@ -113,6 +113,14 @@
 		F1684BF5247AC6E800AA9A17 /* ShareSpace */ = {
 			isa = PBXGroup;
 			children = (
+				F1684C23247ACEFC00AA9A17 /* Storyboards */,
+				F1684C22247ACEEA00AA9A17 /* Support */,
+				F1684C21247ACEDF00AA9A17 /* APIClients */,
+				F1684C20247ACED400AA9A17 /* DatabaseServices */,
+				F1684C1F247ACEC900AA9A17 /* Models */,
+				F1684C1E247ACEC100AA9A17 /* Secrets */,
+				F1684C1D247ACEA700AA9A17 /* Extensions */,
+				F1684C1C247ACE9200AA9A17 /* ViewControllers */,
 				F1684C1A247ACA3200AA9A17 /* GoogleService-Info.plist */,
 				F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */,
 				F1684BF8247AC6E800AA9A17 /* SceneDelegate.swift */,
@@ -132,6 +140,94 @@
 				F1684C0F247AC6EC00AA9A17 /* Info.plist */,
 			);
 			path = ShareSpaceTests;
+			sourceTree = "<group>";
+		};
+		F1684C1C247ACE9200AA9A17 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F1684C1D247ACEA700AA9A17 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F1684C1E247ACEC100AA9A17 /* Secrets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Secrets;
+			sourceTree = "<group>";
+		};
+		F1684C1F247ACEC900AA9A17 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F1684C20247ACED400AA9A17 /* DatabaseServices */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DatabaseServices;
+			sourceTree = "<group>";
+		};
+		F1684C21247ACEDF00AA9A17 /* APIClients */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = APIClients;
+			sourceTree = "<group>";
+		};
+		F1684C22247ACEEA00AA9A17 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		F1684C23247ACEFC00AA9A17 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				F1684C27247ACF1900AA9A17 /* L */,
+				F1684C26247ACF1400AA9A17 /* Y */,
+				F1684C25247ACF0F00AA9A17 /* E */,
+				F1684C24247ACF0800AA9A17 /* B */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		F1684C24247ACF0800AA9A17 /* B */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = B;
+			sourceTree = "<group>";
+		};
+		F1684C25247ACF0F00AA9A17 /* E */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = E;
+			sourceTree = "<group>";
+		};
+		F1684C26247ACF1400AA9A17 /* Y */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Y;
+			sourceTree = "<group>";
+		};
+		F1684C27247ACF1900AA9A17 /* L */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = L;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
