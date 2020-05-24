@@ -7,14 +7,41 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class MainViewController: UIViewController {
+    
+    private let mainView = MainView()
 
+    override func loadView() {
+        view = mainView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        // Do any additional setup after loading the view.
+        addNavSignOutButton()
     }
+    
+    
+    private func addNavSignOutButton(){
+        let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
+        navigationItem.rightBarButtonItem = barButtonItem
+    }
+    
+    @objc private func signOutButtonPressed(_ sender: UIBarButtonItem) {
+        
+        do {
+            try Auth.auth().signOut()
+            UIViewController.showViewController(viewcontroller: LoginViewController())
+        } catch {
+            DispatchQueue.main.async {
+                self.showAlert(title: "Unable to signout", message: "Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    
     
     
 

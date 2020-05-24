@@ -26,6 +26,8 @@
 		F1684C51247ADDE400AA9A17 /* UIViewController+Nav.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C50247ADDE400AA9A17 /* UIViewController+Nav.swift */; };
 		F1684C53247ADE1400AA9A17 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C52247ADE1400AA9A17 /* TabBarController.swift */; };
 		F1684C55247ADECC00AA9A17 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C54247ADECC00AA9A17 /* MainViewController.swift */; };
+		F1684C57247AE07200AA9A17 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C56247AE07200AA9A17 /* StorageService.swift */; };
+		F1684C59247AE22200AA9A17 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C58247AE22200AA9A17 /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,8 @@
 		F1684C50247ADDE400AA9A17 /* UIViewController+Nav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Nav.swift"; sourceTree = "<group>"; };
 		F1684C52247ADE1400AA9A17 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		F1684C54247ADECC00AA9A17 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		F1684C56247AE07200AA9A17 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		F1684C58247AE22200AA9A17 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				F1684C46247AD7BE00AA9A17 /* LoginView.swift */,
+				F1684C58247AE22200AA9A17 /* MainView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -214,6 +219,7 @@
 			children = (
 				F1684C48247ADC6F00AA9A17 /* AuthenticationSession.swift */,
 				F1684C4A247ADCCF00AA9A17 /* DatabaseService.swift */,
+				F1684C56247AE07200AA9A17 /* StorageService.swift */,
 			);
 			path = FirebaseServices;
 			sourceTree = "<group>";
@@ -413,12 +419,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1684C4D247ADD3C00AA9A17 /* UIViewController+ShowAlert.swift in Sources */,
+				F1684C59247AE22200AA9A17 /* MainView.swift in Sources */,
 				F1684C2D247AD42E00AA9A17 /* LoginViewController.swift in Sources */,
 				F1684C53247ADE1400AA9A17 /* TabBarController.swift in Sources */,
 				F1684C55247ADECC00AA9A17 /* MainViewController.swift in Sources */,
 				F1684C4B247ADCCF00AA9A17 /* DatabaseService.swift in Sources */,
 				F1684BFB247AC6E800AA9A17 /* ViewController.swift in Sources */,
 				F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */,
+				F1684C57247AE07200AA9A17 /* StorageService.swift in Sources */,
 				F1684C4F247ADDA800AA9A17 /* UIImage+Resize.swift in Sources */,
 				F1684C47247AD7BE00AA9A17 /* LoginView.swift in Sources */,
 				F1684C49247ADC6F00AA9A17 /* AuthenticationSession.swift in Sources */,
