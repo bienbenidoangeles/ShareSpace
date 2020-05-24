@@ -115,15 +115,15 @@
 		F1684BF5247AC6E800AA9A17 /* ShareSpace */ = {
 			isa = PBXGroup;
 			children = (
-				F1684C2F247AD44500AA9A17 /* Views */,
-				F1684C2E247AD43F00AA9A17 /* Cells */,
-				F1684C23247ACEFC00AA9A17 /* Storyboards */,
-				F1684C22247ACEEA00AA9A17 /* Support */,
-				F1684C21247ACEDF00AA9A17 /* APIClients */,
-				F1684C20247ACED400AA9A17 /* FirebaseServices */,
-				F1684C1F247ACEC900AA9A17 /* Models */,
-				F1684C1E247ACEC100AA9A17 /* Secrets */,
-				F1684C1D247ACEA700AA9A17 /* Extensions */,
+				F1684C2F247AD44500AA9A17 /* View */,
+				F1684C2E247AD43F00AA9A17 /* Cell */,
+				F1684C23247ACEFC00AA9A17 /* Storyboard */,
+				F1684C22247ACEEA00AA9A17 /* Supports */,
+				F1684C21247ACEDF00AA9A17 /* APIClient */,
+				F1684C20247ACED400AA9A17 /* FirebaseService */,
+				F1684C1F247ACEC900AA9A17 /* Model */,
+				F1684C1E247ACEC100AA9A17 /* Secret */,
+				F1684C1D247ACEA700AA9A17 /* Extension */,
 				F1684C1C247ACE9200AA9A17 /* ViewControllers */,
 				F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */,
 				F1684BF8247AC6E800AA9A17 /* SceneDelegate.swift */,
@@ -154,49 +154,49 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		F1684C1D247ACEA700AA9A17 /* Extensions */ = {
+		F1684C1D247ACEA700AA9A17 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Extensions;
+			path = Extension;
 			sourceTree = "<group>";
 		};
-		F1684C1E247ACEC100AA9A17 /* Secrets */ = {
+		F1684C1E247ACEC100AA9A17 /* Secret */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Secrets;
+			path = Secret;
 			sourceTree = "<group>";
 		};
-		F1684C1F247ACEC900AA9A17 /* Models */ = {
+		F1684C1F247ACEC900AA9A17 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Models;
+			path = Model;
 			sourceTree = "<group>";
 		};
-		F1684C20247ACED400AA9A17 /* FirebaseServices */ = {
+		F1684C20247ACED400AA9A17 /* FirebaseService */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = FirebaseServices;
+			path = FirebaseService;
 			sourceTree = "<group>";
 		};
-		F1684C21247ACEDF00AA9A17 /* APIClients */ = {
+		F1684C21247ACEDF00AA9A17 /* APIClient */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = APIClients;
+			path = APIClient;
 			sourceTree = "<group>";
 		};
-		F1684C22247ACEEA00AA9A17 /* Support */ = {
+		F1684C22247ACEEA00AA9A17 /* Supports */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Support;
+			path = Supports;
 			sourceTree = "<group>";
 		};
-		F1684C23247ACEFC00AA9A17 /* Storyboards */ = {
+		F1684C23247ACEFC00AA9A17 /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
 				F1684C27247ACF1900AA9A17 /* L */,
@@ -204,7 +204,7 @@
 				F1684C25247ACF0F00AA9A17 /* E */,
 				F1684C24247ACF0800AA9A17 /* B */,
 			);
-			path = Storyboards;
+			path = Storyboard;
 			sourceTree = "<group>";
 		};
 		F1684C24247ACF0800AA9A17 /* B */ = {
@@ -235,18 +235,18 @@
 			path = L;
 			sourceTree = "<group>";
 		};
-		F1684C2E247AD43F00AA9A17 /* Cells */ = {
+		F1684C2E247AD43F00AA9A17 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Cells;
+			path = Cell;
 			sourceTree = "<group>";
 		};
-		F1684C2F247AD44500AA9A17 /* Views */ = {
+		F1684C2F247AD44500AA9A17 /* View */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Views;
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
