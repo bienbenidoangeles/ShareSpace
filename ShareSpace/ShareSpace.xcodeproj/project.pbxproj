@@ -117,6 +117,11 @@
 		F1684BF5247AC6E800AA9A17 /* ShareSpace */ = {
 			isa = PBXGroup;
 			children = (
+				F1684C38247AD61600AA9A17 /* SupportFiles */,
+				F1684C37247AD60C00AA9A17 /* FirebaseServices */,
+				F1684C36247AD60400AA9A17 /* Views */,
+				F1684C35247AD5D900AA9A17 /* Models */,
+				F1684C34247AD5CD00AA9A17 /* Cells */,
 				F1684C31247AD56300AA9A17 /* Extensions */,
 				F1684C30247AD55400AA9A17 /*  Models */,
 				F1684C1C247ACE9200AA9A17 /* ViewControllers */,
@@ -152,7 +157,6 @@
 		F1684C30247AD55400AA9A17 /*  Models */ = {
 			isa = PBXGroup;
 			children = (
-				F1684C32247AD59C00AA9A17 /* test.swift */,
 			);
 			path = " Models";
 			sourceTree = "<group>";
@@ -162,6 +166,42 @@
 			children = (
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F1684C34247AD5CD00AA9A17 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		F1684C35247AD5D900AA9A17 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F1684C36247AD60400AA9A17 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F1684C37247AD60C00AA9A17 /* FirebaseServices */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FirebaseServices;
+			sourceTree = "<group>";
+		};
+		F1684C38247AD61600AA9A17 /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				F1684C32247AD59C00AA9A17 /* test.swift */,
+			);
+			path = SupportFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
