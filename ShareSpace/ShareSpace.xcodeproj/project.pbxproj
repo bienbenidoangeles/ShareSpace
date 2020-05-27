@@ -112,6 +112,27 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F149D48C247EF8D4006D77D2 /* Secrets */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Secrets;
+			sourceTree = "<group>";
+		};
+		F149D48D247EF8E7006D77D2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		F149D48E247EF8EA006D77D2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		F1684BEA247AC6E800AA9A17 = {
 			isa = PBXGroup;
 			children = (
@@ -135,15 +156,14 @@
 		F1684BF5247AC6E800AA9A17 /* ShareSpace */ = {
 			isa = PBXGroup;
 			children = (
-				F1684C5B247AE63600AA9A17 /* Secrets */,
+				F149D48E247EF8EA006D77D2 /* Models */,
+				F149D48D247EF8E7006D77D2 /* Cells */,
+				F149D48C247EF8D4006D77D2 /* Secrets */,
 				F1684C5A247AE54100AA9A17 /* Storyboards */,
 				F1684C38247AD61600AA9A17 /* SupportFiles */,
 				F1684C37247AD60C00AA9A17 /* FirebaseServices */,
 				F1684C36247AD60400AA9A17 /* Views */,
-				F1684C35247AD5D900AA9A17 /* Models */,
-				F1684C34247AD5CD00AA9A17 /* Cells */,
 				F1684C31247AD56300AA9A17 /* Extensions */,
-				F1684C30247AD55400AA9A17 /*  Models */,
 				F1684C1C247ACE9200AA9A17 /* ViewControllers */,
 				F1684BFA247AC6E800AA9A17 /* ViewController.swift */,
 				F1684C2A247AD37A00AA9A17 /* GoogleService-Info.plist */,
@@ -171,13 +191,6 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		F1684C30247AD55400AA9A17 /*  Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = " Models";
-			sourceTree = "<group>";
-		};
 		F1684C31247AD56300AA9A17 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,20 +199,6 @@
 				F1684C50247ADDE400AA9A17 /* UIViewController+Nav.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		F1684C34247AD5CD00AA9A17 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		F1684C35247AD5D900AA9A17 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		F1684C36247AD60400AA9A17 /* Views */ = {
@@ -238,13 +237,6 @@
 				F1684C01247AC6EC00AA9A17 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
-			sourceTree = "<group>";
-		};
-		F1684C5B247AE63600AA9A17 /* Secrets */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Secrets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
