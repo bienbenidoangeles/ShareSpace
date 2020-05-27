@@ -21,6 +21,11 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         addNavSignOutButton()
+        delegatesAndDataSources()
+    }
+    
+    private func delegatesAndDataSources(){
+        
     }
     
     
