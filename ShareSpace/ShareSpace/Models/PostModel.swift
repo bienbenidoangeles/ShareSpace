@@ -20,6 +20,7 @@ struct Post {
     let images: [String]
     let description: String
     let location: Location    //let amenities: [String]
+    let rating: Double
     
     
 }
@@ -31,7 +32,11 @@ struct Location {
     let city: String
     let state: String
     let zip: Int
-   
+    var fullAddress: String? {
+        get {
+            return "\(streetAddress) \(apartmentNumber ?? "") \(city), \(state) \(zip) \(country)"
+        }
+    }
     
 }
 extension Location {
@@ -57,5 +62,6 @@ extension Post {
         self.images = dictionary["images"] as? [String] ?? [""]
         self.location = dictionary["location"] as? Location ?? Location(["country": "USA", "streetAddress": "110 Baker Street", "city": "Oxford", "state": "MS", "zip": 38655])
         self.description = dictionary["description"] as? String ?? ""
+        self.rating = dictionary["rating"] as? Double ?? -1.0
     }
 }
