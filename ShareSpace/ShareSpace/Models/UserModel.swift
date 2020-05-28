@@ -17,8 +17,7 @@ struct UserModel {
     let displayName: String
     let bio: String?
     let phoneNumber: String
-    
-    let work: String
+    let work: String?
    // let governmentId: String
    // let payment: String
 }

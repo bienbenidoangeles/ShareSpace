@@ -30,17 +30,40 @@ class MainViewController: UIViewController {
         view.backgroundColor = .systemBackground
         addNavSignOutButton()
         delegatesAndDataSources()
+      loadPost()
     }
     
     private func delegatesAndDataSources(){
-        mainView.searchBar.delegate = self
+
+        
+mainView.searchBar.delegate = self
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
+    }
+  
+//  private var databaseServices = DatabaseService.shared
+  
+  
+  private func loadPost() {
+    DatabaseService.shared.loadPost { (result) in
+      switch result {
+      case .failure(let error):
+        print("It failed")
+      case .success(let post):
+        self.post = post
+      }
+    }
+  }
+  
+  
+
+        
     }
     
     private func registerCell(){
         mainView.collectionView.register(FeedCell.self, forCellWithReuseIdentifier: "feedCell")
     }
+
     
     private func addNavSignOutButton(){
         let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
