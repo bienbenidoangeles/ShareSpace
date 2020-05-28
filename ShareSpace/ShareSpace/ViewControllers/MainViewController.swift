@@ -12,6 +12,14 @@ import FirebaseAuth
 class MainViewController: UIViewController {
     
     private let mainView = MainView()
+    
+    private var posts = [Post](){
+        didSet{
+            DispatchQueue.main.async {
+                self.mainView.collectionView.reloadData()
+            }
+        }
+    }
 
     override func loadView() {
         view = mainView
@@ -26,16 +34,15 @@ class MainViewController: UIViewController {
     }
     
     private func delegatesAndDataSources(){
-        
 
+        
+mainView.searchBar.delegate = self
+        mainView.collectionView.delegate = self
+        mainView.collectionView.dataSource = self
     }
   
 //  private var databaseServices = DatabaseService.shared
-  private var post = [Post]() {
-    didSet {
-      print("\(post.count) post")
-    }
-  }
+  
   
   private func loadPost() {
     DatabaseService.shared.loadPost { (result) in
@@ -49,6 +56,14 @@ class MainViewController: UIViewController {
   }
   
   
+
+        
+    }
+    
+    private func registerCell(){
+        mainView.collectionView.register(FeedCell.self, forCellWithReuseIdentifier: "feedCell")
+    }
+
     
     private func addNavSignOutButton(){
         let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
@@ -67,4 +82,34 @@ class MainViewController: UIViewController {
         }
     }
 
+}
+
+extension MainViewController: UISearchBarDelegate{
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        //
+    }
+}
+
+extension MainViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return posts.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = mainView.collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as? FeedCell else {
+            fatalError()
+        }
+        let post = posts[indexPath.row]
+        cell.configureCell(for: post)
+        return cell
+    }
+}
+
+extension MainViewController: UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let maxSize:CGSize = UIScreen.main.bounds.size
+        let itemWidth:CGFloat = maxSize.width
+        return CGSize(width: itemWidth, height: itemWidth)
+    }
 }
