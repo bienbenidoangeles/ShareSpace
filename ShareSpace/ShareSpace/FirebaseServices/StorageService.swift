@@ -13,7 +13,7 @@ class StorageService {
   
   private let storageRef = Storage.storage().reference()
   
-  private init() {}
+ // private init() {}
   static let shared = StorageService()
   
   public func uploadPhoto(userId: String? = nil, postId: String? = nil, image: UIImage, completion: @escaping (Result<URL, Error>) -> ()) {
