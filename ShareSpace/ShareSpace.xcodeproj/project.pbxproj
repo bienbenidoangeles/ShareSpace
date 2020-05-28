@@ -11,6 +11,7 @@
 		8DBA856A247EFD190029598C /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA8569247EFD190029598C /* PostModel.swift */; };
 		8DBA856C247F2D560029598C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA856B247F2D560029598C /* ProfileView.swift */; };
 		8DBA856E247F3C2E0029598C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA856D247F3C2E0029598C /* ProfileViewController.swift */; };
+		8DBA857024800FBA0029598C /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA856F24800FBA0029598C /* CustomColors.swift */; };
 		9B3D72C6DCDD76A49585596D /* Pods_ShareSpaceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9AE4FCC44BEC8D4C066FF1 /* Pods_ShareSpaceTests.framework */; };
 		F149D498247F3348006D77D2 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D497247F3348006D77D2 /* FeedCell.swift */; };
 		F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */; };
@@ -50,6 +51,7 @@
 		8DBA8569247EFD190029598C /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		8DBA856B247F2D560029598C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		8DBA856D247F3C2E0029598C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		8DBA856F24800FBA0029598C /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		BB5D914FACCC602E321B12DC /* Pods-ShareSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareSpaceTests.debug.xcconfig"; path = "Target Support Files/Pods-ShareSpaceTests/Pods-ShareSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BBE396EC586885A6BD1527B8 /* Pods-ShareSpace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareSpace.release.xcconfig"; path = "Target Support Files/Pods-ShareSpace/Pods-ShareSpace.release.xcconfig"; sourceTree = "<group>"; };
 		D7569AA8C49692E2E6244CB7 /* Pods_ShareSpace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShareSpace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -210,6 +212,7 @@
 				F1684C4C247ADD3C00AA9A17 /* UIViewController+ShowAlert.swift */,
 				F1684C4E247ADDA800AA9A17 /* UIImage+Resize.swift */,
 				F1684C50247ADDE400AA9A17 /* UIViewController+Nav.swift */,
+				8DBA856F24800FBA0029598C /* CustomColors.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				F1684C47247AD7BE00AA9A17 /* LoginView.swift in Sources */,
 				F1684C49247ADC6F00AA9A17 /* AuthenticationSession.swift in Sources */,
 				F149D498247F3348006D77D2 /* FeedCell.swift in Sources */,
+				8DBA857024800FBA0029598C /* CustomColors.swift in Sources */,
 				F1684C51247ADDE400AA9A17 /* UIViewController+Nav.swift in Sources */,
 				F1684BF9247AC6E800AA9A17 /* SceneDelegate.swift in Sources */,
 			);
