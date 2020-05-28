@@ -31,6 +31,7 @@ class MainViewController: UIViewController {
         addNavSignOutButton()
         delegatesAndDataSources()
       loadPost()
+        registerCell()
     }
     
     private func delegatesAndDataSources(){
@@ -50,7 +51,7 @@ mainView.searchBar.delegate = self
       case .failure(let error):
         print("It failed")
       case .success(let post):
-        self.post = post
+        self.posts = post
       }
     }
   }
@@ -58,7 +59,7 @@ mainView.searchBar.delegate = self
   
 
         
-    }
+    
     
     private func registerCell(){
         mainView.collectionView.register(FeedCell.self, forCellWithReuseIdentifier: "feedCell")
@@ -83,6 +84,7 @@ mainView.searchBar.delegate = self
     }
 
 }
+
 
 extension MainViewController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
