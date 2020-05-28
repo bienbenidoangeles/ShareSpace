@@ -9,20 +9,24 @@
 import UIKit
 
 class ProfileView: UIView {
+    
+    override func layoutSubviews() {
+        profileImageView.clipsToBounds = true
+        profileImageView.layer.borderWidth = 3
+        profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
+        profileImageView.layer.borderColor = UIColor.white.cgColor
+        
+    }
 
      public lazy var profileImageView: UIImageView = {
-          //  let imageView = UIImageView()
+            let imageView = UIImageView()
         
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 125, height: 125))
         imageView.image = UIImage(systemName: "person.fill")
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.layoutSubviews()
         imageView.backgroundColor = .systemOrange
-//        imageView.layer.cornerRadius = imageView.frame.height / 2
-//        imageView.image = UIImage(systemName: "person.fill")
-//            imageView.contentMode = .scaleAspectFit
-//            imageView.clipsToBounds =  true
-//            imageView.tintColor = .systemOrange
+
+           imageView.tintColor = .systemYellow
         
             return imageView
         }()
@@ -147,9 +151,11 @@ class ProfileView: UIView {
             NSLayoutConstraint.activate([
             
                 profileImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 30),
-                profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
-                profileImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
-                profileImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15)
+               // profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
+                //profileImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
+                profileImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+                profileImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15),
+                profileImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.32)
             
             
             ])
