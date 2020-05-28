@@ -249,6 +249,7 @@ PODS:
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.21.0)
   - GTMSessionFetcher/Core (1.3.1)
+  - JTAppleCalendar (8.0.3)
   - Kingfisher (5.13.1):
     - Kingfisher/Core (= 5.13.1)
   - Kingfisher/Core (5.13.1)
@@ -265,6 +266,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Storage
   - FirebaseFirestoreSwift
+  - JTAppleCalendar
   - Kingfisher
 
 SPEC REPOS:
@@ -287,6 +289,7 @@ SPEC REPOS:
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
+    - JTAppleCalendar
     - Kingfisher
     - leveldb-library
     - nanopb
@@ -310,10 +313,11 @@ SPEC CHECKSUMS:
   "gRPC-C++": 9dfe7b44821e7b3e44aacad2af29d2c21f7cde83
   gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
   GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
+  JTAppleCalendar: 932cadea40b1051beab10f67843451d48ba16c99
   Kingfisher: f33a848445e33c543620812158dc5d47f6bf90df
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
 
-PODFILE CHECKSUM: 1c8c9c98a06e8cfc308e4fec8e5c4f395f762b32
+PODFILE CHECKSUM: 7d4ca162e7395503f4fd692ab4fdeb7299176ab2
 
 COCOAPODS: 1.9.0
