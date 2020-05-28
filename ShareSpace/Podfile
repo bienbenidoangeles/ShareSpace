@@ -18,6 +18,7 @@ target 'ShareSpace' do
   
   pod 'Kingfisher'
   pod 'Alamofire'
+  pod 'JTAppleCalendar'
 
   target 'ShareSpaceTests' do
     inherit! :search_paths

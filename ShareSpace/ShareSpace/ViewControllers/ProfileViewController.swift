@@ -32,7 +32,7 @@ class ProfileViewController: UIViewController {
     }
     
     //???
-    private let storageService = StorageService()
+    private let storageService = StorageService.shared
     
 
     override func viewDidLoad() {
