@@ -16,7 +16,7 @@ enum UserType: Int{
 }
 
 
-struct UserModel {
+class UserModel {
     let userEmail: String
     let userId: String
     let firstName: String
@@ -25,20 +25,29 @@ struct UserModel {
     let bio: String?
     let phoneNumber: String
     let work: String?
+    let reviews: [Review]?
+    let userType: UserType
+    let profileImage:String?
    // let governmentId: String
    // let payment: String
+    init(_ dictionary: [String: Any]) {
+        
+        self.userEmail = dictionary["userEmail"] as? String ?? "nil"
+        self.userId = dictionary["userId"] as? String ?? "nil"
+        self.firstName = dictionary["firstName"] as? String ?? "nil"
+        self.lastName = dictionary["lastName"] as? String ?? "nil"
+        self.displayName = dictionary["displayName"] as? String ?? "nil"
+        self.bio = dictionary["bio"] as? String ?? "nil"
+        self.phoneNumber = dictionary["phoneNumber"] as? String ?? "nil"
+        self.work = dictionary["work"] as? String ?? "nil"
+        self.reviews = dictionary["reviews"] as? [Review] ?? [Review]()
+        self.userType = dictionary["userType"] as? UserType ?? UserType.user
+        self.profileImage = dictionary["profileImage"] as? String ?? ""
+    }
 }
 
-extension UserModel {
-    init(_ dictionary: [String: Any]) {
-       
-        self.userEmail = dictionary["userEmail"] as? String ?? ""
-        self.userId = dictionary["userId"] as? String ?? ""
-        self.firstName = dictionary["firstName"] as? String ?? ""
-        self.lastName = dictionary["lastName"] as? String ?? ""
-        self.displayName = dictionary["displayName"] as? String ?? ""
-        self.bio = dictionary["bio"] as? String ?? ""
-        self.phoneNumber = dictionary["phoneNumber"] as? String ?? ""
-        self.work = dictionary["work"] as? String ?? ""
+class HostModel: UserModel {
+    override init(_ dictionary: [String : Any]) {
+        super.init(dictionary)
     }
 }
