@@ -12,6 +12,9 @@
 		8DBA856C247F2D560029598C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA856B247F2D560029598C /* ProfileView.swift */; };
 		8DBA856E247F3C2E0029598C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA856D247F3C2E0029598C /* ProfileViewController.swift */; };
 		8DBA857024800FBA0029598C /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA856F24800FBA0029598C /* CustomColors.swift */; };
+		8DBA85B1248192260029598C /* ListingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA85B0248192260029598C /* ListingDetailView.swift */; };
+		8DBA85B3248192520029598C /* ListingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA85B2248192520029598C /* ListingDetailViewController.swift */; };
+		8DBA85B5248196B10029598C /* ListingDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DBA85B4248196B10029598C /* ListingDetail.storyboard */; };
 		9B3D72C6DCDD76A49585596D /* Pods_ShareSpaceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9AE4FCC44BEC8D4C066FF1 /* Pods_ShareSpaceTests.framework */; };
 		F149D498247F3348006D77D2 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D497247F3348006D77D2 /* FeedCell.swift */; };
 		F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */; };
@@ -52,6 +55,9 @@
 		8DBA856B247F2D560029598C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		8DBA856D247F3C2E0029598C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8DBA856F24800FBA0029598C /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
+		8DBA85B0248192260029598C /* ListingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDetailView.swift; sourceTree = "<group>"; };
+		8DBA85B2248192520029598C /* ListingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDetailViewController.swift; sourceTree = "<group>"; };
+		8DBA85B4248196B10029598C /* ListingDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ListingDetail.storyboard; sourceTree = "<group>"; };
 		BB5D914FACCC602E321B12DC /* Pods-ShareSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareSpaceTests.debug.xcconfig"; path = "Target Support Files/Pods-ShareSpaceTests/Pods-ShareSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BBE396EC586885A6BD1527B8 /* Pods-ShareSpace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareSpace.release.xcconfig"; path = "Target Support Files/Pods-ShareSpace/Pods-ShareSpace.release.xcconfig"; sourceTree = "<group>"; };
 		D7569AA8C49692E2E6244CB7 /* Pods_ShareSpace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShareSpace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,6 +208,7 @@
 				F1684C52247ADE1400AA9A17 /* TabBarController.swift */,
 				F1684C54247ADECC00AA9A17 /* MainViewController.swift */,
 				8DBA856D247F3C2E0029598C /* ProfileViewController.swift */,
+				8DBA85B2248192520029598C /* ListingDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -223,6 +230,7 @@
 				F1684C46247AD7BE00AA9A17 /* LoginView.swift */,
 				F1684C58247AE22200AA9A17 /* MainView.swift */,
 				8DBA856B247F2D560029598C /* ProfileView.swift */,
+				8DBA85B0248192260029598C /* ListingDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -252,6 +260,7 @@
 			children = (
 				F1684BFC247AC6E800AA9A17 /* Main.storyboard */,
 				F1684C01247AC6EC00AA9A17 /* LaunchScreen.storyboard */,
+				8DBA85B4248196B10029598C /* ListingDetail.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -342,6 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1684C03247AC6EC00AA9A17 /* LaunchScreen.storyboard in Resources */,
+				8DBA85B5248196B10029598C /* ListingDetail.storyboard in Resources */,
 				F1684C2B247AD37A00AA9A17 /* GoogleService-Info.plist in Resources */,
 				F1684C00247AC6EC00AA9A17 /* Assets.xcassets in Resources */,
 				F1684BFE247AC6E800AA9A17 /* Main.storyboard in Resources */,
@@ -445,12 +455,14 @@
 			files = (
 				F1684C4D247ADD3C00AA9A17 /* UIViewController+ShowAlert.swift in Sources */,
 				8DBA856A247EFD190029598C /* PostModel.swift in Sources */,
+				8DBA85B1248192260029598C /* ListingDetailView.swift in Sources */,
 				F1684C59247AE22200AA9A17 /* MainView.swift in Sources */,
 				F1684C2D247AD42E00AA9A17 /* LoginViewController.swift in Sources */,
 				F1684C53247ADE1400AA9A17 /* TabBarController.swift in Sources */,
 				F1684C55247ADECC00AA9A17 /* MainViewController.swift in Sources */,
 				F1684C4B247ADCCF00AA9A17 /* DatabaseService.swift in Sources */,
 				8DBA856E247F3C2E0029598C /* ProfileViewController.swift in Sources */,
+				8DBA85B3248192520029598C /* ListingDetailViewController.swift in Sources */,
 				F1684BFB247AC6E800AA9A17 /* ViewController.swift in Sources */,
 				8DBA856C247F2D560029598C /* ProfileView.swift in Sources */,
 				F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */,
