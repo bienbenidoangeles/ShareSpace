@@ -259,6 +259,7 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - SwiftLint (0.39.2)
 
 DEPENDENCIES:
   - Alamofire
@@ -268,6 +269,7 @@ DEPENDENCIES:
   - FirebaseFirestoreSwift
   - JTAppleCalendar
   - Kingfisher
+  - SwiftLint
 
 SPEC REPOS:
   trunk:
@@ -293,6 +295,7 @@ SPEC REPOS:
     - Kingfisher
     - leveldb-library
     - nanopb
+    - SwiftLint
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
@@ -317,7 +320,8 @@ SPEC CHECKSUMS:
   Kingfisher: f33a848445e33c543620812158dc5d47f6bf90df
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: 7d4ca162e7395503f4fd692ab4fdeb7299176ab2
+PODFILE CHECKSUM: 1d458d8c78611b7d1a63f0fa43685f5b4134fb96
 
 COCOAPODS: 1.9.0

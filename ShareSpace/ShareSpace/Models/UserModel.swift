@@ -9,6 +9,13 @@
 import Foundation
 import Firebase
 
+enum UserType: Int{
+    case guest
+    case user
+    case host
+}
+
+
 struct UserModel {
     let userEmail: String
     let userId: String
