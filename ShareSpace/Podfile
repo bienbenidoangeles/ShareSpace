@@ -19,6 +19,7 @@ target 'ShareSpace' do
   pod 'Kingfisher'
   pod 'Alamofire'
   pod 'JTAppleCalendar'
+  pod 'SwiftLint'
 
   target 'ShareSpaceTests' do
     inherit! :search_paths
@@ -27,6 +28,7 @@ target 'ShareSpace' do
     pod 'Firebase/Firestore'
     pod 'FirebaseFirestoreSwift'
     pod 'Firebase/Storage'
+    pod 'SwiftLint'
 
   end
 
