@@ -17,6 +17,8 @@ enum UserType: Int{
 
 
 class UserModel {
+    
+    
     let userEmail: String
     let userId: String
     let firstName: String
@@ -30,6 +32,21 @@ class UserModel {
     let profileImage:String?
    // let governmentId: String
    // let payment: String
+    
+    internal init(userEmail: String, userId: String, firstName: String, lastName: String, displayName: String, bio: String?, phoneNumber: String, work: String?, reviews: [Review]?, userType: UserType, profileImage: String?) {
+        self.userEmail = userEmail
+        self.userId = userId
+        self.firstName = firstName
+        self.lastName = lastName
+        self.displayName = displayName
+        self.bio = bio
+        self.phoneNumber = phoneNumber
+        self.work = work
+        self.reviews = reviews
+        self.userType = userType
+        self.profileImage = profileImage
+    }
+    
     init(_ dictionary: [String: Any]) {
         
         self.userEmail = dictionary["userEmail"] as? String ?? "nil"
@@ -44,10 +61,20 @@ class UserModel {
         self.userType = dictionary["userType"] as? UserType ?? UserType.user
         self.profileImage = dictionary["profileImage"] as? String ?? ""
     }
+    
 }
 
 class HostModel: UserModel {
+    
+    let posts: [Post]
+    
+    init(userEmail: String, userId: String, firstName: String, lastName: String, displayName: String, bio: String?, phoneNumber: String, work: String?, reviews: [Review]?, userType: UserType, profileImage: String?, posts: [Post]) {
+        self.posts = posts
+        super.init(userEmail: userEmail, userId: userId, firstName: firstName, lastName: lastName, displayName: displayName, bio: bio, phoneNumber: phoneNumber, work: work, reviews: reviews, userType: userType, profileImage: profileImage)
+    }
+    
     override init(_ dictionary: [String : Any]) {
+        self.posts = dictionary["post"] as? [Post] ?? [Post]()
         super.init(dictionary)
     }
 }
