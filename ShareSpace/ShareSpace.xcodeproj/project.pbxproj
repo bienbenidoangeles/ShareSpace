@@ -17,6 +17,7 @@
 		8DBA85B5248196B10029598C /* ListingDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DBA85B4248196B10029598C /* ListingDetail.storyboard */; };
 		9B3D72C6DCDD76A49585596D /* Pods_ShareSpaceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9AE4FCC44BEC8D4C066FF1 /* Pods_ShareSpaceTests.framework */; };
 		F149D498247F3348006D77D2 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D497247F3348006D77D2 /* FeedCell.swift */; };
+		F149D4D42481B7EB006D77D2 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D492247EF94B006D77D2 /* UserModel.swift */; };
 		F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */; };
 		F1684BF9247AC6E800AA9A17 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684BF8247AC6E800AA9A17 /* SceneDelegate.swift */; };
 		F1684BFB247AC6E800AA9A17 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684BFA247AC6E800AA9A17 /* ViewController.swift */; };
@@ -463,6 +464,7 @@
 				F1684C4B247ADCCF00AA9A17 /* DatabaseService.swift in Sources */,
 				8DBA856E247F3C2E0029598C /* ProfileViewController.swift in Sources */,
 				8DBA85B3248192520029598C /* ListingDetailViewController.swift in Sources */,
+				F149D4D42481B7EB006D77D2 /* UserModel.swift in Sources */,
 				F1684BFB247AC6E800AA9A17 /* ViewController.swift in Sources */,
 				8DBA856C247F2D560029598C /* ProfileView.swift in Sources */,
 				F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */,
