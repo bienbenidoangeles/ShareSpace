@@ -7,28 +7,75 @@
 //
 
 import XCTest
+import Firebase
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseStorage
 @testable import ShareSpace
 
 class ShareSpaceTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+  
+  func testCreateAuthenticatedUser() {
+    let email = "\(randomEmail())@runningtest.com"
+    let password = "password"
+    let exp = XCTestExpectation(description: "Auth user created")
+    
+    AuthenticationSession.shared.createNewUser(email: email, password: password) { (result) in
+      exp.fulfill()
+      switch result {
+      case .failure(let error):
+        XCTFail("Error creating auth user: \(error.localizedDescription)")
+      case .success(let authDataResult):
+        XCTAssertEqual(email, authDataResult.user.email)
+      }
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    wait(for: [exp], timeout: 3.0)
+  }
+  
+  func testCreateDatabaseUser() {
+    guard let user = FirebaseAuth.Auth.auth().currentUser else {
+      XCTFail("no logged user")
+      return
     }
+    let userDict: [String: Any] = ["email": user.email,
+                                   "userId": user.uid,
+                                   "createdDate": Date()]
+  }
+   
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+  
+  
+  
+  
+  func testSignOut() {
+    let exp =  XCTestExpectation(description: "User logged out")
+    guard let user = Auth.auth().currentUser else {
+      XCTFail("no logged user")
+      return
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    do {
+      try Auth.auth().signOut()
+      exp.fulfill()
+    } catch {
+      XCTFail("failed to log out")
     }
+    wait(for: [exp], timeout: 4.0)
+  }
+  
 
+}
+
+
+
+extension ShareSpaceTests {
+  func randomEmail() -> String {
+    let alphabet = "abcdefghijklmnopqrstuvwxyz"
+    var name = ""
+    
+    for _ in 0..<5 {
+      name.append(alphabet.randomElement() ?? "E")
+    }
+    return name
+  }
 }

@@ -68,6 +68,18 @@ class DatabaseService {
     }
   }
   
+  func loadUser(userId: String, completion: @escaping (Result<UserModel, Error>) -> ()) {
+    db.collection(DatabaseService.usersCollection).document(userId).getDocument { (snapshot, error) in
+      if let error = error {
+        completion(.failure(error))
+      } else if let snapshot = snapshot,
+        let data = snapshot.data() {
+        let user = UserModel(data)
+        completion(.success(user))
+      }
+    }
+  }
+  
   
   
 }
