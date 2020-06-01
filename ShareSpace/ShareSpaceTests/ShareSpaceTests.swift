@@ -131,6 +131,23 @@ class ShareSpaceTests: XCTestCase {
   }
   
 
+  func testChatThread() {
+    let exp = XCTestExpectation(description: "Chat created")
+    guard let user = Auth.auth().currentUser else {
+       XCTFail("no current user")
+      return
+    }
+    DatabaseService.shared.createNewChat(user1ID: user.uid, user2ID: "hz7DjrFALvgPBHNS3m4kjDmvQn52") { (result) in
+      exp.fulfill()
+      switch result {
+      case .failure(let error):
+        XCTFail("Failed to load chat")
+      case .success:
+        XCTAssert(true)
+      }
+    }
+    wait(for: [exp], timeout: 3.0)
+  }
   
   
 //  func testSignOut() {
@@ -164,4 +181,23 @@ extension ShareSpaceTests {
     }
     return name
   }
+  
+//  func randomUser2() -> {
+//    let email = "\(randomEmail())@chatUser.com"
+//    AuthenticationSession.shared.createNewUser(email: email, password: "password") { (result) in
+//      switch result {
+//      case .failure(let error):
+//        print("failed to make auth user")
+//      case .success(let data):
+//        DatabaseService.shared.createDatabaseUser(authDataResult: data) { (result) in
+//          switch result {
+//          case .failure(let error):
+//            print("Database error: \(error)")
+//          case .success:
+//            print("random user 2 created")
+//          }
+//        }
+//      }
+//    }
+//  }
 }
