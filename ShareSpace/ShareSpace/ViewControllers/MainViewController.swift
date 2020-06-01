@@ -114,4 +114,15 @@ extension MainViewController: UICollectionViewDelegateFlowLayout{
         let itemWidth:CGFloat = maxSize.width
         return CGSize(width: itemWidth, height: itemWidth)
     }
+    
+    // ADDED BY ME LET BIEN KNOW
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let aPost = posts[indexPath.row]
+        let storyboard = UIStoryboard(name: "ListingDetail", bundle: nil)
+        let detailVC = storyboard.instantiateViewController(identifier: "ListingDetailViewController") { (coder) in
+            return ListingDetailViewController(coder: coder, selectedPost: aPost)
+        }
+        navigationController?.pushViewController(detailVC, animated: true)
+        
+    }
 }
