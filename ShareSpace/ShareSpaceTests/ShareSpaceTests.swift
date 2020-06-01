@@ -33,6 +33,7 @@ class ShareSpaceTests: XCTestCase {
   }
   
   func testCreateDatabaseUser() {
+    let exp = XCTestExpectation(description: "Database user created")
     guard let user = FirebaseAuth.Auth.auth().currentUser else {
       XCTFail("no logged user")
       return
@@ -40,6 +41,36 @@ class ShareSpaceTests: XCTestCase {
     let userDict: [String: Any] = ["email": user.email,
                                    "userId": user.uid,
                                    "createdDate": Date()]
+    
+    Firestore.firestore().collection(DatabaseService.usersCollection)
+      .document(user.uid)
+      .setData(userDict) { (error) in
+        
+        if let error = error {
+          XCTFail("Failed to create database user")
+        } else {
+          exp.fulfill()
+          XCTAssert(true)
+        }
+    }
+  }
+  
+  func testLoadUser() {
+    let exp = XCTestExpectation(description: "User profile loaded")
+    guard let user = FirebaseAuth.Auth.auth().currentUser else {
+      XCTFail("no logged user")
+      return
+    }
+    DatabaseService.shared.loadUser(userId: user.uid) { (result) in
+      switch result {
+      case .failure(let error):
+        XCTFail("failed to load user profile: \(error)")
+      case .success(let testUser):
+        exp.fulfill()
+        XCTAssertEqual(testUser.userId, user.uid)
+    }
+    }
+    wait(for: [exp], timeout: 6.0)
   }
    
 
@@ -47,21 +78,21 @@ class ShareSpaceTests: XCTestCase {
   
   
   
-  func testSignOut() {
-    let exp =  XCTestExpectation(description: "User logged out")
-    guard let user = Auth.auth().currentUser else {
-      XCTFail("no logged user")
-      return
-    }
-    
-    do {
-      try Auth.auth().signOut()
-      exp.fulfill()
-    } catch {
-      XCTFail("failed to log out")
-    }
-    wait(for: [exp], timeout: 4.0)
-  }
+//  func testSignOut() {
+//    let exp =  XCTestExpectation(description: "User logged out")
+//    guard let user = Auth.auth().currentUser else {
+//      XCTFail("no logged user")
+//      return
+//    }
+//
+//    do {
+//      try Auth.auth().signOut()
+//      exp.fulfill()
+//    } catch {
+//      XCTFail("failed to log out")
+//    }
+//    wait(for: [exp], timeout: 4.0)
+//  }
   
 
 }
