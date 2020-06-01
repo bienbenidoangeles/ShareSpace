@@ -15,7 +15,7 @@ import FirebaseStorage
 
 class ShareSpaceTests: XCTestCase {
   
-  func testCreateAuthenticatedUser() {
+  func testAuthFuncCreateUser() {
     let email = "\(randomEmail())@runningtest.com"
     let password = "password"
     let exp = XCTestExpectation(description: "Auth user created")
@@ -47,15 +47,16 @@ class ShareSpaceTests: XCTestCase {
       .setData(userDict) { (error) in
         
         if let error = error {
-          XCTFail("Failed to create database user")
+          XCTFail("Failed to create database user: \(error)")
         } else {
           exp.fulfill()
           XCTAssert(true)
         }
     }
+    wait(for: [exp], timeout: 3.0)
   }
   
-  func testLoadUser() {
+  func testDBFuncLoadUser() {
     let exp = XCTestExpectation(description: "User profile loaded")
     guard let user = FirebaseAuth.Auth.auth().currentUser else {
       XCTFail("no logged user")
@@ -73,9 +74,63 @@ class ShareSpaceTests: XCTestCase {
     wait(for: [exp], timeout: 6.0)
   }
    
+  func testDBFuncLoadPost() {
+    let exp = XCTestExpectation(description: "Post loaded")
+    DatabaseService.shared.loadPost { (result) in
+      exp.fulfill()
+      switch result {
+      case .failure(let error):
+        XCTFail("Failed to load any post: \(error)")
+      case .success(let post):
+        if post.count > 0 {
+          XCTAssert(true)
+        } else {
+          XCTFail("No post test to load")
+        }
+      }
+    }
+    wait(for: [exp], timeout: 3.0)
+  }
+  
+  func testDBFuncDeleteUser() {
+    let exp = XCTestExpectation(description: "User deleted")
+    guard let user = Auth.auth().currentUser else {
+      XCTFail("No current user")
+      return
+    }
+    
+    DatabaseService.shared.deleteDatabaseUser(userId: user.uid) { (result) in
+      switch result {
+      case .failure(let error):
+        XCTFail("Failed to delete user: \(error)")
+      case .success:
+        exp.fulfill()
+        XCTAssert(true)
+      }
+    }
+    wait(for: [exp], timeout: 3.0)
+    
+  }
+  
+  func testAuthFuncDeleteUser() {
+    let exp = XCTestExpectation(description: "User deleted")
+    guard let user = Auth.auth().currentUser else {
+      XCTFail("No current user logged in")
+      return
+    }
+    AuthenticationSession.shared.deleteUser(userId: user.uid) { (result) in
+      switch result {
+      case .failure(let error):
+        XCTFail("Issue deleting user: \(error)")
+      case .success:
+        exp.fulfill()
+        XCTAssert(true)
+      }
+    }
+    wait(for: [exp], timeout: 3.0)
+  }
+  
 
-  
-  
   
   
 //  func testSignOut() {

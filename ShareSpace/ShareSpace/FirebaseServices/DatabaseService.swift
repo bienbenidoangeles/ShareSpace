@@ -80,6 +80,16 @@ class DatabaseService {
     }
   }
   
+  func deleteDatabaseUser(userId: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+    db.collection(DatabaseService.usersCollection).document(userId).delete { (error) in
+      if let error = error {
+        completion(.failure(error))
+      } else {
+        completion(.success(true))
+      }
+    }
+  }
+  
   
   
 }
