@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05A5C581F9733E0669975914 /* Pods_ShareSpace.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7569AA8C49692E2E6244CB7 /* Pods_ShareSpace.framework */; };
+		8D6C2D4E24859CA4001A840D /* ReservePopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */; };
 		8DBA856A247EFD190029598C /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA8569247EFD190029598C /* PostModel.swift */; };
 		8DBA856C247F2D560029598C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA856B247F2D560029598C /* ProfileView.swift */; };
 		8DBA856E247F3C2E0029598C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA856D247F3C2E0029598C /* ProfileViewController.swift */; };
@@ -16,6 +17,7 @@
 		8DBA85B3248192520029598C /* ListingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA85B2248192520029598C /* ListingDetailViewController.swift */; };
 		8DBA85B5248196B10029598C /* ListingDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DBA85B4248196B10029598C /* ListingDetail.storyboard */; };
 		8DBA85B72481C4DE0029598C /* ListingPhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA85B62481C4DD0029598C /* ListingPhotosCell.swift */; };
+		8DCB76152486BD38005C1C04 /* CoreLocationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCB76142486BD38005C1C04 /* CoreLocationSession.swift */; };
 		9B3D72C6DCDD76A49585596D /* Pods_ShareSpaceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9AE4FCC44BEC8D4C066FF1 /* Pods_ShareSpaceTests.framework */; };
 		F149D498247F3348006D77D2 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D497247F3348006D77D2 /* FeedCell.swift */; };
 		F149D4D42481B7EB006D77D2 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D492247EF94B006D77D2 /* UserModel.swift */; };
@@ -54,6 +56,7 @@
 /* Begin PBXFileReference section */
 		071046540716F7B4635C6842 /* Pods-ShareSpace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareSpace.debug.xcconfig"; path = "Target Support Files/Pods-ShareSpace/Pods-ShareSpace.debug.xcconfig"; sourceTree = "<group>"; };
 		4B9AE4FCC44BEC8D4C066FF1 /* Pods_ShareSpaceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShareSpaceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservePopupController.swift; sourceTree = "<group>"; };
 		8DBA8569247EFD190029598C /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		8DBA856B247F2D560029598C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		8DBA856D247F3C2E0029598C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +65,7 @@
 		8DBA85B2248192520029598C /* ListingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDetailViewController.swift; sourceTree = "<group>"; };
 		8DBA85B4248196B10029598C /* ListingDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ListingDetail.storyboard; sourceTree = "<group>"; };
 		8DBA85B62481C4DD0029598C /* ListingPhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingPhotosCell.swift; sourceTree = "<group>"; };
+		8DCB76142486BD38005C1C04 /* CoreLocationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocationSession.swift; sourceTree = "<group>"; };
 		BB5D914FACCC602E321B12DC /* Pods-ShareSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareSpaceTests.debug.xcconfig"; path = "Target Support Files/Pods-ShareSpaceTests/Pods-ShareSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BBE396EC586885A6BD1527B8 /* Pods-ShareSpace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareSpace.release.xcconfig"; path = "Target Support Files/Pods-ShareSpace/Pods-ShareSpace.release.xcconfig"; sourceTree = "<group>"; };
 		D7569AA8C49692E2E6244CB7 /* Pods_ShareSpace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShareSpace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -215,7 +219,11 @@
 				F1684C54247ADECC00AA9A17 /* MainViewController.swift */,
 				8DBA856D247F3C2E0029598C /* ProfileViewController.swift */,
 				8DBA85B2248192520029598C /* ListingDetailViewController.swift */,
+
+				8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */,
+
 				F149D4F72486CF2A006D77D2 /* NavBarViewController.swift */,
+
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -227,6 +235,7 @@
 				F1684C4E247ADDA800AA9A17 /* UIImage+Resize.swift */,
 				F1684C50247ADDE400AA9A17 /* UIViewController+Nav.swift */,
 				8DBA856F24800FBA0029598C /* CustomColors.swift */,
+				8DCB76142486BD38005C1C04 /* CoreLocationSession.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -463,6 +472,7 @@
 				F1684C4D247ADD3C00AA9A17 /* UIViewController+ShowAlert.swift in Sources */,
 				8DBA856A247EFD190029598C /* PostModel.swift in Sources */,
 				8DBA85B1248192260029598C /* ListingDetailView.swift in Sources */,
+				8DCB76152486BD38005C1C04 /* CoreLocationSession.swift in Sources */,
 				F1684C59247AE22200AA9A17 /* MainView.swift in Sources */,
 				F1684C2D247AD42E00AA9A17 /* LoginViewController.swift in Sources */,
 				F1684C53247ADE1400AA9A17 /* TabBarController.swift in Sources */,
@@ -471,6 +481,7 @@
 				8DBA856E247F3C2E0029598C /* ProfileViewController.swift in Sources */,
 				8DBA85B3248192520029598C /* ListingDetailViewController.swift in Sources */,
 				F149D4D42481B7EB006D77D2 /* UserModel.swift in Sources */,
+				8D6C2D4E24859CA4001A840D /* ReservePopupController.swift in Sources */,
 				F1684BFB247AC6E800AA9A17 /* ViewController.swift in Sources */,
 				8DBA856C247F2D560029598C /* ProfileView.swift in Sources */,
 				F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */,
