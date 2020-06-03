@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 
-class MainViewController: UIViewController {
+class MainViewController: NavBarViewController {
     
     private let mainView = MainView()
     
@@ -68,7 +68,7 @@ mainView.searchBar.delegate = self
     
     private func addNavSignOutButton(){
         let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
-        navigationItem.rightBarButtonItem = barButtonItem
+        navigationItem.rightBarButtonItems?.append(barButtonItem)
     }
     
     @objc private func signOutButtonPressed(_ sender: UIBarButtonItem) {
