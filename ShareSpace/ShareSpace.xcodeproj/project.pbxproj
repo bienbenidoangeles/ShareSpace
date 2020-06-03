@@ -238,9 +238,9 @@
 			isa = PBXGroup;
 			children = (
 				F1684C4C247ADD3C00AA9A17 /* UIViewController+ShowAlert.swift */,
+				8DBA856F24800FBA0029598C /* CustomColors.swift */,
 				F1684C4E247ADDA800AA9A17 /* UIImage+Resize.swift */,
 				F1684C50247ADDE400AA9A17 /* UIViewController+Nav.swift */,
-				8DBA856F24800FBA0029598C /* CustomColors.swift */,
 				8DCB76142486BD38005C1C04 /* CoreLocationSession.swift */,
 			);
 			path = Extensions;
