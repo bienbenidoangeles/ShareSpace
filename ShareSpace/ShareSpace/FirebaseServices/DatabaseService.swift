@@ -40,6 +40,22 @@ class DatabaseService {
         }
     }
   }
+    
+    func loadIDs(completion: @escaping (Result<[String], Error>) -> ()) {
+    db.collection(DatabaseService.usersCollection).getDocuments { (snapshot, error) in
+      if let error = error {
+        completion(.failure(error))
+      } else if let snapshot = snapshot {
+        let users = snapshot.documents.map { UserModel($0.data())}
+        var userIDs = [String]()
+        for i in users {
+          userIDs.append(i.userId)
+        }
+        completion(.success(userIDs))
+      }
+     }
+    }
+
   
   func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, completion: @escaping (Result<Bool, Error>) -> ()) {
     guard let user = Auth.auth().currentUser else { return }
@@ -58,16 +74,9 @@ class DatabaseService {
         }
     }
   }
-  
-  
-  func loadPost(completion: @escaping (Result<[Post], Error>) -> ()) {
-    db.collection(DatabaseService.postCollection).getDocuments { (snapshot, error) in
-      if let error = error {
-        completion(.failure(error))
-      } else if let snapshot = snapshot {
-        let post = snapshot.documents.map { Post($0.data())}
-        completion(.success(post.sorted {$0.listedDate > $1.listedDate}))
-      }
+    
+    func updateDatabaseUserType(userType: User){
+        
     }
   }
     
@@ -127,6 +136,31 @@ class DatabaseService {
       }
     }
   }
-  
-  
+    
+    func postSpace(post: [String:Any], completion: @escaping (Result<Bool, Error>) -> ()) {
+    guard let user = Auth.auth().currentUser else { return }
+    
+    db.collection(DatabaseService.postCollection)
+        .document((post["postId"] as? String)!)
+        .setData(post) { (error) in
+                  
+                  if let error = error {
+                    completion(.failure(error))
+                  } else {
+                    completion(.success(true))
+                  }
+        }
+    }
+        
+    func loadPost(completion: @escaping (Result<[Post], Error>) -> ()) {
+            db.collection(DatabaseService.postCollection).getDocuments { (snapshot, error) in
+                if let error = error {
+                    completion(.failure(error))
+                } else if let snapshot = snapshot {
+                    let post = snapshot.documents.map { Post($0.data())}
+                    completion(.success(post.sorted {$0.listedDate > $1.listedDate}))
+                }
+            }
+        }
 }
+

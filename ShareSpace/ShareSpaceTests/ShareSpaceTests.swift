@@ -130,6 +130,26 @@ class ShareSpaceTests: XCTestCase {
     wait(for: [exp], timeout: 3.0)
   }
   
+      func testCreatePost() {
+        let exp = XCTestExpectation(description: "Post created")
+//        guard let user = Auth.auth().currentUser else {
+//          XCTFail("No current user logged in")
+//          return
+//        }
+        let post = Post.generatePostAsDict()
+        
+          DatabaseService.shared.postSpace(post: post) { (result) in
+            exp.fulfill()
+          switch result {
+          case .failure(let error):
+            XCTFail("Failed to make post \(error)")
+          case .success:
+            XCTAssert(true)
+          }
+        }
+        wait(for: [exp], timeout: 10.0)
+      }
+  
 
   func testChatThread() {
     let exp = XCTestExpectation(description: "Chat created")
