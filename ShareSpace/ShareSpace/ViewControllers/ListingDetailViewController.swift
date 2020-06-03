@@ -8,10 +8,15 @@
 
 import UIKit
 import MapKit
+import CoreLocation
+
 
 
 class ListingDetailViewController: UIViewController {
     
+    private let locationSession = CoreLocationSession()
+    private var annotation = MKPointAnnotation()
+    private var isShowingNewAnnotation = false
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -31,6 +36,8 @@ class ListingDetailViewController: UIViewController {
     
     
     private var selectedPost: Post
+    
+    
     
     init?(coder: NSCoder, selectedPost: Post) {
         self.selectedPost = selectedPost
@@ -52,10 +59,35 @@ class ListingDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        map.showsCompass = true
+        map.showsUserLocation = true
         updateUI()
         configureCollectionView()
     }
+    
+    func returnCoordinates(address: String, completion: @escaping (Result<[CLLocationCoordinate2D], Error>) ->())  {
+        CLGeocoder().geocodeAddressString(address) { (placemarks, error) in
+            let placemark = placemarks?.first
+            let lat = placemark?.location?.coordinate.latitude
+            let lon = placemark?.location?.coordinate.longitude
+            print("Lat: \(lat ?? 0), Lon: \(lon ?? 0)")
+        }
+    }
+    
+//    private func makeAnnotation(for post: Post) -> MKPointAnnotation {
+//        selectedPost = post
+//        let annotation = MKPointAnnotation()
+//       // let coordinate = CLLocationCoordinate2D
+//        returnCoordinates(address: "329 Kosciuszko street, Brooklyn, NY, 11221", completion: { (result) in
+//            switch result {
+//            case .failure(let error):
+//                print(error)
+//            case .success(let coordinates):
+//                annotation.coordinate.latitude = coordinates.first?.latitude
+//                let long = coordinates.first?.longitude
+//            }
+//        })
+//    }
     
     private func updateUI() {
         titleLabel.text = selectedPost.postTitle
