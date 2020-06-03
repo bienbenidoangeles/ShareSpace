@@ -14,7 +14,9 @@ class DatabaseService {
   
   static let usersCollection = "users"
   static let postCollection = "post"
-  static let chatsCollection = "chatTest"
+  static let chatsTestCollection = "chatTest"
+  static let favoritesCollection = "favorites"
+  static let chatsCollection = "chats"
   private let db = Firestore.firestore()
   
   private init() {}
@@ -82,6 +84,49 @@ class DatabaseService {
       }
     }
   
+  func loadUser(userId: String, completion: @escaping (Result<UserModel, Error>) -> ()) {
+    db.collection(DatabaseService.usersCollection).document(userId).getDocument { (snapshot, error) in
+      if let error = error {
+        completion(.failure(error))
+      } else if let snapshot = snapshot,
+        let data = snapshot.data() {
+        let user = UserModel(data)
+        completion(.success(user))
+      }
+    }
+  }
+  
+  func deleteDatabaseUser(userId: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+    db.collection(DatabaseService.usersCollection).document(userId).delete { (error) in
+      if let error = error {
+        completion(.failure(error))
+      } else {
+        completion(.success(true))
+      }
+    }
+  }
+  
+  func postSpace(hostId: String, price: Price, postTitle: String, hostName: String, mainImage: String, images: [String],description: String, location: Location, rating: Rating, reviews: [Review], completion: @escaping (Result<String, Error>) -> ()) {
+    
+//    let docRef = db.collection(DatabaseService.postCollection).document()
+    /*
+     postId: String
+     let listedDate: Date
+     */
+  }
+  
+  public func createNewChat(user1ID: String, user2ID: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+    let users = [user1ID, user2ID]
+    let data: [String: Any] = [DatabaseService.usersCollection: users]
+        
+    db.collection(DatabaseService.chatsCollection).addDocument(data: data) { (error) in
+      if let error = error {
+        completion(.failure(error))
+      } else {
+        completion(.success(true))
+      }
+    }
+  }
   
   
 }
