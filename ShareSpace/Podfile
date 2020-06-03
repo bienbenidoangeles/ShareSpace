@@ -20,6 +20,11 @@ target 'ShareSpace' do
   pod 'Alamofire'
   pod 'JTAppleCalendar'
   pod 'SwiftLint'
+  
+  # Pods for Messaging
+  pod 'Firebase/Core'
+  pod 'MessageKit'
+  pod 'SDWebImage'
 
   target 'ShareSpaceTests' do
     inherit! :search_paths
