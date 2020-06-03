@@ -14,6 +14,7 @@ class DatabaseService {
   
   static let usersCollection = "users"
   static let postCollection = "post"
+  static let chatsCollection = "chatTest"
   private let db = Firestore.firestore()
   
   private init() {}
@@ -67,6 +68,19 @@ class DatabaseService {
       }
     }
   }
+    
+    public func createNewChat(user1ID: String, user2ID: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+      let users = [user1ID, user2ID]
+      let data: [String: Any] = [DatabaseService.usersCollection: users]
+          
+      db.collection(DatabaseService.chatsCollection).addDocument(data: data) { (error) in
+        if let error = error {
+          completion(.failure(error))
+        } else {
+          completion(.success(true))
+        }
+      }
+    }
   
   
   
