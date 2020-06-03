@@ -78,7 +78,7 @@ class DatabaseService {
     func updateDatabaseUserType(userType: User){
         
     }
-  }
+  
     
 //    public func createNewChat(user1ID: String, user2ID: String, completion: @escaping (Result<Bool, Error>) -> ()) {
 //      let users = [user1ID, user2ID]
