@@ -14,6 +14,7 @@ class DatabaseService {
   
   static let usersCollection = "users"
   static let postCollection = "post"
+  static let chatsTestCollection = "chatTest"
   static let favoritesCollection = "favorites"
   static let chatsCollection = "chats"
   private let db = Firestore.firestore()
@@ -69,6 +70,19 @@ class DatabaseService {
       }
     }
   }
+    
+    public func createNewChat(user1ID: String, user2ID: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+      let users = [user1ID, user2ID]
+      let data: [String: Any] = [DatabaseService.usersCollection: users]
+          
+      db.collection(DatabaseService.chatsCollection).addDocument(data: data) { (error) in
+        if let error = error {
+          completion(.failure(error))
+        } else {
+          completion(.success(true))
+        }
+      }
+    }
   
   func loadUser(userId: String, completion: @escaping (Result<UserModel, Error>) -> ()) {
     db.collection(DatabaseService.usersCollection).document(userId).getDocument { (snapshot, error) in
