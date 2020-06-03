@@ -21,10 +21,17 @@ class TabBarController: UITabBarController {
         vc.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.fill"), tag: 1)
         return vc
     }()
+    
+     private var chatVC: ChatViewController = {
+            let vc = ChatViewController()
+            vc.tabBarItem = UITabBarItem(title: "Chat", image: UIImage(systemName: "message"), tag: 1)
+            return vc
+        }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let controllers = [mainVC, profileVC]
+        //let controllers = [mainVC, profileVC]
+        let controllers = [mainVC, profileVC, chatVC]
         viewControllers = controllers.map{UINavigationController(rootViewController: $0)}
 
     }
