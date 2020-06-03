@@ -33,4 +33,14 @@ class AuthenticationSession {
       }
     }
   }
+  
+  public func deleteUser(userId: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+    Auth.auth().currentUser?.delete(completion: { (error) in
+      if let error = error {
+        completion(.failure(error))
+      } else {
+        completion(.success(true))
+      }
+    })
+  }
 }
