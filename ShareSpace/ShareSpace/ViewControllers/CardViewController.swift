@@ -62,7 +62,7 @@ class CardViewController: UIViewController {
     
     
     private func registerCell(){
-        mainView.collectionView.register(FeedCell.self, forCellWithReuseIdentifier: "feedCell")
+        mainView.collectionView.register(UINib(nibName: "CollapsedCell", bundle: nil), forCellWithReuseIdentifier: "collapsedFeedCell")
     }
 
 }
@@ -73,7 +73,7 @@ extension CardViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = mainView.collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as? FeedCell else {
+        guard let cell = mainView.collectionView.dequeueReusableCell(withReuseIdentifier: "collapsedFeedCell", for: indexPath) as? FeedCollapsedCell else {
             fatalError()
         }
         let post = posts[indexPath.row]
@@ -86,8 +86,8 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let maxSize:CGSize = UIScreen.main.bounds.size
-        let itemWidth:CGFloat = maxSize.width * 0.6
-        let itemHeight:CGFloat = itemWidth
+        let itemWidth:CGFloat = maxSize.width
+        let itemHeight:CGFloat = itemWidth*0.25
         return CGSize(width: itemWidth, height: itemHeight)
     }
     

@@ -51,6 +51,7 @@ class RootViewController: NavBarViewController {
         addTargets()
         setupCard()
         setupMap()
+        addNavButtons()
     }
     
     private func delegatesAndDataSources(){
