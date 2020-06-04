@@ -9,9 +9,11 @@
 import UIKit
 import FirebaseAuth
 
-class CardViewController: NavBarViewController {
+class CardViewController: UIViewController {
     
-    private let mainView = MainView()
+    private let mainView = CardView()
+    
+    public lazy var handleArea = mainView.topView
     
     private var posts = [Post](){
         didSet{
@@ -28,14 +30,12 @@ class CardViewController: NavBarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        addNavSignOutButton()
         delegatesAndDataSources()
         loadPost()
         registerCell()
     }
     
     private func delegatesAndDataSources(){
-        mainView.searchBar.delegate = self
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
     }
@@ -63,31 +63,6 @@ class CardViewController: NavBarViewController {
         mainView.collectionView.register(FeedCell.self, forCellWithReuseIdentifier: "feedCell")
     }
 
-    
-    private func addNavSignOutButton(){
-        let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
-        navigationItem.rightBarButtonItems?.append(barButtonItem)
-    }
-    
-    @objc private func signOutButtonPressed(_ sender: UIBarButtonItem) {
-        
-        do {
-            try Auth.auth().signOut()
-            UIViewController.showViewController(viewcontroller: LoginViewController())
-        } catch {
-            DispatchQueue.main.async {
-                self.showAlert(title: "Unable to signout", message: "Error: \(error.localizedDescription)")
-            }
-        }
-    }
-
-}
-
-
-extension CardViewController: UISearchBarDelegate{
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        //
-    }
 }
 
 extension CardViewController: UICollectionViewDataSource {
@@ -110,7 +85,8 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
         
         let maxSize:CGSize = UIScreen.main.bounds.size
         let itemWidth:CGFloat = maxSize.width
-        return CGSize(width: itemWidth, height: itemWidth)
+        let itemHeight:CGFloat = maxSize.height
+        return CGSize(width: itemWidth, height: itemHeight)
     }
     
     // ADDED BY ME LET BIEN KNOW

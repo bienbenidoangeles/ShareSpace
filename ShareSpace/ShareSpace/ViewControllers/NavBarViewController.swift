@@ -23,7 +23,8 @@ class NavBarViewController: UIViewController {
     }
     
     @objc private func pushToProfileViewController(){
-        
+        let profileVC = ProfileViewController()
+        navigationController?.pushViewController(profileVC, animated: true)
     }
 
 }

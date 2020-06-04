@@ -25,6 +25,11 @@
 		F149D498247F3348006D77D2 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D497247F3348006D77D2 /* FeedCell.swift */; };
 		F149D4D42481B7EB006D77D2 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D492247EF94B006D77D2 /* UserModel.swift */; };
 		F149D4F82486CF2A006D77D2 /* NavBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D4F72486CF2A006D77D2 /* NavBarViewController.swift */; };
+		F149D4FA24886EA1006D77D2 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D4F924886EA1006D77D2 /* RootViewController.swift */; };
+		F149D4FC24886F2C006D77D2 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D4FB24886F2C006D77D2 /* RootView.swift */; };
+		F149D4FE2488946A006D77D2 /* DateToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D4FD2488946A006D77D2 /* DateToString.swift */; };
+		F149D500248899F9006D77D2 /* IntTimeIntervalAsSecondsToOther.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D4FF248899F9006D77D2 /* IntTimeIntervalAsSecondsToOther.swift */; };
+		F149D5022488CC43006D77D2 /* MapView+CenterToLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D5012488CC41006D77D2 /* MapView+CenterToLocation.swift */; };
 		F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */; };
 		F1684BF9247AC6E800AA9A17 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684BF8247AC6E800AA9A17 /* SceneDelegate.swift */; };
 		F1684BFB247AC6E800AA9A17 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684BFA247AC6E800AA9A17 /* ViewController.swift */; };
@@ -41,9 +46,9 @@
 		F1684C4F247ADDA800AA9A17 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C4E247ADDA800AA9A17 /* UIImage+Resize.swift */; };
 		F1684C51247ADDE400AA9A17 /* UIViewController+Nav.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C50247ADDE400AA9A17 /* UIViewController+Nav.swift */; };
 		F1684C53247ADE1400AA9A17 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C52247ADE1400AA9A17 /* TabBarController.swift */; };
-		F1684C55247ADECC00AA9A17 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C54247ADECC00AA9A17 /* MainViewController.swift */; };
+		F1684C55247ADECC00AA9A17 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C54247ADECC00AA9A17 /* CardViewController.swift */; };
 		F1684C57247AE07200AA9A17 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C56247AE07200AA9A17 /* StorageService.swift */; };
-		F1684C59247AE22200AA9A17 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C58247AE22200AA9A17 /* MainView.swift */; };
+		F1684C59247AE22200AA9A17 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C58247AE22200AA9A17 /* CardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +84,11 @@
 		F149D492247EF94B006D77D2 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		F149D497247F3348006D77D2 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		F149D4F72486CF2A006D77D2 /* NavBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarViewController.swift; sourceTree = "<group>"; };
+		F149D4F924886EA1006D77D2 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		F149D4FB24886F2C006D77D2 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		F149D4FD2488946A006D77D2 /* DateToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateToString.swift; sourceTree = "<group>"; };
+		F149D4FF248899F9006D77D2 /* IntTimeIntervalAsSecondsToOther.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntTimeIntervalAsSecondsToOther.swift; sourceTree = "<group>"; };
+		F149D5012488CC41006D77D2 /* MapView+CenterToLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapView+CenterToLocation.swift"; sourceTree = "<group>"; };
 		F1684BF3247AC6E800AA9A17 /* ShareSpace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShareSpace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1684BF8247AC6E800AA9A17 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -99,9 +109,9 @@
 		F1684C4E247ADDA800AA9A17 /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		F1684C50247ADDE400AA9A17 /* UIViewController+Nav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Nav.swift"; sourceTree = "<group>"; };
 		F1684C52247ADE1400AA9A17 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		F1684C54247ADECC00AA9A17 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		F1684C54247ADECC00AA9A17 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		F1684C56247AE07200AA9A17 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
-		F1684C58247AE22200AA9A17 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		F1684C58247AE22200AA9A17 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,12 +234,13 @@
 			children = (
 				F1684C2C247AD42E00AA9A17 /* LoginViewController.swift */,
 				F1684C52247ADE1400AA9A17 /* TabBarController.swift */,
-				F1684C54247ADECC00AA9A17 /* MainViewController.swift */,
+				F1684C54247ADECC00AA9A17 /* CardViewController.swift */,
 				8DBA856D247F3C2E0029598C /* ProfileViewController.swift */,
 				8DBA85B2248192520029598C /* ListingDetailViewController.swift */,
 				0FA8B0DF24857B030079A9B4 /* ChatViewController.swift */,
 				8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */,
 				F149D4F72486CF2A006D77D2 /* NavBarViewController.swift */,
+				F149D4F924886EA1006D77D2 /* RootViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -238,10 +249,13 @@
 			isa = PBXGroup;
 			children = (
 				F1684C4C247ADD3C00AA9A17 /* UIViewController+ShowAlert.swift */,
+				F149D5012488CC41006D77D2 /* MapView+CenterToLocation.swift */,
 				8DBA856F24800FBA0029598C /* CustomColors.swift */,
 				F1684C4E247ADDA800AA9A17 /* UIImage+Resize.swift */,
 				F1684C50247ADDE400AA9A17 /* UIViewController+Nav.swift */,
+				F149D4FF248899F9006D77D2 /* IntTimeIntervalAsSecondsToOther.swift */,
 				8DCB76142486BD38005C1C04 /* CoreLocationSession.swift */,
+				F149D4FD2488946A006D77D2 /* DateToString.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -250,9 +264,10 @@
 			isa = PBXGroup;
 			children = (
 				F1684C46247AD7BE00AA9A17 /* LoginView.swift */,
-				F1684C58247AE22200AA9A17 /* MainView.swift */,
+				F1684C58247AE22200AA9A17 /* CardView.swift */,
 				8DBA856B247F2D560029598C /* ProfileView.swift */,
 				8DBA85B0248192260029598C /* ListingDetailView.swift */,
+				F149D4FB24886F2C006D77D2 /* RootView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -479,10 +494,12 @@
 				8DBA856A247EFD190029598C /* PostModel.swift in Sources */,
 				8DBA85B1248192260029598C /* ListingDetailView.swift in Sources */,
 				8DCB76152486BD38005C1C04 /* CoreLocationSession.swift in Sources */,
-				F1684C59247AE22200AA9A17 /* MainView.swift in Sources */,
+				F1684C59247AE22200AA9A17 /* CardView.swift in Sources */,
+				F149D4FE2488946A006D77D2 /* DateToString.swift in Sources */,
 				F1684C2D247AD42E00AA9A17 /* LoginViewController.swift in Sources */,
+				F149D500248899F9006D77D2 /* IntTimeIntervalAsSecondsToOther.swift in Sources */,
 				F1684C53247ADE1400AA9A17 /* TabBarController.swift in Sources */,
-				F1684C55247ADECC00AA9A17 /* MainViewController.swift in Sources */,
+				F1684C55247ADECC00AA9A17 /* CardViewController.swift in Sources */,
 				F1684C4B247ADCCF00AA9A17 /* DatabaseService.swift in Sources */,
 				8DBA856E247F3C2E0029598C /* ProfileViewController.swift in Sources */,
 				0FA8B0E424857D310079A9B4 /* Message.swift in Sources */,
@@ -495,9 +512,12 @@
 				F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */,
 				F149D4F82486CF2A006D77D2 /* NavBarViewController.swift in Sources */,
 				F1684C57247AE07200AA9A17 /* StorageService.swift in Sources */,
+				F149D5022488CC43006D77D2 /* MapView+CenterToLocation.swift in Sources */,
+				F149D4FA24886EA1006D77D2 /* RootViewController.swift in Sources */,
 				F1684C4F247ADDA800AA9A17 /* UIImage+Resize.swift in Sources */,
 				F1684C47247AD7BE00AA9A17 /* LoginView.swift in Sources */,
 				F1684C49247ADC6F00AA9A17 /* AuthenticationSession.swift in Sources */,
+				F149D4FC24886F2C006D77D2 /* RootView.swift in Sources */,
 				F149D498247F3348006D77D2 /* FeedCell.swift in Sources */,
 				0FA8B0E8248587720079A9B4 /* Chat.swift in Sources */,
 				8DBA857024800FBA0029598C /* CustomColors.swift in Sources */,
