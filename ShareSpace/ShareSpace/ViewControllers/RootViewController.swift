@@ -61,6 +61,16 @@ class RootViewController: NavBarViewController {
         rootView.dateTimeButton.addTarget(self, action: #selector(dateTimeButtonPressed), for: .touchUpInside)
     }
     
+    private func addNavButtons(){
+        let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "calendar.circle"), style: .plain, target: self, action: #selector(calenderButtonPressed))
+        navigationItem.rightBarButtonItems?.append(barButtonItem)
+    }
+    
+    @objc private func calenderButtonPressed(){
+//        let vc = VC()
+//        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     private func setupMap(){
         rootView.mapView.showsCompass = true
         rootView.mapView.showsUserLocation = true
