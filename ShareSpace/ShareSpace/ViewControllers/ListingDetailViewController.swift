@@ -14,7 +14,7 @@ import CoreLocation
 
 class ListingDetailViewController: UIViewController {
     
-    private let locationSession = CoreLocationSession()
+    private let locationSession = CoreLocationSession.shared.locationManager
     private var annotation = MKPointAnnotation()
     private var isShowingNewAnnotation = false
     

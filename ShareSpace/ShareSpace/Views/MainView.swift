@@ -8,19 +8,7 @@
 
 import UIKit
 
-class MainView: UIView {
-    
-    public lazy var searchBar : UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.placeholder = "Filter by results"
-        return searchBar
-    }()
-    
-    public lazy var mapButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "map"), for: .normal)
-        return button
-    }()
+class CardView: UIView {
     
     public lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -42,28 +30,7 @@ class MainView: UIView {
     }
     
     private func commonInit(){
-        setupSearchBarConstrainsts()
-        setupMapConstrainsts()
         setUpCollectionViewConstrainsts()
-    }
-    
-    private func setupSearchBarConstrainsts(){
-        addSubview(searchBar)
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            searchBar.leadingAnchor.constraint(equalTo: leadingAnchor),
-            searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-        ])
-    }
-    
-    private func setupMapConstrainsts(){
-        addSubview(mapButton)
-        mapButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            mapButton.leadingAnchor.constraint(equalTo: searchBar.trailingAnchor, constant: 8),
-            mapButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            mapButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 8)
-        ])
     }
     
     private func setUpCollectionViewConstrainsts(){
@@ -71,10 +38,9 @@ class MainView: UIView {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 8),
-            collectionView.topAnchor.constraint(equalTo: mapButton.bottomAnchor, constant: 8),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 8),
-            collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8)
+            collectionView.topAnchor.constraint(equalTo: topAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
