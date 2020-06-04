@@ -9,9 +9,13 @@
 import UIKit
 import FirebaseAuth
 
-class CardViewController: NavBarViewController {
+class CardViewController: UIViewController {
     
-    private let mainView = MainView()
+    private let mainView = CardView()
+    
+    public lazy var handleArea = mainView.topView
+    
+    public lazy var cv = mainView.collectionView
     
     private var posts = [Post](){
         didSet{
@@ -28,14 +32,12 @@ class CardViewController: NavBarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        addNavSignOutButton()
         delegatesAndDataSources()
         loadPost()
         registerCell()
     }
     
     private func delegatesAndDataSources(){
-        mainView.searchBar.delegate = self
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
     }
@@ -60,34 +62,9 @@ class CardViewController: NavBarViewController {
     
     
     private func registerCell(){
-        mainView.collectionView.register(FeedCell.self, forCellWithReuseIdentifier: "feedCell")
+        mainView.collectionView.register(UINib(nibName: "CollapsedCell", bundle: nil), forCellWithReuseIdentifier: "collapsedFeedCell")
     }
 
-    
-    private func addNavSignOutButton(){
-        let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
-        navigationItem.rightBarButtonItems?.append(barButtonItem)
-    }
-    
-    @objc private func signOutButtonPressed(_ sender: UIBarButtonItem) {
-        
-        do {
-            try Auth.auth().signOut()
-            UIViewController.showViewController(viewcontroller: LoginViewController())
-        } catch {
-            DispatchQueue.main.async {
-                self.showAlert(title: "Unable to signout", message: "Error: \(error.localizedDescription)")
-            }
-        }
-    }
-
-}
-
-
-extension CardViewController: UISearchBarDelegate{
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        //
-    }
 }
 
 extension CardViewController: UICollectionViewDataSource {
@@ -96,7 +73,7 @@ extension CardViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = mainView.collectionView.dequeueReusableCell(withReuseIdentifier: "feedCell", for: indexPath) as? FeedCell else {
+        guard let cell = mainView.collectionView.dequeueReusableCell(withReuseIdentifier: "collapsedFeedCell", for: indexPath) as? FeedCollapsedCell else {
             fatalError()
         }
         let post = posts[indexPath.row]
@@ -110,7 +87,8 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
         
         let maxSize:CGSize = UIScreen.main.bounds.size
         let itemWidth:CGFloat = maxSize.width
-        return CGSize(width: itemWidth, height: itemWidth)
+        let itemHeight:CGFloat = itemWidth*0.25
+        return CGSize(width: itemWidth, height: itemHeight)
     }
     
     // ADDED BY ME LET BIEN KNOW

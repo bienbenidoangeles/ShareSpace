@@ -14,7 +14,7 @@ import CoreLocation
 
 class ListingDetailViewController: UIViewController {
     
-    private let locationSession = CoreLocationSession()
+    private let locationSession = CoreLocationSession.shared.locationManager
     private var annotation = MKPointAnnotation()
     private var isShowingNewAnnotation = false
     
@@ -63,31 +63,55 @@ class ListingDetailViewController: UIViewController {
         map.showsUserLocation = true
         updateUI()
         configureCollectionView()
+        loadMap()
     }
     
-    func returnCoordinates(address: String, completion: @escaping (Result<[CLLocationCoordinate2D], Error>) ->())  {
+    private func loadMap() {
+         makeAnnotation(for: selectedPost)
+       
+    }
+    
+    func returnCoordinates(address: String, completion: @escaping (Result<CLLocationCoordinate2D, Error>) ->())  {
         CLGeocoder().geocodeAddressString(address) { (placemarks, error) in
-            let placemark = placemarks?.first
-            let lat = placemark?.location?.coordinate.latitude
-            let lon = placemark?.location?.coordinate.longitude
-            print("Lat: \(lat ?? 0), Lon: \(lon ?? 0)")
+            if let error = error {
+                completion(.failure(error))
+            }
+            else if let placemark = placemarks{
+                let lat = placemark.first?.location?.coordinate.latitude
+            let lon = placemark.first?.location?.coordinate.longitude
+                 print("Lat: \(lat ?? 0), Lon: \(lon ?? 0)")
+                completion(.success(CLLocationCoordinate2D(latitude: lat ?? 0, longitude: lon ?? 0)))
+            }
+           
         }
     }
-    
-//    private func makeAnnotation(for post: Post) -> MKPointAnnotation {
-//        selectedPost = post
-//        let annotation = MKPointAnnotation()
-//       // let coordinate = CLLocationCoordinate2D
-//        returnCoordinates(address: "329 Kosciuszko street, Brooklyn, NY, 11221", completion: { (result) in
-//            switch result {
-//            case .failure(let error):
-//                print(error)
-//            case .success(let coordinates):
-//                annotation.coordinate.latitude = coordinates.first?.latitude
-//                let long = coordinates.first?.longitude
-//            }
-//        })
-//    }
+  
+    private func makeAnnotation(for post: Post)  {
+        selectedPost = post
+        let annotation = MKPointAnnotation()
+       // let coordinate = CLLocationCoordinate2D
+        returnCoordinates(address: "\(post.location.streetAddress), \(post.location.city), \(post.location.state)", completion: { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let coordinates):
+                //annotation.coordinate.latitude = coordinates.first?.latitude
+            
+                let lat = coordinates.latitude
+                let long = coordinates.longitude
+                let coordinate = CLLocationCoordinate2D(latitude: lat , longitude: long )
+                annotation.coordinate = coordinate
+                annotation.title = post.price.total.description
+                self.isShowingNewAnnotation = true
+                self.annotation = annotation
+                self.map.addAnnotation(annotation)
+            }
+        })
+        
+        
+       
+        
+    }
     
     private func updateUI() {
         titleLabel.text = selectedPost.postTitle

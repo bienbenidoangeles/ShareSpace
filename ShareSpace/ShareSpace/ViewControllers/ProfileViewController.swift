@@ -50,12 +50,27 @@ class ProfileViewController: UIViewController {
         profileView.userCreditcardTextfield.delegate = self
         profileView.userCreditcardCVVNumberTextfield.delegate = self
         profileView.userExpirationDateTextfield.delegate = self
-        
         profileView.editProfileImageButton.addTarget(self, action: #selector(userImageEditButtonPressed), for: .touchUpInside)
-        
         profileView.uploadIdButton.addTarget(self, action: #selector(uploadIdButtonPressed), for: .touchUpInside)
-        
         profileView.saveChangesButton.addTarget(self, action: #selector(saveUserProfileButtonPressed), for: .touchUpInside)
+        addNavSignOutButton()
+    }
+    
+    private func addNavSignOutButton(){
+        let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
+        navigationItem.rightBarButtonItems?.append(barButtonItem)
+    }
+    
+    @objc private func signOutButtonPressed(_ sender: UIBarButtonItem) {
+        
+        do {
+            try Auth.auth().signOut()
+            UIViewController.showViewController(viewcontroller: LoginViewController())
+        } catch {
+            DispatchQueue.main.async {
+                self.showAlert(title: "Unable to signout", message: "Error: \(error.localizedDescription)")
+            }
+        }
     }
     
     private func updateUI() {
