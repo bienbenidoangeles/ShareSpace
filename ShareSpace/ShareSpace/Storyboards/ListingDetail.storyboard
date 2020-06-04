@@ -16,11 +16,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="blr-Nr-Sk2">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blr-Nr-Sk2">
                                 <rect key="frame" x="0.0" y="88" width="414" height="1329"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fYj-TI-6ra" userLabel="ContentView">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1329"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1330"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3FC-aE-IIx">
                                                 <rect key="frame" x="0.0" y="8" width="414" height="400"/>
@@ -74,9 +74,9 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="aAs-eJ-sjp">
-                                                <rect key="frame" x="0.0" y="683" width="414" height="532"/>
+                                                <rect key="frame" x="0.0" y="683" width="414" height="332.5"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="532" id="wbJ-JN-Q8z"/>
+                                                    <constraint firstAttribute="height" constant="332.5" id="hI3-wr-Y7u"/>
                                                 </constraints>
                                                 <viewLayoutGuide key="safeArea" id="tmS-u5-7sT"/>
                                             </mapView>
@@ -93,7 +93,7 @@
                                             <constraint firstAttribute="trailing" secondItem="aAs-eJ-sjp" secondAttribute="trailing" id="mUf-fR-g5t"/>
                                             <constraint firstItem="bYu-g6-kp1" firstAttribute="leading" secondItem="fYj-TI-6ra" secondAttribute="leading" constant="8" id="o8Z-7V-JU0"/>
                                             <constraint firstItem="aAs-eJ-sjp" firstAttribute="top" secondItem="bYu-g6-kp1" secondAttribute="bottom" constant="12" id="rsC-6h-odm"/>
-                                            <constraint firstItem="aAs-eJ-sjp" firstAttribute="height" secondItem="fYj-TI-6ra" secondAttribute="height" multiplier="0.400301" id="v3D-qS-FAE"/>
+                                            <constraint firstItem="aAs-eJ-sjp" firstAttribute="height" secondItem="fYj-TI-6ra" secondAttribute="height" multiplier="0.25" id="v3D-qS-FAE"/>
                                             <constraint firstItem="pPL-fs-MAh" firstAttribute="leading" secondItem="fYj-TI-6ra" secondAttribute="leading" constant="8" id="w3C-PC-rCK"/>
                                             <constraint firstItem="3FC-aE-IIx" firstAttribute="leading" secondItem="fYj-TI-6ra" secondAttribute="leading" id="xKg-8S-CmV"/>
                                         </constraints>
@@ -110,7 +110,7 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="H64-44-pTl"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="GTr-5I-ucC"/>
                             </scrollView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PY2-Lj-eg2">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PY2-Lj-eg2">
                                 <rect key="frame" x="0.0" y="1417" width="414" height="49"/>
                                 <items>
                                     <barButtonItem title="Contact Host" style="plain" id="cOu-hC-PT9">

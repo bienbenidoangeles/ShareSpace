@@ -85,12 +85,12 @@ class ListingDetailViewController: UIViewController {
            
         }
     }
-    
+  
     private func makeAnnotation(for post: Post)  {
         selectedPost = post
         let annotation = MKPointAnnotation()
        // let coordinate = CLLocationCoordinate2D
-        returnCoordinates(address: "329 Kosciuszko Street, Brooklyn, NY", completion: { (result) in
+        returnCoordinates(address: "\(post.location.streetAddress), \(post.location.city), \(post.location.state)", completion: { (result) in
             switch result {
             case .failure(let error):
                 print(error)
@@ -101,7 +101,7 @@ class ListingDetailViewController: UIViewController {
                 let long = coordinates.longitude
                 let coordinate = CLLocationCoordinate2D(latitude: lat , longitude: long )
                 annotation.coordinate = coordinate
-                annotation.title = "my house"
+                annotation.title = post.price.total.description
                 self.isShowingNewAnnotation = true
                 self.annotation = annotation
                 self.map.addAnnotation(annotation)
