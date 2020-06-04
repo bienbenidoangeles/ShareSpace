@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 import Kingfisher
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UIScrollViewDelegate {
     
     private var profileView = ProfileView()
     
@@ -40,6 +40,8 @@ class ProfileViewController: UIViewController {
         view.backgroundColor = .systemGroupedBackground
         
         updateUI()
+        
+        profileView.scrollView.delegate = self
         
         profileView.userDisplayNameTextfield.delegate = self
         profileView.userNameTextfield.delegate = self

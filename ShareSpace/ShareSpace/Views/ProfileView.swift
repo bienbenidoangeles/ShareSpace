@@ -18,7 +18,7 @@ class ProfileView: UIView {
             scrollView.backgroundColor = .white
             scrollView.frame = self.bounds
             scrollView.contentSize = contentViewSize
-            scrollView.autoresizingMask = .flexibleHeight
+           // scrollView.autoresizingMask = .flexibleHeight
             scrollView.showsHorizontalScrollIndicator = true
             scrollView.bounces = true
             return scrollView
@@ -182,7 +182,8 @@ class ProfileView: UIView {
     }
     
     private func commomInit() {
-        // setUpScrollviewConstraints()
+        setUpScrollviewConstraints()
+        setUpContainerviewConstraints()
         setUpProfileImageViewConstraints()
         setUpEditProfileImageButtonConstraints()
         setUpStackViewTextFieldConstraints()
@@ -191,9 +192,6 @@ class ProfileView: UIView {
     
         private func setUpScrollviewConstraints() {
             addSubview(scrollView)
-            scrollView.addSubview(containerView)
-            
-            containerView.addSubview(stackView)
             
             scrollView.translatesAutoresizingMaskIntoConstraints =  false
     
@@ -202,7 +200,21 @@ class ProfileView: UIView {
                 scrollView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
                 scrollView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
                 scrollView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-                scrollView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+                scrollView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
+            ])
+        }
+    
+    private func setUpContainerviewConstraints() {
+        scrollView.addSubview(containerView)
+
+            containerView.translatesAutoresizingMaskIntoConstraints =  false
+
+            NSLayoutConstraint.activate([
+
+                containerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
+                containerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 0),
+                containerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0),
+                containerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0),
             ])
         }
     
@@ -215,7 +227,8 @@ class ProfileView: UIView {
 
              view.addSubview(scrollView)
              scrollView.addSubview(scrollViewContainer)
-             scrollViewContainer.addArrangedSubview(redView)
+             
+     scrollViewContainer.addArrangedSubview(redView)
              scrollViewContainer.addArrangedSubview(blueView)
              scrollViewContainer.addArrangedSubview(greenView)
 
@@ -273,11 +286,11 @@ class ProfileView: UIView {
      */
     
     private func setUpProfileImageViewConstraints() {
-        addSubview(profileImageView)
+        containerView.addSubview(profileImageView)
         profileImageView.translatesAutoresizingMaskIntoConstraints =  false
         
         NSLayoutConstraint.activate([
-            profileImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             profileImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             profileImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15),
             profileImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.32)
@@ -285,17 +298,17 @@ class ProfileView: UIView {
     }
     
     private func setUpEditProfileImageButtonConstraints() {
-        addSubview(editProfileImageButton)
+        containerView.addSubview(editProfileImageButton)
         editProfileImageButton.translatesAutoresizingMaskIntoConstraints =  false
         
         NSLayoutConstraint.activate([
-            editProfileImageButton.topAnchor.constraint(equalTo:  safeAreaLayoutGuide.topAnchor, constant: 120),
+            editProfileImageButton.topAnchor.constraint(equalTo:  topAnchor, constant: 120),
             editProfileImageButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -140),
         ])
     }
     
     private func setUpStackViewTextFieldConstraints() {
-        addSubview(stackView)
+        containerView.addSubview(stackView)
         stackView.addArrangedSubview(userDisplayNameTextfield)
         stackView.addArrangedSubview(userNameTextfield)
         stackView.addArrangedSubview(userPhoneNumberTextfield)
@@ -320,12 +333,13 @@ class ProfileView: UIView {
     }
     
     private func setUpSaveChangesButtonConstraints() {
-        addSubview(saveChangesButton)
+        containerView.addSubview(saveChangesButton)
         saveChangesButton.translatesAutoresizingMaskIntoConstraints =  false
         
         NSLayoutConstraint.activate([
             saveChangesButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 8),
-            saveChangesButton.centerXAnchor.constraint(equalTo: centerXAnchor)
+            saveChangesButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            saveChangesButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 20)
         ])
     }
 }
