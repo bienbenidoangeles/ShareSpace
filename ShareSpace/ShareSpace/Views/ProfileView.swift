@@ -10,35 +10,18 @@ import UIKit
 
 class ProfileView: UIView {
     
-    lazy var contentViewSize = CGSize(width: self.frame.width, height: self.frame.height + 400)
-    
-    // FIXME: Scroll view
         public lazy var scrollView: UIScrollView = {
             let scrollView = UIScrollView()
             scrollView.backgroundColor = .white
             scrollView.frame = self.bounds
-            scrollView.contentSize = contentViewSize
-           // scrollView.autoresizingMask = .flexibleHeight
             scrollView.showsHorizontalScrollIndicator = true
             scrollView.bounces = true
             return scrollView
         }()
     
-//    lazy var scrollView: UIScrollView = {
-//            let view = UIScrollView(frame: .zero)
-//            view.backgroundColor = .white
-//            view.frame = self.view.bounds
-//            view.contentSize = contentViewSize
-//            view.autoresizingMask = .flexibleHeight
-//            view.showsHorizontalScrollIndicator = true
-//            view.bounces = true
-//            return view
-//        }()
-    
     lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.frame.size = contentViewSize
         return view
     }()
     
@@ -56,6 +39,7 @@ class ProfileView: UIView {
         imageView.layoutSubviews()
         imageView.backgroundColor = .systemOrange
         imageView.tintColor = .systemYellow
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -145,12 +129,10 @@ class ProfileView: UIView {
         return button
     }()
     
-    //FIXME: fix the size of imageview
     public lazy var idImageView: UIImageView = {
         let imageView = UIImageView()
         //imageView.image = UIImage(systemName: "person.fill")
         imageView.contentMode = .scaleAspectFill
-        //imageView.layoutSubviews()
         imageView.backgroundColor = .systemGray3
         return imageView
     }()
@@ -196,11 +178,10 @@ class ProfileView: UIView {
             scrollView.translatesAutoresizingMaskIntoConstraints =  false
     
             NSLayoutConstraint.activate([
-    
-                scrollView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-                scrollView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-                scrollView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
-                scrollView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
+                scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                scrollView.topAnchor.constraint(equalTo: topAnchor),
+                scrollView.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
         }
     
@@ -208,90 +189,27 @@ class ProfileView: UIView {
         scrollView.addSubview(containerView)
 
             containerView.translatesAutoresizingMaskIntoConstraints =  false
+        
+        let heightConstraint = containerView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
+        heightConstraint.priority = UILayoutPriority(250)
 
             NSLayoutConstraint.activate([
-
-                containerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
-                containerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 0),
-                containerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0),
-                containerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 0),
+                containerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+                containerView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+                containerView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+                containerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+                containerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+                heightConstraint
             ])
         }
-    
-    /*
-
-     class ViewController: UIViewController {
-
-         override func viewDidLoad() {
-             super.viewDidLoad()
-
-             view.addSubview(scrollView)
-             scrollView.addSubview(scrollViewContainer)
-             
-     scrollViewContainer.addArrangedSubview(redView)
-             scrollViewContainer.addArrangedSubview(blueView)
-             scrollViewContainer.addArrangedSubview(greenView)
-
-             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-             scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-
-             scrollViewContainer.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
-             scrollViewContainer.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
-             scrollViewContainer.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-             scrollViewContainer.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-             // this is important for scrolling
-             scrollViewContainer.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
-         }
-
-         let scrollView: UIScrollView = {
-             let scrollView = UIScrollView()
-
-             scrollView.translatesAutoresizingMaskIntoConstraints = false
-             return scrollView
-         }()
-
-         let scrollViewContainer: UIStackView = {
-             let view = UIStackView()
-
-             view.axis = .vertical
-             view.spacing = 10
-
-             view.translatesAutoresizingMaskIntoConstraints = false
-             return view
-         }()
-
-         let redView: UIView = {
-             let view = UIView()
-             view.heightAnchor.constraint(equalToConstant: 500).isActive = true
-             view.backgroundColor = .red
-             return view
-         }()
-
-         let blueView: UIView = {
-             let view = UIView()
-             view.heightAnchor.constraint(equalToConstant: 200).isActive = true
-             view.backgroundColor = .blue
-             return view
-         }()
-
-         let greenView: UIView = {
-             let view = UIView()
-             view.heightAnchor.constraint(equalToConstant: 1200).isActive = true
-             view.backgroundColor = .green
-             return view
-         }()
-     }
-     */
     
     private func setUpProfileImageViewConstraints() {
         containerView.addSubview(profileImageView)
         profileImageView.translatesAutoresizingMaskIntoConstraints =  false
         
         NSLayoutConstraint.activate([
-            profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-            profileImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            profileImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
+           profileImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             profileImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15),
             profileImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.32)
         ])
@@ -302,8 +220,8 @@ class ProfileView: UIView {
         editProfileImageButton.translatesAutoresizingMaskIntoConstraints =  false
         
         NSLayoutConstraint.activate([
-            editProfileImageButton.topAnchor.constraint(equalTo:  topAnchor, constant: 120),
-            editProfileImageButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -140),
+            editProfileImageButton.topAnchor.constraint(equalTo:  containerView.topAnchor, constant: 130),
+            editProfileImageButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -157),
         ])
     }
     
@@ -339,7 +257,7 @@ class ProfileView: UIView {
         NSLayoutConstraint.activate([
             saveChangesButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 8),
             saveChangesButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            saveChangesButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 20)
+            saveChangesButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -275)
         ])
     }
 }
