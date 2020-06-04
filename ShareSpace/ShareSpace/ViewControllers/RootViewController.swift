@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import MapKit
 
 class RootViewController: NavBarViewController {
+    private let locationSession = CoreLocationSession.shared.locationManager
     
     let rootView = RootView()
     
@@ -62,6 +64,9 @@ class RootViewController: NavBarViewController {
     private func setupMap(){
         rootView.mapView.showsCompass = true
         rootView.mapView.showsUserLocation = true
+        let usersLocation = locationSession.location
+        let tempLocation = CLLocation(latitude: 40.8765478, longitude: -73.9089867)
+        rootView.mapView.centerToLocation(tempLocation)
     }
     
     private func setupCard(){
@@ -115,8 +120,14 @@ class RootViewController: NavBarViewController {
                 switch state {
                 case .expanded:
                     self.cardVC.view.frame.origin.y = (self.view.frame.height ) - self.cardHeight
+                    if let layout = self.cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
+                        layout.scrollDirection = .vertical
+                    }
                 case .collapsed:
                     self.cardVC.view.frame.origin.y = (self.view.frame.height - self.totalHeight) - self.cardHandleAreaHeight
+                    if let layout = self.cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
+                        layout.scrollDirection = .horizontal
+                    }
                 }
             }
             frameAnimator.addCompletion { (anim) in

@@ -15,6 +15,8 @@ class CardViewController: UIViewController {
     
     public lazy var handleArea = mainView.topView
     
+    public lazy var cv = mainView.collectionView
+    
     private var posts = [Post](){
         didSet{
             DispatchQueue.main.async {
@@ -84,8 +86,8 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let maxSize:CGSize = UIScreen.main.bounds.size
-        let itemWidth:CGFloat = maxSize.width
-        let itemHeight:CGFloat = maxSize.height
+        let itemWidth:CGFloat = maxSize.width * 0.6
+        let itemHeight:CGFloat = itemWidth
         return CGSize(width: itemWidth, height: itemHeight)
     }
     

@@ -11,9 +11,11 @@ import CoreLocation
 
 class CoreLocationSession: NSObject {
     
+    public static let shared = CoreLocationSession()
+    
     public var locationManager: CLLocationManager
     
-    override init() {
+    private override init() {
         locationManager = CLLocationManager()
         super.init()
         locationManager.delegate = self
