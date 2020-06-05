@@ -123,9 +123,33 @@ class ListingDetailViewController: UIViewController {
         collectionView.delegate = self
     }
     
-
-    @IBAction func reserveButtonPressed(_ sender: UIBarButtonItem) {
+    
+    @IBAction func inquireButtonPressed(_ sender: UIBarButtonItem) {
+        
+        print("button pressed")
     }
+    
+    
+    @IBAction func price(_ sender: UIBarButtonItem) {
+        print("pressed")
+    }
+    
+//    @IBAction func reserveButtonPressed(_ sender: UIBarButtonItem) {
+//        print("pressed reserv button")
+//        let storyboard = UIStoryboard(name: "ListingDetail", bundle: nil)
+//        let detailVC = storyboard.instantiateViewController(identifier: "ReservePopupController")
+//        navigationController?.pushViewController(detailVC, animated:false)
+//
+//        let storyBoard: UIStoryboard = UIStoryboard(name: "ListingDetail", bundle: nil)
+//        let newViewController = storyBoard.instantiateViewController(withIdentifier: "newViewController") as! ReservePopupController
+//
+//
+
+       // self.present(newViewController, animated: true, completion: nil)
+//
+ //       }
+    
+    
     
 
 }
