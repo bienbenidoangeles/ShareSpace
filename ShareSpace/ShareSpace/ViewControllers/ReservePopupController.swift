@@ -52,7 +52,7 @@ class ReservePopupController: UIViewController {
            calendar.appearance.headerTitleColor = .sunnyYellow
            //calendar.appearance.weekdayTextColor = .white
            calendar.appearance.headerTitleFont = UIFont(name: "Verdana", size: 23.0)
-           calendar.appearance.titleFont = UIFont(name: "Verdana", size: 18.0)
+        calendar.appearance.titleFont = UIFont(name: "Verdana", size: 18.0)
            
            
        }
