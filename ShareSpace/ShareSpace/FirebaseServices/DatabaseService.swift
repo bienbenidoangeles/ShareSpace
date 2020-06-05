@@ -17,6 +17,7 @@ class DatabaseService {
   static let chatsTestCollection = "chatTest"
   static let favoritesCollection = "favorites"
   static let chatsCollection = "chats"
+    static let reservationCollection = "reservations"
   private let db = Firestore.firestore()
   
   private init() {}
@@ -162,5 +163,49 @@ class DatabaseService {
                 }
             }
         }
+    
+    func createReservation(reservation: [String: Any], completion: @escaping(Result<Bool, Error>) -> ()){
+        
+        guard let reservationId = reservation["reservationId"] as? String else {
+            return
+        }
+        
+        db.collection(DatabaseService.reservationCollection).document(reservationId).setData(reservation) { (error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(true))
+            }
+        }
+    }
+    
+    func readReservation(reservationId: String, completion: @escaping(Result<Reservation, Error>) -> ()) {
+        db.collection(DatabaseService.reservationCollection).document(reservationId).getDocument { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = snapshot, let data = snapshot.data() {
+                 let reservation = Reservation(dict: data)
+                completion(.success(reservation))
+            }
+        }
+    }
+    
+    func updateReservation(reservationId: String, reservation: Reservation, completion: @escaping(Result<Bool, Error>) -> ()) {
+        let updatedDict:[String:Any] = [
+            "checkIn":reservation.checkIn,
+            "checkOut": reservation.checkOut,
+            "timeIn": reservation.timeIn,
+            "timeOut": reservation.timeOut,
+            "status": reservation.status
+        ]
+        
+        db.collection(DatabaseService.reservationCollection).document(reservationId).updateData(updatedDict) { (error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(true))
+            }
+        }
+    }
 }
 
