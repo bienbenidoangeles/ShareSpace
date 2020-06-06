@@ -337,7 +337,7 @@
 				F1684BEF247AC6E800AA9A17 /* Sources */,
 				F1684BF0247AC6E800AA9A17 /* Frameworks */,
 				F1684BF1247AC6E800AA9A17 /* Resources */,
-				2DB8D40D230952A491FC2A80 /* [CP] Embed Pods Frameworks */,
+				8390B056DC6A39BBFF2459C4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -356,7 +356,6 @@
 				F1684C05247AC6EC00AA9A17 /* Sources */,
 				F1684C06247AC6EC00AA9A17 /* Frameworks */,
 				F1684C07247AC6EC00AA9A17 /* Resources */,
-				8DBD29C3365A63426CB70F5F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -432,7 +431,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2DB8D40D230952A491FC2A80 /* [CP] Embed Pods Frameworks */ = {
+		8390B056DC6A39BBFF2459C4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -447,23 +446,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShareSpace/Pods-ShareSpace-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8DBD29C3365A63426CB70F5F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ShareSpaceTests/Pods-ShareSpaceTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ShareSpaceTests/Pods-ShareSpaceTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShareSpaceTests/Pods-ShareSpaceTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A309D23CA812C1D570D907C5 /* [CP] Check Pods Manifest.lock */ = {
