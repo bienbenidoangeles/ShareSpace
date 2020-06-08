@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05A5C581F9733E0669975914 /* Pods_ShareSpace.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7569AA8C49692E2E6244CB7 /* Pods_ShareSpace.framework */; };
+		0F01D82D248ABB4300B5BEE5 /* FirstProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F01D82C248ABB4300B5BEE5 /* FirstProfileViewController.swift */; };
 		0FA8B0E024857B030079A9B4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA8B0DF24857B030079A9B4 /* ChatViewController.swift */; };
 		0FA8B0E424857D310079A9B4 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA8B0E324857D310079A9B4 /* Message.swift */; };
 		0FA8B0E8248587720079A9B4 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA8B0E7248587720079A9B4 /* Chat.swift */; };
@@ -69,6 +70,7 @@
 
 /* Begin PBXFileReference section */
 		071046540716F7B4635C6842 /* Pods-ShareSpace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareSpace.debug.xcconfig"; path = "Target Support Files/Pods-ShareSpace/Pods-ShareSpace.debug.xcconfig"; sourceTree = "<group>"; };
+		0F01D82C248ABB4300B5BEE5 /* FirstProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstProfileViewController.swift; sourceTree = "<group>"; };
 		0FA8B0DF24857B030079A9B4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		0FA8B0E324857D310079A9B4 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		0FA8B0E7248587720079A9B4 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */,
 				F149D4F72486CF2A006D77D2 /* NavBarViewController.swift */,
 				F149D4F924886EA1006D77D2 /* RootViewController.swift */,
+				0F01D82C248ABB4300B5BEE5 /* FirstProfileViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -539,6 +542,7 @@
 				F149D4FA24886EA1006D77D2 /* RootViewController.swift in Sources */,
 				F1684C4F247ADDA800AA9A17 /* UIImage+Resize.swift in Sources */,
 				F1684C47247AD7BE00AA9A17 /* LoginView.swift in Sources */,
+				0F01D82D248ABB4300B5BEE5 /* FirstProfileViewController.swift in Sources */,
 				F1684C49247ADC6F00AA9A17 /* AuthenticationSession.swift in Sources */,
 				F149D4FC24886F2C006D77D2 /* RootView.swift in Sources */,
 				F149D498247F3348006D77D2 /* FeedCell.swift in Sources */,

@@ -57,12 +57,19 @@ class ProfileView: UIView {
         return textfield
     }()
     
-    public lazy var userNameTextfield: UITextField = {
+    public lazy var userFirstNameTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.placeholder = "Enter your first and last name"
+        textfield.placeholder = "Enter your first name"
         textfield.textAlignment = .left
         return textfield
     }()
+    
+    public lazy var userLastNameTextfield: UITextField = {
+           let textfield = UITextField()
+           textfield.placeholder = "Enter your last name"
+           textfield.textAlignment = .left
+           return textfield
+       }()
     
     public lazy var userPhoneNumberTextfield: UITextField = {
         let textfield = UITextField()
@@ -100,6 +107,7 @@ class ProfileView: UIView {
         return textfield
     }()
     
+    //Should be nil if host!
     public lazy var userCreditcardTextfield: UITextField = {
         let textfield = UITextField()
         textfield.placeholder = "Enter your credit ot debit card number"
@@ -107,6 +115,7 @@ class ProfileView: UIView {
         return textfield
     }()
     
+     //Should be nil if host!
     public lazy var userCreditcardCVVNumberTextfield: UITextField = {
         let textfield = UITextField()
         textfield.placeholder = "Enter your card CVV number"
@@ -114,6 +123,7 @@ class ProfileView: UIView {
         return textfield
     }()
     
+     //Should be nil if host!
     public lazy var userExpirationDateTextfield: UITextField = {
         let textfield = UITextField()
         textfield.placeholder = "Enter your card expiration date"
@@ -129,6 +139,8 @@ class ProfileView: UIView {
         return button
     }()
     
+    
+    //Should be nil if host?
     public lazy var idImageView: UIImageView = {
         let imageView = UIImageView()
         //imageView.image = UIImage(systemName: "person.fill")
@@ -228,7 +240,8 @@ class ProfileView: UIView {
     private func setUpStackViewTextFieldConstraints() {
         containerView.addSubview(stackView)
         stackView.addArrangedSubview(userDisplayNameTextfield)
-        stackView.addArrangedSubview(userNameTextfield)
+        stackView.addArrangedSubview(userFirstNameTextfield)
+        stackView.addArrangedSubview(userLastNameTextfield)
         stackView.addArrangedSubview(userPhoneNumberTextfield)
         stackView.addArrangedSubview(emailLabel)
         stackView.addArrangedSubview(userBioTextfield)
@@ -261,57 +274,3 @@ class ProfileView: UIView {
         ])
     }
 }
-
-/*
- import TinyConstraints
-
- class SimpleRootViewController: UIViewController {
-     
-     // MARK: - Proterties
-     
-     lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 400)
-     
-     // MARK: - Views
-     
-     lazy var scrollView: UIScrollView = {
-         let view = UIScrollView(frame: .zero)
-         view.backgroundColor = .white
-         view.frame = self.view.bounds
-         view.contentSize = contentViewSize
-         view.autoresizingMask = .flexibleHeight
-         view.showsHorizontalScrollIndicator = true
-         view.bounces = true
-         return view
-     }()
-     
-     lazy var containerView: UIView = {
-         let view = UIView()
-         view.backgroundColor = .white
-         view.frame.size = contentViewSize
-         return view
-     }()
-     
-     lazy var label: UILabel = {
-         let label = UILabel()
-         label.text = "Center of container view"
-         return label
-     }()
-     
-     // MARK: - View Controller Lifecycle
-     override func viewDidLoad() {
-         super.viewDidLoad()
-         // Do any additional setup after loading the view, typically from a nib.
-         view.backgroundColor = .white
-         
-         view.addSubview(scrollView)
-         scrollView.addSubview(containerView)
-         
-         containerView.addSubview(label)
-         
-         label.center(in: containerView)
-         
-     }
-
-
- }
- */

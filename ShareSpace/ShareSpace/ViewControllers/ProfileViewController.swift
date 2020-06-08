@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import Kingfisher
+import FirebaseFirestore
 
 class ProfileViewController: UIViewController, UIScrollViewDelegate {
     
@@ -31,6 +32,12 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    private var selectedIdImage: UIImage? {
+        didSet {
+            profileView.idImageView.image = selectedIdImage
+        }
+    }
+    
     private let storageService = StorageService.shared
     
     
@@ -44,7 +51,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.scrollView.delegate = self
         
         profileView.userDisplayNameTextfield.delegate = self
-        profileView.userNameTextfield.delegate = self
+        profileView.userFirstNameTextfield.delegate = self
+        profileView.userLastNameTextfield.delegate = self
         profileView.userPhoneNumberTextfield.delegate = self
         profileView.userBioTextfield.delegate = self
         profileView.userOccupationTextfield.delegate = self
@@ -52,12 +60,15 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.userCreditcardTextfield.delegate = self
         profileView.userCreditcardCVVNumberTextfield.delegate = self
         profileView.userExpirationDateTextfield.delegate = self
+        
         profileView.editProfileImageButton.addTarget(self, action: #selector(userImageEditButtonPressed), for: .touchUpInside)
         profileView.uploadIdButton.addTarget(self, action: #selector(uploadIdButtonPressed), for: .touchUpInside)
         profileView.saveChangesButton.addTarget(self, action: #selector(saveUserProfileButtonPressed), for: .touchUpInside)
         addNavSignOutButton()
     }
     
+    
+    //FIXME:
     private func addNavSignOutButton(){
         let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
         navigationItem.rightBarButtonItems?.append(barButtonItem)
@@ -122,6 +133,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         present(alertController, animated: true)
     }
     
+    
+    //FIXME: to add chosed pic to idImageView
      @objc func uploadIdButtonPressed() {
            
            let alertController = UIAlertController(title: "Choose Photo Option", message: nil, preferredStyle: .actionSheet)
@@ -149,8 +162,10 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         
         guard let displayName = profileView.userDisplayNameTextfield.text,
             !displayName.isEmpty,
-            let userFullName = profileView.userNameTextfield.text,
-            !userFullName.isEmpty,
+            let userFirstName = profileView.userFirstNameTextfield.text,
+            !userFirstName.isEmpty,
+            let userLastName = profileView.userLastNameTextfield.text,
+            !userLastName.isEmpty,
             let userPhoneNumber = profileView.userPhoneNumberTextfield.text,
             !userPhoneNumber.isEmpty,
             let userBio = profileView.userBioTextfield.text,
@@ -206,7 +221,25 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                 })
             }
         }
+        
+        DatabaseService.shared.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber) { [weak self]
+        (result) in
+            switch result {
+            case .failure(let error):
+              DispatchQueue.main.async {
+                self?.showAlert(title: "Error save profile changes", message: error.localizedDescription)
+              }
+            case .success:
+              DispatchQueue.main.async {
+                self?.navigateToMainView()
+              }
+            }
     }
+    }
+        
+        private func navigateToMainView() {
+          UIViewController.showViewController(viewcontroller: TabBarController())
+        }
 }
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
