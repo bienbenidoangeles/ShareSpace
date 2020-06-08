@@ -53,6 +53,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.userDisplayNameTextfield.delegate = self
         profileView.userFirstNameTextfield.delegate = self
         profileView.userLastNameTextfield.delegate = self
+        profileView.userTypeTextfield.delegate = self
         profileView.userPhoneNumberTextfield.delegate = self
         profileView.userBioTextfield.delegate = self
         profileView.userOccupationTextfield.delegate = self
@@ -166,10 +167,14 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             !userFirstName.isEmpty,
             let userLastName = profileView.userLastNameTextfield.text,
             !userLastName.isEmpty,
+            let userType = profileView.userTypeTextfield.text,
+            !userType.isEmpty,
             let userPhoneNumber = profileView.userPhoneNumberTextfield.text,
             !userPhoneNumber.isEmpty,
             let userBio = profileView.userBioTextfield.text,
             !userBio.isEmpty,
+            let userGovenmentId = profileView.governmentIdTextfield.text,
+            !userGovenmentId.isEmpty,
             let userOccupation = profileView.userOccupationTextfield.text, !userOccupation.isEmpty,
             let userCardNumber = profileView.userCreditcardTextfield.text, !userCardNumber.isEmpty,
             let userCardCVVNumber = profileView.userCreditcardCVVNumberTextfield.text,
@@ -222,7 +227,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        DatabaseService.shared.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber) { [weak self]
+        DatabaseService.shared.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, userType: userType, governmentId: userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate){ [weak self]
         (result) in
             switch result {
             case .failure(let error):

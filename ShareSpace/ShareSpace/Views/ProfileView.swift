@@ -71,6 +71,14 @@ class ProfileView: UIView {
            return textfield
        }()
     
+    //FIXME: change for segmented control?
+    public lazy var userTypeTextfield: UITextField = {
+        let textfield = UITextField()
+        textfield.placeholder = "Host or Renter"
+        textfield.textAlignment = .left
+        return textfield
+    }()
+    
     public lazy var userPhoneNumberTextfield: UITextField = {
         let textfield = UITextField()
         textfield.placeholder = "Enter your phone number"
@@ -242,6 +250,7 @@ class ProfileView: UIView {
         stackView.addArrangedSubview(userDisplayNameTextfield)
         stackView.addArrangedSubview(userFirstNameTextfield)
         stackView.addArrangedSubview(userLastNameTextfield)
+        stackView.addArrangedSubview(userTypeTextfield)
         stackView.addArrangedSubview(userPhoneNumberTextfield)
         stackView.addArrangedSubview(emailLabel)
         stackView.addArrangedSubview(userBioTextfield)
