@@ -20,4 +20,19 @@ extension MKMapView {
       longitudinalMeters: regionRadius)
     setRegion(coordinateRegion, animated: true)
   }
+    
+    func getDirections(coordinate: CLLocationCoordinate2D, map: MKMapView) {
+        let request = MKDirections.Request()
+        request.source = MKMapItem.forCurrentLocation()
+        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
+        request.transportType = .any
+        let directions = MKDirections(request: request)
+        directions.calculate { (response, error) in
+            guard let unwreppedResponse = response else { return}
+            for route in unwreppedResponse.routes {
+                map.addOverlay(route.polyline)
+                map.setVisibleMapRect(route.polyline.boundingMapRect, animated: true)
+            }
+        }
+    }
 }

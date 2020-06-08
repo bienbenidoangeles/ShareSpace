@@ -116,7 +116,7 @@
                                     <barButtonItem title="Item" id="0Ex-DU-VNo">
                                         <connections>
                                             <action selector="inquireButtonPressed:" destination="CRA-Yw-ME6" id="Eq3-ft-NR8"/>
-                                            <segue destination="hxg-NL-7D9" kind="presentation" id="NHo-qG-Aj7"/>
+                                            <segue destination="hxg-NL-7D9" kind="presentation" identifier="inquireSeque" id="NHo-qG-Aj7"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="RyW-BM-zKb"/>
@@ -225,6 +225,7 @@
                     <navigationItem key="navigationItem" id="VWB-DS-XzM"/>
                     <connections>
                         <outlet property="calendar" destination="keG-Rh-CB2" id="NJw-FQ-omW"/>
+                        <outlet property="totalPriceLabel" destination="BVC-ri-5hl" id="80r-3R-N8h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ng2-MY-4qr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

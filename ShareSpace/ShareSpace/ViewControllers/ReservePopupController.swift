@@ -12,19 +12,21 @@ import FSCalendar
 class ReservePopupController: UIViewController {
     
     
-//    private var selectedPost: Post
-//    
-//    
-//    
-//    init?(coder: NSCoder, selectedPost: Post) {
+    public var selectedPost: Post?
+    
+    @IBOutlet weak var totalPriceLabel: UILabel!
+    
+    
+//    init?( selectedPost: Post) {
 //        self.selectedPost = selectedPost
-//        super.init(coder: coder)
+//        super.init(nibName: nil, bundle: nil)
 //    }
+//
 //    required init?(coder: NSCoder) {
 //        fatalError("init(coder:) has not been implemented")
 //    }
-//    
-    
+//
+//
     
     @IBOutlet weak var calendar: FSCalendar!
     
@@ -41,6 +43,7 @@ class ReservePopupController: UIViewController {
                calendar.dataSource = self
                calendar.allowsMultipleSelection = true
                setupCalendarAppearance()
+            updateUI()
        }
        
        private func setupCalendarAppearance() {
@@ -56,6 +59,9 @@ class ReservePopupController: UIViewController {
            
            
        }
+    func updateUI() {
+        totalPriceLabel.text = selectedPost?.price.total.description
+    }
 
 
 
@@ -69,6 +75,7 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
         if firstDate == nil {
             firstDate = date
             datesRange = [firstDate!]
+//totalPriceLabel.text = (datesRange?.count ?? 1 * Int(selectedPost?.price.total ?? 1)).description
             //print("datesRange contains: \(datesRange!)")
             return
         }
@@ -92,7 +99,7 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
             }
 
             datesRange = range
-
+totalPriceLabel.text = (datesRange?.count ?? 1 * Int(selectedPost?.price.total ?? 1)).description
             print("datesRange contains: \(datesRange!)")
 
             return
@@ -102,13 +109,15 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
         if firstDate != nil && lastDate != nil {
             for d in calendar.selectedDates {
                 calendar.deselect(d)
+                
             }
 
             lastDate = nil
             firstDate = nil
 
             datesRange = []
-
+            
+            print("there are:\(datesRange?.count ?? 0) dates")
             print("datesRange contains: \(datesRange!)")
         }
     }
