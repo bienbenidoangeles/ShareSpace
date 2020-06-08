@@ -131,23 +131,60 @@ class ShareSpaceTests: XCTestCase {
   }
   
 
-  func testChatThread() {
+  func testCreateNewChat() {
     let exp = XCTestExpectation(description: "Chat created")
     guard let user = Auth.auth().currentUser else {
-       XCTFail("no current user")
+      XCTFail("no current user")
       return
     }
-    DatabaseService.shared.createNewChat(user1ID: user.uid, user2ID: "hz7DjrFALvgPBHNS3m4kjDmvQn52") { (result) in
+    DatabaseService.shared.createNewChat(user1ID: "ZjorXCGS6cZAnJY47PHG2Sr8y462", user2ID: "j6NB9Ve4cqQWXyheiqYHkotczQY2") { (result) in
       exp.fulfill()
       switch result {
       case .failure(let error):
-        XCTFail("Failed to load chat")
+        XCTFail("Failed to create chat: \(error)")
       case .success:
         XCTAssert(true)
       }
     }
     wait(for: [exp], timeout: 3.0)
   }
+  
+//  func testChatLoad() {
+//    let exp = XCTestExpectation(description: "chats loaded")
+//    guard let user = Auth.auth().currentUser else {
+//      XCTFail("no current user")
+//      return
+//    }
+//    DatabaseService.shared.loadChatOptions(userId: user.uid) { (result) in
+//      exp.fulfill()
+//      switch result {
+//      case .failure(let error):
+//        XCTFail("Failed to load chat: \(error)")
+//      case .success(let users):
+//        if users.count <= 0 {
+//          XCTFail("no chats loaded")
+//        } else {
+//          XCTAssert(true, "\(users.count) chats loaded")
+//        }
+//      }
+//    }
+//    wait(for: [exp], timeout: 3.0)
+//  }
+  
+//  func testLoadSingleChat() {
+//    let exp = XCTestExpectation(description: "chats loaded")
+//    let id = "iujeuXZDjOjoyeZPvvbC"
+//    DatabaseService.shared.loadChat(chatId: id) { (result) in
+//      exp.fulfill()
+//      switch result {
+//      case .failure(let error):
+//        XCTFail("failed to pass: \(error)")
+//      case .success(let chat):
+//        XCTAssertEqual(chat.id, id)
+//      }
+//    }
+//    wait(for: [exp], timeout: 3.0)
+//  }
   
   
 //  func testSignOut() {

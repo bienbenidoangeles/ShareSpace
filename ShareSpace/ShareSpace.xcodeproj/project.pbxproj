@@ -11,6 +11,10 @@
 		0FA8B0E024857B030079A9B4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA8B0DF24857B030079A9B4 /* ChatViewController.swift */; };
 		0FA8B0E424857D310079A9B4 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA8B0E324857D310079A9B4 /* Message.swift */; };
 		0FA8B0E8248587720079A9B4 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA8B0E7248587720079A9B4 /* Chat.swift */; };
+		5802D7E224882D2200A505FB /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802D7E124882D2200A505FB /* ChatListView.swift */; };
+		5802D7E424882DF300A505FB /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802D7E324882DF300A505FB /* ChatListViewController.swift */; };
+		5802D7E624884C0400A505FB /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802D7E524884C0400A505FB /* UserCell.swift */; };
+		5802D7E824884C1F00A505FB /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5802D7E724884C1F00A505FB /* UserCell.xib */; };
 		8D6C2D4E24859CA4001A840D /* ReservePopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */; };
 		8DBA856A247EFD190029598C /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA8569247EFD190029598C /* PostModel.swift */; };
 		8DBA856C247F2D560029598C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA856B247F2D560029598C /* ProfileView.swift */; };
@@ -62,6 +66,10 @@
 		0FA8B0E324857D310079A9B4 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		0FA8B0E7248587720079A9B4 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		4B9AE4FCC44BEC8D4C066FF1 /* Pods_ShareSpaceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShareSpaceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5802D7E124882D2200A505FB /* ChatListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListView.swift; sourceTree = "<group>"; };
+		5802D7E324882DF300A505FB /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
+		5802D7E524884C0400A505FB /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		5802D7E724884C1F00A505FB /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservePopupController.swift; sourceTree = "<group>"; };
 		8DBA8569247EFD190029598C /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		8DBA856B247F2D560029598C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -230,6 +238,7 @@
 				0FA8B0DF24857B030079A9B4 /* ChatViewController.swift */,
 				8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */,
 				F149D4F72486CF2A006D77D2 /* NavBarViewController.swift */,
+				5802D7E324882DF300A505FB /* ChatListViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -253,6 +262,9 @@
 				F1684C58247AE22200AA9A17 /* MainView.swift */,
 				8DBA856B247F2D560029598C /* ProfileView.swift */,
 				8DBA85B0248192260029598C /* ListingDetailView.swift */,
+				5802D7E124882D2200A505FB /* ChatListView.swift */,
+				5802D7E524884C0400A505FB /* UserCell.swift */,
+				5802D7E724884C1F00A505FB /* UserCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -374,6 +386,7 @@
 			files = (
 				F1684C03247AC6EC00AA9A17 /* LaunchScreen.storyboard in Resources */,
 				8DBA85B5248196B10029598C /* ListingDetail.storyboard in Resources */,
+				5802D7E824884C1F00A505FB /* UserCell.xib in Resources */,
 				F1684C2B247AD37A00AA9A17 /* GoogleService-Info.plist in Resources */,
 				F1684C00247AC6EC00AA9A17 /* Assets.xcassets in Resources */,
 				F1684BFE247AC6E800AA9A17 /* Main.storyboard in Resources */,
@@ -483,6 +496,7 @@
 				F1684C2D247AD42E00AA9A17 /* LoginViewController.swift in Sources */,
 				F1684C53247ADE1400AA9A17 /* TabBarController.swift in Sources */,
 				F1684C55247ADECC00AA9A17 /* MainViewController.swift in Sources */,
+				5802D7E624884C0400A505FB /* UserCell.swift in Sources */,
 				F1684C4B247ADCCF00AA9A17 /* DatabaseService.swift in Sources */,
 				8DBA856E247F3C2E0029598C /* ProfileViewController.swift in Sources */,
 				0FA8B0E424857D310079A9B4 /* Message.swift in Sources */,
@@ -491,6 +505,7 @@
 				F149D4D42481B7EB006D77D2 /* UserModel.swift in Sources */,
 				8D6C2D4E24859CA4001A840D /* ReservePopupController.swift in Sources */,
 				F1684BFB247AC6E800AA9A17 /* ViewController.swift in Sources */,
+				5802D7E224882D2200A505FB /* ChatListView.swift in Sources */,
 				8DBA856C247F2D560029598C /* ProfileView.swift in Sources */,
 				F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */,
 				F149D4F82486CF2A006D77D2 /* NavBarViewController.swift in Sources */,
@@ -499,6 +514,7 @@
 				F1684C47247AD7BE00AA9A17 /* LoginView.swift in Sources */,
 				F1684C49247ADC6F00AA9A17 /* AuthenticationSession.swift in Sources */,
 				F149D498247F3348006D77D2 /* FeedCell.swift in Sources */,
+				5802D7E424882DF300A505FB /* ChatListViewController.swift in Sources */,
 				0FA8B0E8248587720079A9B4 /* Chat.swift in Sources */,
 				8DBA857024800FBA0029598C /* CustomColors.swift in Sources */,
 				F1684C51247ADDE400AA9A17 /* UIViewController+Nav.swift in Sources */,
@@ -665,7 +681,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QZLWJATC87;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ShareSpace/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -684,7 +700,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QZLWJATC87;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ShareSpace/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
