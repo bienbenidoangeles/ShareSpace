@@ -33,6 +33,11 @@ class CoreLocationSession: NSObject {
         locationManager.startMonitoringSignificantLocationChanges()
     }
     
+    //use google places to convert
+    func convertAddressToCoor(){
+        
+    }
+    
 }
 
 extension CoreLocationSession: CLLocationManagerDelegate    {

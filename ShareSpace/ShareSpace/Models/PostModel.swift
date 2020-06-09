@@ -11,14 +11,14 @@ import Firebase
 
 struct Post:Codable {
     let postId: String
-    let price: Price
-    let postTitle: String
+    let price: Price // post vc
+    let postTitle: String // post vc
     let userId: String
     let listedDate: Date
     let mainImage: String
     let images: [String]?
-    let description: String
-    let location: Location    //let amenities: [String]
+    let description: String // post vc
+    let location: Location    //let amenities: [String] // post
     let rating: Rating?
     let reviews: [Review]?
     
@@ -185,8 +185,8 @@ extension Rating {
 }
 
 struct Price:Codable {
-    let subtotal:Double
-    let spaceRate: Double
+    let subtotal:Double // postVC
+    let spaceRate: Double //postVC
     var spaceCut: Double {
         get {
             return subtotal*self.spaceRate

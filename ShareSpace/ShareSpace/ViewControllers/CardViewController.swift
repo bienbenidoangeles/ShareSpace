@@ -46,15 +46,22 @@ class CardViewController: UIViewController {
   
   
   private func loadPost() {
-    DatabaseService.shared.loadPost { (result) in
+    DatabaseService.shared.loadPosts { (result) in
       switch result {
       case .failure(let error):
         print("It failed")
       case .success(let post):
+        //let filteredPosts = post.filter{$0.location.zip == "10001"}
         self.posts = post
+
       }
     }
+    
   }
+    
+    //func to find nearby zipcodes if posts are less than (num)
+    //func to zoom out if nothing is near the zipcode
+    //func to add addition posts until count == (ideal max on card vc)
   
   
 
