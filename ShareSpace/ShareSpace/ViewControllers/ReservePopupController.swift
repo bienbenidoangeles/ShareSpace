@@ -12,19 +12,25 @@ import FSCalendar
 class ReservePopupController: UIViewController {
     
     
-//    private var selectedPost: Post
-//    
-//    
-//    
-//    init?(coder: NSCoder, selectedPost: Post) {
-//        self.selectedPost = selectedPost
-//        super.init(coder: coder)
-//    }
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    
+    private var selectedPost: Post
     
+    @IBOutlet weak var totalPriceLabel: UILabel!
+    
+    
+    @IBOutlet weak var dismissBar: UIView!
+    
+    
+    
+    init?(coder: NSCoder, selectedPost: Post) {
+        self.selectedPost = selectedPost
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+
     
     @IBOutlet weak var calendar: FSCalendar!
     
@@ -41,7 +47,19 @@ class ReservePopupController: UIViewController {
                calendar.dataSource = self
                calendar.allowsMultipleSelection = true
                setupCalendarAppearance()
+            updateUI()
+            setupDismissBar()
        }
+    
+    private func setupDismissBar() {
+        dismissBar.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector (topGesturePressed(recognizer:)))
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleCardTap(recognizer:)))
+        dismissBar.addGestureRecognizer(tapGesture)
+    }
+    @objc func topGesturePressed(recognizer: UITapGestureRecognizer) {
+        dismiss(animated: true) 
+    }
        
        private func setupCalendarAppearance() {
            calendar.scrollDirection = .vertical
@@ -56,6 +74,9 @@ class ReservePopupController: UIViewController {
            
            
        }
+    func updateUI() {
+        totalPriceLabel.text = selectedPost.price.total.description
+    }
 
 
 
@@ -69,6 +90,7 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
         if firstDate == nil {
             firstDate = date
             datesRange = [firstDate!]
+//totalPriceLabel.text = (datesRange?.count ?? 1 * Int(selectedPost?.price.total ?? 1)).description
             //print("datesRange contains: \(datesRange!)")
             return
         }
@@ -92,7 +114,7 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
             }
 
             datesRange = range
-
+            totalPriceLabel.text = (datesRange?.count ?? 1 * Int(selectedPost.price.total ?? 1)).description
             print("datesRange contains: \(datesRange!)")
 
             return
@@ -102,13 +124,15 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
         if firstDate != nil && lastDate != nil {
             for d in calendar.selectedDates {
                 calendar.deselect(d)
+                
             }
 
             lastDate = nil
             firstDate = nil
 
             datesRange = []
-
+            
+            print("there are:\(datesRange?.count ?? 0) dates")
             print("datesRange contains: \(datesRange!)")
         }
     }

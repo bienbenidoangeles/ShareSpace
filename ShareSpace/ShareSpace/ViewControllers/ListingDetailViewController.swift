@@ -37,8 +37,6 @@ class ListingDetailViewController: UIViewController {
     
     private var selectedPost: Post
     
-    
-    
     init?(coder: NSCoder, selectedPost: Post) {
         self.selectedPost = selectedPost
         super.init(coder: coder)
@@ -59,6 +57,7 @@ class ListingDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        map.delegate = self
         map.showsCompass = true
         map.showsUserLocation = true
         updateUI()
@@ -105,6 +104,9 @@ class ListingDetailViewController: UIViewController {
                 self.isShowingNewAnnotation = true
                 self.annotation = annotation
                 self.map.addAnnotation(annotation)
+                let location = CLLocation(latitude: lat, longitude: long)
+                self.map.centerToLocation(location)
+                self.map.getDirections(coordinate: coordinate, map: self.map)
             }
         })
         
@@ -123,9 +125,31 @@ class ListingDetailViewController: UIViewController {
         collectionView.delegate = self
     }
     
+   // override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        guard let detailsVC = segue.destination as? ReservePopupController else {
+//                fatalError("unable to segue properly-MainViewController")
+//        }
+//        if segue.destination is ReservePopupController {
+//            let reserveVC = segue.destination as? ReservePopupController
+//            reserveVC?.selectedPost = selectedPost
+//        }
+//    
+//    }
+//    
     
     @IBAction func inquireButtonPressed(_ sender: UIBarButtonItem) {
+     
+        let storyboard = UIStoryboard(name: "ListingDetail", bundle: nil)
+         let popupVC = storyboard.instantiateViewController(identifier: "ReservePopupController", creator: { (coder) -> ReservePopupController? in
+            return ReservePopupController(coder: coder, selectedPost: self.selectedPost)
+        })
         
+       // let popupVC = ReservePopupController(selectedPost: selectedPost)
+       // navigationController?.pushViewController(popupVC, animated: true)
+        popupVC.modalTransitionStyle = .crossDissolve
+        popupVC.modalPresentationStyle = .fullScreen
+        //navigationController?.pushViewController(popupVC, animated: true)
+        present(popupVC, animated: true) 
         print("button pressed")
     }
     
@@ -176,4 +200,38 @@ extension ListingDetailViewController: UICollectionViewDelegateFlowLayout {
         let itemHeight = maxSize.height * 0.70
         return CGSize(width: itemWidth, height: itemHeight)
     }
+}
+
+extension ListingDetailViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else { return nil }
+        
+        let identifier = "annotationView"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+        
+      //  if annotationView == nil {
+            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView?.canShowCallout = true
+            annotationView?.tintColor = .black
+            annotationView?.markerTintColor = .systemRed
+            
+       // } else {
+       //     annotationView?.annotation = annotation
+           // annotationView?.canShowCallout = true
+      //  }
+        return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
+        // renderer.fillColor = UIColor.black.withAlphaComponent(0.5)
+        renderer.strokeColor = UIColor.systemBlue
+        
+        renderer.lineWidth = 3.0
+        
+        // renderer.lineDashPattern = [10]
+        
+        return renderer
+    }
+    
 }

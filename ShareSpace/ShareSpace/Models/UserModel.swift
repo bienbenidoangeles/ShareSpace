@@ -64,7 +64,7 @@ class UserModel: Codable {
     
     init(_ dictionary: [String: Any]) {
         
-        self.userEmail = dictionary["userEmail"] as? String ?? "nil"
+        self.userEmail = dictionary["email"] as? String ?? "nil"
         self.userId = dictionary["userId"] as? String ?? "nil"
         self.firstName = dictionary["firstName"] as? String ?? "nil"
         self.lastName = dictionary["lastName"] as? String ?? "nil"
