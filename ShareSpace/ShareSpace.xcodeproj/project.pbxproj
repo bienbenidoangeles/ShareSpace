@@ -11,6 +11,10 @@
 		0FA8B0E024857B030079A9B4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA8B0DF24857B030079A9B4 /* ChatViewController.swift */; };
 		0FA8B0E424857D310079A9B4 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA8B0E324857D310079A9B4 /* Message.swift */; };
 		0FA8B0E8248587720079A9B4 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA8B0E7248587720079A9B4 /* Chat.swift */; };
+		5802D7E224882D2200A505FB /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802D7E124882D2200A505FB /* ChatListView.swift */; };
+		5802D7E424882DF300A505FB /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802D7E324882DF300A505FB /* ChatListViewController.swift */; };
+		5802D7E624884C0400A505FB /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802D7E524884C0400A505FB /* UserCell.swift */; };
+		5802D7E824884C1F00A505FB /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5802D7E724884C1F00A505FB /* UserCell.xib */; };
 		8D32684D248AEC8300065CAB /* ReservationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D32684C248AEC8300065CAB /* ReservationModel.swift */; };
 		8D6C2D4E24859CA4001A840D /* ReservePopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */; };
 		8D759B1F24895C4B006697F4 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D759B1E24895C4A006697F4 /* CalendarViewController.swift */; };
@@ -75,6 +79,10 @@
 		0FA8B0E324857D310079A9B4 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		0FA8B0E7248587720079A9B4 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		4B9AE4FCC44BEC8D4C066FF1 /* Pods_ShareSpaceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShareSpaceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5802D7E124882D2200A505FB /* ChatListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListView.swift; sourceTree = "<group>"; };
+		5802D7E324882DF300A505FB /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
+		5802D7E524884C0400A505FB /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		5802D7E724884C1F00A505FB /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		8D32684C248AEC8300065CAB /* ReservationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationModel.swift; sourceTree = "<group>"; };
 		8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservePopupController.swift; sourceTree = "<group>"; };
 		8D759B1E24895C4A006697F4 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -262,6 +270,7 @@
 				0FA8B0DF24857B030079A9B4 /* ChatViewController.swift */,
 				8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */,
 				F149D4F72486CF2A006D77D2 /* NavBarViewController.swift */,
+				5802D7E324882DF300A505FB /* ChatListViewController.swift */,
 				F149D4F924886EA1006D77D2 /* RootViewController.swift */,
 				8D759B1E24895C4A006697F4 /* CalendarViewController.swift */,
 			);
@@ -291,6 +300,9 @@
 				F1684C58247AE22200AA9A17 /* CardView.swift */,
 				8DBA856B247F2D560029598C /* ProfileView.swift */,
 				8DBA85B0248192260029598C /* ListingDetailView.swift */,
+				5802D7E124882D2200A505FB /* ChatListView.swift */,
+				5802D7E524884C0400A505FB /* UserCell.swift */,
+				5802D7E724884C1F00A505FB /* UserCell.xib */,
 				F149D4FB24886F2C006D77D2 /* RootView.swift */,
 			);
 			path = Views;
@@ -415,6 +427,7 @@
 				F149D5082488E7F8006D77D2 /* SimpleCollapsedCell.xib in Resources */,
 				F149D5042488DDC1006D77D2 /* CollapsedCell.xib in Resources */,
 				8DBA85B5248196B10029598C /* ListingDetail.storyboard in Resources */,
+				5802D7E824884C1F00A505FB /* UserCell.xib in Resources */,
 				F1684C2B247AD37A00AA9A17 /* GoogleService-Info.plist in Resources */,
 				F1684C00247AC6EC00AA9A17 /* Assets.xcassets in Resources */,
 				F149D5062488E715006D77D2 /* ExpandedCell.xib in Resources */,
@@ -527,6 +540,8 @@
 				F1684C2D247AD42E00AA9A17 /* LoginViewController.swift in Sources */,
 				F149D500248899F9006D77D2 /* IntTimeIntervalAsSecondsToOther.swift in Sources */,
 				F1684C53247ADE1400AA9A17 /* TabBarController.swift in Sources */,
+				F1684C55247ADECC00AA9A17 /* MainViewController.swift in Sources */,
+				5802D7E624884C0400A505FB /* UserCell.swift in Sources */,
 				8D759B1F24895C4B006697F4 /* CalendarViewController.swift in Sources */,
 				F1684C55247ADECC00AA9A17 /* CardViewController.swift in Sources */,
 				F1684C4B247ADCCF00AA9A17 /* DatabaseService.swift in Sources */,
@@ -537,6 +552,7 @@
 				F149D4D42481B7EB006D77D2 /* UserModel.swift in Sources */,
 				8D6C2D4E24859CA4001A840D /* ReservePopupController.swift in Sources */,
 				F1684BFB247AC6E800AA9A17 /* ViewController.swift in Sources */,
+				5802D7E224882D2200A505FB /* ChatListView.swift in Sources */,
 				F149D50A2488FDF3006D77D2 /* FeedCollapsedCell.swift in Sources */,
 				8DBA856C247F2D560029598C /* ProfileView.swift in Sources */,
 				F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */,
@@ -549,6 +565,7 @@
 				F1684C49247ADC6F00AA9A17 /* AuthenticationSession.swift in Sources */,
 				F149D4FC24886F2C006D77D2 /* RootView.swift in Sources */,
 				F149D498247F3348006D77D2 /* FeedCell.swift in Sources */,
+				5802D7E424882DF300A505FB /* ChatListViewController.swift in Sources */,
 				F149D50C24890E20006D77D2 /* FeedExpandedCell.swift in Sources */,
 				0FA8B0E8248587720079A9B4 /* Chat.swift in Sources */,
 				8D32684D248AEC8300065CAB /* ReservationModel.swift in Sources */,
@@ -717,7 +734,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QZLWJATC87;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ShareSpace/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -736,7 +753,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QZLWJATC87;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ShareSpace/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
