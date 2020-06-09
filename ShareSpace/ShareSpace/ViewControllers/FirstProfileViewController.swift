@@ -9,22 +9,26 @@
 import UIKit
 
 class FirstProfileViewController: UIViewController {
-
+    
+    @IBOutlet var userImegeView: UIView!
+    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet weak var userTypeLabel: UILabel!
+    @IBOutlet weak var userRating: UILabel!
+    @IBOutlet weak var userPhoneNumber: UILabel!
+    
+    @IBOutlet weak var spacesCollectionView: UICollectionView!
+    
+    @IBOutlet weak var reviewsCollectionView: UICollectionView!
+    
+    
+    @IBOutlet weak var userEmail: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func editButton(_ sender: UIButton) {
     }
-    */
+    
 
 }
