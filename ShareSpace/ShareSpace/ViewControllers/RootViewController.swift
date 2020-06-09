@@ -43,6 +43,7 @@ class RootViewController: NavBarViewController {
     override func loadView() {
         super.loadView()
         view = rootView
+        view.backgroundColor = .systemBackground
     }
     
     override func viewDidLoad() {
@@ -217,8 +218,8 @@ class RootViewController: NavBarViewController {
         }
         confirmButton.setValuesForKeys(
             [
-                //"backgroundColor":UIColor.systemOrange,
-            "titleTextColor":UIColor.systemBackground,
+            //"backgroundColor":UIColor.systemOrange,
+            "titleTextColor":UIColor.systemOrange,
         ])
         
         let actions = [dateButton, timeButton, confirmButton, cancelButton]

@@ -76,7 +76,7 @@ class ShareSpaceTests: XCTestCase {
    
   func testDBFuncLoadPost() {
     let exp = XCTestExpectation(description: "Post loaded")
-    DatabaseService.shared.loadPost { (result) in
+    DatabaseService.shared.loadPosts(zipcode: "") { (result) in
       exp.fulfill()
       switch result {
       case .failure(let error):
@@ -136,6 +136,11 @@ class ShareSpaceTests: XCTestCase {
 //          XCTFail("No current user logged in")
 //          return
 //        }
+        
+        for _ in 1...30 {
+            
+            
+        }
         let post = Post.generatePostAsDict()
         
           DatabaseService.shared.postSpace(post: post) { (result) in

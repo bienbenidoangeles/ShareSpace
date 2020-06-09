@@ -153,7 +153,7 @@ class DatabaseService {
         }
     }
         
-    func loadPost(completion: @escaping (Result<[Post], Error>) -> ()) {
+    func loadPosts(completion: @escaping (Result<[Post], Error>) -> ()) {
             db.collection(DatabaseService.postCollection).getDocuments { (snapshot, error) in
                 if let error = error {
                     completion(.failure(error))
