@@ -12,21 +12,25 @@ import FSCalendar
 class ReservePopupController: UIViewController {
     
     
-    public var selectedPost: Post?
+    private var selectedPost: Post
     
     @IBOutlet weak var totalPriceLabel: UILabel!
     
     
-//    init?( selectedPost: Post) {
-//        self.selectedPost = selectedPost
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//
-//
+    @IBOutlet weak var dismissBar: UIView!
+    
+    
+    
+    init?(coder: NSCoder, selectedPost: Post) {
+        self.selectedPost = selectedPost
+        super.init(coder: coder)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+
     
     @IBOutlet weak var calendar: FSCalendar!
     
@@ -44,7 +48,18 @@ class ReservePopupController: UIViewController {
                calendar.allowsMultipleSelection = true
                setupCalendarAppearance()
             updateUI()
+            setupDismissBar()
        }
+    
+    private func setupDismissBar() {
+        dismissBar.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector (topGesturePressed(recognizer:)))
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleCardTap(recognizer:)))
+        dismissBar.addGestureRecognizer(tapGesture)
+    }
+    @objc func topGesturePressed(recognizer: UITapGestureRecognizer) {
+        dismiss(animated: true) 
+    }
        
        private func setupCalendarAppearance() {
            calendar.scrollDirection = .vertical
@@ -60,7 +75,7 @@ class ReservePopupController: UIViewController {
            
        }
     func updateUI() {
-        totalPriceLabel.text = selectedPost?.price.total.description
+        totalPriceLabel.text = selectedPost.price.total.description
     }
 
 
@@ -99,7 +114,7 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
             }
 
             datesRange = range
-totalPriceLabel.text = (datesRange?.count ?? 1 * Int(selectedPost?.price.total ?? 1)).description
+            totalPriceLabel.text = (datesRange?.count ?? 1 * Int(selectedPost.price.total ?? 1)).description
             print("datesRange contains: \(datesRange!)")
 
             return
