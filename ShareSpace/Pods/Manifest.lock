@@ -230,6 +230,7 @@ PODS:
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 6.0)
     - GTMSessionFetcher/Core (~> 1.1)
+  - FSCalendar (2.8.1)
   - GoogleAppMeasurement (6.3.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -278,7 +279,6 @@ PODS:
   - InputBarAccessoryView (4.3.2):
     - InputBarAccessoryView/Core (= 4.3.2)
   - InputBarAccessoryView/Core (4.3.2)
-  - JTAppleCalendar (8.0.3)
   - Kingfisher (5.13.1):
     - Kingfisher/Core (= 5.13.1)
   - Kingfisher/Core (5.13.1)
@@ -303,7 +303,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Storage
   - FirebaseFirestoreSwift
-  - JTAppleCalendar
+  - FSCalendar
   - Kingfisher
   - MessageKit
   - SDWebImage
@@ -325,6 +325,7 @@ SPEC REPOS:
     - FirebaseFirestoreSwift
     - FirebaseInstallations
     - FirebaseStorage
+    - FSCalendar
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
@@ -333,7 +334,6 @@ SPEC REPOS:
     - gRPC-Core
     - GTMSessionFetcher
     - InputBarAccessoryView
-    - JTAppleCalendar
     - Kingfisher
     - leveldb-library
     - MessageKit
@@ -357,6 +357,7 @@ SPEC CHECKSUMS:
   FirebaseFirestoreSwift: 0437bb10d83f8161a9131da1739998254c78fdf5
   FirebaseInstallations: acb3216eb9784d3b1d2d2d635ff74fa892cc0c44
   FirebaseStorage: 6c5263796af3b1be82ed173598aade47535fe125
+  FSCalendar: 5245140456fcbcac5824c203b98bd8068bdfee1a
   GoogleAppMeasurement: 39ecba10918b21c83877d392246157f65db351cf
   GoogleDataTransport: 653963cf5be60fb59cf051e070f0836fdc305f81
   GoogleDataTransportCCTSupport: 84e4d4bbab642f2e9d83ee65d78aca2b5527d314
@@ -365,7 +366,6 @@ SPEC CHECKSUMS:
   gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
   GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
   InputBarAccessoryView: 7985d418040a05fe894bd4b8328dd43ab35517c3
-  JTAppleCalendar: 932cadea40b1051beab10f67843451d48ba16c99
   Kingfisher: f33a848445e33c543620812158dc5d47f6bf90df
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   MessageKit: 3beb578737a5aa2bba25cc27c7b6d6faa09af5a7
@@ -374,6 +374,6 @@ SPEC CHECKSUMS:
   SDWebImage: 84000f962cbfa70c07f19d2234cbfcf5d779b5dc
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 
-PODFILE CHECKSUM: dcf792033894de84cacae37571dee98ddb34d9af
+PODFILE CHECKSUM: 33ebef14e52d62ca0835b60bf57d02e1acfffe06
 
 COCOAPODS: 1.9.0

@@ -31,72 +31,71 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    //???
     private let storageService = StorageService.shared
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-       view.backgroundColor = .systemGroupedBackground
+        
+        view.backgroundColor = .systemGroupedBackground
         
         updateUI()
         
-        profileView.updateProfileButton.isHidden = true
-        profileView.editProfileImageButton.isHidden = true
-        
-        profileView.userDisplayNameTextfield.isHidden = true
         profileView.userDisplayNameTextfield.delegate = self
-        
-        profileView.userNameTextfield.isHidden = true
         profileView.userNameTextfield.delegate = self
-        
-        profileView.userPhoneNumberTextfield.isHidden = true
         profileView.userPhoneNumberTextfield.delegate = self
-        
-        profileView.userBioTextfield.isHidden = true
         profileView.userBioTextfield.delegate = self
-        
-        profileView.userOccupationTextfield.isHidden = true
         profileView.userOccupationTextfield.delegate = self
-        
-        profileView.userCreditcardTextfield.isHidden = true
+        profileView.governmentIdTextfield.delegate = self
         profileView.userCreditcardTextfield.delegate = self
-        profileView.userCreditcardCVVNumberTextfield.isHidden = true
         profileView.userCreditcardCVVNumberTextfield.delegate = self
-        profileView.userExpirationDateTextfield.isHidden = true
         profileView.userExpirationDateTextfield.delegate = self
+        profileView.editProfileImageButton.addTarget(self, action: #selector(userImageEditButtonPressed), for: .touchUpInside)
+        profileView.uploadIdButton.addTarget(self, action: #selector(uploadIdButtonPressed), for: .touchUpInside)
+        profileView.saveChangesButton.addTarget(self, action: #selector(saveUserProfileButtonPressed), for: .touchUpInside)
+        addNavSignOutButton()
+    }
+    
+    private func addNavSignOutButton(){
+        let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
+        navigationItem.rightBarButtonItems?.append(barButtonItem)
+    }
+    
+    @objc private func signOutButtonPressed(_ sender: UIBarButtonItem) {
         
-       // profileView.editProfileImageButton.addTarget(self, action: #selector(userImageEditButtonPressed), for: .touchUpInside)
-        
-        profileView.editProfileButton.addTarget(self, action: #selector(editUserProfileButtonPressed), for: .touchUpInside)
-
+        do {
+            try Auth.auth().signOut()
+            UIViewController.showViewController(viewcontroller: LoginViewController())
+        } catch {
+            DispatchQueue.main.async {
+                self.showAlert(title: "Unable to signout", message: "Error: \(error.localizedDescription)")
+            }
+        }
     }
     
     private func updateUI() {
         guard let user = Auth.auth().currentUser else {
             return
         }
-//        emailLabel.text = user.email
-//        displayUsernameTextField.text = user.displayName
-//        profileImageView.kf.setImage(with: user.photoURL)
+        
+        //        emailLabel.text = user.email
+        // profileView.userDisplayNameTextfield.text = user.displayName
+        //        profileImageView.kf.setImage(with: user.photoURL)
         
         //I think we have to add photo to user model
         //profileView.profileImageView.kf.setImage(with: user.photoURL)
-       
-       // profileView.userDisplayNameLabel.text = user.displayName
-       
+        
+        // profileView.userDisplayNameLabel.text = user.displayName
+        
         // profileView.userNameLabel.text = user.firstName
-       // profileView.phoneNumberLabel.text = user.phoneNumber
+        profileView.userPhoneNumberTextfield.text = user.phoneNumber
         
         profileView.emailLabel.text = user.email
         
-        //profileView.bioLabel.text = user.bio
-       // profileView.occupationLabel.text = user.work
-        //profileView.governmentIdLabel.text = user.govermentId
-       // profileView.paymentLabel.text = user.payment
-        
-        
+        // profileView.userBioTextfield.text = user.bio
+        // profileView.userOccupationTextfield.text = user.work
+        // profileView.governmentIdLabel.text = user.govermentId
+        // profileView.paymentLabel.text = user.payment
     }
     
     @objc func userImageEditButtonPressed() {
@@ -119,53 +118,40 @@ class ProfileViewController: UIViewController {
         alertController.addAction(phototLibararyAction)
         alertController.addAction(cancelAction)
         present(alertController, animated: true)
-        
     }
     
-    @objc func editUserProfileButtonPressed() {
-        
-        //profileView.emailLabel
-        
-        profileView.editProfileImageButton.isHidden = false
-        
-        profileView.userDisplayNameTextfield.isHidden = false
-        profileView.userDisplayNameLabel.isHidden = true
-        
-        profileView.userNameTextfield.isHidden = false
-        profileView.userNameLabel.isHidden = true
-        
-        profileView.userPhoneNumberTextfield.isHidden = false
-        profileView.phoneNumberLabel.isHidden = true
-        
-        profileView.userBioTextfield.isHidden = false
-        profileView.bioLabel.isHidden = true
-        
-        profileView.userOccupationTextfield.isHidden = false
-        profileView.occupationLabel.isHidden = true
-        
-        profileView.userCreditcardTextfield.isHidden = false
-        profileView.userCreditcardCVVNumberTextfield.isHidden = false
-        profileView.userExpirationDateTextfield.isHidden = false
-        profileView.paymentLabel.isHidden = true
-        
-        profileView.editProfileImageButton.addTarget(self, action: #selector(userImageEditButtonPressed), for: .touchUpInside)
-        
-        profileView.editProfileButton.isHidden = true
-        profileView.updateProfileButton.isHidden = false
-        
-       // profileView.updateProfileButton.addTarget(self, action: #selector(updateUserProfileButtonPressed), for: .touchUpInside)
-    }
+     @objc func uploadIdButtonPressed() {
+           
+           let alertController = UIAlertController(title: "Choose Photo Option", message: nil, preferredStyle: .actionSheet)
+           let cameraAction = UIAlertAction(title: "Camera", style: .default)
+           { [weak self] alertAction in
+               self?.imagePickerController.sourceType = .camera
+               self?.present(self!.imagePickerController, animated: true)
+           }
+           let phototLibararyAction = UIAlertAction(title: "Photo Libarary", style: .default)
+           { [weak self] alertAction in
+               self?.imagePickerController.sourceType = .photoLibrary
+               self?.present(self!.imagePickerController, animated: true)
+           }
+           let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+           if UIImagePickerController.isSourceTypeAvailable(.camera) {
+               alertController.addAction(cameraAction)
+           }
+           alertController.addAction(phototLibararyAction)
+           alertController.addAction(cancelAction)
+           present(alertController, animated: true)
+       }
     
-    /*
-    @objc func updateUserProfileButtonPressed() {
+    
+    @objc func saveUserProfileButtonPressed() {
         
         guard let displayName = profileView.userDisplayNameTextfield.text,
             !displayName.isEmpty,
-          let userFullName = profileView.userNameTextfield.text,
+            let userFullName = profileView.userNameTextfield.text,
             !userFullName.isEmpty,
-          let userPhoneNumber = profileView.userPhoneNumberTextfield.text,
+            let userPhoneNumber = profileView.userPhoneNumberTextfield.text,
             !userPhoneNumber.isEmpty,
-        let userBio = profileView.userBioTextfield.text,
+            let userBio = profileView.userBioTextfield.text,
             !userBio.isEmpty,
             let userOccupation = profileView.userOccupationTextfield.text, !userOccupation.isEmpty,
             let userCardNumber = profileView.userCreditcardTextfield.text, !userCardNumber.isEmpty,
@@ -188,8 +174,9 @@ class ProfileViewController: UIViewController {
         //TODO: call storageService.upload
         //need to update to user userId ot itemId
         
-       // Update this code:
-        storageservice.uploadPhoto(userId: user.uid, image: resizedImage) { [weak self] (result) in
+        // Update this code:
+        
+        storageService.uploadPhoto(userId: user.uid, image: selectedImage) { [weak self] (result) in
             // code here to add the photoURL to the user's photoURL
             //     property then commit changes
             switch result {
@@ -217,14 +204,7 @@ class ProfileViewController: UIViewController {
                 })
             }
         }
-        
-        
-        
-        profileView.updateProfileButton.isHidden = false
-        
     }
-
-*/
 }
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
