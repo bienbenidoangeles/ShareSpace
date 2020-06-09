@@ -1,17 +1,22 @@
 //
-//  FirstProfileViewController.swift
+//  PostViewController.swift
 //  ShareSpace
 //
-//  Created by Yuliia Engman on 6/8/20.
+//  Created by Yuliia Engman on 6/9/20.
 //  Copyright © 2020 Bienbenido Angeles. All rights reserved.
 //
 
 import UIKit
 
-class FirstProfileViewController: UIViewController {
+class PostViewController: UIViewController {
 
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    @IBOutlet weak var label: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        label.text = "Hello!"
 
         // Do any additional setup after loading the view.
     }

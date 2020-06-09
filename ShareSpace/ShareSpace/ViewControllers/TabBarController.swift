@@ -16,22 +16,22 @@ class TabBarController: UITabBarController {
         return vc
     }()
         
-//    private var profileVC: ProfileViewController = {
-//        let vc = ProfileViewController()
-//        vc.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.fill"), tag: 1)
-//        return vc
-//    }()
+    private var postVC: PostViewController = {
+        let vc = PostViewController()
+        vc.tabBarItem = UITabBarItem(title: "Post", image: UIImage(systemName: "person"), tag: 1)
+        return vc
+    }()
     
-     private var chatVC: ChatViewController = {
-            let vc = ChatViewController()
-            vc.tabBarItem = UITabBarItem(title: "Chat", image: UIImage(systemName: "message"), tag: 2)
-            return vc
-        }()
+//     private var chatVC: ChatViewController = {
+//            let vc = ChatViewController()
+//            vc.tabBarItem = UITabBarItem(title: "Chat", image: UIImage(systemName: "message"), tag: 2)
+//            return vc
+//        }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //let controllers = [mainVC, profileVC]
-        let controllers = [mainVC, chatVC]
+        let controllers = [mainVC, postVC]
+        //let controllers = [mainVC, chatVC]
         viewControllers = controllers.map{UINavigationController(rootViewController: $0)}
 
     }
