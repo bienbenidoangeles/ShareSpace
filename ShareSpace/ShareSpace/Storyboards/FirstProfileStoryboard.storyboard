@@ -11,7 +11,7 @@
         <!--FirstProfileViewController-->
         <scene sceneID="NeU-mT-YwO">
             <objects>
-                <viewController title="FirstProfileViewController" id="EIg-oz-ubD" customClass="FirstProfileViewController" customModule="ShareSpace" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="FirstProfileViewController" storyboardIdentifier="FirstProfileViewController" title="FirstProfileViewController" id="EIg-oz-ubD" customClass="FirstProfileViewController" customModule="ShareSpace" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bp3-Fe-sl8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -290,7 +290,6 @@
                     <connections>
                         <outlet property="reviewsCollectionView" destination="A1V-fa-99M" id="DX4-S6-pi5"/>
                         <outlet property="spacesCollectionView" destination="6s2-RF-29O" id="SLM-Ao-uiR"/>
-                        <outlet property="uaerImegeView" destination="bp3-Fe-sl8" id="39N-5U-JE3"/>
                         <outlet property="userEmail" destination="Bw9-MF-KZR" id="hxy-UE-qnD"/>
                         <outlet property="userNameLabel" destination="awK-X6-3LM" id="ALm-6c-dtp"/>
                         <outlet property="userPhoneNumber" destination="QKd-78-w2P" id="mOA-Mo-cvr"/>

@@ -7,8 +7,23 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseStorage
 
 class FirstProfileViewController: UIViewController {
+    
+    
+    
+      private var user: UserModel?
+    
+    private let userId: String
+    init?(coder: NSCoder, userId: String) {
+      self.userId = userId
+      super.init(coder: coder)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     @IBOutlet var userImegeView: UIView!
     @IBOutlet weak var userNameLabel: UILabel!
@@ -25,6 +40,35 @@ class FirstProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadUser()
+        
+        //updateUI()
+    }
+    
+    
+    func updateUI() {
+        guard let user = user else {
+            return
+        }
+        if let user = Auth.auth().currentUser {
+            if user.uid == self.userId {
+                userEmail.text = user.email ?? "no email"
+            }
+        }
+      //  userEmail.text = user.userEmail
+    }
+    
+    func loadUser() {
+        DatabaseService.shared.loadUser(userId: userId) {
+            (result) in
+            switch result {
+            case .failure(let error):
+                print("error load user: \(error.localizedDescription)")
+            case .success(let user):
+                self.user = user
+                self.updateUI()
+            }
+        }
     }
     
     @IBAction func editButton(_ sender: UIButton) {

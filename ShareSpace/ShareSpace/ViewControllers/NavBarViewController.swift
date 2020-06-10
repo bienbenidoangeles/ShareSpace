@@ -7,34 +7,32 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class NavBarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         addNavBarItems()
     }
     
-//    private func addNavBarItems(){
-//        let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(pushToProfileViewController))
-//        navigationItem.rightBarButtonItem = barButtonItem
-//    }
+    
     
        private func addNavBarItems(){
             let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(pushToFirstProfileViewController))
             navigationItem.rightBarButtonItem = barButtonItem
         }
     
-//    @objc private func pushToProfileViewController(){
-//        let profileVC = ProfileViewController()
-//        navigationController?.pushViewController(profileVC, animated: true)
-//    }
-        
-         @objc private func pushToFirstProfileViewController(){
-                let firstProfileVC = FirstProfileViewController()
-                navigationController?.pushViewController(firstProfileVC, animated: true)
-            }
-
+    
+    @objc private func pushToFirstProfileViewController(){
+        guard let user = Auth.auth().currentUser else {
+            return
+        }
+        let storyboard = UIStoryboard(name: "FirstProfileStoryboard", bundle: nil)
+        let firstProfilelVC = storyboard.instantiateViewController(identifier: "FirstProfileViewController")
+        { (coder) in
+            return FirstProfileViewController(coder: coder, userId: user.uid)
+        }
+        navigationController?.pushViewController(firstProfilelVC, animated: true)
+    }
 }

@@ -16,7 +16,8 @@ class PostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        label.text = "Hello!"
+        //label.text = "Hello!"
+        //view.backgroundColor = .red
 
         // Do any additional setup after loading the view.
     }
