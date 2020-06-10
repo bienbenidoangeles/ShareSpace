@@ -91,7 +91,7 @@ class DatabaseService {
       } else {
         completion(.success(true))
       }
-
+    }
     func updateDatabaseUserType(userType: User){
         
     }
@@ -275,16 +275,11 @@ class DatabaseService {
         }
     }
         
-    func loadPosts(completion: @escaping (Result<[Post], Error>) -> ()) {
-            db.collection(DatabaseService.postCollection).getDocuments { (snapshot, error) in
-                if let error = error {
-                    completion(.failure(error))
-                } else if let snapshot = snapshot {
-                    let post = snapshot.documents.map { Post($0.data())}
-                    completion(.success(post.sorted {$0.listedDate > $1.listedDate}))
-                }
-            }
-        }
+    func loadPosts(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion: @escaping (Result<[Post], Error>) -> ()) {
+        let postRef = db.collection(DatabaseService.postCollection)
+        postRef.whereField("location", arrayContains: [""])
+        
+    }
     
     func createReservation(reservation: [String: Any], completion: @escaping(Result<Bool, Error>) -> ()){
         
