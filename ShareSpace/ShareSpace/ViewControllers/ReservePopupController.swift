@@ -12,7 +12,7 @@ import FSCalendar
 class ReservePopupController: UIViewController {
     
     
-    private var selectedPost: Post
+    
     
     @IBOutlet weak var totalPriceLabel: UILabel!
     
@@ -20,6 +20,17 @@ class ReservePopupController: UIViewController {
     @IBOutlet weak var dismissBar: UIView!
     
     
+    @IBOutlet weak var pricePerNightLabel: UILabel!
+    
+    @IBOutlet weak var toDateLAbel: UILabel!
+    
+    @IBOutlet weak var fromDateLabel: UILabel!
+    
+    
+    @IBOutlet weak var messageTextView: UITextView!
+    
+    
+  private var selectedPost: Post
     
     init?(coder: NSCoder, selectedPost: Post) {
         self.selectedPost = selectedPost
@@ -81,7 +92,9 @@ class ReservePopupController: UIViewController {
     }
 
 
-
+    @IBAction func sendMessageButtonPressed(_ sender: UIButton) {
+    }
+    
 }
 
 extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
@@ -116,7 +129,10 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
             }
 
             datesRange = range
-            totalPriceLabel.text = (datesRange?.count ?? 1 * Int(selectedPost.price.total ?? 1)).description
+            totalPriceLabel.text = (datesRange?.count ?? 1 * Int(selectedPost.price.total )).description
+            fromDateLabel.text = datesRange?.first?.description
+            toDateLAbel.text = datesRange?.last?.description
+            
             print("datesRange contains: \(datesRange!)")
 
             return
