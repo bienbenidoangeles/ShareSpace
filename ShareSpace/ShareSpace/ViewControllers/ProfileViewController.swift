@@ -243,7 +243,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     }
         
         private func navigateToMainView() {
-          UIViewController.showViewController(viewcontroller: TabBarController())
+          dismiss()
         }
 }
 
