@@ -82,7 +82,24 @@ class RootViewController: NavBarViewController {
     @objc private func calenderButtonPressed(){
 //        let vc = VC()
 //        navigationController?.pushViewController(vc, animated: true)
+        
+        let storyboard = UIStoryboard(name: "Post", bundle: nil)
+               let postVC = storyboard.instantiateViewController(identifier: "PostViewController")
+               navigationController?.pushViewController(postVC, animated: true)
     }
+    
+//    private func addNavBarItems(){
+//            let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(pushToFirstProfileViewController))
+//            navigationItem.rightBarButtonItem = barButtonItem
+//        }
+    
+    
+//    @objc private func pushToFirstProfileViewController(){
+//    //        let profileVC = ProfileViewController()
+//        let storyboard = UIStoryboard(name: "FirstProfileStoryboard", bundle: nil)
+//        let firstProfilelVC = storyboard.instantiateViewController(identifier: "FirstProfileViewController")
+//        navigationController?.pushViewController(firstProfilelVC, animated: true)
+//    }
     
     private func setupMap(){
         rootView.mapView.showsCompass = true
