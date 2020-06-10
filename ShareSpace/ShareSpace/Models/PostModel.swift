@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import MapKit
 
 struct Post:Codable {
     let postId: String
@@ -64,7 +65,7 @@ struct Post:Codable {
 }
 
 
-struct Location:Codable {
+struct Location: Codable {
     let country: String
     let streetAddress: String
     let apartmentNumber: String?
@@ -84,6 +85,18 @@ struct Location:Codable {
     
     let longitutude: Double?
     let latitude:Double?
+    
+    var coordinate: CLLocationCoordinate2D? {
+        guard let lat = latitude,
+            let long = longitutude else {
+                return nil
+        }
+        
+        return CLLocationCoordinate2D(
+            latitude: lat,
+            longitude: long)
+    }
+
     
     static func generateFullLocationWOLatLong() -> Location{
         let countries:[String] = ["US, CA, MEX"]
@@ -133,13 +146,6 @@ extension Location {
         self.zip = dictionary["zip"] as? String ?? ""
         self.longitutude = dictionary["longitutude"] as? Double ?? 0.0
         self.latitude = dictionary["latitude"] as? Double ?? 0.0
-    }
-    
-    var coordinate: (longitutde: Double, latitude: Double){
-        get {
-            guard let long = longitutude, let lat = latitude else { return (0,0) }
-            return (long, lat)
-        }
     }
 }
 extension Post {

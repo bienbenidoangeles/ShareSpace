@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 import FirebaseAuth
 
 class CardViewController: UIViewController {
@@ -25,6 +26,7 @@ class CardViewController: UIViewController {
         }
     }
 
+
     override func loadView() {
         view = mainView
     }
@@ -33,25 +35,28 @@ class CardViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         delegatesAndDataSources()
-        loadPost()
+        let coordinate = CoreLocationSession.shared.locationManager.location?.coordinate.toString
+        //loadPost(given: coordinate)
         registerCell()
     }
     
     private func delegatesAndDataSources(){
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
+        let rootVC = RootViewController()
+        rootVC.delegate = self
     }
   
 //  private var databaseServices = DatabaseService.shared
   
   
-  private func loadPost() {
-    DatabaseService.shared.loadPosts { (result) in
+    private func loadPost(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
+        
+        DatabaseService.shared.loadPosts(coordinateRange: coordinateRange) { (result) in
       switch result {
       case .failure(let error):
         print("It failed")
       case .success(let post):
-        //let filteredPosts = post.filter{$0.location.zip == "10001"}
         self.posts = post
 
       }
@@ -62,11 +67,6 @@ class CardViewController: UIViewController {
     //func to find nearby zipcodes if posts are less than (num)
     //func to zoom out if nothing is near the zipcode
     //func to add addition posts until count == (ideal max on card vc)
-  
-  
-
-        
-    
     
     private func registerCell(){
         mainView.collectionView.register(UINib(nibName: "CollapsedCell", bundle: nil), forCellWithReuseIdentifier: "collapsedFeedCell")
@@ -106,6 +106,16 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
             return ListingDetailViewController(coder: coder, selectedPost: aPost)
         }
         navigationController?.pushViewController(detailVC, animated: true)
+        
+    }
+}
+
+extension CardViewController: SearchPostDelegate{
+    func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
+        
+    }
+    
+    func readPostsFromSearchBar(given coordinate: [CLLocationCoordinate2D]) {
         
     }
 }
