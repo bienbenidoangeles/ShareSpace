@@ -167,8 +167,6 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             !userFirstName.isEmpty,
             let userLastName = profileView.userLastNameTextfield.text,
             !userLastName.isEmpty,
-            let userType = profileView.userTypeTextfield.text,
-            !userType.isEmpty,
             let userPhoneNumber = profileView.userPhoneNumberTextfield.text,
             !userPhoneNumber.isEmpty,
             let userBio = profileView.userBioTextfield.text,
@@ -227,7 +225,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        DatabaseService.shared.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, userType: userType, governmentId: userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate){ [weak self]
+        DatabaseService.shared.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId: userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate, userType: AppState.shared.userType?.rawValue ?? 1){ [weak self]
         (result) in
             switch result {
             case .failure(let error):
@@ -243,7 +241,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     }
         
         private func navigateToMainView() {
-          dismiss()
+            dismiss(animated: true)
         }
 }
 
