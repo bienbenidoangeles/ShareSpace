@@ -349,7 +349,7 @@
 				F1684BEF247AC6E800AA9A17 /* Sources */,
 				F1684BF0247AC6E800AA9A17 /* Frameworks */,
 				F1684BF1247AC6E800AA9A17 /* Resources */,
-				8390B056DC6A39BBFF2459C4 /* [CP] Embed Pods Frameworks */,
+				8B1E332276856F7902A587CD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -444,7 +444,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8390B056DC6A39BBFF2459C4 /* [CP] Embed Pods Frameworks */ = {
+		8B1E332276856F7902A587CD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -522,7 +522,7 @@
 				F1684C2D247AD42E00AA9A17 /* LoginViewController.swift in Sources */,
 				F149D500248899F9006D77D2 /* IntTimeIntervalAsSecondsToOther.swift in Sources */,
 				F1684C53247ADE1400AA9A17 /* TabBarController.swift in Sources */,
-				F1684C55247ADECC00AA9A17 /* MainViewController.swift in Sources */,
+				F1684C55247ADECC00AA9A17 /* CardViewController.swift in Sources */,
 				5802D7E624884C0400A505FB /* UserCell.swift in Sources */,
 				8D759B1F24895C4B006697F4 /* CalendarViewController.swift in Sources */,
 				F1684C55247ADECC00AA9A17 /* CardViewController.swift in Sources */,
@@ -716,8 +716,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				GCC_NO_COMMON_BLOCKS = NO;
 				DEVELOPMENT_TEAM = "";
+				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = ShareSpace/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -818,8 +818,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				GCC_NO_COMMON_BLOCKS = NO;
 				DEVELOPMENT_TEAM = "";
+				GCC_NO_COMMON_BLOCKS = NO;
 				INFOPLIST_FILE = ShareSpace/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -91,7 +91,7 @@ class DatabaseService {
       } else {
         completion(.success(true))
       }
-
+    }
     func updateDatabaseUserType(userType: User){
         
     }
@@ -330,4 +330,5 @@ class DatabaseService {
         }
     }
 }
+
 
