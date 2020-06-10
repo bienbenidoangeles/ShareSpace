@@ -16,7 +16,7 @@ target 'ShareSpace' do
   # Storage is used to store media files
   pod 'Firebase/Storage'
   
-  pod 'Kingfisher'
+ pod 'Kingfisher'
   pod 'Alamofire'
   pod 'FSCalendar'
   pod 'SwiftLint'
