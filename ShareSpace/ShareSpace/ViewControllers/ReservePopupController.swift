@@ -25,6 +25,8 @@ class ReservePopupController: UIViewController {
         self.selectedPost = selectedPost
         super.init(coder: coder)
     }
+    
+    
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
