@@ -11,12 +11,19 @@ import CoreLocation
 
 class CoreLocationSession: NSObject {
     
+    private enum GeoCodeErrors: Error {
+        case addressError(String)
+    }
+    
     public static let shared = CoreLocationSession()
     
     public var locationManager: CLLocationManager
     
+    public var geoCoder:CLGeocoder
+    
     private override init() {
         locationManager = CLLocationManager()
+        geoCoder = CLGeocoder()
         super.init()
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
@@ -31,6 +38,23 @@ class CoreLocationSession: NSObject {
         }
         // less aggressive thant the startUpdatingLocation()
         locationManager.startMonitoringSignificantLocationChanges()
+    }
+    
+    //use google places to convert
+    func convertAddressToCoors(address: String, completion: @escaping (Result<[CLLocationCoordinate2D], Error>) -> ()){
+        geoCoder.geocodeAddressString(address) { (placemarks, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let placemarks = placemarks {
+                let coordinates = placemarks.compactMap{$0.location?.coordinate}
+                completion(.success(coordinates))
+//                else {
+//                    let error:GeoCodeErrors = .addressError("\(address) could not be geoCoded properly")
+//                    completion(.failure(error))
+//                }
+                
+            }
+        }
     }
     
 }

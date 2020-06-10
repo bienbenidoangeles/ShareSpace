@@ -44,6 +44,18 @@ class RootView: UIView {
         button.layer.cornerRadius = 12
         return button
     }()
+    
+    public lazy var searchByMapViewButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Search this area", for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .callout)
+        button.setTitleColor(.systemBackground, for: .normal)
+        button.tintColor = .systemBackground
+        button.backgroundColor = .systemTeal
+        button.layer.cornerRadius = 12
+        button.isHidden = true
+        return button
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
@@ -60,6 +72,7 @@ class RootView: UIView {
         setupSearchbarView()
         setupSearchBarTFConstrainsts()
         setupDateTimeConstrainsts()
+        setUpSearchAreaButton()
     }
     
     private func setupMapView(){
@@ -103,6 +116,16 @@ class RootView: UIView {
             dateTimeButton.topAnchor.constraint(equalTo: searchTextField.topAnchor),
             dateTimeButton.trailingAnchor.constraint(equalTo: searchBarView.trailingAnchor, constant: -4),
             dateTimeButton.bottomAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: -4)
+        ])
+    }
+    
+    private func setUpSearchAreaButton(){
+        addSubview(searchByMapViewButton)
+        searchByMapViewButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            searchByMapViewButton.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 8),
+            searchByMapViewButton.centerXAnchor.constraint(equalTo: searchBarView.centerXAnchor),
+            searchByMapViewButton.widthAnchor.constraint(equalTo: searchBarView.widthAnchor, multiplier: 0.4)
         ])
     }
 

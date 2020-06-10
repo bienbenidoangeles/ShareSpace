@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+ platform :ios, '13.5'
 
 target 'ShareSpace' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -16,9 +16,9 @@ target 'ShareSpace' do
   # Storage is used to store media files
   pod 'Firebase/Storage'
   
-  pod 'Kingfisher'
+ pod 'Kingfisher'
   pod 'Alamofire'
-  pod 'JTAppleCalendar'
+  pod 'FSCalendar'
   pod 'SwiftLint'
   
   # Pods for Messaging
@@ -29,11 +29,11 @@ target 'ShareSpace' do
   target 'ShareSpaceTests' do
     inherit! :search_paths
     # Pods for testing
-    pod 'Alamofire'
-    pod 'Firebase/Firestore'
-    pod 'FirebaseFirestoreSwift'
-    pod 'Firebase/Storage'
-    pod 'SwiftLint'
+    #pod 'Alamofire'
+    #pod 'Firebase/Firestore'
+    #pod 'FirebaseFirestoreSwift'
+    #pod 'Firebase/Storage'
+    #pod 'SwiftLint'
 
   end
 

@@ -8,17 +8,18 @@
 
 import Foundation
 import Firebase
+import MapKit
 
 struct Post:Codable {
     let postId: String
-    let price: Price
-    let postTitle: String
+    let price: Price // post vc
+    let postTitle: String // post vc
     let userId: String
     let listedDate: Date
     let mainImage: String
     let images: [String]?
-    let description: String
-    let location: Location    //let amenities: [String]
+    let description: String // post vc
+    let location: Location    //let amenities: [String] // post
     let rating: Rating?
     let reviews: [Review]?
     
@@ -64,7 +65,7 @@ struct Post:Codable {
 }
 
 
-struct Location:Codable {
+struct Location: Codable {
     let country: String
     let streetAddress: String
     let apartmentNumber: String?
@@ -84,6 +85,18 @@ struct Location:Codable {
     
     let longitutude: Double?
     let latitude:Double?
+    
+    var coordinate: CLLocationCoordinate2D? {
+        guard let lat = latitude,
+            let long = longitutude else {
+                return nil
+        }
+        
+        return CLLocationCoordinate2D(
+            latitude: lat,
+            longitude: long)
+    }
+
     
     static func generateFullLocationWOLatLong() -> Location{
         let countries:[String] = ["US, CA, MEX"]
@@ -134,13 +147,6 @@ extension Location {
         self.longitutude = dictionary["longitutude"] as? Double ?? 0.0
         self.latitude = dictionary["latitude"] as? Double ?? 0.0
     }
-    
-    var coordinate: (longitutde: Double, latitude: Double){
-        get {
-            guard let long = longitutude, let lat = latitude else { return (0,0) }
-            return (long, lat)
-        }
-    }
 }
 extension Post {
     
@@ -185,8 +191,8 @@ extension Rating {
 }
 
 struct Price:Codable {
-    let subtotal:Double
-    let spaceRate: Double
+    let subtotal:Double // postVC
+    let spaceRate: Double //postVC
     var spaceCut: Double {
         get {
             return subtotal*self.spaceRate

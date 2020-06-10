@@ -7,16 +7,149 @@
 //
 
 import UIKit
+import FSCalendar
 
 class ReservePopupController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-       
+    
+    
+    private var selectedPost: Post
+    
+    @IBOutlet weak var totalPriceLabel: UILabel!
+    
+    
+    @IBOutlet weak var dismissBar: UIView!
+    
+    
+    
+    init?(coder: NSCoder, selectedPost: Post) {
+        self.selectedPost = selectedPost
+        super.init(coder: coder)
     }
-    
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
 
     
+    @IBOutlet weak var calendar: FSCalendar!
+    
+    // first date in the range
+       private var firstDate: Date?
+       // last date in the range
+       private var lastDate: Date?
+       
+       private var datesRange: [Date]?
+       
+           override func viewDidLoad() {
+               super.viewDidLoad()
+               calendar.delegate = self
+               calendar.dataSource = self
+               calendar.allowsMultipleSelection = true
+               setupCalendarAppearance()
+            updateUI()
+            setupDismissBar()
+       }
+    
+    private func setupDismissBar() {
+        dismissBar.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector (topGesturePressed(recognizer:)))
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleCardTap(recognizer:)))
+        dismissBar.addGestureRecognizer(tapGesture)
+    }
+    @objc func topGesturePressed(recognizer: UITapGestureRecognizer) {
+        dismiss(animated: true) 
+    }
+       
+       private func setupCalendarAppearance() {
+           calendar.scrollDirection = .vertical
+           calendar.appearance.todayColor = .yummyOrange
+           
+           calendar.appearance.selectionColor = .oceanBlue
+           calendar.appearance.weekdayTextColor = .oceanBlue
+           calendar.appearance.headerTitleColor = .sunnyYellow
+           //calendar.appearance.weekdayTextColor = .white
+           calendar.appearance.headerTitleFont = UIFont(name: "Verdana", size: 23.0)
+        calendar.appearance.titleFont = UIFont(name: "Verdana", size: 18.0)
+           
+           
+       }
+    func updateUI() {
+        totalPriceLabel.text = selectedPost.price.total.description
+    }
+
+
+
+}
+
+extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
+
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        print("selected")
+         // nothing selected:
+        if firstDate == nil {
+            firstDate = date
+            datesRange = [firstDate!]
+//totalPriceLabel.text = (datesRange?.count ?? 1 * Int(selectedPost?.price.total ?? 1)).description
+            //print("datesRange contains: \(datesRange!)")
+            return
+        }
+
+        // only first date is selected:
+        if firstDate != nil && lastDate == nil {
+            // handle the case of if the last date is less than the first date:
+            if date <= firstDate! {
+                calendar.deselect(firstDate!)
+                firstDate = date
+                datesRange = [firstDate!]
+                //print("datesRange contains: \(datesRange!)")
+                return
+            }
+
+            let range = datesRange(from: firstDate!, to: date)
+            lastDate = range.last
+
+            for d in range {
+                calendar.select(d)
+            }
+
+            datesRange = range
+            totalPriceLabel.text = (datesRange?.count ?? 1 * Int(selectedPost.price.total ?? 1)).description
+            print("datesRange contains: \(datesRange!)")
+
+            return
+        }
+
+        // both are selected:
+        if firstDate != nil && lastDate != nil {
+            for d in calendar.selectedDates {
+                calendar.deselect(d)
+                
+            }
+
+            lastDate = nil
+            firstDate = nil
+
+            datesRange = []
+            
+            print("there are:\(datesRange?.count ?? 0) dates")
+            print("datesRange contains: \(datesRange!)")
+        }
+    }
+    func datesRange(from: Date, to: Date) -> [Date] {
+        // in case of the "from" date is more than "to" date,
+        // it should returns an empty array:
+        if from > to { return [Date]() }
+
+        var tempDate = from
+        var array = [tempDate]
+
+        while tempDate < to {
+            tempDate = Calendar.current.date(byAdding: .day, value: 1, to: tempDate)!
+            array.append(tempDate)
+        }
+
+        return array
+    }
 
 }
