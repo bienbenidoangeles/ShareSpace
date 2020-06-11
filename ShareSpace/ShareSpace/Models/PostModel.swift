@@ -19,6 +19,7 @@ struct Post:Codable {
     let mainImage: String
     let images: [String]?
     let description: String // post vc
+    let amenities: [String]
     let location: Location    //let amenities: [String] // post
     let rating: Rating?
     let reviews: [Review]?
@@ -46,7 +47,7 @@ struct Post:Codable {
             }
         }
         
-        return Post(postId: UUID().uuidString, price: Price.generatePrice(), postTitle: randomReviewDesc, userId: randomUIDs, listedDate: Date(), mainImage: "mainImgURL", images: nil, description: randomReviewDesc, location: Location.generateFullLocationWOLatLong(), rating: Rating.generateRating(), reviews: Review.generateReviews())
+        return Post(postId: UUID().uuidString, price: Price.generatePrice(), postTitle: randomReviewDesc, userId: randomUIDs, listedDate: Date(), mainImage: "mainImgURL", images: nil, description: randomReviewDesc, amenities: ["washing machine", "WiFi"], location: Location.generateFullLocationWOLatLong(), rating: Rating.generateRating(), reviews: Review.generateReviews())
     }
     
     static func generatePostAsDict() -> [String: Any] {
@@ -160,6 +161,7 @@ extension Post {
         self.images = dictionary["images"] as? [String] ?? ["nil"]
         self.location = dictionary["location"] as? Location ?? Location(["country": "nil", "streetAddress": "nil", "city": "nil", "state": "nil", "zip": -1.0])
         self.description = dictionary["description"] as? String ?? ""
+        self.amenities = dictionary["amenities"] as? [String] ?? [""]
         self.rating = dictionary["rating"] as? Rating ?? Rating(["rating": -1.0, "ratingImage": "nil"])
         self.reviews = dictionary["reviews"] as? [Review] ?? [Review]()
     }
@@ -191,12 +193,13 @@ extension Rating {
 }
 
 struct Price:Codable {
-    let subtotal:Double // postVC
+    var subtotal:Double {
+        return spaceRate+spaceCut
+    }// postVC
     let spaceRate: Double //postVC
     var spaceCut: Double {
-        get {
-            return subtotal*self.spaceRate
-        }
+        return spaceRate * 0.05 //self.spaceCut
+                //subtotal*self.spaceRate
     }
     let taxRate: Double
     var tax: Double {
@@ -210,7 +213,7 @@ struct Price:Codable {
         
         let randomAmount = Double(round(Double.random(in: 0.0...999.99))/100.0)
         let randomPercentage = Double(round(Double.random(in: 0.0...1.0))/100.0)
-        return Price(subtotal: randomAmount, spaceRate: randomPercentage, taxRate: randomPercentage)
+        return Price(spaceRate: randomPercentage, taxRate: randomPercentage)
     }
     
     static func generatePriceasDict() -> [String: Any] {
@@ -223,7 +226,7 @@ struct Price:Codable {
 
 extension Price {
     init(_ dictionary: [String: Any]) {
-        self.subtotal = dictionary["subtotal"] as? Double ?? -1.0
+        //self.subtotal = dictionary["subtotal"] as? Double ?? -1.0
         self.spaceRate = dictionary["spaceRate"] as? Double ?? -1.0
         self.taxRate = dictionary["taxRate"] as? Double ?? -1.0
     }

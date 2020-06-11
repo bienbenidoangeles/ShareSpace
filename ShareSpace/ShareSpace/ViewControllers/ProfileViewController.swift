@@ -32,11 +32,11 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    private var selectedIdImage: UIImage? {
-        didSet {
-            profileView.idImageView.image = selectedIdImage
-        }
-    }
+//    private var selectedIdImage: UIImage? {
+//        didSet {
+//            profileView.idImageView.image = selectedIdImage
+//        }
+//    }
     
     private let storageService = StorageService.shared
     

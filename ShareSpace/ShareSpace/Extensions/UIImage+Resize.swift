@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+
 extension UIImage {
     func resizeImage(width: CGFloat, height: CGFloat) -> UIImage {
         let size = CGSize(width: width, height: height)
@@ -14,5 +16,15 @@ extension UIImage {
         return renderer.image { (context) in
             self.draw(in: CGRect(origin: .zero, size: size))
         }
+    }
+    
+    
+    static func resizeImageTwo(originalImage: UIImage, rect: CGRect) -> UIImage {
+     let rect = AVMakeRect(aspectRatio: originalImage.size, insideRect: rect)
+     let size = CGSize(width: rect.width, height: rect.height)
+     let renderer = UIGraphicsImageRenderer(size: size)
+     return renderer.image { (context) in
+      originalImage.draw(in: CGRect(origin: .zero, size: size))
+     }
     }
 }

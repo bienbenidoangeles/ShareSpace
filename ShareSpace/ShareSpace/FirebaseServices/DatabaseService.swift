@@ -282,11 +282,12 @@ class DatabaseService {
                   }
         }
     }
-        
+
 //    func loadPosts(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion: @escaping (Result<[Post], Error>) -> ()) {
 //        let postRef = db.collection(DatabaseService.postCollection)
 //        postRef.whereField("location", arrayContains: [""])
-//        
+//
+
 //    }
     
     func loadPosts(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion: @escaping (Result<[Post], Error>) -> ()) {
@@ -299,6 +300,20 @@ class DatabaseService {
           completion(.success(posts))
         }
       }
+    }
+    
+    func editPost(postdictionary: [String: Any], completion: @escaping (Result<Bool, Error>) -> ()) {
+        let postRef = db.collection(DatabaseService.postCollection)
+        guard let postId = postdictionary["postId"] as? String else {
+            return
+        }
+        postRef.document(postId).updateData(postdictionary) { (error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(true))
+            }
+        }
     }
     
     func createReservation(reservation: [String: Any], completion: @escaping(Result<Bool, Error>) -> ()){
