@@ -29,9 +29,11 @@ class MainViewController: NavBarViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         addNavSignOutButton()
+      addChatButton()
         delegatesAndDataSources()
       loadPost()
         registerCell()
+      print(Auth.auth().currentUser?.uid)
     }
     
     private func delegatesAndDataSources(){
@@ -70,6 +72,11 @@ mainView.searchBar.delegate = self
         let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
         navigationItem.rightBarButtonItems?.append(barButtonItem)
     }
+  private func addChatButton(){
+       let barButtonItem = UIBarButtonItem(title: "Chat", style: .plain, target: self, action: #selector(loadChatList))
+       navigationItem.rightBarButtonItems?.append(barButtonItem)
+   }
+  
     
     @objc private func signOutButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -82,8 +89,14 @@ mainView.searchBar.delegate = self
             }
         }
     }
+  
+  @objc private func loadChatList() {
+    let chatList = ChatListViewController(nibName: nil, bundle: nil)
+    navigationController?.pushViewController(chatList, animated: true)
+  }
 
 }
+
 
 
 extension MainViewController: UISearchBarDelegate{

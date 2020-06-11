@@ -22,8 +22,8 @@ class TabBarController: UITabBarController {
         return vc
     }()
     
-     private var chatVC: ChatViewController = {
-            let vc = ChatViewController()
+     private var chatVC: ChatVC = {
+            let vc = ChatVC()
             vc.tabBarItem = UITabBarItem(title: "Chat", image: UIImage(systemName: "message"), tag: 1)
             return vc
         }()
