@@ -294,6 +294,18 @@ class DatabaseService {
                   }
         }
     }
+    
+    func loadPosts(userId: String, completion: @escaping (Result<[Post]?, Error>) -> ()){
+        let postRef = db.collection(DatabaseService.postCollection)
+        postRef.whereField(userId, isEqualTo: userId).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = snapshot {
+                let posts = snapshot.documents.map{Post($0.data())}
+                completion(.success(posts))
+            }
+        }
+    }
         
     func loadPosts(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion: @escaping (Result<[Post]?, Error>) -> ()) {
         let postRef = db.collection(DatabaseService.postCollection)
