@@ -301,6 +301,20 @@ class DatabaseService {
       }
     }
     
+    func editPost(postdictionary: [String: Any], completion: @escaping (Result<Bool, Error>) -> ()) {
+        let postRef = db.collection(DatabaseService.postCollection)
+        guard let postId = postdictionary["postId"] as? String else {
+            return
+        }
+        postRef.document(postId).updateData(postdictionary) { (error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(true))
+            }
+        }
+    }
+    
     func createReservation(reservation: [String: Any], completion: @escaping(Result<Bool, Error>) -> ()){
         
         guard let reservationId = reservation["reservationId"] as? String else {

@@ -36,6 +36,8 @@ class CardViewController: UIViewController {
         view.backgroundColor = .systemBackground
         delegatesAndDataSources()
         let coordinate = CoreLocationSession.shared.locationManager.location?.coordinate.toString
+        let coorRang = (lat: 0...1.5, long: 0...1.5)
+        loadPost(given: coorRang)
         //loadPost(given: coordinate)
         registerCell()
     }
