@@ -336,12 +336,12 @@ class DatabaseService {
     
     func readDBLocations(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion:  @escaping(Result<[Location]?, Error>) -> () ) {
         let locationRef = db.collection(DatabaseService.locationCollection)
-        let latUpper = coordinateRange.lat.upperBound
-        let latLower = coordinateRange.lat.lowerBound
+        let latUpper = coordinateRange.lat.upperBound.magnitude
+        let latLower = coordinateRange.lat.lowerBound.magnitude
         let longUpper = coordinateRange.long.upperBound
         let longLower = coordinateRange.long.lowerBound
-        locationRef.whereField("latitude", isLessThanOrEqualTo: latLower)
-        .whereField("latitude", isGreaterThanOrEqualTo: latUpper)
+        locationRef.whereField("latitude", isLessThanOrEqualTo: latUpper)
+        .whereField("latitude", isGreaterThanOrEqualTo: latLower)
             //.whereField("longitude", isLessThanOrEqualTo: longUpper)
             //.whereField("longitude", isGreaterThanOrEqualTo: longLower)
             .getDocuments { (snapshot, error) in

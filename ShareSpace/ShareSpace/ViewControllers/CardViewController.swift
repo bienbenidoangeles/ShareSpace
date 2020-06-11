@@ -67,26 +67,26 @@ class CardViewController: UIViewController {
       }
     }
         
-//        for _ in 0...9{
-//            let genPost = Post.generatePostAsDict()
-//            DatabaseService.shared.postSpace(post: genPost) { (result) in
-//                switch result{
-//                case .failure:
-//                    break
-//                case .success:
-//                    let location = genPost["location"] as? [String:Any]
-//                    DatabaseService.shared.createDBLocation(location:  location!) { (result) in
-//                        switch result{
-//                        case .failure:
-//                            break
-//                        case.success(let locId):
-//                            //print(locId)
-//                            break
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        for _ in 0...9{
+            let genPost = Post.generatePostAsDict()
+            DatabaseService.shared.postSpace(post: genPost) { (result) in
+                switch result{
+                case .failure:
+                    break
+                case .success:
+                    let location = genPost["location"] as? [String:Any]
+                    DatabaseService.shared.createDBLocation(location:  location!) { (result) in
+                        switch result{
+                        case .failure:
+                            break
+                        case.success(let locId):
+                            //print(locId)
+                            break
+                        }
+                    }
+                }
+            }
+        }
     
   }
     

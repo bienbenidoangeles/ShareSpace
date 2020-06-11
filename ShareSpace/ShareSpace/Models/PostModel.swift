@@ -139,7 +139,7 @@ struct Location: Codable {
             Double.random(in: 73...75) * -1.0
         }
         
-        return (randomLong, randomLat)
+        return (randomLat, randomLong)
     }
     
     static func generateFullLocationWLatLongAsDict(locationId: String, postId:String) -> [String: Any] {
