@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 
-class MainViewController: NavBarViewController {
+class CardViewController: NavBarViewController {
     
     private let mainView = MainView()
     
@@ -31,15 +31,13 @@ class MainViewController: NavBarViewController {
         addNavSignOutButton()
       addChatButton()
         delegatesAndDataSources()
-      loadPost()
+        loadPost()
         registerCell()
       print(Auth.auth().currentUser?.uid)
     }
     
     private func delegatesAndDataSources(){
-
-        
-mainView.searchBar.delegate = self
+        mainView.searchBar.delegate = self
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
     }
@@ -98,14 +96,18 @@ mainView.searchBar.delegate = self
 }
 
 
+<<<<<<< HEAD
 
 extension MainViewController: UISearchBarDelegate{
+=======
+extension CardViewController: UISearchBarDelegate{
+>>>>>>> a99c9b85a0260c88177801c7676d02e72f04d75f
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         //
     }
 }
 
-extension MainViewController: UICollectionViewDataSource {
+extension CardViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return posts.count
     }
@@ -120,7 +122,7 @@ extension MainViewController: UICollectionViewDataSource {
     }
 }
 
-extension MainViewController: UICollectionViewDelegateFlowLayout{
+extension CardViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let maxSize:CGSize = UIScreen.main.bounds.size

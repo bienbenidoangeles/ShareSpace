@@ -14,7 +14,7 @@ import CoreLocation
 
 class ListingDetailViewController: UIViewController {
     
-    private let locationSession = CoreLocationSession()
+    private let locationSession = CoreLocationSession.shared.locationManager
     private var annotation = MKPointAnnotation()
     private var isShowingNewAnnotation = false
     
@@ -59,35 +59,63 @@ class ListingDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        map.delegate = self
         map.showsCompass = true
         map.showsUserLocation = true
         updateUI()
         configureCollectionView()
+        loadMap()
     }
     
-    func returnCoordinates(address: String, completion: @escaping (Result<[CLLocationCoordinate2D], Error>) ->())  {
+    private func loadMap() {
+         makeAnnotation(for: selectedPost)
+       
+    }
+    
+    func returnCoordinates(address: String, completion: @escaping (Result<CLLocationCoordinate2D, Error>) ->())  {
         CLGeocoder().geocodeAddressString(address) { (placemarks, error) in
-            let placemark = placemarks?.first
-            let lat = placemark?.location?.coordinate.latitude
-            let lon = placemark?.location?.coordinate.longitude
-            print("Lat: \(lat ?? 0), Lon: \(lon ?? 0)")
+            if let error = error {
+                completion(.failure(error))
+            }
+            else if let placemark = placemarks{
+                let lat = placemark.first?.location?.coordinate.latitude
+            let lon = placemark.first?.location?.coordinate.longitude
+                 print("Lat: \(lat ?? 0), Lon: \(lon ?? 0)")
+                completion(.success(CLLocationCoordinate2D(latitude: lat ?? 0, longitude: lon ?? 0)))
+            }
+           
         }
     }
-    
-//    private func makeAnnotation(for post: Post) -> MKPointAnnotation {
-//        selectedPost = post
-//        let annotation = MKPointAnnotation()
-//       // let coordinate = CLLocationCoordinate2D
-//        returnCoordinates(address: "329 Kosciuszko street, Brooklyn, NY, 11221", completion: { (result) in
-//            switch result {
-//            case .failure(let error):
-//                print(error)
-//            case .success(let coordinates):
-//                annotation.coordinate.latitude = coordinates.first?.latitude
-//                let long = coordinates.first?.longitude
-//            }
-//        })
-//    }
+  
+    private func makeAnnotation(for post: Post)  {
+        selectedPost = post
+        let annotation = MKPointAnnotation()
+       // let coordinate = CLLocationCoordinate2D
+        returnCoordinates(address: "\(post.location.streetAddress), \(post.location.city), \(post.location.state)", completion: { (result) in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let coordinates):
+                //annotation.coordinate.latitude = coordinates.first?.latitude
+            
+                let lat = coordinates.latitude
+                let long = coordinates.longitude
+                let coordinate = CLLocationCoordinate2D(latitude: lat , longitude: long )
+                annotation.coordinate = coordinate
+                annotation.title = post.price.total.description
+                self.isShowingNewAnnotation = true
+                self.annotation = annotation
+                self.map.addAnnotation(annotation)
+                let location = CLLocation(latitude: lat, longitude: long)
+                self.map.centerToLocation(location)
+                self.map.getDirections(coordinate: coordinate, map: self.map)
+            }
+        })
+        
+        
+       
+        
+    }
     
     private func updateUI() {
         titleLabel.text = selectedPost.postTitle
@@ -99,9 +127,47 @@ class ListingDetailViewController: UIViewController {
         collectionView.delegate = self
     }
     
-
-    @IBAction func reserveButtonPressed(_ sender: UIBarButtonItem) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        guard let detailsVC = segue.destination as? ReservePopupController else {
+//                fatalError("unable to segue properly-MainViewController")
+//        }
+        if segue.destination is ReservePopupController {
+            let reserveVC = segue.destination as? ReservePopupController
+            reserveVC?.selectedPost = selectedPost
+        }
+    
     }
+    
+    
+    @IBAction func inquireButtonPressed(_ sender: UIBarButtonItem) {
+        
+        
+
+        
+        print("button pressed")
+    }
+    
+    
+    @IBAction func price(_ sender: UIBarButtonItem) {
+        print("pressed")
+    }
+    
+//    @IBAction func reserveButtonPressed(_ sender: UIBarButtonItem) {
+//        print("pressed reserv button")
+//        let storyboard = UIStoryboard(name: "ListingDetail", bundle: nil)
+//        let detailVC = storyboard.instantiateViewController(identifier: "ReservePopupController")
+//        navigationController?.pushViewController(detailVC, animated:false)
+//
+//        let storyBoard: UIStoryboard = UIStoryboard(name: "ListingDetail", bundle: nil)
+//        let newViewController = storyBoard.instantiateViewController(withIdentifier: "newViewController") as! ReservePopupController
+//
+//
+
+       // self.present(newViewController, animated: true, completion: nil)
+//
+ //       }
+    
+    
     
 
 }
@@ -128,4 +194,38 @@ extension ListingDetailViewController: UICollectionViewDelegateFlowLayout {
         let itemHeight = maxSize.height * 0.70
         return CGSize(width: itemWidth, height: itemHeight)
     }
+}
+
+extension ListingDetailViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else { return nil }
+        
+        let identifier = "annotationView"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+        
+      //  if annotationView == nil {
+            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView?.canShowCallout = true
+            annotationView?.tintColor = .black
+            annotationView?.markerTintColor = .systemRed
+            
+       // } else {
+       //     annotationView?.annotation = annotation
+           // annotationView?.canShowCallout = true
+      //  }
+        return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
+        // renderer.fillColor = UIColor.black.withAlphaComponent(0.5)
+        renderer.strokeColor = UIColor.systemBlue
+        
+        renderer.lineWidth = 3.0
+        
+        // renderer.lineDashPattern = [10]
+        
+        return renderer
+    }
+    
 }

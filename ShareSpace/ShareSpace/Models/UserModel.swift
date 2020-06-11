@@ -9,15 +9,30 @@
 import Foundation
 import Firebase
 
-enum UserType: Int{
+enum UserType: Int, Codable{
     case guest
     case user
     case host
 }
 
-
-class UserModel {
+class AppState {
     
+    private init() {}
+    static let shared = AppState()
+    
+    var userType:UserType?
+    
+    func setAppState(userType: UserType){
+        self.userType = userType
+    }
+    
+    func getAppState() -> UserType?{
+        return userType
+    }
+}
+
+
+class UserModel: Codable {
     
     let userEmail: String
     let userId: String
@@ -76,5 +91,9 @@ class HostModel: UserModel {
     override init(_ dictionary: [String : Any]) {
         self.posts = dictionary["post"] as? [Post] ?? [Post]()
         super.init(dictionary)
+    }
+    
+    required init(from decoder: Decoder) throws {
+        fatalError("init(from:) has not been implemented")
     }
 }

@@ -18,7 +18,7 @@ target 'ShareSpace' do
   
   pod 'Kingfisher'
   pod 'Alamofire'
-  pod 'JTAppleCalendar'
+  pod 'FSCalendar'
   pod 'SwiftLint'
   
   # Pods for Messaging
