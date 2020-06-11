@@ -26,10 +26,11 @@ class RootView: UIView {
         return view
     }()
     
-    public lazy var searchTextField : UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "I want to go to..."
-        tf.borderStyle = .none
+    public lazy var searchLabel : UILabel = {
+        let tf = UILabel()
+        tf.text = "I want to go to..."
+        tf.textColor = .systemTeal
+        tf.isUserInteractionEnabled = true
         return tf
     }()
     
@@ -98,13 +99,13 @@ class RootView: UIView {
     }
     
     private func setupSearchBarTFConstrainsts(){
-        searchBarView.addSubview(searchTextField)
-        searchTextField.translatesAutoresizingMaskIntoConstraints = false
+        searchBarView.addSubview(searchLabel)
+        searchLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            searchTextField.leadingAnchor.constraint(equalTo: searchBarView.leadingAnchor, constant: 4),
-            searchTextField.topAnchor.constraint(equalTo: searchBarView.topAnchor, constant: 4),
-            searchTextField.widthAnchor.constraint(equalTo: searchBarView.widthAnchor, multiplier: 0.7),
-            searchTextField.bottomAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: -4),
+            searchLabel.leadingAnchor.constraint(equalTo: searchBarView.leadingAnchor, constant: 4),
+            searchLabel.topAnchor.constraint(equalTo: searchBarView.topAnchor, constant: 4),
+            searchLabel.widthAnchor.constraint(equalTo: searchBarView.widthAnchor, multiplier: 0.7),
+            searchLabel.bottomAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: -4),
         ])
     }
     
@@ -112,8 +113,8 @@ class RootView: UIView {
         searchBarView.addSubview(dateTimeButton)
         dateTimeButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            dateTimeButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor, constant: 4),
-            dateTimeButton.topAnchor.constraint(equalTo: searchTextField.topAnchor),
+            dateTimeButton.leadingAnchor.constraint(equalTo: searchLabel.trailingAnchor, constant: 4),
+            dateTimeButton.topAnchor.constraint(equalTo: searchLabel.topAnchor),
             dateTimeButton.trailingAnchor.constraint(equalTo: searchBarView.trailingAnchor, constant: -4),
             dateTimeButton.bottomAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: -4)
         ])

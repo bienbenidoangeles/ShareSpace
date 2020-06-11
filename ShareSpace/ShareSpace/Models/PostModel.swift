@@ -21,6 +21,7 @@ struct Post:Codable {
     let description: String // post vc
     let amenities: [String]
     let location: Location    //let amenities: [String] // post
+    let locationId: String
     let rating: Rating?
     let reviews: [Review]?
     
@@ -47,7 +48,9 @@ struct Post:Codable {
             }
         }
         
-        return Post(postId: UUID().uuidString, price: Price.generatePrice(), postTitle: randomReviewDesc, userId: randomUIDs, listedDate: Date(), mainImage: "mainImgURL", images: nil, description: randomReviewDesc, amenities: ["washing machine", "WiFi"], location: Location.generateFullLocationWOLatLong(), rating: Rating.generateRating(), reviews: Review.generateReviews())
+        let locationId:String = UUID().uuidString
+        let postId: String = UUID().uuidString
+        return Post(postId: UUID().uuidString, price: Price.generatePrice(), postTitle: randomReviewDesc, userId: randomUIDs, listedDate: Date(), mainImage: "mainImgURL", images: nil, description: randomReviewDesc,  amenities: ["washing machine", "WiFi"], location: Location.generateFullLocationWOLatLong(locationId: locationId, postId: postId), rating: Rating.generateRating(), reviews: Review.generateReviews())
     }
     
     static func generatePostAsDict() -> [String: Any] {
@@ -58,8 +61,22 @@ struct Post:Codable {
         }
         
         let randomUIs:[String] = ["08bULUBwqqNbX6opGlUmUdM2xCH2", "0qtGZ0YxnWgsvX63aq1UBC4fpbC3","8e4XfTNmQAcAUsJs2CeY52XEkRJ3"]
+        let locationId:String = UUID().uuidString
+        let postId: String = UUID().uuidString
         
-        let dict:[String:Any] = ["postId": UUID().uuidString, "price": Price.generatePriceasDict(), "postTitle": randomReviewDesc, "userId": randomUIs.randomElement()!, "listedDate": Date(), "mainImage": "mainImgURL", "images": "nil", "description": randomReviewDesc, "location": Location.generateFullLocationWLatLongAsDict(), "rating": Rating.generateRatingAsDict(), "reviews": Review.generateReviewsAsDict()]
+        let dict:[String:Any] = [
+            "postId": UUID().uuidString,
+            "price": Price.generatePriceasDict(),
+            "postTitle": randomReviewDesc,
+            "userId": randomUIs.randomElement()!,
+            "listedDate": Date(), "mainImage": "mainImgURL",
+            "images": "nil",
+            "description": randomReviewDesc,
+            "location": Location.generateFullLocationWLatLongAsDict(locationId: locationId, postId: postId),
+            "locationId": locationId,
+            "rating": Rating.generateRatingAsDict(),
+            "reviews": Review.generateReviewsAsDict(),
+        ]
         return dict
     }
     
@@ -73,6 +90,8 @@ struct Location: Codable {
     let city: String
     let state: String
     let zip: String
+    let locationId: String
+    let postId:String
     var fullAddress: String? {
         get {
             return "\(streetAddress) \(apartmentNumber ?? "") \(city), \(state) \(zip) \(country)"
@@ -99,7 +118,7 @@ struct Location: Codable {
     }
 
     
-    static func generateFullLocationWOLatLong() -> Location{
+    static func generateFullLocationWOLatLong(locationId: String, postId: String) -> Location{
         let countries:[String] = ["US, CA, MEX"]
         let randomStreetNum = Int.random(in: 100...9999)
         let randomStreetNames: [String] = ["Park Avenue", "Mason Street", "Carroll Street", "Pineapple Street"]
@@ -109,7 +128,7 @@ struct Location: Codable {
         let randomZip:[String] = ["10001", "10402", "10043"]
         
         
-        return Location(country: countries.randomElement()!, streetAddress: "\(randomStreetNum) \(randomStreetNames.randomElement()!)", apartmentNumber: randomApartments.randomElement(), city: randomCity.randomElement()!, state: randomState.first!, zip: randomZip.randomElement()!, longitutude: nil, latitude: nil)
+        return Location(country: countries.randomElement()!, streetAddress: "\(randomStreetNum) \(randomStreetNames.randomElement()!)", apartmentNumber: randomApartments.randomElement(), city: randomCity.randomElement()!, state: randomState.first!, zip: randomZip.randomElement()!, locationId: locationId, postId: postId, longitutude: nil, latitude: nil)
     }
     
     static func generateLongLatLocation() -> (Double, Double) {
@@ -120,10 +139,10 @@ struct Location: Codable {
             Double.random(in: 73...75) * -1.0
         }
         
-        return (randomLong, randomLat)
+        return (randomLat, randomLong)
     }
     
-    static func generateFullLocationWLatLongAsDict() -> [String: Any] {
+    static func generateFullLocationWLatLongAsDict(locationId: String, postId:String) -> [String: Any] {
         let countries:[String] = ["US", "CA", "MEX"]
         let randomStreetNum = Int.random(in: 100...9999)
         let randomStreetNames: [String] = ["Park Avenue", "Mason Street", "Carroll Street", "Pineapple Street"]
@@ -131,8 +150,18 @@ struct Location: Codable {
         let randomCity:String = ["Bx", "Ny", "Bk", "Q", "SI"].randomElement()!
         let randomState:[String] = ["NY"]
         let randomZip:String = ["10001", "10402", "10043"].randomElement()!
-        
-        let dict:[String: Any] = ["country": countries.randomElement()!, "streetAddress": "\(randomStreetNum) \(randomStreetNames.randomElement()!)", "apartmentNumber": randomApartments, "city": randomCity, "state": "NY", "zip": randomZip, "longitutde": Location.generateLongLatLocation().0, "latitude": Location.generateLongLatLocation().1]
+        let dict:[String: Any] = [
+            "country": countries.randomElement()!,
+            "streetAddress": "\(randomStreetNum) \(randomStreetNames.randomElement()!)",
+            "apartmentNumber": randomApartments,
+            "city": randomCity,
+            "state": "NY",
+            "zip": randomZip,
+            "longitutde": Location.generateLongLatLocation().0,
+            "latitude": Location.generateLongLatLocation().1,
+            "locationId": locationId,
+            "postId":postId,
+        ]
         return dict
     }
     
@@ -147,6 +176,8 @@ extension Location {
         self.zip = dictionary["zip"] as? String ?? ""
         self.longitutude = dictionary["longitutude"] as? Double ?? 0.0
         self.latitude = dictionary["latitude"] as? Double ?? 0.0
+        self.locationId = dictionary["locationId"] as? String ?? "nil"
+        self.postId = dictionary["postId"] as? String ?? "nil"
     }
 }
 extension Post {
@@ -164,6 +195,7 @@ extension Post {
         self.amenities = dictionary["amenities"] as? [String] ?? [""]
         self.rating = dictionary["rating"] as? Rating ?? Rating(["rating": -1.0, "ratingImage": "nil"])
         self.reviews = dictionary["reviews"] as? [Review] ?? [Review]()
+        self.locationId = dictionary["locationId"] as? String ?? "nil"
     }
 }
 

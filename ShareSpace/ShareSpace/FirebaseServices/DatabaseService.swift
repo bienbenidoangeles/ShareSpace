@@ -19,6 +19,7 @@ class DatabaseService {
   static let chatsCollection = "chats"
   private var docRef: DocumentReference?
     static let reservationCollection = "reservations"
+    static let locationCollection = "locations"
   private let db = Firestore.firestore()
   
   private init() {}
@@ -268,7 +269,7 @@ class DatabaseService {
 //}
 
     
-    func postSpace(post: [String:Any], completion: @escaping (Result<Bool, Error>) -> ()) {
+    func postSpace(post: [String:Any], createDBLocation: Bool? = nil, completion: @escaping (Result<Bool, Error>) -> ()) {
     guard let user = Auth.auth().currentUser else { return }
     
     db.collection(DatabaseService.postCollection)
@@ -278,30 +279,59 @@ class DatabaseService {
                   if let error = error {
                     completion(.failure(error))
                   } else {
-                    completion(.success(true))
+                    if let createDBLocation = createDBLocation, createDBLocation == true, let location = post["location"] as? [String:Any] {
+                        self.createDBLocation(location: location) { (result) in
+                            switch result{
+                            case .failure(let error):
+                                completion(.failure(error))
+                            case .success:
+                                completion(.success(true))
+                            }
+                        }
+                    } else {
+                        completion(.success(true))
+                    }
                   }
         }
     }
-
-//    func loadPosts(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion: @escaping (Result<[Post], Error>) -> ()) {
-//        let postRef = db.collection(DatabaseService.postCollection)
-//        postRef.whereField("location", arrayContains: [""])
-//
-
-//    }
     
-    func loadPosts(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion: @escaping (Result<[Post], Error>) -> ()) {
-      let postRef = db.collection(DatabaseService.postCollection)
-      postRef.getDocuments { (snapshot, error) in
-        if let error = error {
-          completion(.failure(error))
-        } else if let snapshot = snapshot {
-          let posts = snapshot.documents.map{Post($0.data())}
-          completion(.success(posts))
+    func loadPosts(userId: String, completion: @escaping (Result<[Post]?, Error>) -> ()){
+        let postRef = db.collection(DatabaseService.postCollection)
+        postRef.whereField(userId, isEqualTo: userId).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = snapshot {
+                let posts = snapshot.documents.map{Post($0.data())}
+                completion(.success(posts))
+            }
         }
-      }
     }
-    
+        
+    func loadPosts(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion: @escaping (Result<[Post]?, Error>) -> ()) {
+        let postRef = db.collection(DatabaseService.postCollection)
+        readDBLocations(coordinateRange: coordinateRange) { (result) in
+            switch result{
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let locations):
+                if let locations = locations {
+                    postRef.whereField("locationId", in: locations.map{$0.locationId})
+                        .getDocuments { (snapshot, error) in
+                            if let error = error {
+                                completion(.failure(error))
+                            } else if let snapshot = snapshot {
+                                let posts = snapshot.documents.map{Post($0.data())}
+                                completion(.success(posts))
+                            }
+                    }
+                } else {
+                    completion(.success(nil))
+                }
+                
+            }
+        }
+        
+
     func editPost(postdictionary: [String: Any], completion: @escaping (Result<Bool, Error>) -> ()) {
         let postRef = db.collection(DatabaseService.postCollection)
         guard let postId = postdictionary["postId"] as? String else {
@@ -313,6 +343,54 @@ class DatabaseService {
             } else {
                 completion(.success(true))
             }
+        }
+    }
+    
+    func createDBLocation(location: [String:Any], completion: @escaping (Result<String, Error>)->()){
+        let locationRef = db.collection(DatabaseService.locationCollection)
+        let locationId = location["locationId"] as? String ?? UUID().uuidString
+        locationRef.document(locationId).setData(location) { (error) in
+            if let error = error{
+                completion(.failure(error))
+            } else {
+                completion(.success(locationId))
+            }
+        }
+    }
+    
+    func readDBLocation(locationId:String, completion: @escaping(Result<Location, Error>) -> ()){
+        let locationRef = db.collection(DatabaseService.locationCollection)
+        locationRef.document(locationId).getDocument { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            }else if let snapshot = snapshot, let data = snapshot.data() {
+                let location = Location(data)
+                completion(.success(location))
+            }
+        }
+    }
+    
+    func readDBLocations(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion:  @escaping(Result<[Location]?, Error>) -> () ) {
+        let locationRef = db.collection(DatabaseService.locationCollection)
+        let latUpper = coordinateRange.lat.upperBound.magnitude
+        let latLower = coordinateRange.lat.lowerBound.magnitude
+        let longUpper = coordinateRange.long.upperBound
+        let longLower = coordinateRange.long.lowerBound
+        locationRef.whereField("latitude", isLessThanOrEqualTo: latUpper)
+        .whereField("latitude", isGreaterThanOrEqualTo: latLower)
+            //.whereField("longitude", isLessThanOrEqualTo: longUpper)
+            //.whereField("longitude", isGreaterThanOrEqualTo: longLower)
+            .getDocuments { (snapshot, error) in
+                if let error = error{
+                    completion(.failure(error))
+                } else if let snapshot = snapshot {
+                    let locations = snapshot.documents.map{Location($0.data())}
+                    if locations.isEmpty{
+                        completion(.success(nil))
+                    } else {
+                        completion(.success(locations))
+                    }
+                }
         }
     }
     

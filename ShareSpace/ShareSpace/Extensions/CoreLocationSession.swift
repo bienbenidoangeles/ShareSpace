@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import CoreLocation
+import MapKit
 
 class CoreLocationSession: NSObject {
     
@@ -21,9 +21,12 @@ class CoreLocationSession: NSObject {
     
     public var geoCoder:CLGeocoder
     
+    public var searchCompletor: MKLocalSearchCompleter
+    
     private override init() {
         locationManager = CLLocationManager()
         geoCoder = CLGeocoder()
+        searchCompletor = MKLocalSearchCompleter()
         super.init()
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
@@ -41,7 +44,7 @@ class CoreLocationSession: NSObject {
     }
     
     //use google places to convert
-    func convertAddressToCoors(address: String, completion: @escaping (Result<[CLLocationCoordinate2D], Error>) -> ()){
+    func convertAddressToCoors(address: String, completion: @escaping (Result<[CLLocationCoordinate2D]?, Error>) -> ()){
         geoCoder.geocodeAddressString(address) { (placemarks, error) in
             if let error = error {
                 completion(.failure(error))
