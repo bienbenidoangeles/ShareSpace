@@ -9,11 +9,6 @@
 import UIKit
 import MapKit
 
-protocol SearchPostDelegate: AnyObject {
-    func readPostsFromSearchBar(given coordinate: [CLLocationCoordinate2D])
-    func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>))
-}
-
 class RootViewController: NavBarViewController {
     private let locationSession = CoreLocationSession.shared.locationManager
     
@@ -62,11 +57,16 @@ class RootViewController: NavBarViewController {
         setupCard()
         setupMap()
         addNavButtons()
+        setupGestures()
     }
     
     private func delegatesAndDataSources(){
-        rootView.searchTextField.delegate = self
         rootView.mapView.delegate = self
+    }
+    
+    private func setupGestures(){
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(searchLabelTapped(_:)))
+        rootView.searchLabel.addGestureRecognizer(tapGesture)
     }
     
     private func addTargets(){
@@ -77,6 +77,14 @@ class RootViewController: NavBarViewController {
     private func addNavButtons(){
         let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "calendar.circle"), style: .plain, target: self, action: #selector(calenderButtonPressed))
         navigationItem.rightBarButtonItems?.append(barButtonItem)
+    }
+    
+    @objc private func searchLabelTapped(_ recognizer: UITapGestureRecognizer){
+        let searchCompletor =  CoreLocationSession.shared.searchCompletor
+        let searchResultsVC = SearchResultsViewController(searchCompletor: searchCompletor)
+        searchResultsVC.modalTransitionStyle = .crossDissolve
+        searchResultsVC.delegate = self
+        navigationController?.pushViewController(searchResultsVC, animated: true)
     }
     
     @objc private func calenderButtonPressed(){
@@ -286,24 +294,16 @@ class RootViewController: NavBarViewController {
     
 }
 
-extension RootViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let address = textField.text, !address.isEmpty else {
-            return false
-        }
-        
-        CoreLocationSession.shared.convertAddressToCoors(address: address) { (result) in
-            switch result{
-            case .failure(let error):
-                //message pop-up for errors
-                break
-            case .success(let coordinates):
-                self.delegate?.readPostsFromSearchBar(given: coordinates)
-                self.rootView.searchTextField.resignFirstResponder()
-            }
-        }
-        return true
+extension RootViewController: SearchPostDelegate{
+    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D) {
+        //map view to center location from addrr
+        self.rootView.mapView.centerToLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
     }
+    
+    func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
+        
+    }
+    
 }
 
 extension RootViewController: MKMapViewDelegate {

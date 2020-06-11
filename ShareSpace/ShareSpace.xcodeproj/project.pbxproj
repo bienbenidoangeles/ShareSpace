@@ -66,6 +66,8 @@
 		F1684C57247AE07200AA9A17 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C56247AE07200AA9A17 /* StorageService.swift */; };
 		F1684C59247AE22200AA9A17 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C58247AE22200AA9A17 /* CardView.swift */; };
 		F1DA144A249109CF0067B55B /* CLLocationCoordinate2D+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */; };
+		F1DA144E24920B730067B55B /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA144D24920B730067B55B /* SearchResultsViewController.swift */; };
+		F1DA145224920E360067B55B /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA145124920E360067B55B /* SearchResultsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +148,8 @@
 		F1684C56247AE07200AA9A17 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		F1684C58247AE22200AA9A17 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Extensions.swift"; sourceTree = "<group>"; };
+		F1DA144D24920B730067B55B /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		F1DA145124920E360067B55B /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,6 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				F1684C2C247AD42E00AA9A17 /* LoginViewController.swift */,
+				F1DA144D24920B730067B55B /* SearchResultsViewController.swift */,
 				F1684C52247ADE1400AA9A17 /* TabBarController.swift */,
 				F1684C54247ADECC00AA9A17 /* CardViewController.swift */,
 				8DBA856D247F3C2E0029598C /* ProfileViewController.swift */,
@@ -317,6 +322,7 @@
 				5802D7E524884C0400A505FB /* UserCell.swift */,
 				5802D7E724884C1F00A505FB /* UserCell.xib */,
 				F149D4FB24886F2C006D77D2 /* RootView.swift */,
+				F1DA145124920E360067B55B /* SearchResultsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -556,6 +562,7 @@
 				F1DA144A249109CF0067B55B /* CLLocationCoordinate2D+Extensions.swift in Sources */,
 				F149D50A2488FDF3006D77D2 /* FeedCollapsedCell.swift in Sources */,
 				8DBA856C247F2D560029598C /* ProfileView.swift in Sources */,
+				F1DA144E24920B730067B55B /* SearchResultsViewController.swift in Sources */,
 				F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */,
 				F149D4F82486CF2A006D77D2 /* NavBarViewController.swift in Sources */,
 				F1684C57247AE07200AA9A17 /* StorageService.swift in Sources */,
@@ -565,6 +572,7 @@
 				F1684C47247AD7BE00AA9A17 /* LoginView.swift in Sources */,
 				0F01D831248EABDE00B5BEE5 /* FirstProfileViewController.swift in Sources */,
 				F1684C49247ADC6F00AA9A17 /* AuthenticationSession.swift in Sources */,
+				F1DA145224920E360067B55B /* SearchResultsView.swift in Sources */,
 				F149D4FC24886F2C006D77D2 /* RootView.swift in Sources */,
 				F149D498247F3348006D77D2 /* FeedCell.swift in Sources */,
 				5802D7E424882DF300A505FB /* ChatListViewController.swift in Sources */,

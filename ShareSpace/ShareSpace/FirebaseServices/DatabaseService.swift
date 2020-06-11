@@ -269,7 +269,7 @@ class DatabaseService {
 //}
 
     
-    func postSpace(post: [String:Any], completion: @escaping (Result<Bool, Error>) -> ()) {
+    func postSpace(post: [String:Any], createDBLocation: Bool? = nil, completion: @escaping (Result<Bool, Error>) -> ()) {
     guard let user = Auth.auth().currentUser else { return }
     
     db.collection(DatabaseService.postCollection)
@@ -279,7 +279,18 @@ class DatabaseService {
                   if let error = error {
                     completion(.failure(error))
                   } else {
-                    completion(.success(true))
+                    if let createDBLocation = createDBLocation, createDBLocation == true, let location = post["location"] as? [String:Any] {
+                        self.createDBLocation(location: location) { (result) in
+                            switch result{
+                            case .failure(let error):
+                                completion(.failure(error))
+                            case .success:
+                                completion(.success(true))
+                            }
+                        }
+                    } else {
+                        completion(.success(true))
+                    }
                   }
         }
     }
