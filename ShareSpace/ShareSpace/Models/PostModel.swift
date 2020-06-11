@@ -154,7 +154,7 @@ extension Post {
         self.postId = dictionary["postId"] as? String ?? "nil"
         self.price = dictionary["price"] as? Price ?? Price(["subtotal": -1.0, "spaceCut": -1.0, "tax": -1.0, "taxRate": -1.0, "total": -1.0])
         self.postTitle = dictionary["postTitle"] as? String ?? "nil"
-        self.userId = dictionary["hostId"] as? String ?? ""
+        self.userId = dictionary["userId"] as? String ?? ""
         self.listedDate = dictionary["listedDate"] as? Date ?? Date()
         self.mainImage = dictionary["mainImage"] as? String ?? "nil"
         self.images = dictionary["images"] as? [String] ?? ["nil"]
