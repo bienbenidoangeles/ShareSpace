@@ -167,8 +167,6 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             !userFirstName.isEmpty,
             let userLastName = profileView.userLastNameTextfield.text,
             !userLastName.isEmpty,
-            let userType = profileView.userTypeTextfield.text,
-            !userType.isEmpty,
             let userPhoneNumber = profileView.userPhoneNumberTextfield.text,
             !userPhoneNumber.isEmpty,
             let userBio = profileView.userBioTextfield.text,
@@ -197,7 +195,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         //need to update to user userId ot itemId
         
         // Update this code:
-        
+        // create
         storageService.uploadPhoto(userId: user.uid, image: selectedImage) { [weak self] (result) in
             // code here to add the photoURL to the user's photoURL
             //     property then commit changes
@@ -209,7 +207,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             case .success(let url):
                 let request = Auth.auth().currentUser?.createProfileChangeRequest()
                 request?.displayName = displayName
-                request?.photoURL = url
+                request?.photoURL = url // url.absoluteString for the updateDbUser func
                 request?.commitChanges(completion: { [unowned self] (error) in
                     if let error = error {
                         //TODO: show alert
@@ -219,6 +217,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                         }
                     } else {
                         //print("profile successfully updated")
+                        //update user code
+                        
                         DispatchQueue.main.async {
                             self?.showAlert(title: "Profile Updated", message: "Profile successfully updated")
                         }
@@ -227,7 +227,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        DatabaseService.shared.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, userType: userType, governmentId: userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate){ [weak self]
+        DatabaseService.shared.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId: userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate, userType: AppState.shared.userType?.rawValue ?? 1){ [weak self]
         (result) in
             switch result {
             case .failure(let error):

@@ -60,7 +60,7 @@ class DatabaseService {
 
   
     //FIXME: change userType from string to UserType
-    func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String, userType: String, governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+    func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String , governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, userType: Int, completion: @escaping (Result<Bool, Error>) -> ()) {
     guard let user = Auth.auth().currentUser else { return }
     
     db.collection(DatabaseService.usersCollection)
@@ -85,19 +85,19 @@ class DatabaseService {
     }
   }
     
-  func createNewChat(user1ID: String, user2ID: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+    func createNewChat(user1ID: String, user2ID: String, chatId:String? = nil, completion: @escaping (Result<String, Error>) -> ()) {
       let users = [user1ID, user2ID]
       
     let docRef: DocumentReference = db.collection(DatabaseService.chatsCollection).document()
 //    let docRef: DocumentReference = db.collection(DatabaseService.usersCollection).document(user1ID).collection(DatabaseService.chatsCollection).document()
       
-    let chat: [String: Any] = [DatabaseService.usersCollection: users, "chatId": docRef.documentID]
+    let chat: [String: Any] = [DatabaseService.usersCollection: users, "chatId": chatId ?? docRef.documentID]
       
-    db.collection(DatabaseService.chatsCollection).document(docRef.documentID).setData(chat) { (error) in
+    db.collection(DatabaseService.chatsCollection).document(chatId ?? docRef.documentID).setData(chat) { (error) in
       if let error = error {
         completion(.failure(error))
       } else {
-        completion(.success(true))
+        completion(.success(docRef.documentID))
       }
     }
     func updateDatabaseUserType(userType: User){
@@ -282,11 +282,12 @@ class DatabaseService {
                   }
         }
     }
-//
+
 //    func loadPosts(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion: @escaping (Result<[Post], Error>) -> ()) {
 //        let postRef = db.collection(DatabaseService.postCollection)
 //        postRef.whereField("location", arrayContains: [""])
 //
+
 //    }
     
     func loadPosts(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion: @escaping (Result<[Post], Error>) -> ()) {
