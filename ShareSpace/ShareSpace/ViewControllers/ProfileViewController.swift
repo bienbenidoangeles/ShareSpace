@@ -32,11 +32,11 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    private var selectedIdImage: UIImage? {
-        didSet {
-            profileView.idImageView.image = selectedIdImage
-        }
-    }
+//    private var selectedIdImage: UIImage? {
+//        didSet {
+//            profileView.idImageView.image = selectedIdImage
+//        }
+//    }
     
     private let storageService = StorageService.shared
     
@@ -195,7 +195,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         //need to update to user userId ot itemId
         
         // Update this code:
-        
+        // create
         storageService.uploadPhoto(userId: user.uid, image: selectedImage) { [weak self] (result) in
             // code here to add the photoURL to the user's photoURL
             //     property then commit changes
@@ -207,7 +207,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             case .success(let url):
                 let request = Auth.auth().currentUser?.createProfileChangeRequest()
                 request?.displayName = displayName
-                request?.photoURL = url
+                request?.photoURL = url // url.absoluteString for the updateDbUser func
                 request?.commitChanges(completion: { [unowned self] (error) in
                     if let error = error {
                         //TODO: show alert
@@ -217,6 +217,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                         }
                     } else {
                         //print("profile successfully updated")
+                        //update user code
+                        
                         DispatchQueue.main.async {
                             self?.showAlert(title: "Profile Updated", message: "Profile successfully updated")
                         }

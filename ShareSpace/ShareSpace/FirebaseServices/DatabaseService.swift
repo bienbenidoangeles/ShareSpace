@@ -86,19 +86,19 @@ class DatabaseService {
     }
   }
     
-  func createNewChat(user1ID: String, user2ID: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+    func createNewChat(user1ID: String, user2ID: String, chatId:String? = nil, completion: @escaping (Result<String, Error>) -> ()) {
       let users = [user1ID, user2ID]
       
     let docRef: DocumentReference = db.collection(DatabaseService.chatsCollection).document()
 //    let docRef: DocumentReference = db.collection(DatabaseService.usersCollection).document(user1ID).collection(DatabaseService.chatsCollection).document()
       
-    let chat: [String: Any] = [DatabaseService.usersCollection: users, "chatId": docRef.documentID]
+    let chat: [String: Any] = [DatabaseService.usersCollection: users, "chatId": chatId ?? docRef.documentID]
       
-    db.collection(DatabaseService.chatsCollection).document(docRef.documentID).setData(chat) { (error) in
+    db.collection(DatabaseService.chatsCollection).document(chatId ?? docRef.documentID).setData(chat) { (error) in
       if let error = error {
         completion(.failure(error))
       } else {
-        completion(.success(true))
+        completion(.success(docRef.documentID))
       }
     }
     func updateDatabaseUserType(userType: User){
@@ -331,6 +331,19 @@ class DatabaseService {
             }
         }
         
+
+    func editPost(postdictionary: [String: Any], completion: @escaping (Result<Bool, Error>) -> ()) {
+        let postRef = db.collection(DatabaseService.postCollection)
+        guard let postId = postdictionary["postId"] as? String else {
+            return
+        }
+        postRef.document(postId).updateData(postdictionary) { (error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(true))
+            }
+        }
     }
     
     func createDBLocation(location: [String:Any], completion: @escaping (Result<String, Error>)->()){

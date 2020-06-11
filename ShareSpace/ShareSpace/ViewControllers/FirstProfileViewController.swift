@@ -72,7 +72,11 @@ class FirstProfileViewController: UIViewController {
     }
     
     @IBAction func editButton(_ sender: UIButton) {
+            guard let user = Auth.auth().currentUser else {
+                return
+            }
+          
+            let editProfilelVC = ProfileViewController()
+            navigationController?.pushViewController(editProfilelVC, animated: true)
     }
-    
-
 }
