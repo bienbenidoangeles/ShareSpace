@@ -36,14 +36,17 @@ class CardViewController: UIViewController {
         view.backgroundColor = .systemBackground
         delegatesAndDataSources()
         let coordinate = CoreLocationSession.shared.locationManager.location?.coordinate.toString
-        //loadPost(given: coordinate)
+        let coorRang = (lat: 0...1.5, long: 0...1.5)
+        loadPost(given: coorRang)
         registerCell()
     }
     
     private func delegatesAndDataSources(){
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
-        let rootVC = RootViewController()
+        guard let rootVC = self.parent as? RootViewController else {
+            return
+        }
         rootVC.delegate = self
     }
   
@@ -56,17 +59,36 @@ class CardViewController: UIViewController {
       switch result {
       case .failure(let error):
         print("It failed")
-      case .success(let post):
-        self.posts = post
-
+      case .success(let posts):
+        guard let posts = posts else {
+            return // have an empty view
+        }
+        self.posts = posts
       }
     }
+        
+//        for _ in 0...9{
+//            let genPost = Post.generatePostAsDict()
+//            DatabaseService.shared.postSpace(post: genPost) { (result) in
+//                switch result{
+//                case .failure:
+//                    break
+//                case .success:
+//                    let location = genPost["location"] as? [String:Any]
+//                    DatabaseService.shared.createDBLocation(location:  location!) { (result) in
+//                        switch result{
+//                        case .failure:
+//                            break
+//                        case.success(let locId):
+//                            //print(locId)
+//                            break
+//                        }
+//                    }
+//                }
+//            }
+//        }
     
   }
-    
-    //func to find nearby zipcodes if posts are less than (num)
-    //func to zoom out if nothing is near the zipcode
-    //func to add addition posts until count == (ideal max on card vc)
     
     private func registerCell(){
         mainView.collectionView.register(UINib(nibName: "CollapsedCell", bundle: nil), forCellWithReuseIdentifier: "collapsedFeedCell")
@@ -112,7 +134,7 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
 
 extension CardViewController: SearchPostDelegate{
     func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
-        
+        loadPost(given: coordinateRange)
     }
     
     func readPostsFromSearchBar(given coordinate: [CLLocationCoordinate2D]) {

@@ -19,6 +19,7 @@ class DatabaseService {
   static let chatsCollection = "chats"
   private var docRef: DocumentReference?
     static let reservationCollection = "reservations"
+    static let locationCollection = "locations"
   private let db = Firestore.firestore()
   
   private init() {}
@@ -283,10 +284,78 @@ class DatabaseService {
         }
     }
         
-    func loadPosts(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion: @escaping (Result<[Post], Error>) -> ()) {
+    func loadPosts(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion: @escaping (Result<[Post]?, Error>) -> ()) {
         let postRef = db.collection(DatabaseService.postCollection)
-        postRef.whereField("location", arrayContains: [""])
+        readDBLocations(coordinateRange: coordinateRange) { (result) in
+            switch result{
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let locations):
+                if let locations = locations {
+                    postRef.whereField("locationId", in: locations.map{$0.locationId})
+                        .getDocuments { (snapshot, error) in
+                            if let error = error {
+                                completion(.failure(error))
+                            } else if let snapshot = snapshot {
+                                let posts = snapshot.documents.map{Post($0.data())}
+                                completion(.success(posts))
+                            }
+                    }
+                } else {
+                    completion(.success(nil))
+                }
+                
+            }
+        }
         
+    }
+    
+    func createDBLocation(location: [String:Any], completion: @escaping (Result<String, Error>)->()){
+        let locationRef = db.collection(DatabaseService.locationCollection)
+        let locationId = location["locationId"] as? String ?? UUID().uuidString
+        locationRef.document(locationId).setData(location) { (error) in
+            if let error = error{
+                completion(.failure(error))
+            } else {
+                completion(.success(locationId))
+            }
+        }
+    }
+    
+    func readDBLocation(locationId:String, completion: @escaping(Result<Location, Error>) -> ()){
+        let locationRef = db.collection(DatabaseService.locationCollection)
+        locationRef.document(locationId).getDocument { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            }else if let snapshot = snapshot, let data = snapshot.data() {
+                let location = Location(data)
+                completion(.success(location))
+            }
+        }
+    }
+    
+    func readDBLocations(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion:  @escaping(Result<[Location]?, Error>) -> () ) {
+        let locationRef = db.collection(DatabaseService.locationCollection)
+        let latUpper = coordinateRange.lat.upperBound
+        let latLower = coordinateRange.lat.lowerBound
+        let longUpper = coordinateRange.long.upperBound
+        let longLower = coordinateRange.long.lowerBound
+        locationRef.whereField("latitude", isLessThanOrEqualTo: latLower)
+        .whereField("latitude", isGreaterThanOrEqualTo: latUpper)
+            //.whereField("longitude", isLessThanOrEqualTo: longUpper)
+            //.whereField("longitude", isGreaterThanOrEqualTo: longLower)
+            .getDocuments { (snapshot, error) in
+                if let error = error{
+                    completion(.failure(error))
+                } else if let snapshot = snapshot {
+                    let locations = snapshot.documents.map{Location($0.data())}
+                    if locations.isEmpty{
+                        completion(.success(nil))
+                    } else {
+                        completion(.success(locations))
+                    }
+                }
+        }
     }
     
     func createReservation(reservation: [String: Any], completion: @escaping(Result<Bool, Error>) -> ()){
