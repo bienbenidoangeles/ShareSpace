@@ -8,9 +8,12 @@
 
 import UIKit
 import FSCalendar
+import FirebaseAuth
+import FirebaseFirestore
 
 class ReservePopupController: UIViewController {
     
+   private let storageService = StorageService.shared
     
     
     
@@ -56,6 +59,7 @@ class ReservePopupController: UIViewController {
        
            override func viewDidLoad() {
                super.viewDidLoad()
+            view.backgroundColor = .systemGroupedBackground
                calendar.delegate = self
                calendar.dataSource = self
                calendar.allowsMultipleSelection = true
@@ -88,12 +92,70 @@ class ReservePopupController: UIViewController {
            
        }
     func updateUI() {
-        totalPriceLabel.text = selectedPost.price.total.description
+        pricePerNightLabel.text = "\(selectedPost.price.total.description)$/NIGHT"
     }
 
 
     @IBAction func sendMessageButtonPressed(_ sender: UIButton) {
+        
+        guard let user = Auth.auth().currentUser else { return }
+        let chatId = UUID().uuidString
+        let renterId = user.uid
+        let postId = selectedPost.postId
+        let status = Status.undetermined
+        let reservationId = UUID().uuidString
+        guard let checkIn = datesRange?.first,
+            
+            let checkOut = datesRange?.last,
+           
+            let message = messageTextView.text,
+            !message.isEmpty else { return }
+        let messageID = UUID().uuidString
+        let dict:[String : Any]
+            = [
+                "renterId": renterId,
+            "postId": postId,
+            "checkIn": checkIn,
+            "checkOut": checkOut,
+            "chatId": chatId,
+            "status": status.rawValue,
+            "reservationId": reservationId
+            ]
+        DatabaseService.shared.createReservation(reservation: dict) { (result) in
+            switch result {
+            case .failure(let error):
+                self.showAlert(title: "Error", message: error.localizedDescription)
+                
+            case .success:
+                let message = Message(id: messageID, content: message, created: Timestamp(), senderID: renterId, senderName: user.displayName ?? "anonymous")
+                self.creatingThread(user1Id: renterId, user2Id: self.selectedPost.userId, messgae: message, chatId: chatId)
+            }
+        }
+       
     }
+    
+    private func creatingThread(user1Id: String, user2Id: String, messgae: Message, chatId: String){
+        DatabaseService.shared.createNewChat(user1ID: user1Id, user2ID: user2Id, chatId: chatId) { (result) in
+            switch result{
+            case .failure(let error):
+            self.showAlert(title: "Error", message: error.localizedDescription)
+            case .success(let chatId):
+                self.sendMessage(message: messgae, destinationUserId: user2Id, chatId: chatId)
+            }
+        }
+    }
+    
+    private func sendMessage(message: Message, destinationUserId: String, chatId: String){
+        DatabaseService.shared.sendChatMessage(message, user2ID: destinationUserId, chatId: chatId) { (result) in
+            switch result {
+            case .failure(let error):
+                self.showAlert(title: "Error", message: error.localizedDescription)
+            case .success:
+                self.showAlert(title: "Your message was successfully sent", message: "Your host will reply shortly!")
+            }
+        }
+    }
+    
     
 }
 
@@ -129,9 +191,9 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
             }
 
             datesRange = range
-            totalPriceLabel.text = (datesRange?.count ?? 1 * Int(selectedPost.price.total )).description
-            fromDateLabel.text = datesRange?.first?.description
-            toDateLAbel.text = datesRange?.last?.description
+            totalPriceLabel.text = "Total for \(datesRange?.count ?? -1) days: \((datesRange?.count ?? 1 * Int(selectedPost.price.total)).description)$"
+            fromDateLabel.text = "From: \(datesRange?.first?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
+            toDateLAbel.text = "To: \(datesRange?.last?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
             
             print("datesRange contains: \(datesRange!)")
 
@@ -170,4 +232,9 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
         return array
     }
 
+}
+extension String {
+    func toDouble() -> Double? {
+        return NumberFormatter().number(from: self)?.doubleValue
+    }
 }

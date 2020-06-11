@@ -20,7 +20,7 @@ struct Reservation: Codable {
     let checkOut:Date
     let timeIn: Date?
     let timeOut:Date?
-    let messageId: String?
+    let chatId: String?
     let status: Status.RawValue
     let reservationId: String
 }
@@ -32,7 +32,7 @@ extension Reservation {
         self.checkOut = dict["checkOut"] as? Date ?? Date()
         self.timeIn = dict["timeIn"] as? Date ?? Date()
         self.timeOut = dict["timeOut"] as? Date ?? Date()
-        self.messageId = dict["messageId"] as? String
+        self.chatId = dict["chatId"] as? String
         self.status = dict["status"] as? Status.RawValue ?? Status.undetermined.rawValue
         self.reservationId = dict["reservationId"] as? String ?? ""
     }

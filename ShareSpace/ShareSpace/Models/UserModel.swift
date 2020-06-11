@@ -44,7 +44,7 @@ class UserModel: Codable {
     let work: String?
     let reviews: [Review]?
     let userType: UserType
-    let profileImage:String?
+    let profileImage:String? // this needs to be included under the updateDataBaseUser func arguements
     let governmentId: String?
     let creditCard: String?
     let cardCVV: String?
