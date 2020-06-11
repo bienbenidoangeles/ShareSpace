@@ -94,7 +94,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
         
         guard let user = Auth.auth().currentUser else { return }
         
-        let location = Location(country: "USA", streetAddress: streetTextField.text ?? "no street name", apartmentNumber: apartmentTextField.text ?? "no apartment name", city: cityTextField.text ?? "no city name", state: stateTextField.text ?? "no state name", zip: zipCodeTextField.text ?? "no zip code", longitutude: nil, latitude: nil)
+        let location = Location(country: "USA", streetAddress: streetTextField.text ?? "no street name", apartmentNumber: apartmentTextField.text ?? "no apartment name", city: cityTextField.text ?? "no city name", state: stateTextField.text ?? "no state name", zip: zipCodeTextField.text ?? "no zip code", locationId: "", postId: "",  longitutude: nil, latitude: nil)
         
         CoreLocationSession.shared.convertAddressToCoors(address: location.fullAddress ?? "no address found") {
             (result) in
@@ -102,7 +102,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
             case .failure(let error):
                 break
             case .success(let coordinate):
-                guard let coordinate = coordinate.first else {
+                guard let coordinate = coordinate?.first else {
                     return
                 }
                 let locationDict: [String: Any] =

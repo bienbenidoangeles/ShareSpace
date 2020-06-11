@@ -233,8 +233,8 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
     }
 
 }
-extension String {
-    func toDouble() -> Double? {
-        return NumberFormatter().number(from: self)?.doubleValue
-    }
-}
+//extension String {
+//    func toDouble() -> Double? {
+//        return NumberFormatter().number(from: self)?.doubleValue
+//    }
+//}

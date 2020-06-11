@@ -50,7 +50,7 @@ struct Post:Codable {
         
         let locationId:String = UUID().uuidString
         let postId: String = UUID().uuidString
-        return Post(postId: UUID().uuidString, price: Price.generatePrice(), postTitle: randomReviewDesc, userId: randomUIDs, listedDate: Date(), mainImage: "mainImgURL", images: nil, description: randomReviewDesc,  amenities: ["washing machine", "WiFi"], location: Location.generateFullLocationWOLatLong(locationId: locationId, postId: postId), rating: Rating.generateRating(), reviews: Review.generateReviews())
+        return Post(postId: UUID().uuidString, price: Price.generatePrice(), postTitle: randomReviewDesc, userId: randomUIDs, listedDate: Date(), mainImage: "mainImgURL", images: nil, description: randomReviewDesc,  amenities: ["washing machine", "WiFi"], location: Location.generateFullLocationWOLatLong(locationId: locationId, postId: postId), locationId: locationId, rating: Rating.generateRating(), reviews: Review.generateReviews())
     }
     
     static func generatePostAsDict() -> [String: Any] {
