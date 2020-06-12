@@ -61,7 +61,8 @@ class DatabaseService {
     
     
     //FIXME: change userType from string to UserType
-    func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String , governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, userType: Int, completion: @escaping (Result<Bool, Error>) -> ()) {
+    func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String , governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, //userType: Int,
+        profileImage: String, completion: @escaping (Result<Bool, Error>) -> ()) {
         guard let user = Auth.auth().currentUser else { return }
         
         db.collection(DatabaseService.usersCollection)
@@ -72,11 +73,12 @@ class DatabaseService {
                          "phoneNumber": phoneNumber,
                          "bio": bio,
                          "work": work,
-                         "userType": userType,
+                        // "userType": userType,
                          "governmentId": governmentId,
                          "creditCard": creditCard,
                          "cardCVV": cardCVV,
-                         "cardExpDate": cardExpDate
+                         "cardExpDate": cardExpDate,
+                         "profileImage": profileImage
             ]) { (error) in
                 if let error = error {
                     completion(.failure(error))

@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseStorage
+import Kingfisher
 
 class FirstProfileViewController: UIViewController {
     
@@ -47,6 +48,8 @@ class FirstProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadUser()
+        
+        loadUserImage()
     }
     
     
@@ -70,11 +73,77 @@ class FirstProfileViewController: UIViewController {
             if user.uid == self.userId {
                 //works
                 userEmail.text = user.email ?? "no email"
+                
             }
         }
         userNameLabel.text = user.displayName
         userPhoneNumber.text = user.phoneNumber
+        //userImage.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
+       // userImage.kf.setImage(with: URL(string: user.profileImage ?? "no "))
+        userImage.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
+        
+       // loadUserImage()
+        //loadImage(imageURL: user.profileImage ?? "no image url")
+    
     }
+    
+    
+    func loadImage(imageURL: String) {
+              userImage.kf.setImage(with: URL(string: imageURL))
+    }
+    
+    
+    func loadUserImage() {
+        guard let displayName = userNameLabel.text,
+            let selectedImage = selectedImage else {
+                          print("missing field")
+                          return
+                  }
+          guard let user = Auth.auth().currentUser else { return }
+           //resize image before uploading to Firebase
+           //let resizedImage = UIImage.resizeImage(originalImage: selectedImage, rect: profileView.profileImageView.bounds)
+           let resizedImage = UIImage.resizeImage(selectedImage)
+           
+           print("original image size: \(selectedImage.size)")
+           print("resized image size: \(resizedImage)")
+           
+           //TODO: call storageService.upload
+           //need to update to user userId ot itemId
+           
+           // Update this code:
+           // create
+           storageService.uploadPhoto(userId: user.uid, image: selectedImage) { [weak self] (result) in
+               // code here to add the photoURL to the user's photoURL
+               //     property then commit changes
+               switch result {
+               case .failure(let error):
+                   DispatchQueue.main.async {
+                       self?.showAlert(title: "Error uploading photo", message: "\(error.localizedDescription)")
+                   }
+               case .success(let url):
+                   let request = Auth.auth().currentUser?.createProfileChangeRequest()
+                   request?.displayName = displayName
+                   request?.photoURL = url // url.absoluteString for the updateDbUser func
+                   request?.commitChanges(completion: { [unowned self] (error) in
+                       if let error = error {
+                           //TODO: show alert
+                           //print("CommitCjanges error: \(error)")
+                           DispatchQueue.main.async {
+                               self?.showAlert(title: "Error updating profile", message: "Error changing profile: \(error.localizedDescription)")
+                           }
+                       } else {
+                           //print("profile successfully updated")
+                           //update user code
+                           
+                           DispatchQueue.main.async {
+                               self?.showAlert(title: "Profile Updated", message: "Profile successfully updated")
+                           }
+                       }
+                   })
+               }
+        }
+    }
+  
     
     func loadUser() {
         DatabaseService.shared.loadUser(userId: userId) {
