@@ -279,11 +279,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aOA-LW-jOu"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Bnw-Eo-z2T"/>
+                    <navigationItem key="navigationItem" id="Bnw-Eo-z2T">
+                        <barButtonItem key="rightBarButtonItem" title="Sign Out" id="xiv-Sp-EZH">
+                            <connections>
+                                <action selector="signOutButtonPressed:" destination="EIg-oz-ubD" id="SpN-Qi-Qhe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="reviewsCollectionView" destination="A1V-fa-99M" id="DX4-S6-pi5"/>
                         <outlet property="spacesCollectionView" destination="6s2-RF-29O" id="SLM-Ao-uiR"/>
                         <outlet property="userEmail" destination="Bw9-MF-KZR" id="hxy-UE-qnD"/>
+                        <outlet property="userImage" destination="EVL-cc-Yb1" id="6UK-b4-c68"/>
                         <outlet property="userNameLabel" destination="awK-X6-3LM" id="ALm-6c-dtp"/>
                         <outlet property="userPhoneNumber" destination="QKd-78-w2P" id="mOA-Mo-cvr"/>
                         <outlet property="userRating" destination="bbX-4j-SLY" id="DOK-AW-8Pv"/>
