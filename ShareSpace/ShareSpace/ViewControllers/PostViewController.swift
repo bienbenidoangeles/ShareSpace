@@ -66,6 +66,9 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
         descriptionTextView.delegate = self
         amenititesTextView.delegate = self
         
+        imagePosting.image = UIImage(systemName: "house.fill")
+        imagePosting.tintColor = .yummyOrange
+        
     }
     
     @IBAction func uploadPhotosButtonPressed(_ sender: UIButton) {
