@@ -53,7 +53,6 @@
 		F1684C00247AC6EC00AA9A17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1684BFF247AC6EC00AA9A17 /* Assets.xcassets */; };
 		F1684C03247AC6EC00AA9A17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1684C01247AC6EC00AA9A17 /* LaunchScreen.storyboard */; };
 		F1684C0E247AC6EC00AA9A17 /* ShareSpaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C0D247AC6EC00AA9A17 /* ShareSpaceTests.swift */; };
-		F1684C2B247AD37A00AA9A17 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1684C2A247AD37A00AA9A17 /* GoogleService-Info.plist */; };
 		F1684C2D247AD42E00AA9A17 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C2C247AD42E00AA9A17 /* LoginViewController.swift */; };
 		F1684C47247AD7BE00AA9A17 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C46247AD7BE00AA9A17 /* LoginView.swift */; };
 		F1684C49247ADC6F00AA9A17 /* AuthenticationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C48247ADC6F00AA9A17 /* AuthenticationSession.swift */; };
@@ -68,6 +67,7 @@
 		F1DA144A249109CF0067B55B /* CLLocationCoordinate2D+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */; };
 		F1DA144E24920B730067B55B /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA144D24920B730067B55B /* SearchResultsViewController.swift */; };
 		F1DA145224920E360067B55B /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA145124920E360067B55B /* SearchResultsView.swift */; };
+		F1DA14542493CD800067B55B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1DA14532493CD7F0067B55B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,7 +135,6 @@
 		F1684C09247AC6EC00AA9A17 /* ShareSpaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShareSpaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1684C0D247AC6EC00AA9A17 /* ShareSpaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSpaceTests.swift; sourceTree = "<group>"; };
 		F1684C0F247AC6EC00AA9A17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F1684C2A247AD37A00AA9A17 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F1684C2C247AD42E00AA9A17 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F1684C46247AD7BE00AA9A17 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		F1684C48247ADC6F00AA9A17 /* AuthenticationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationSession.swift; sourceTree = "<group>"; };
@@ -150,6 +149,7 @@
 		F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Extensions.swift"; sourceTree = "<group>"; };
 		F1DA144D24920B730067B55B /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		F1DA145124920E360067B55B /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
+		F1DA14532493CD7F0067B55B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,7 +258,7 @@
 				F1684C31247AD56300AA9A17 /* Extensions */,
 				F1684C1C247ACE9200AA9A17 /* ViewControllers */,
 				F1684BFA247AC6E800AA9A17 /* ViewController.swift */,
-				F1684C2A247AD37A00AA9A17 /* GoogleService-Info.plist */,
+				F1DA14532493CD7F0067B55B /* GoogleService-Info.plist */,
 				F1684C04247AC6EC00AA9A17 /* Info.plist */,
 			);
 			path = ShareSpace;
@@ -446,10 +446,10 @@
 				0F01D82F248EAB9E00B5BEE5 /* FirstProfileStoryboard.storyboard in Resources */,
 				F1684C03247AC6EC00AA9A17 /* LaunchScreen.storyboard in Resources */,
 				F149D5082488E7F8006D77D2 /* SimpleCollapsedCell.xib in Resources */,
+				F1DA14542493CD800067B55B /* GoogleService-Info.plist in Resources */,
 				F149D5042488DDC1006D77D2 /* CollapsedCell.xib in Resources */,
 				8DBA85B5248196B10029598C /* ListingDetail.storyboard in Resources */,
 				5802D7E824884C1F00A505FB /* UserCell.xib in Resources */,
-				F1684C2B247AD37A00AA9A17 /* GoogleService-Info.plist in Resources */,
 				F1684C00247AC6EC00AA9A17 /* Assets.xcassets in Resources */,
 				F149D5062488E715006D77D2 /* ExpandedCell.xib in Resources */,
 				0F01D833248EB90D00B5BEE5 /* Post.storyboard in Resources */,
@@ -834,7 +834,7 @@
 					"-framework",
 					"\"openssl_grpc\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.BienbenidoAngeles.ShareSpace;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pursuit.sharespace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -937,7 +937,7 @@
 					"-framework",
 					"\"openssl_grpc\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.BienbenidoAngeles.ShareSpace;
+				PRODUCT_BUNDLE_IDENTIFIER = org.pursuit.sharespace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
