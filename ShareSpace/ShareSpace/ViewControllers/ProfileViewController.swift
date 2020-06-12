@@ -9,8 +9,9 @@
 import UIKit
 import FirebaseAuth
 import Kingfisher
+import FirebaseFirestore
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UIScrollViewDelegate {
     
     private var profileView = ProfileView()
     
@@ -31,6 +32,12 @@ class ProfileViewController: UIViewController {
         }
     }
     
+//    private var selectedIdImage: UIImage? {
+//        didSet {
+//            profileView.idImageView.image = selectedIdImage
+//        }
+//    }
+    
     private let storageService = StorageService.shared
     
     
@@ -41,8 +48,12 @@ class ProfileViewController: UIViewController {
         
         updateUI()
         
+        profileView.scrollView.delegate = self
+        
         profileView.userDisplayNameTextfield.delegate = self
-        profileView.userNameTextfield.delegate = self
+        profileView.userFirstNameTextfield.delegate = self
+        profileView.userLastNameTextfield.delegate = self
+        profileView.userTypeTextfield.delegate = self
         profileView.userPhoneNumberTextfield.delegate = self
         profileView.userBioTextfield.delegate = self
         profileView.userOccupationTextfield.delegate = self
@@ -50,12 +61,15 @@ class ProfileViewController: UIViewController {
         profileView.userCreditcardTextfield.delegate = self
         profileView.userCreditcardCVVNumberTextfield.delegate = self
         profileView.userExpirationDateTextfield.delegate = self
+        
         profileView.editProfileImageButton.addTarget(self, action: #selector(userImageEditButtonPressed), for: .touchUpInside)
         profileView.uploadIdButton.addTarget(self, action: #selector(uploadIdButtonPressed), for: .touchUpInside)
         profileView.saveChangesButton.addTarget(self, action: #selector(saveUserProfileButtonPressed), for: .touchUpInside)
         addNavSignOutButton()
     }
     
+    
+    //FIXME:
     private func addNavSignOutButton(){
         let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
         navigationItem.rightBarButtonItems?.append(barButtonItem)
@@ -120,6 +134,8 @@ class ProfileViewController: UIViewController {
         present(alertController, animated: true)
     }
     
+    
+    //FIXME: to add chosed pic to idImageView
      @objc func uploadIdButtonPressed() {
            
            let alertController = UIAlertController(title: "Choose Photo Option", message: nil, preferredStyle: .actionSheet)
@@ -147,12 +163,16 @@ class ProfileViewController: UIViewController {
         
         guard let displayName = profileView.userDisplayNameTextfield.text,
             !displayName.isEmpty,
-            let userFullName = profileView.userNameTextfield.text,
-            !userFullName.isEmpty,
+            let userFirstName = profileView.userFirstNameTextfield.text,
+            !userFirstName.isEmpty,
+            let userLastName = profileView.userLastNameTextfield.text,
+            !userLastName.isEmpty,
             let userPhoneNumber = profileView.userPhoneNumberTextfield.text,
             !userPhoneNumber.isEmpty,
             let userBio = profileView.userBioTextfield.text,
             !userBio.isEmpty,
+            let userGovenmentId = profileView.governmentIdTextfield.text,
+            !userGovenmentId.isEmpty,
             let userOccupation = profileView.userOccupationTextfield.text, !userOccupation.isEmpty,
             let userCardNumber = profileView.userCreditcardTextfield.text, !userCardNumber.isEmpty,
             let userCardCVVNumber = profileView.userCreditcardCVVNumberTextfield.text,
@@ -175,7 +195,7 @@ class ProfileViewController: UIViewController {
         //need to update to user userId ot itemId
         
         // Update this code:
-        
+        // create
         storageService.uploadPhoto(userId: user.uid, image: selectedImage) { [weak self] (result) in
             // code here to add the photoURL to the user's photoURL
             //     property then commit changes
@@ -187,7 +207,7 @@ class ProfileViewController: UIViewController {
             case .success(let url):
                 let request = Auth.auth().currentUser?.createProfileChangeRequest()
                 request?.displayName = displayName
-                request?.photoURL = url
+                request?.photoURL = url // url.absoluteString for the updateDbUser func
                 request?.commitChanges(completion: { [unowned self] (error) in
                     if let error = error {
                         //TODO: show alert
@@ -197,6 +217,8 @@ class ProfileViewController: UIViewController {
                         }
                     } else {
                         //print("profile successfully updated")
+                        //update user code
+                        
                         DispatchQueue.main.async {
                             self?.showAlert(title: "Profile Updated", message: "Profile successfully updated")
                         }
@@ -204,7 +226,25 @@ class ProfileViewController: UIViewController {
                 })
             }
         }
+        
+        DatabaseService.shared.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId: userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate, userType: AppState.shared.userType?.rawValue ?? 1){ [weak self]
+        (result) in
+            switch result {
+            case .failure(let error):
+              DispatchQueue.main.async {
+                self?.showAlert(title: "Error save profile changes", message: error.localizedDescription)
+              }
+            case .success:
+              DispatchQueue.main.async {
+                self?.navigateToMainView()
+              }
+            }
     }
+    }
+        
+        private func navigateToMainView() {
+            dismiss(animated: true)
+        }
 }
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

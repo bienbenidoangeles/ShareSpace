@@ -23,12 +23,17 @@ class TabBarController: UITabBarController {
 //    }()
     
 <<<<<<< HEAD
+<<<<<<< HEAD
      private var chatVC: ChatVC = {
             let vc = ChatVC()
             vc.tabBarItem = UITabBarItem(title: "Chat", image: UIImage(systemName: "message"), tag: 1)
 =======
      private var chatVC: ChatViewController = {
             let vc = ChatViewController()
+=======
+     private var chatVC: ChatListViewController = {
+            let vc =  ChatListViewController()
+>>>>>>> c2d6bb2a6175dcd534e3bec281d3e116992bfc2b
             vc.tabBarItem = UITabBarItem(title: "Chat", image: UIImage(systemName: "message"), tag: 2)
 >>>>>>> a99c9b85a0260c88177801c7676d02e72f04d75f
             return vc

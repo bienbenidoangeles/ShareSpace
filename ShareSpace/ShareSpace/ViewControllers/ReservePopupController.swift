@@ -8,25 +8,45 @@
 
 import UIKit
 import FSCalendar
+import FirebaseAuth
+import FirebaseFirestore
 
 class ReservePopupController: UIViewController {
     
+   private let storageService = StorageService.shared
     
-    public var selectedPost: Post?
+    
     
     @IBOutlet weak var totalPriceLabel: UILabel!
     
     
-//    init?( selectedPost: Post) {
-//        self.selectedPost = selectedPost
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//
-//
+    @IBOutlet weak var dismissBar: UIView!
+    
+    
+    @IBOutlet weak var pricePerNightLabel: UILabel!
+    
+    @IBOutlet weak var toDateLAbel: UILabel!
+    
+    @IBOutlet weak var fromDateLabel: UILabel!
+    
+    
+    @IBOutlet weak var messageTextView: UITextView!
+    
+    
+  private var selectedPost: Post
+    
+    init?(coder: NSCoder, selectedPost: Post) {
+        self.selectedPost = selectedPost
+        super.init(coder: coder)
+    }
+    
+    
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+
     
     @IBOutlet weak var calendar: FSCalendar!
     
@@ -39,12 +59,24 @@ class ReservePopupController: UIViewController {
        
            override func viewDidLoad() {
                super.viewDidLoad()
+            view.backgroundColor = .systemGroupedBackground
                calendar.delegate = self
                calendar.dataSource = self
                calendar.allowsMultipleSelection = true
                setupCalendarAppearance()
             updateUI()
+            setupDismissBar()
        }
+    
+    private func setupDismissBar() {
+        dismissBar.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector (topGesturePressed(recognizer:)))
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleCardTap(recognizer:)))
+        dismissBar.addGestureRecognizer(tapGesture)
+    }
+    @objc func topGesturePressed(recognizer: UITapGestureRecognizer) {
+        dismiss(animated: true) 
+    }
        
        private func setupCalendarAppearance() {
            calendar.scrollDirection = .vertical
@@ -60,11 +92,71 @@ class ReservePopupController: UIViewController {
            
        }
     func updateUI() {
-        totalPriceLabel.text = selectedPost?.price.total.description
+        pricePerNightLabel.text = "\(selectedPost.price.total.description)$/NIGHT"
     }
 
 
-
+    @IBAction func sendMessageButtonPressed(_ sender: UIButton) {
+        
+        guard let user = Auth.auth().currentUser else { return }
+        let chatId = UUID().uuidString
+        let renterId = user.uid
+        let postId = selectedPost.postId
+        let status = Status.undetermined
+        let reservationId = UUID().uuidString
+        guard let checkIn = datesRange?.first,
+            
+            let checkOut = datesRange?.last,
+           
+            let message = messageTextView.text,
+            !message.isEmpty else { return }
+        let messageID = UUID().uuidString
+        let dict:[String : Any]
+            = [
+                "renterId": renterId,
+            "postId": postId,
+            "checkIn": checkIn,
+            "checkOut": checkOut,
+            "chatId": chatId,
+            "status": status.rawValue,
+            "reservationId": reservationId
+            ]
+        DatabaseService.shared.createReservation(reservation: dict) { (result) in
+            switch result {
+            case .failure(let error):
+                self.showAlert(title: "Error", message: error.localizedDescription)
+                
+            case .success:
+                let message = Message(id: messageID, content: message, created: Timestamp(), senderID: renterId, senderName: user.displayName ?? "anonymous")
+                self.creatingThread(user1Id: renterId, user2Id: self.selectedPost.userId, messgae: message, chatId: chatId)
+            }
+        }
+       
+    }
+    
+    private func creatingThread(user1Id: String, user2Id: String, messgae: Message, chatId: String){
+        DatabaseService.shared.createNewChat(user1ID: user1Id, user2ID: user2Id, chatId: chatId) { (result) in
+            switch result{
+            case .failure(let error):
+            self.showAlert(title: "Error", message: error.localizedDescription)
+            case .success(let chatId):
+                self.sendMessage(message: messgae, destinationUserId: user2Id, chatId: chatId)
+            }
+        }
+    }
+    
+    private func sendMessage(message: Message, destinationUserId: String, chatId: String){
+        DatabaseService.shared.sendChatMessage(message, user2ID: destinationUserId, chatId: chatId) { (result) in
+            switch result {
+            case .failure(let error):
+                self.showAlert(title: "Error", message: error.localizedDescription)
+            case .success:
+                self.showAlert(title: "Your message was successfully sent", message: "Your host will reply shortly!")
+            }
+        }
+    }
+    
+    
 }
 
 extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
@@ -99,7 +191,10 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
             }
 
             datesRange = range
-totalPriceLabel.text = (datesRange?.count ?? 1 * Int(selectedPost?.price.total ?? 1)).description
+            totalPriceLabel.text = "Total for \(datesRange?.count ?? -1) days: \((datesRange?.count ?? 1 * Int(selectedPost.price.total)).description)$"
+            fromDateLabel.text = "From: \(datesRange?.first?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
+            toDateLAbel.text = "To: \(datesRange?.last?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
+            
             print("datesRange contains: \(datesRange!)")
 
             return
@@ -138,3 +233,8 @@ totalPriceLabel.text = (datesRange?.count ?? 1 * Int(selectedPost?.price.total ?
     }
 
 }
+//extension String {
+//    func toDouble() -> Double? {
+//        return NumberFormatter().number(from: self)?.doubleValue
+//    }
+//}

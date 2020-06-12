@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 import FirebaseAuth
 
 class CardViewController: UIViewController {
@@ -25,6 +26,7 @@ class CardViewController: UIViewController {
         }
     }
 
+
     override func loadView() {
         view = mainView
     }
@@ -33,33 +35,60 @@ class CardViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         delegatesAndDataSources()
-        loadPost()
+        let coordinate = CoreLocationSession.shared.locationManager.location?.coordinate.toString
+        let coorRang = (lat: 0...1.5, long: 0...1.5)
+        loadPost(given: coorRang)
         registerCell()
     }
     
     private func delegatesAndDataSources(){
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
+        guard let rootVC = self.parent as? RootViewController else {
+            return
+        }
+        rootVC.delegate = self
     }
   
 //  private var databaseServices = DatabaseService.shared
   
   
-  private func loadPost() {
-    DatabaseService.shared.loadPost { (result) in
+    private func loadPost(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
+        
+        DatabaseService.shared.loadPosts(coordinateRange: coordinateRange) { (result) in
       switch result {
       case .failure(let error):
         print("It failed")
-      case .success(let post):
-        self.posts = post
+      case .success(let posts):
+        guard let posts = posts else {
+            return // have an empty view
+        }
+        self.posts = posts
       }
     }
-  }
-  
-  
-
         
+//        for _ in 0...9{
+//            let genPost = Post.generatePostAsDict()
+//            DatabaseService.shared.postSpace(post: genPost) { (result) in
+//                switch result{
+//                case .failure:
+//                    break
+//                case .success:
+//                    let location = genPost["location"] as? [String:Any]
+//                    DatabaseService.shared.createDBLocation(location:  location!) { (result) in
+//                        switch result{
+//                        case .failure:
+//                            break
+//                        case.success(let locId):
+//                            //print(locId)
+//                            break
+//                        }
+//                    }
+//                }
+//            }
+//        }
     
+  }
     
     private func registerCell(){
         mainView.collectionView.register(UINib(nibName: "CollapsedCell", bundle: nil), forCellWithReuseIdentifier: "collapsedFeedCell")
@@ -99,6 +128,16 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
             return ListingDetailViewController(coder: coder, selectedPost: aPost)
         }
         navigationController?.pushViewController(detailVC, animated: true)
+        
+    }
+}
+
+extension CardViewController: SearchPostDelegate{
+    func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
+        loadPost(given: coordinateRange)
+    }
+    
+    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D) {
         
     }
 }

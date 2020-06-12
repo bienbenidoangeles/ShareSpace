@@ -11,15 +11,23 @@ import MapKit
 
 extension MKMapView {
   func centerToLocation(
-    _ location: CLLocation,
-    regionRadius: CLLocationDistance = 1000
+    _ location: CLLocation
   ) {
+    
+    
     let coordinateRegion = MKCoordinateRegion(
       center: location.coordinate,
-      latitudinalMeters: regionRadius,
-      longitudinalMeters: regionRadius)
+      latitudinalMeters: getRadius(centralLocation: location),
+      longitudinalMeters: getRadius(centralLocation: location))
     setRegion(coordinateRegion, animated: true)
   }
+    
+    func getRadius(centralLocation: CLLocation) -> Double{
+        let topCentralLat:Double = centralLocation.coordinate.latitude -  self.region.span.latitudeDelta/2
+        let topCentralLocation = CLLocation(latitude: topCentralLat, longitude: centralLocation.coordinate.longitude)
+        let radius = centralLocation.distance(from: topCentralLocation)
+        return radius / 100.0 // to convert radius to meters
+    }
     
     func getDirections(coordinate: CLLocationCoordinate2D, map: MKMapView) {
         let request = MKDirections.Request()

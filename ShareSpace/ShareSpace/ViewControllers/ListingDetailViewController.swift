@@ -37,8 +37,6 @@ class ListingDetailViewController: UIViewController {
     
     private var selectedPost: Post
     
-    
-    
     init?(coder: NSCoder, selectedPost: Post) {
         self.selectedPost = selectedPost
         super.init(coder: coder)
@@ -127,23 +125,31 @@ class ListingDetailViewController: UIViewController {
         collectionView.delegate = self
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+   // override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //        guard let detailsVC = segue.destination as? ReservePopupController else {
 //                fatalError("unable to segue properly-MainViewController")
 //        }
-        if segue.destination is ReservePopupController {
-            let reserveVC = segue.destination as? ReservePopupController
-            reserveVC?.selectedPost = selectedPost
-        }
-    
-    }
-    
+//        if segue.destination is ReservePopupController {
+//            let reserveVC = segue.destination as? ReservePopupController
+//            reserveVC?.selectedPost = selectedPost
+//        }
+//    
+//    }
+//    
     
     @IBAction func inquireButtonPressed(_ sender: UIBarButtonItem) {
+     
+        let storyboard = UIStoryboard(name: "ListingDetail", bundle: nil)
+         let popupVC = storyboard.instantiateViewController(identifier: "ReservePopupController", creator: { (coder) -> ReservePopupController? in
+            return ReservePopupController(coder: coder, selectedPost: self.selectedPost)
+        })
         
-        
-
-        
+       // let popupVC = ReservePopupController(selectedPost: selectedPost)
+       // navigationController?.pushViewController(popupVC, animated: true)
+        popupVC.modalTransitionStyle = .crossDissolve
+        popupVC.modalPresentationStyle = .fullScreen
+        //navigationController?.pushViewController(popupVC, animated: true)
+        present(popupVC, animated: true) 
         print("button pressed")
     }
     

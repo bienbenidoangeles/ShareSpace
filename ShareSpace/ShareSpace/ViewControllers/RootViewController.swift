@@ -27,6 +27,8 @@ class RootViewController: NavBarViewController {
     
     var cardVisible = false
     
+    weak var delegate: SearchPostDelegate?
+    
     var nextState: CardState {
         return cardVisible ? .collapsed : .expanded
     }
@@ -39,10 +41,13 @@ class RootViewController: NavBarViewController {
     lazy var searchBarHeight:CGFloat = self.rootView.searchBarView.frame.size.height
     lazy var totalHeight = tabBarheight + navBarHeight + searchBarHeight
     
+    private lazy var topRightCoor = rootView.mapView.convert(CGPoint(x: rootView.mapView.bounds.width, y: 0), toCoordinateFrom: rootView.mapView)
+    private lazy var bottomLeftCoor = rootView.mapView.convert(CGPoint(x: 0, y: rootView.mapView.bounds.height), toCoordinateFrom: rootView.mapView)
 
     override func loadView() {
         super.loadView()
         view = rootView
+        view.backgroundColor = .systemBackground
     }
     
     override func viewDidLoad() {
@@ -52,14 +57,21 @@ class RootViewController: NavBarViewController {
         setupCard()
         setupMap()
         addNavButtons()
+        setupGestures()
     }
     
     private func delegatesAndDataSources(){
-        rootView.searchTextField.delegate = self
+        rootView.mapView.delegate = self
+    }
+    
+    private func setupGestures(){
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(searchLabelTapped(_:)))
+        rootView.searchLabel.addGestureRecognizer(tapGesture)
     }
     
     private func addTargets(){
         rootView.dateTimeButton.addTarget(self, action: #selector(dateTimeButtonPressed), for: .touchUpInside)
+        rootView.searchByMapViewButton.addTarget(self, action: #selector(mapViewButtonPressed), for: .touchUpInside)
     }
     
     private func addNavButtons(){
@@ -67,10 +79,35 @@ class RootViewController: NavBarViewController {
         navigationItem.rightBarButtonItems?.append(barButtonItem)
     }
     
+    @objc private func searchLabelTapped(_ recognizer: UITapGestureRecognizer){
+        let searchCompletor =  CoreLocationSession.shared.searchCompletor
+        let searchResultsVC = SearchResultsViewController(searchCompletor: searchCompletor)
+        searchResultsVC.modalTransitionStyle = .crossDissolve
+        searchResultsVC.delegate = self
+        navigationController?.pushViewController(searchResultsVC, animated: true)
+    }
+    
     @objc private func calenderButtonPressed(){
 //        let vc = VC()
 //        navigationController?.pushViewController(vc, animated: true)
+        
+        let storyboard = UIStoryboard(name: "Post", bundle: nil)
+               let postVC = storyboard.instantiateViewController(identifier: "PostViewController")
+               navigationController?.pushViewController(postVC, animated: true)
     }
+    
+//    private func addNavBarItems(){
+//            let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(pushToFirstProfileViewController))
+//            navigationItem.rightBarButtonItem = barButtonItem
+//        }
+    
+    
+//    @objc private func pushToFirstProfileViewController(){
+//    //        let profileVC = ProfileViewController()
+//        let storyboard = UIStoryboard(name: "FirstProfileStoryboard", bundle: nil)
+//        let firstProfilelVC = storyboard.instantiateViewController(identifier: "FirstProfileViewController")
+//        navigationController?.pushViewController(firstProfilelVC, animated: true)
+//    }
     
     private func setupMap(){
         rootView.mapView.showsCompass = true
@@ -78,6 +115,9 @@ class RootViewController: NavBarViewController {
         let usersLocation = locationSession.location
         let tempLocation = CLLocation(latitude: 40.8765478, longitude: -73.9089867)
         rootView.mapView.centerToLocation(tempLocation)
+        rootView.searchByMapViewButton.isHidden = true
+        topRightCoor = rootView.mapView.convert(CGPoint(x: rootView.mapView.bounds.width, y: 0), toCoordinateFrom: rootView.mapView)
+        bottomLeftCoor = rootView.mapView.convert(CGPoint(x: 0, y: rootView.mapView.bounds.height), toCoordinateFrom: rootView.mapView)
     }
     
     private func setupCard(){
@@ -197,6 +237,32 @@ class RootViewController: NavBarViewController {
         }
     }
     
+    @objc private func mapViewButtonPressed(){
+        rootView.searchByMapViewButton.isHidden = true
+        let latRange:ClosedRange<CLLocationDegrees>
+        let longRange:ClosedRange<CLLocationDegrees>
+        let topRightLat = topRightCoor.latitude
+        let topRightLong = topRightCoor.longitude
+        let bottomLeftLat = bottomLeftCoor.latitude
+        let bottomLeftLong = bottomLeftCoor.longitude
+        
+        if topRightLat > bottomLeftLat {
+            latRange = bottomLeftLat...topRightLat
+        } else {
+            latRange = topRightLat...bottomLeftLat
+        }
+        
+        if topRightLong > bottomLeftLong{
+            longRange = bottomLeftLong...topRightLong
+        } else {
+            longRange = topRightLong...bottomLeftLong
+        }
+        
+        let latLongTuple = (lat: latRange, long: longRange)
+        
+        delegate?.readPostsFromMapView(given: latLongTuple)
+    }
+    
     @objc private func dateTimeButtonPressed(){
         let actionsheet = UIAlertController(title: "Nope, I mean...", message: nil, preferredStyle: .actionSheet)
         let dateButton = UIAlertAction(title: Date().toString(givenFormat: "E MM.dd"), style: .default) { (action) in
@@ -217,8 +283,8 @@ class RootViewController: NavBarViewController {
         }
         confirmButton.setValuesForKeys(
             [
-                //"backgroundColor":UIColor.systemOrange,
-            "titleTextColor":UIColor.systemBackground,
+            //"backgroundColor":UIColor.systemOrange,
+            "titleTextColor":UIColor.systemOrange,
         ])
         
         let actions = [dateButton, timeButton, confirmButton, cancelButton]
@@ -228,8 +294,23 @@ class RootViewController: NavBarViewController {
     
 }
 
-extension RootViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        return true
+extension RootViewController: SearchPostDelegate{
+    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D) {
+        //map view to center location from addrr
+        self.rootView.mapView.centerToLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
+    }
+    
+    func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
+        
+    }
+    
+}
+
+extension RootViewController: MKMapViewDelegate {
+    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+        topRightCoor = rootView.mapView.convert(CGPoint(x: rootView.mapView.bounds.width, y: 0), toCoordinateFrom: rootView.mapView)
+        bottomLeftCoor = rootView.mapView.convert(CGPoint(x: 0, y: rootView.mapView.bounds.height), toCoordinateFrom: rootView.mapView)
+        rootView.searchByMapViewButton.isHidden = false
+        print("topRight",topRightCoor,"bottomLeft", bottomLeftCoor)
     }
 }

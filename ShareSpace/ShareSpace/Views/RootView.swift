@@ -26,10 +26,11 @@ class RootView: UIView {
         return view
     }()
     
-    public lazy var searchTextField : UITextField = {
-        let tf = UITextField()
-        tf.placeholder = "I want to go to..."
-        tf.borderStyle = .none
+    public lazy var searchLabel : UILabel = {
+        let tf = UILabel()
+        tf.text = "I want to go to..."
+        tf.textColor = .systemTeal
+        tf.isUserInteractionEnabled = true
         return tf
     }()
     
@@ -42,6 +43,18 @@ class RootView: UIView {
         button.tintColor = .systemBackground
         button.backgroundColor = .systemOrange
         button.layer.cornerRadius = 12
+        return button
+    }()
+    
+    public lazy var searchByMapViewButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Search this area", for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .callout)
+        button.setTitleColor(.systemBackground, for: .normal)
+        button.tintColor = .systemBackground
+        button.backgroundColor = .systemTeal
+        button.layer.cornerRadius = 12
+        button.isHidden = true
         return button
     }()
 
@@ -60,6 +73,7 @@ class RootView: UIView {
         setupSearchbarView()
         setupSearchBarTFConstrainsts()
         setupDateTimeConstrainsts()
+        setUpSearchAreaButton()
     }
     
     private func setupMapView(){
@@ -85,13 +99,13 @@ class RootView: UIView {
     }
     
     private func setupSearchBarTFConstrainsts(){
-        searchBarView.addSubview(searchTextField)
-        searchTextField.translatesAutoresizingMaskIntoConstraints = false
+        searchBarView.addSubview(searchLabel)
+        searchLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            searchTextField.leadingAnchor.constraint(equalTo: searchBarView.leadingAnchor, constant: 4),
-            searchTextField.topAnchor.constraint(equalTo: searchBarView.topAnchor, constant: 4),
-            searchTextField.widthAnchor.constraint(equalTo: searchBarView.widthAnchor, multiplier: 0.7),
-            searchTextField.bottomAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: -4),
+            searchLabel.leadingAnchor.constraint(equalTo: searchBarView.leadingAnchor, constant: 4),
+            searchLabel.topAnchor.constraint(equalTo: searchBarView.topAnchor, constant: 4),
+            searchLabel.widthAnchor.constraint(equalTo: searchBarView.widthAnchor, multiplier: 0.7),
+            searchLabel.bottomAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: -4),
         ])
     }
     
@@ -99,10 +113,20 @@ class RootView: UIView {
         searchBarView.addSubview(dateTimeButton)
         dateTimeButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            dateTimeButton.leadingAnchor.constraint(equalTo: searchTextField.trailingAnchor, constant: 4),
-            dateTimeButton.topAnchor.constraint(equalTo: searchTextField.topAnchor),
+            dateTimeButton.leadingAnchor.constraint(equalTo: searchLabel.trailingAnchor, constant: 4),
+            dateTimeButton.topAnchor.constraint(equalTo: searchLabel.topAnchor),
             dateTimeButton.trailingAnchor.constraint(equalTo: searchBarView.trailingAnchor, constant: -4),
             dateTimeButton.bottomAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: -4)
+        ])
+    }
+    
+    private func setUpSearchAreaButton(){
+        addSubview(searchByMapViewButton)
+        searchByMapViewButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            searchByMapViewButton.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 8),
+            searchByMapViewButton.centerXAnchor.constraint(equalTo: searchBarView.centerXAnchor),
+            searchByMapViewButton.widthAnchor.constraint(equalTo: searchBarView.widthAnchor, multiplier: 0.4)
         ])
     }
 
