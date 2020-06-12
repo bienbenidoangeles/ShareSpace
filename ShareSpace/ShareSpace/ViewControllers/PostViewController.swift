@@ -166,9 +166,9 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                         }
                     case .success:
                         DispatchQueue.main.async {
-                            self?.showAlert(title: "Post was successfully cleated", message: nil)
+                           self?.showAlert(title: "Post was successfully cleated", message: nil)
                             self?.uploadPhoto(photo: resizedImage, documentId: postId)
-                            print(postId)
+                           // self.navigationController?.popViewController(animated: true)
                         }
                     }
                 }
@@ -253,7 +253,8 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
             case .success:
                 print("all went well with update")
                 DispatchQueue.main.async {
-                    self?.dismiss(animated: true)
+                   // self?.dismiss(animated: true)
+                self?.navigationController?.popViewController(animated: true)
                 }
             }
         }
@@ -261,7 +262,9 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
     }
     
     private func navigateToMainView() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
+        //UIViewController.showViewController(viewcontroller: RootViewController())
+       // dRootViewController
     }
     
 }

@@ -19,7 +19,7 @@ class FeedCollapsedCell: UICollectionViewCell {
     @IBOutlet weak var cellBackGroundView: UIView!
     
     public func configureCell(for post: Post){
-        if let mainImgURL = URL(string: post.mainImage), let ratingImgURL = URL(string: post.rating?.ratingImage ?? "") {
+        if let mainImgURL = URL(string: post.mainImage), let ratingImgURL = URL(string: post.rating?.ratingImage ?? "ax") {
              let mainImgprocessor = DownsamplingImageProcessor(size: feedMainImageView.bounds.size)
                 |> RoundCornerImageProcessor(cornerRadius: 8)
             let ratingImgProcessor = DownsamplingImageProcessor(size: ratingImageView.bounds.size)
