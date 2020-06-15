@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>610376844292-0ficqsp4e7tmlq5g2d2m447q7unmidtb.apps.googleusercontent.com</string>
+	<string>610376844292-okqtgp3mtl5lba2d8q52ad540dadaulp.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.610376844292-0ficqsp4e7tmlq5g2d2m447q7unmidtb</string>
+	<string>com.googleusercontent.apps.610376844292-okqtgp3mtl5lba2d8q52ad540dadaulp</string>
 	<key>API_KEY</key>
 	<string>AIzaSyAsz8t4tbGuWvghoaP8beM0iMq7L2pWcDg</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,23 +13,23 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.BienbenidoAngeles.ShareSpace</string>
+	<string>org.pursuit.sharespace</string>
 	<key>PROJECT_ID</key>
 	<string>capstone-project-c3379</string>
 	<key>STORAGE_BUCKET</key>
 	<string>capstone-project-c3379.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:610376844292:ios:b2dd9f6e190e786728e151</string>
+	<string>1:610376844292:ios:7ddac557e87eefc328e151</string>
 	<key>DATABASE_URL</key>
 	<string>https://capstone-project-c3379.firebaseio.com</string>
 </dict>

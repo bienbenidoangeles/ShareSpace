@@ -78,7 +78,7 @@ class SearchResultsViewController: UIViewController {
                 }
                 self?.delegate?.readPostsFromSearchBar(given: coor)
                 //self.searchResultsView.searchTextField.resignFirstResponder()
-                self?.dismiss(animated: true, completion: nil)
+                self?.navigationController?.popViewController(animated: true)
             }
         }
     }

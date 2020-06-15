@@ -136,10 +136,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                         print("missing field")
                         return
                 }
-                //        guard let user = Auth.auth().currentUser else { return }
-                //let resizedImage = UIImage.resizeImage(mainImage)
-                
-                // let resizedImage = UIImage.resizeImage(originalImage: mainImage, rect: imagePosting.bounds)
+               
                 var ameritiesArray = amenities.components(separatedBy: CharacterSet(charactersIn: " ,\n")).filter{$0 != ""}
                 
                 let resizedImage = UIImage.resizeImageTwo(originalImage: mainImage, rect: self.imagePosting.bounds)
@@ -177,6 +174,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                 }
             }
         }
+
     }
     
     private func uploadPhoto(photo: UIImage, documentId: String) {
