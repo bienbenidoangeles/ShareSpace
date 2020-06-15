@@ -27,6 +27,13 @@ class TabBarController: UITabBarController {
             vc.tabBarItem = UITabBarItem(title: "Chat", image: UIImage(systemName: "message"), tag: 2)
             return vc
         }()
+    
+//    private var reservVC: ReservationDetailViewController = {
+//        let vc =  ReservationDetailViewController()
+//        vc.tabBarItem = UITabBarItem(title: "test", image: UIImage(systemName: "message"), tag: 1)
+//        return vc
+//    }()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
