@@ -29,11 +29,9 @@ class CardViewController: NavBarViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         addNavSignOutButton()
-      addChatButton()
         delegatesAndDataSources()
         loadPost()
         registerCell()
-      print(Auth.auth().currentUser?.uid)
     }
     
     private func delegatesAndDataSources(){
@@ -70,11 +68,6 @@ class CardViewController: NavBarViewController {
         let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
         navigationItem.rightBarButtonItems?.append(barButtonItem)
     }
-  private func addChatButton(){
-       let barButtonItem = UIBarButtonItem(title: "Chat", style: .plain, target: self, action: #selector(loadChatList))
-       navigationItem.rightBarButtonItems?.append(barButtonItem)
-   }
-  
     
     @objc private func signOutButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -87,17 +80,15 @@ class CardViewController: NavBarViewController {
             }
         }
     }
-  
-  @objc private func loadChatList() {
-    let chatList = ChatListViewController(nibName: nil, bundle: nil)
-    navigationController?.pushViewController(chatList, animated: true)
-  }
 
 }
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 9f38f5e... Remaking chat view controller into collectionview-collection created
 extension MainViewController: UISearchBarDelegate{
 =======
 extension CardViewController: UISearchBarDelegate{

@@ -24,8 +24,19 @@ class TabBarController: UITabBarController {
     
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
      private var chatVC: ChatVC = {
             let vc = ChatVC()
+=======
+    private var profileVC: ProfileViewController = {
+        let vc = ProfileViewController()
+        vc.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.fill"), tag: 1)
+        return vc
+    }()
+    
+     private var chatVC: ChatViewController = {
+            let vc = ChatViewController()
+>>>>>>> parent of 9f38f5e... Remaking chat view controller into collectionview-collection created
             vc.tabBarItem = UITabBarItem(title: "Chat", image: UIImage(systemName: "message"), tag: 1)
 =======
      private var chatVC: ChatViewController = {

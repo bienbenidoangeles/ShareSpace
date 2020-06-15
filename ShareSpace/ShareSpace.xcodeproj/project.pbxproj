@@ -20,11 +20,14 @@
 		5802D7E624884C0400A505FB /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802D7E524884C0400A505FB /* UserCell.swift */; };
 		5802D7E824884C1F00A505FB /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5802D7E724884C1F00A505FB /* UserCell.xib */; };
 <<<<<<< HEAD
+<<<<<<< HEAD
 		58661D90249162A500258281 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58661D8F249162A500258281 /* ChatView.swift */; };
 		58661D9224916D4800258281 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58661D9124916D4800258281 /* ChatVC.swift */; };
 =======
 		8D32684D248AEC8300065CAB /* ReservationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D32684C248AEC8300065CAB /* ReservationModel.swift */; };
 >>>>>>> a99c9b85a0260c88177801c7676d02e72f04d75f
+=======
+>>>>>>> parent of 9f38f5e... Remaking chat view controller into collectionview-collection created
 		8D6C2D4E24859CA4001A840D /* ReservePopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */; };
 		8D759B1F24895C4B006697F4 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D759B1E24895C4A006697F4 /* CalendarViewController.swift */; };
 		8DBA856A247EFD190029598C /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA8569247EFD190029598C /* PostModel.swift */; };
@@ -100,11 +103,14 @@
 		5802D7E524884C0400A505FB /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		5802D7E724884C1F00A505FB /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 <<<<<<< HEAD
+<<<<<<< HEAD
 		58661D8F249162A500258281 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		58661D9124916D4800258281 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 =======
 		8D32684C248AEC8300065CAB /* ReservationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationModel.swift; sourceTree = "<group>"; };
 >>>>>>> a99c9b85a0260c88177801c7676d02e72f04d75f
+=======
+>>>>>>> parent of 9f38f5e... Remaking chat view controller into collectionview-collection created
 		8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservePopupController.swift; sourceTree = "<group>"; };
 		8D759B1E24895C4A006697F4 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		8DBA8569247EFD190029598C /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
@@ -293,7 +299,6 @@
 				8DBA856D247F3C2E0029598C /* ProfileViewController.swift */,
 				8DBA85B2248192520029598C /* ListingDetailViewController.swift */,
 				0FA8B0DF24857B030079A9B4 /* ChatViewController.swift */,
-				58661D9124916D4800258281 /* ChatVC.swift */,
 				8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */,
 				F149D4F72486CF2A006D77D2 /* NavBarViewController.swift */,
 				5802D7E324882DF300A505FB /* ChatListViewController.swift */,
@@ -331,7 +336,6 @@
 				8DBA85B0248192260029598C /* ListingDetailView.swift */,
 				5802D7E124882D2200A505FB /* ChatListView.swift */,
 				5802D7E524884C0400A505FB /* UserCell.swift */,
-				58661D8F249162A500258281 /* ChatView.swift */,
 				5802D7E724884C1F00A505FB /* UserCell.xib */,
 				F149D4FB24886F2C006D77D2 /* RootView.swift */,
 				F1DA145124920E360067B55B /* SearchResultsView.swift */,
@@ -554,7 +558,10 @@
 				F149D50E24892879006D77D2 /* ImageView+Animation.swift in Sources */,
 				8DCB76152486BD38005C1C04 /* CoreLocationSession.swift in Sources */,
 <<<<<<< HEAD
+<<<<<<< HEAD
 				58661D90249162A500258281 /* ChatView.swift in Sources */,
+=======
+>>>>>>> parent of 9f38f5e... Remaking chat view controller into collectionview-collection created
 				F1684C59247AE22200AA9A17 /* MainView.swift in Sources */,
 =======
 				F1684C59247AE22200AA9A17 /* CardView.swift in Sources */,
@@ -586,7 +593,6 @@
 				F149D5022488CC43006D77D2 /* MapView+CenterToLocation.swift in Sources */,
 				F149D4FA24886EA1006D77D2 /* RootViewController.swift in Sources */,
 				F1684C4F247ADDA800AA9A17 /* UIImage+Resize.swift in Sources */,
-				58661D9224916D4800258281 /* ChatVC.swift in Sources */,
 				F1684C47247AD7BE00AA9A17 /* LoginView.swift in Sources */,
 				0F01D831248EABDE00B5BEE5 /* FirstProfileViewController.swift in Sources */,
 				F1684C49247ADC6F00AA9A17 /* AuthenticationSession.swift in Sources */,

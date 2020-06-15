@@ -26,7 +26,6 @@ class ChatViewController: MessagesViewController {
   
   let db = Firestore.firestore()
   
- 
   //I've fetched the profile of user 2 in previous class from which //I'm navigating to chat view. So make sure you have the following //three variables information when you are on this class.
   var user2Name: String? // user2 - person who gets message
   var user2ImgUrl: String?
@@ -36,7 +35,7 @@ class ChatViewController: MessagesViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewDidAppear(true)
-//    listenerSetup()
+    listenerSetup()
 //    Firestore.firestore().collection("chats").document(chatId ?? "no chat id").collection(DatabaseService.threadCollection).order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true, listener: { (snapshot, error) in
 //      if let error = error {
 //        print("Error: \(error)")
@@ -73,14 +72,14 @@ class ChatViewController: MessagesViewController {
     messagesCollectionView.messagesDataSource = self
     messagesCollectionView.messagesLayoutDelegate = self
     messagesCollectionView.messagesDisplayDelegate = self
-//
-//    loadChat()
-//    listenerSetup()
+    
+    loadChat()
+    listenerSetup()
   }
   
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(true)
-//    listener?.remove()
+    listener?.remove()
   }
   
   
