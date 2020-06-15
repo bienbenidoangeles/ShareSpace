@@ -407,7 +407,7 @@ class ReservationDetailView: UIView {
         reservationDetailsView.addSubview(numberOfGuestsLabel)
         numberOfGuestsLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            numberOfGuestsLabel.bottomAnchor.constraint(equalTo: reservationDetailsView.bottomAnchor, constant: -16),
+            numberOfGuestsLabel.bottomAnchor.constraint(equalTo: reservationDetailsView.bottomAnchor, constant: -8),
             numberOfGuestsLabel.leadingAnchor.constraint(equalTo:  reservationDetailsView.leadingAnchor, constant: 16),
             numberOfGuestsLabel.trailingAnchor.constraint(equalTo: reservationDetailsView.trailingAnchor, constant: -16)
         ])
@@ -419,10 +419,10 @@ class ReservationDetailView: UIView {
         buttonsStackView.addArrangedSubview(declineButton)
         buttonsStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            buttonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            buttonsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             buttonsStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -8),
-            buttonsStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            buttonsStackView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.10)
+            buttonsStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            buttonsStackView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.07)
             
         ])
     }
