@@ -32,12 +32,6 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-//    private var selectedIdImage: UIImage? {
-//        didSet {
-//            profileView.idImageView.image = selectedIdImage
-//        }
-//    }
-    
     private let storageService = StorageService.shared
     
     
@@ -65,27 +59,27 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.editProfileImageButton.addTarget(self, action: #selector(userImageEditButtonPressed), for: .touchUpInside)
         profileView.uploadIdButton.addTarget(self, action: #selector(uploadIdButtonPressed), for: .touchUpInside)
         profileView.saveChangesButton.addTarget(self, action: #selector(saveUserProfileButtonPressed), for: .touchUpInside)
-        addNavSignOutButton()
+       // addNavSignOutButton()
     }
     
     
     //FIXME:
-    private func addNavSignOutButton(){
-        let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
-        navigationItem.rightBarButtonItems?.append(barButtonItem)
-    }
-    
-    @objc private func signOutButtonPressed(_ sender: UIBarButtonItem) {
-        
-        do {
-            try Auth.auth().signOut()
-            UIViewController.showViewController(viewcontroller: LoginViewController())
-        } catch {
-            DispatchQueue.main.async {
-                self.showAlert(title: "Unable to signout", message: "Error: \(error.localizedDescription)")
-            }
-        }
-    }
+//    private func addNavSignOutButton(){
+//        let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
+//        navigationItem.rightBarButtonItems?.append(barButtonItem)
+//    }
+//    
+//    @objc private func signOutButtonPressed(_ sender: UIBarButtonItem) {
+//        
+//        do {
+//            try Auth.auth().signOut()
+//            UIViewController.showViewController(viewcontroller: LoginViewController())
+//        } catch {
+//            DispatchQueue.main.async {
+//                self.showAlert(title: "Unable to signout", message: "Error: \(error.localizedDescription)")
+//            }
+//        }
+//    }
     
     private func updateUI() {
         guard let user = Auth.auth().currentUser else {
@@ -205,6 +199,9 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                     self?.showAlert(title: "Error uploading photo", message: "\(error.localizedDescription)")
                 }
             case .success(let url):
+                
+                self?.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId:userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate, profileImage: url.absoluteString)
+                
                 let request = Auth.auth().currentUser?.createProfileChangeRequest()
                 request?.displayName = displayName
                 request?.photoURL = url // url.absoluteString for the updateDbUser func
@@ -227,20 +224,31 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        DatabaseService.shared.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId: userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate, userType: AppState.shared.userType?.rawValue ?? 1){ [weak self]
-        (result) in
-            switch result {
-            case .failure(let error):
-              DispatchQueue.main.async {
-                self?.showAlert(title: "Error save profile changes", message: error.localizedDescription)
-              }
-            case .success:
-              DispatchQueue.main.async {
-                self?.navigateToMainView()
-              }
-            }
+//        DatabaseService.shared.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId: userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate, userType: AppState.shared.userType?.rawValue ?? 1, profileImage: ){ [weak self]
+//        (result) in
+//            switch result {
+//            case .failure(let error):
+//              DispatchQueue.main.async {
+//                self?.showAlert(title: "Error save profile changes", message: error.localizedDescription)
+//              }
+//            case .success:
+//              DispatchQueue.main.async {
+//                self?.navigateToMainView()
+//              }
+//            }
+//    }
     }
-    }
+    
+    private func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String, governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, profileImage: String) {
+        DatabaseService.shared.updateDatabaseUser(firstName: firstName, lastName: lastName, displayName: displayName, phoneNumber: phoneNumber, bio: bio, work: work, governmentId: governmentId, creditCard: creditCard, cardCVV: cardCVV, cardExpDate: cardExpDate, profileImage: profileImage) { [weak self] (result) in
+               switch result {
+               case .failure(let error):
+                   print("failed to update db user: \(error.localizedDescription)")
+               case .success:
+                   print("successfully updated db user")
+               }
+           }
+       }
         
         private func navigateToMainView() {
             dismiss(animated: true)

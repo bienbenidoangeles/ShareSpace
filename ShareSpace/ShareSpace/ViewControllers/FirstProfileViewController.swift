@@ -9,42 +9,61 @@
 import UIKit
 import FirebaseAuth
 import FirebaseStorage
+import Kingfisher
 
 class FirstProfileViewController: UIViewController {
     
-    
-    
-      private var user: UserModel?
+    private var user: UserModel?
     
     private let userId: String
     init?(coder: NSCoder, userId: String) {
-      self.userId = userId
-      super.init(coder: coder)
+        self.userId = userId
+        super.init(coder: coder)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @IBOutlet var userImegeView: UIView!
+    
+    
+    @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userTypeLabel: UILabel!
     @IBOutlet weak var userRating: UILabel!
     @IBOutlet weak var userPhoneNumber: UILabel!
-    
     @IBOutlet weak var spacesCollectionView: UICollectionView!
-    
     @IBOutlet weak var reviewsCollectionView: UICollectionView!
-    
-    
     @IBOutlet weak var userEmail: UILabel!
+    
+    
+    
+    private var selectedImage: UIImage? {
+        didSet {
+            userImage.image = selectedImage
+        }
+    }
+    
+    private let storageService = StorageService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadUser()
         
-        //updateUI()
+        loadUserImage()
     }
     
+    
+    @IBAction func signOutButtonPressed(_ sender: UIBarButtonItem) {
+        
+        do {
+            try Auth.auth().signOut()
+            UIViewController.showViewController(viewcontroller: LoginViewController())
+        } catch {
+            DispatchQueue.main.async {
+                self.showAlert(title: "Unable to signout", message: "Error: \(error.localizedDescription)")
+            }
+        }
+    }
     
     func updateUI() {
         guard let user = user else {
@@ -52,11 +71,79 @@ class FirstProfileViewController: UIViewController {
         }
         if let user = Auth.auth().currentUser {
             if user.uid == self.userId {
+                //works
                 userEmail.text = user.email ?? "no email"
+                
             }
         }
-      //  userEmail.text = user.userEmail
+        userNameLabel.text = user.displayName
+        userPhoneNumber.text = user.phoneNumber
+        //userImage.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
+       // userImage.kf.setImage(with: URL(string: user.profileImage ?? "no "))
+        userImage.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
+        
+       // loadUserImage()
+        //loadImage(imageURL: user.profileImage ?? "no image url")
+    
     }
+    
+    
+    func loadImage(imageURL: String) {
+              userImage.kf.setImage(with: URL(string: imageURL))
+    }
+    
+    
+    func loadUserImage() {
+        guard let displayName = userNameLabel.text,
+            let selectedImage = selectedImage else {
+                          print("missing field")
+                          return
+                  }
+          guard let user = Auth.auth().currentUser else { return }
+           //resize image before uploading to Firebase
+           //let resizedImage = UIImage.resizeImage(originalImage: selectedImage, rect: profileView.profileImageView.bounds)
+           let resizedImage = UIImage.resizeImage(selectedImage)
+           
+           print("original image size: \(selectedImage.size)")
+           print("resized image size: \(resizedImage)")
+           
+           //TODO: call storageService.upload
+           //need to update to user userId ot itemId
+           
+           // Update this code:
+           // create
+           storageService.uploadPhoto(userId: user.uid, image: selectedImage) { [weak self] (result) in
+               // code here to add the photoURL to the user's photoURL
+               //     property then commit changes
+               switch result {
+               case .failure(let error):
+                   DispatchQueue.main.async {
+                       self?.showAlert(title: "Error uploading photo", message: "\(error.localizedDescription)")
+                   }
+               case .success(let url):
+                   let request = Auth.auth().currentUser?.createProfileChangeRequest()
+                   request?.displayName = displayName
+                   request?.photoURL = url // url.absoluteString for the updateDbUser func
+                   request?.commitChanges(completion: { [unowned self] (error) in
+                       if let error = error {
+                           //TODO: show alert
+                           //print("CommitCjanges error: \(error)")
+                           DispatchQueue.main.async {
+                               self?.showAlert(title: "Error updating profile", message: "Error changing profile: \(error.localizedDescription)")
+                           }
+                       } else {
+                           //print("profile successfully updated")
+                           //update user code
+                           
+                           DispatchQueue.main.async {
+                               self?.showAlert(title: "Profile Updated", message: "Profile successfully updated")
+                           }
+                       }
+                   })
+               }
+        }
+    }
+  
     
     func loadUser() {
         DatabaseService.shared.loadUser(userId: userId) {
@@ -72,11 +159,10 @@ class FirstProfileViewController: UIViewController {
     }
     
     @IBAction func editButton(_ sender: UIButton) {
-            guard let user = Auth.auth().currentUser else {
-                return
-            }
-          
-            let editProfilelVC = ProfileViewController()
-            navigationController?.pushViewController(editProfilelVC, animated: true)
+        guard let user = Auth.auth().currentUser else {
+            return
+        }
+        let editProfilelVC = ProfileViewController()
+        navigationController?.pushViewController(editProfilelVC, animated: true)
     }
 }

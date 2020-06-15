@@ -66,6 +66,9 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
         descriptionTextView.delegate = self
         amenititesTextView.delegate = self
         
+        imagePosting.image = UIImage(systemName: "house.fill")
+        imagePosting.tintColor = .yummyOrange
+        
     }
     
     @IBAction func uploadPhotosButtonPressed(_ sender: UIButton) {
@@ -163,19 +166,15 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                         }
                     case .success:
                         DispatchQueue.main.async {
-                            self?.showAlert(title: "Post was successfully cleated", message: nil)
+                           self?.showAlert(title: "Post was successfully cleated", message: nil)
                             self?.uploadPhoto(photo: resizedImage, documentId: postId)
-                            print(postId)
+                           // self.navigationController?.popViewController(animated: true)
                         }
                     }
                 }
             }
         }
-        
-        
-        
-        
-        
+
     }
     
     private func uploadPhoto(photo: UIImage, documentId: String) {
@@ -206,51 +205,18 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
             case .success:
                 print("all went well with update")
                 DispatchQueue.main.async {
-                    self?.dismiss(animated: true)
+                   // self?.dismiss(animated: true)
+                self?.navigationController?.popViewController(animated: true)
                 }
             }
         }
-        
     }
     
     private func navigateToMainView() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
-    
 }
 
-/*
- guard let user = Auth.auth().currentUser else { return }
- let chatId = UUID().uuidString
- let renterId = user.uid
- let postId = selectedPost.postId
- let status = Status.undetermined
- let reservationId = UUID().uuidString
- 
- guard let checkIn = datesRange?.first,
- let checkOut = datesRange?.last,
- let message = messageTextView.text,
- !message.isEmpty else { return }
- let messageID = UUID().uuidString
- let dict:[String : Any]
- = [
- “renterId”: renterId,
- “postId”: postId,
- “checkIn”: checkIn,
- “checkOut”: checkOut,
- “chatId”: chatId,
- “status”: status.rawValue,
- “reservationId”: reservationId
- ]
- DatabaseService.shared.createReservation(reservation: dict) { (result) in
- switch result {
- case .failure(let error):
- self.showAlert(title: “Error”, message: error.localizedDescription)
- case .success:
- self.showAlert(title: “Your message was successfully sent”, message: “Your host will reply shortly!“)
- }
- }
- */
 
 extension PostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
