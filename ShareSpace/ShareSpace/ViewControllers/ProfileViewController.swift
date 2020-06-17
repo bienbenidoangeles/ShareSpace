@@ -20,6 +20,19 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         view = profileView
     }
     
+     private var user: UserModel?
+    
+    private let userId: String
+    
+      init(_ userId: String) {
+        self.userId = userId
+        super.init(nibName: nil, bundle: nil)
+        }
+    
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    
     private lazy var imagePickerController: UIImagePickerController = {
         let ip = UIImagePickerController()
         ip.delegate = self
@@ -32,6 +45,13 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    private var userState: Int?
+    private var selectedUserState: UserType = .user {
+        didSet {
+            userState = selectedUserState.rawValue
+        }
+    }
+    
     private let storageService = StorageService.shared
     
     
@@ -40,14 +60,14 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         
         view.backgroundColor = .systemGroupedBackground
         
-        updateUI()
+        //updateUI()
         
         profileView.scrollView.delegate = self
         
         profileView.userDisplayNameTextfield.delegate = self
         profileView.userFirstNameTextfield.delegate = self
         profileView.userLastNameTextfield.delegate = self
-        profileView.userTypeTextfield.delegate = self
+        //profileView.userTypeTextfield.delegate = self
         profileView.userPhoneNumberTextfield.delegate = self
         profileView.userBioTextfield.delegate = self
         profileView.userOccupationTextfield.delegate = self
@@ -57,54 +77,81 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.userExpirationDateTextfield.delegate = self
         
         profileView.editProfileImageButton.addTarget(self, action: #selector(userImageEditButtonPressed), for: .touchUpInside)
-        profileView.uploadIdButton.addTarget(self, action: #selector(uploadIdButtonPressed), for: .touchUpInside)
+       // profileView.uploadIdButton.addTarget(self, action: #selector(uploadIdButtonPressed), for: .touchUpInside)
         profileView.saveChangesButton.addTarget(self, action: #selector(saveUserProfileButtonPressed), for: .touchUpInside)
        // addNavSignOutButton()
+        
+        profileView.userSegmentedControl.addTarget(self, action: #selector(segmentAction), for: .valueChanged)
+        profileView.userSegmentedControl.selectedSegmentIndex = 1
+        
+        loadUser()
     }
     
-    
-    //FIXME:
-//    private func addNavSignOutButton(){
-//        let barButtonItem = UIBarButtonItem(title: "Signout", style: .plain, target: self, action: #selector(signOutButtonPressed(_:)))
-//        navigationItem.rightBarButtonItems?.append(barButtonItem)
-//    }
-//    
-//    @objc private func signOutButtonPressed(_ sender: UIBarButtonItem) {
-//        
-//        do {
-//            try Auth.auth().signOut()
-//            UIViewController.showViewController(viewcontroller: LoginViewController())
-//        } catch {
-//            DispatchQueue.main.async {
-//                self.showAlert(title: "Unable to signout", message: "Error: \(error.localizedDescription)")
-//            }
-//        }
-//    }
-    
-    private func updateUI() {
-        guard let user = Auth.auth().currentUser else {
+    func updateUI() {
+        guard let user = user else {
             return
         }
+        if let user = Auth.auth().currentUser {
+            if user.uid == self.userId {
+                //works
+                profileView.emailLabel.text = user.email ?? "no email"
+
+            }
+        }
         
-        //        emailLabel.text = user.email
-        // profileView.userDisplayNameTextfield.text = user.displayName
-        //        profileImageView.kf.setImage(with: user.photoURL)
-        
-        //I think we have to add photo to user model
-        //profileView.profileImageView.kf.setImage(with: user.photoURL)
-        
-        // profileView.userDisplayNameLabel.text = user.displayName
-        
-        // profileView.userNameLabel.text = user.firstName
+        // profileView.userSegmentedControl = userState,
+        profileView.userDisplayNameTextfield.text = user.displayName
+        profileView.userFirstNameTextfield.text = user.firstName
+        profileView.userLastNameTextfield.text = user.lastName
+
+        //status
+
         profileView.userPhoneNumberTextfield.text = user.phoneNumber
-        
-        profileView.emailLabel.text = user.email
-        
-        // profileView.userBioTextfield.text = user.bio
-        // profileView.userOccupationTextfield.text = user.work
-        // profileView.governmentIdLabel.text = user.govermentId
-        // profileView.paymentLabel.text = user.payment
+        profileView.userBioTextfield.text = user.bio
+        profileView.userOccupationTextfield.text = user.bio
+        profileView.governmentIdTextfield.text = user.governmentId
+        profileView.userCreditcardTextfield.text = user.creditCard
+        profileView.userCreditcardCVVNumberTextfield.text = user.cardCVV
+        profileView.userExpirationDateTextfield.text = user.cardExpDate
+
+        DispatchQueue.main.async {
+
+            self.profileView.profileImageView.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
+            
+        }
     }
+    
+    @objc func loadUser() {
+          DatabaseService.shared.loadUser(userId: userId) {
+              (result) in
+              switch result {
+              case .failure(let error):
+                  print("error load user: \(error.localizedDescription)")
+              case .success(let user):
+                  self.user = user
+                  self.updateUI()
+              }
+          }
+      }
+    
+    @objc func segmentAction(_ segmentedControl: UISegmentedControl) {
+           switch (segmentedControl.selectedSegmentIndex) {
+           case 0:
+            selectedUserState = .guest
+              // break // Uno
+           case 1:
+            selectedUserState = .user
+              // break // Dos
+           case 2:
+            selectedUserState = .host
+              // break // Tres
+          // case 3:
+           // selectedUserState = .hostAndUser
+           default:
+            print("default")
+               //break
+           }
+       }
     
     @objc func userImageEditButtonPressed() {
         
@@ -128,34 +175,10 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         present(alertController, animated: true)
     }
     
-    
-    //FIXME: to add chosed pic to idImageView
-     @objc func uploadIdButtonPressed() {
-           
-           let alertController = UIAlertController(title: "Choose Photo Option", message: nil, preferredStyle: .actionSheet)
-           let cameraAction = UIAlertAction(title: "Camera", style: .default)
-           { [weak self] alertAction in
-               self?.imagePickerController.sourceType = .camera
-               self?.present(self!.imagePickerController, animated: true)
-           }
-           let phototLibararyAction = UIAlertAction(title: "Photo Libarary", style: .default)
-           { [weak self] alertAction in
-               self?.imagePickerController.sourceType = .photoLibrary
-               self?.present(self!.imagePickerController, animated: true)
-           }
-           let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-           if UIImagePickerController.isSourceTypeAvailable(.camera) {
-               alertController.addAction(cameraAction)
-           }
-           alertController.addAction(phototLibararyAction)
-           alertController.addAction(cancelAction)
-           present(alertController, animated: true)
-       }
-    
-    
     @objc func saveUserProfileButtonPressed() {
         
-        guard let displayName = profileView.userDisplayNameTextfield.text,
+        guard let userType = userState,
+            let displayName = profileView.userDisplayNameTextfield.text,
             !displayName.isEmpty,
             let userFirstName = profileView.userFirstNameTextfield.text,
             !userFirstName.isEmpty,
@@ -167,13 +190,20 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             !userBio.isEmpty,
             let userGovenmentId = profileView.governmentIdTextfield.text,
             !userGovenmentId.isEmpty,
-            let userOccupation = profileView.userOccupationTextfield.text, !userOccupation.isEmpty,
-            let userCardNumber = profileView.userCreditcardTextfield.text, !userCardNumber.isEmpty,
+            let userOccupation = profileView.userOccupationTextfield.text,
+            !userOccupation.isEmpty,
+            let userCardNumber = profileView.userCreditcardTextfield.text,
+            !userCardNumber.isEmpty,
             let userCardCVVNumber = profileView.userCreditcardCVVNumberTextfield.text,
             !userCardCVVNumber.isEmpty,
             let userCardExpDate = profileView.userExpirationDateTextfield.text, !userCardExpDate.isEmpty,
+            
+            //FIXME: why I need to change photo in terms to update some textfield?
             let selectedImage = selectedImage else {
                 print("missing field")
+                DispatchQueue.main.async {
+                    self.showAlert(title: "Missing fields", message: "All fields are required")
+                }
                 return
         }
         
@@ -199,8 +229,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                     self?.showAlert(title: "Error uploading photo", message: "\(error.localizedDescription)")
                 }
             case .success(let url):
-                
-                self?.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId:userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate, profileImage: url.absoluteString)
+                self?.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId:userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate, userType: userType, profileImage: url.absoluteString)
                 
                 let request = Auth.auth().currentUser?.createProfileChangeRequest()
                 request?.displayName = displayName
@@ -213,46 +242,27 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                             self?.showAlert(title: "Error updating profile", message: "Error changing profile: \(error.localizedDescription)")
                         }
                     } else {
-                        //print("profile successfully updated")
-                        //update user code
-                        
                         DispatchQueue.main.async {
                             self?.showAlert(title: "Profile Updated", message: "Profile successfully updated")
                         }
+                        self?.navigationController?.popViewController(animated: true)
                     }
                 })
             }
         }
-        
-//        DatabaseService.shared.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId: userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate, userType: AppState.shared.userType?.rawValue ?? 1, profileImage: ){ [weak self]
-//        (result) in
-//            switch result {
-//            case .failure(let error):
-//              DispatchQueue.main.async {
-//                self?.showAlert(title: "Error save profile changes", message: error.localizedDescription)
-//              }
-//            case .success:
-//              DispatchQueue.main.async {
-//                self?.navigateToMainView()
-//              }
-//            }
-//    }
     }
     
-    private func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String, governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, profileImage: String) {
-        DatabaseService.shared.updateDatabaseUser(firstName: firstName, lastName: lastName, displayName: displayName, phoneNumber: phoneNumber, bio: bio, work: work, governmentId: governmentId, creditCard: creditCard, cardCVV: cardCVV, cardExpDate: cardExpDate, profileImage: profileImage) { [weak self] (result) in
+    private func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String, governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, userType: Int, profileImage: String) {
+        DatabaseService.shared.updateDatabaseUser(firstName: firstName, lastName: lastName, displayName: displayName, phoneNumber: phoneNumber, bio: bio, work: work, governmentId: governmentId, creditCard: creditCard, cardCVV: cardCVV, cardExpDate: cardExpDate, userType: userType, profileImage: profileImage) { [weak self] (result) in
                switch result {
                case .failure(let error):
                    print("failed to update db user: \(error.localizedDescription)")
                case .success:
                    print("successfully updated db user")
+                   self?.dismiss(animated: true, completion: nil)
                }
            }
        }
-        
-        private func navigateToMainView() {
-            dismiss(animated: true)
-        }
 }
 
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
