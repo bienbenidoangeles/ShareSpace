@@ -110,9 +110,15 @@ class ReservationDetailViewController: UIViewController {
     }
    
     private func updateUI() {
-        guard let reservation = selectedReservation else {
+        guard let reservation = selectedReservation, let user = Auth.auth().currentUser else {
             return
         }
+        if user.uid != reservation.hostId {
+            reservationDetailView.buttonsStackView.isHidden = true
+            //reservationDetailView.acceptButton.isHidden = true
+            //reservationDetailView.declineButton.isHidden = true
+        }
+        
         DatabaseService.shared.loadUser(userId: reservation.renterId) { (result) in
             switch result {
             case .failure(let error):
