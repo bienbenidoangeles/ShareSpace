@@ -69,7 +69,9 @@ class CardViewController: UIViewController {
                 print("It failed")
             case .success(let posts):
                 guard let posts = posts, !posts.isEmpty else {
-                    return // have an empty view
+                    self.posts.removeAll() // have an empty view
+                    self.delegate?.postsFound(posts: self.posts, coordinateRange: coordinateRange)
+                    return
                 }
                 self.posts = posts
                 self.delegate?.postsFound(posts: posts, coordinateRange: coordinateRange)
