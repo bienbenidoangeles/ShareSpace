@@ -245,7 +245,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     }
     
     private func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String, governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, userType: Int, profileImage: String) {
-        DatabaseService.shared.updateDatabaseUser(firstName: firstName, lastName: lastName, displayName: displayName, phoneNumber: phoneNumber, bio: bio, work: work, governmentId: governmentId, creditCard: creditCard, cardCVV: cardCVV, cardExpDate: cardExpDate, userType: userType, profileImage: profileImage) { [weak self] (result) in
+      DatabaseService.shared.updateDatabaseUser(firstName: firstName, lastName: lastName, displayName: displayName, phoneNumber: phoneNumber, bio: bio, work: work, governmentId: governmentId, creditCard: creditCard, cardCVV: cardCVV, cardExpDate: cardExpDate, userType: userType, profileImage: profileImage) { [weak self] (result) in
                switch result {
                case .failure(let error):
                    print("failed to update db user: \(error.localizedDescription)")

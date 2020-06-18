@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:MyPostsReservationsView.swift">
+   </FileRef>
+   <FileRef
+      location = "group:MyPostsReservationsViewController.swift">
+   </FileRef>
+   <FileRef
+      location = "group:ProgrammaticPostReservationCell.swift">
+   </FileRef>
+   <FileRef
       location = "group:ShareSpace.xcodeproj">
    </FileRef>
    <FileRef

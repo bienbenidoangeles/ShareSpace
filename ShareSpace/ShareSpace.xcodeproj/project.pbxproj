@@ -19,6 +19,9 @@
 		5802D7E424882DF300A505FB /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802D7E324882DF300A505FB /* ChatListViewController.swift */; };
 		5802D7E624884C0400A505FB /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802D7E524884C0400A505FB /* UserCell.swift */; };
 		5802D7E824884C1F00A505FB /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5802D7E724884C1F00A505FB /* UserCell.xib */; };
+		58491305249C1B8400CFDC2A /* ProgrammaticPostReservationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58491304249C1B8400CFDC2A /* ProgrammaticPostReservationCell.swift */; };
+		58491307249C1BA200CFDC2A /* MyPostsReservationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58491306249C1BA200CFDC2A /* MyPostsReservationsViewController.swift */; };
+		58491309249C1BA700CFDC2A /* MyPostsReservationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58491308249C1BA700CFDC2A /* MyPostsReservationsView.swift */; };
 		58D5E757249766E500B32CFB /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5E755249766E500B32CFB /* ChatCell.swift */; };
 		58D5E758249766E500B32CFB /* ChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58D5E756249766E500B32CFB /* ChatCell.xib */; };
 		58D5E75A2497A60000B32CFB /* ChatTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5E7592497A60000B32CFB /* ChatTableView.swift */; };
@@ -74,9 +77,6 @@
 		F1DA144A249109CF0067B55B /* CLLocationCoordinate2D+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */; };
 		F1DA144E24920B730067B55B /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA144D24920B730067B55B /* SearchResultsViewController.swift */; };
 		F1DA145224920E360067B55B /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA145124920E360067B55B /* SearchResultsView.swift */; };
-		F1DA1456249BE5110067B55B /* ProgrammaticPostReservationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA1455249BE5100067B55B /* ProgrammaticPostReservationCell.swift */; };
-		F1DA1458249BE54E0067B55B /* MyPostsReservationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA1457249BE54D0067B55B /* MyPostsReservationsView.swift */; };
-		F1DA145A249BE56B0067B55B /* MyPostsReservationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA1459249BE56B0067B55B /* MyPostsReservationsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +103,9 @@
 		5802D7E324882DF300A505FB /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		5802D7E524884C0400A505FB /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		5802D7E724884C1F00A505FB /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
+		58491304249C1B8400CFDC2A /* ProgrammaticPostReservationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgrammaticPostReservationCell.swift; path = ../../ProgrammaticPostReservationCell.swift; sourceTree = "<group>"; };
+		58491306249C1BA200CFDC2A /* MyPostsReservationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyPostsReservationsViewController.swift; path = ../../MyPostsReservationsViewController.swift; sourceTree = "<group>"; };
+		58491308249C1BA700CFDC2A /* MyPostsReservationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyPostsReservationsView.swift; path = ../../MyPostsReservationsView.swift; sourceTree = "<group>"; };
 		58D5E755249766E500B32CFB /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
 		58D5E756249766E500B32CFB /* ChatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatCell.xib; sourceTree = "<group>"; };
 		58D5E7592497A60000B32CFB /* ChatTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableView.swift; sourceTree = "<group>"; };
@@ -165,9 +168,6 @@
 		F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Extensions.swift"; sourceTree = "<group>"; };
 		F1DA144D24920B730067B55B /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		F1DA145124920E360067B55B /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
-		F1DA1455249BE5100067B55B /* ProgrammaticPostReservationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgrammaticPostReservationCell.swift; path = ../../../../../Downloads/ProgrammaticPostReservationCell.swift; sourceTree = "<group>"; };
-		F1DA1457249BE54D0067B55B /* MyPostsReservationsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyPostsReservationsView.swift; path = ../../../../../Downloads/MyPostsReservationsView.swift; sourceTree = "<group>"; };
-		F1DA1459249BE56B0067B55B /* MyPostsReservationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyPostsReservationsViewController.swift; path = ../../../../../Downloads/MyPostsReservationsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,7 +220,7 @@
 		F149D48D247EF8E7006D77D2 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				F1DA1455249BE5100067B55B /* ProgrammaticPostReservationCell.swift */,
+				58491304249C1B8400CFDC2A /* ProgrammaticPostReservationCell.swift */,
 				F149D497247F3348006D77D2 /* FeedCell.swift */,
 				8DBA85B62481C4DD0029598C /* ListingPhotosCell.swift */,
 				F149D5032488DDC1006D77D2 /* CollapsedCell.xib */,
@@ -299,7 +299,7 @@
 		F1684C1C247ACE9200AA9A17 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				F1DA1459249BE56B0067B55B /* MyPostsReservationsViewController.swift */,
+				58491306249C1BA200CFDC2A /* MyPostsReservationsViewController.swift */,
 				F1684C2C247AD42E00AA9A17 /* LoginViewController.swift */,
 				F1DA144D24920B730067B55B /* SearchResultsViewController.swift */,
 				F1684C52247ADE1400AA9A17 /* TabBarController.swift */,
@@ -340,7 +340,7 @@
 		F1684C36247AD60400AA9A17 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F1DA1457249BE54D0067B55B /* MyPostsReservationsView.swift */,
+				58491308249C1BA700CFDC2A /* MyPostsReservationsView.swift */,
 				F1684C46247AD7BE00AA9A17 /* LoginView.swift */,
 				F1684C58247AE22200AA9A17 /* CardView.swift */,
 				8DBA856B247F2D560029598C /* ProfileView.swift */,
@@ -567,8 +567,7 @@
 				8DBA856A247EFD190029598C /* PostModel.swift in Sources */,
 				8DBA85B1248192260029598C /* ListingDetailView.swift in Sources */,
 				0F4E4842248FB39900C68CE6 /* PostViewController.swift in Sources */,
-				F1DA1456249BE5110067B55B /* ProgrammaticPostReservationCell.swift in Sources */,
-				F1DA145A249BE56B0067B55B /* MyPostsReservationsViewController.swift in Sources */,
+				58491305249C1B8400CFDC2A /* ProgrammaticPostReservationCell.swift in Sources */,
 				58D5E757249766E500B32CFB /* ChatCell.swift in Sources */,
 				F149D50E24892879006D77D2 /* ImageView+Animation.swift in Sources */,
 				8DCB76152486BD38005C1C04 /* CoreLocationSession.swift in Sources */,
@@ -579,6 +578,7 @@
 				F149D500248899F9006D77D2 /* IntTimeIntervalAsSecondsToOther.swift in Sources */,
 				F1684C53247ADE1400AA9A17 /* TabBarController.swift in Sources */,
 				8D363FA12496E34B009E4E2B /* ReservationDetailViewController.swift in Sources */,
+				58491307249C1BA200CFDC2A /* MyPostsReservationsViewController.swift in Sources */,
 				F1684C55247ADECC00AA9A17 /* CardViewController.swift in Sources */,
 				5802D7E624884C0400A505FB /* UserCell.swift in Sources */,
 				8D759B1F24895C4B006697F4 /* CalendarViewController.swift in Sources */,
@@ -597,7 +597,6 @@
 				F149D50A2488FDF3006D77D2 /* FeedCollapsedCell.swift in Sources */,
 				8DBA856C247F2D560029598C /* ProfileView.swift in Sources */,
 				F1DA144E24920B730067B55B /* SearchResultsViewController.swift in Sources */,
-				F1DA1458249BE54E0067B55B /* MyPostsReservationsView.swift in Sources */,
 				F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */,
 				F149D4F82486CF2A006D77D2 /* NavBarViewController.swift in Sources */,
 				F1684C57247AE07200AA9A17 /* StorageService.swift in Sources */,
@@ -611,6 +610,7 @@
 				F1DA145224920E360067B55B /* SearchResultsView.swift in Sources */,
 				F149D4FC24886F2C006D77D2 /* RootView.swift in Sources */,
 				F149D498247F3348006D77D2 /* FeedCell.swift in Sources */,
+				58491309249C1BA700CFDC2A /* MyPostsReservationsView.swift in Sources */,
 				5802D7E424882DF300A505FB /* ChatListViewController.swift in Sources */,
 				F149D50C24890E20006D77D2 /* FeedExpandedCell.swift in Sources */,
 				0FA8B0E8248587720079A9B4 /* Chat.swift in Sources */,
