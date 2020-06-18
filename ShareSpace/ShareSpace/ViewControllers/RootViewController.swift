@@ -14,6 +14,8 @@ class RootViewController: NavBarViewController {
     
     let rootView = RootView()
     
+    private lazy var mapView = rootView.mapView
+    
     enum CardState {
         case expanded
         case collapsed
@@ -43,7 +45,7 @@ class RootViewController: NavBarViewController {
     
     private lazy var topRightCoor = rootView.mapView.convert(CGPoint(x: rootView.mapView.bounds.width, y: 0), toCoordinateFrom: rootView.mapView)
     private lazy var bottomLeftCoor = rootView.mapView.convert(CGPoint(x: 0, y: rootView.mapView.bounds.height), toCoordinateFrom: rootView.mapView)
-
+    
     override func loadView() {
         super.loadView()
         view = rootView
@@ -88,26 +90,26 @@ class RootViewController: NavBarViewController {
     }
     
     @objc private func calenderButtonPressed(){
-//        let vc = VC()
-//        navigationController?.pushViewController(vc, animated: true)
+        //        let vc = VC()
+        //        navigationController?.pushViewController(vc, animated: true)
         
         let storyboard = UIStoryboard(name: "Post", bundle: nil)
-               let postVC = storyboard.instantiateViewController(identifier: "PostViewController")
-               navigationController?.pushViewController(postVC, animated: true)
+        let postVC = storyboard.instantiateViewController(identifier: "PostViewController")
+        navigationController?.pushViewController(postVC, animated: true)
     }
     
-//    private func addNavBarItems(){
-//            let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(pushToFirstProfileViewController))
-//            navigationItem.rightBarButtonItem = barButtonItem
-//        }
+    //    private func addNavBarItems(){
+    //            let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(pushToFirstProfileViewController))
+    //            navigationItem.rightBarButtonItem = barButtonItem
+    //        }
     
     
-//    @objc private func pushToFirstProfileViewController(){
-//    //        let profileVC = ProfileViewController()
-//        let storyboard = UIStoryboard(name: "FirstProfileStoryboard", bundle: nil)
-//        let firstProfilelVC = storyboard.instantiateViewController(identifier: "FirstProfileViewController")
-//        navigationController?.pushViewController(firstProfilelVC, animated: true)
-//    }
+    //    @objc private func pushToFirstProfileViewController(){
+    //    //        let profileVC = ProfileViewController()
+    //        let storyboard = UIStoryboard(name: "FirstProfileStoryboard", bundle: nil)
+    //        let firstProfilelVC = storyboard.instantiateViewController(identifier: "FirstProfileViewController")
+    //        navigationController?.pushViewController(firstProfilelVC, animated: true)
+    //    }
     
     private func setupMap(){
         rootView.mapView.showsCompass = true
@@ -125,6 +127,7 @@ class RootViewController: NavBarViewController {
         visualEffectView.frame = self.rootView.mapView.frame
         self.rootView.mapView.addSubview(visualEffectView)
         cardVC = CardViewController()
+        cardVC.delegate = self
         self.addChild(cardVC)
         self.rootView.addSubview(cardVC.view)
         
@@ -192,7 +195,7 @@ class RootViewController: NavBarViewController {
                 switch state {
                 case .expanded:
                     self.cardVC.view.layer.cornerRadius
-                     = 12
+                        = 12
                 case .collapsed:
                     self.cardVC.view.layer.cornerRadius = 0
                 }
@@ -283,8 +286,8 @@ class RootViewController: NavBarViewController {
         }
         confirmButton.setValuesForKeys(
             [
-            //"backgroundColor":UIColor.systemOrange,
-            "titleTextColor":UIColor.systemOrange,
+                //"backgroundColor":UIColor.systemOrange,
+                "titleTextColor":UIColor.systemOrange,
         ])
         
         let actions = [dateButton, timeButton, confirmButton, cancelButton]
@@ -292,10 +295,26 @@ class RootViewController: NavBarViewController {
         present(actionsheet, animated: true, completion: nil)
     }
     
+    public func makeAnnotations(posts: [Post]) -> [MKPointAnnotation]? {
+        var annotations = [MKPointAnnotation]()
+        for post in posts {
+            guard let lat = post.latitude, let long = post.longitude else {
+                return nil
+            }
+            let coordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            let annotation = MKPointAnnotation()
+            annotation.title = post.postTitle
+            annotation.coordinate = coordinates
+            annotations.append(annotation)
+        }
+//        let region = MKCoordinateRegion(center: coordinates, latitudinalMeters: 1500, longitudinalMeters: 1500)
+//        mapView.setRegion(region, animated: true)
+        return annotations
+    }
 }
 
 extension RootViewController: SearchPostDelegate{
-    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D) {
+    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String) {
         //map view to center location from addrr
         self.rootView.mapView.centerToLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
     }
@@ -311,6 +330,16 @@ extension RootViewController: MKMapViewDelegate {
         topRightCoor = rootView.mapView.convert(CGPoint(x: rootView.mapView.bounds.width, y: 0), toCoordinateFrom: rootView.mapView)
         bottomLeftCoor = rootView.mapView.convert(CGPoint(x: 0, y: rootView.mapView.bounds.height), toCoordinateFrom: rootView.mapView)
         rootView.searchByMapViewButton.isHidden = false
-        print("topRight",topRightCoor,"bottomLeft", bottomLeftCoor)
+        //print("topRight",topRightCoor,"bottomLeft", bottomLeftCoor)
+    }
+}
+
+extension RootViewController: CardViewControllerDelegate{
+    func postsFound(posts: [Post], coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
+        guard let annotations = makeAnnotations(posts: posts) else {
+            return
+        }
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotations(annotations)
     }
 }

@@ -97,7 +97,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
         
         guard let user = Auth.auth().currentUser else { return }
         
-        let location = Location(country: "USA", streetAddress: streetTextField.text ?? "no street name", apartmentNumber: apartmentTextField.text ?? "no apartment name", city: cityTextField.text ?? "no city name", state: stateTextField.text ?? "no state name", zip: zipCodeTextField.text ?? "no zip code", locationId: "", postId: "",  longitutude: nil, latitude: nil)
+        let location = Location(country: "USA", streetAddress: streetTextField.text ?? "no street name", apartmentNumber: apartmentTextField.text ?? "no apartment name", city: cityTextField.text ?? "no city name", state: stateTextField.text ?? "no state name", zip: zipCodeTextField.text ?? "no zip code", locationId: "", postId: "",  longitude: nil, latitude: nil)
         
         CoreLocationSession.shared.convertAddressToCoors(address: location.fullAddress ?? "no address found") {
             (result) in
@@ -108,20 +108,20 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                 guard let coordinate = coordinate?.first else {
                     return
                 }
-                let locationDict: [String: Any] =
-                    [ "streetAddress": self.streetTextField.text ?? "no street name",
-                      "apartmentNumber": self.apartmentTextField.text ?? "no apartment number",
-                      "city": self.cityTextField.text ?? "no city name",
-                      "state": self.stateTextField.text ?? "no state name",
-                      "zip": self.zipCodeTextField.text ?? "no zip code",
-                      "latitude": coordinate.latitude,
-                      "longitutude": coordinate.longitude
-                ]
+//                let locationDict: [String: Any] =
+//                    [ "streetAddress": self.streetTextField.text ?? "no street name",
+//                      "apartmentNumber": self.apartmentTextField.text ?? "no apartment number",
+//                      "city": self.cityTextField.text ?? "no city name",
+//                      "state": self.stateTextField.text ?? "no state name",
+//                      "zip": self.zipCodeTextField.text ?? "no zip code",
+//                      "latitude": coordinate.latitude,
+//                      "longitutude": coordinate.longitude
+//                ]
                 
-                let priceDict: [String: Any] =
-                    ["spaceRate": self.priceTextField.text ?? "100",
-                     "tax": 0.15
-                ]
+//                let priceDict: [String: Any] =
+//                    ["spaceRate": self.priceTextField.text ?? "100",
+//                     "tax": 0.15
+//                ]
                 
                 let postId = UUID().uuidString
                 let userId = user.uid
@@ -131,33 +131,45 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                     // let price = priceTextField.text, !price.isEmpty,
                     let description = self.descriptionTextView.text, !description.isEmpty,
                     let amenities = self.amenititesTextView.text,
-                    let mainImage = self.selectedImage
+                    let mainImage = self.selectedImage,
+                    let price = Double(self.priceTextField.text ?? ""),
+                    let streetAddr = self.streetTextField.text,
+                    let city = self.cityTextField.text,
+                    let state = self.stateTextField.text,
+                    let zip = self.zipCodeTextField.text
                     else {
                         print("missing field")
                         return
                 }
-               
-                var ameritiesArray = amenities.components(separatedBy: CharacterSet(charactersIn: " ,\n")).filter{$0 != ""}
+                //        guard let user = Auth.auth().currentUser else { return }
+                //let resizedImage = UIImage.resizeImage(mainImage)
+                
+                // let resizedImage = UIImage.resizeImage(originalImage: mainImage, rect: imagePosting.bounds)
+                var amenitiesArray = amenities.components(separatedBy: CharacterSet(charactersIn: " ,\n")).filter{$0 != ""}
+
                 
                 let resizedImage = UIImage.resizeImageTwo(originalImage: mainImage, rect: self.imagePosting.bounds)
                 
                 // print("original image size: \(mainImage.size)")
                 //  print("resized image size: \(resizedImage)")
                 
-                let dict:[String : Any]
-                    = [
-                        "postId": postId,
-                        "price": priceDict,
-                        "postTitle": postTitle,
-                        "userId": userId,
-                        "listedDate": listedDate,
-                        //"mainImage": resizedImage,
-                        "description": description,
-                        "amenities": ameritiesArray,
-                        "location": locationDict
-                ]
+//                let dict:[String : Any]
+//                    = [
+//                        "postId": postId,
+//                        "price": priceDict,
+//                        "postTitle": postTitle,
+//                        "userId": userId,
+//                        "listedDate": listedDate,
+//                        //"mainImage": resizedImage,
+//                        "description": description,
+//                        "amenities": ameritiesArray,
+//                        "location": locationDict
+//                ]
+                let imageId = UUID().uuidString
+                let apartmentNum = self.apartmentTextField.text
+                let post = Post(postId: postId, price: price, postTitle:postTitle, userId: userId, listedDate: listedDate, mainImage: nil, images: nil, description: description, amenities: amenitiesArray, country: nil, streetAddress: streetAddr, apartmentNumber: apartmentNum, city: city, state: state, zip: zip, longitude: coordinate.longitude, latitude: coordinate.latitude, rating: nil, ratingImgURL: nil)
                 
-                DatabaseService.shared.postSpace(post: dict)
+                DatabaseService.shared.postSpace(post: post)
                 { [weak self] (result) in
                     switch result {
                     case .failure(let error):
@@ -166,9 +178,9 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                         }
                     case .success:
                         DispatchQueue.main.async {
-                           self?.showAlert(title: "Post was successfully cleated", message: nil)
-                            self?.uploadPhoto(photo: resizedImage, documentId: postId)
-                           // self.navigationController?.popViewController(animated: true)
+                            self?.showAlert(title: "Post was successfully cleated", message: nil)
+                            self?.uploadPhoto(photo: resizedImage, postId: postId, postPhotoId: imageId)
+                            print(postId)
                         }
                     }
                 }
@@ -177,8 +189,8 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
 
     }
     
-    private func uploadPhoto(photo: UIImage, documentId: String) {
-        storageService.uploadPhoto(postId: documentId, image: photo)
+    private func uploadPhoto(photo: UIImage, postId: String, postPhotoId: String) {
+        storageService.uploadPhoto(postId: postId, postPhotoId: postPhotoId, image: photo)
         { [weak self] (result) in
             switch result {
             case .failure(let error):
@@ -186,7 +198,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                     self?.showAlert(title: "Error uploading post photo", message: "\(error.localizedDescription)")
                 }
             case .success(let url):
-                self?.updateItemImageURL(url, documentId: documentId)
+                self?.updateItemImageURL(url, documentId: postId)
             }
         }
     }

@@ -57,8 +57,8 @@ class FeedCell: UICollectionViewCell {
     }
     
     public func configureCell(for post: Post){
-        locationLabel.text = post.location.fullAddress ?? "no address available"
-        ratingLabel.text = "\(post.rating)"
+        locationLabel.text = post.streetAddress
+        ratingLabel.text = "\(post.rating ?? 0.0) out of 5 stars"
         titleLabel.text = "\(post.postTitle)"
         priceLabel.text = "$\(post.price)"
     }
