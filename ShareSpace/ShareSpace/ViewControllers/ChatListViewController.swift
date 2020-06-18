@@ -47,12 +47,17 @@ class ChatListViewController: UIViewController {
     view = chatList
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(true)
+    loadtest()
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     tableViewSetup()
 //    loadChatOptions()
 //    loadUserChats()
-    loadtest()
+//    loadtest()
     
     // Do any additional setup after loading the view.
   }
@@ -106,22 +111,21 @@ extension ChatListViewController: UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//    let users = chats[indexPath.row].users
-    let chatVC = ChatViewController(nibName: nil, bundle: nil)
+    let chatVC = ChatVC(nibName: nil, bundle: nil)
+    
+    let users = userChats[indexPath.row].users
     guard let currentUser = Auth.auth().currentUser else {
       print("no current user")
       return
     }
-    userIDs = userChats[indexPath.row].users
-    for (index, i) in userIDs.enumerated() {
-      if i == currentUser.uid {
-        userIDs.remove(at: index)
+    for id in users {
+      if id != currentUser.uid {
+        chatVC.user2ID = id
       }
-      chatVC.user2UID = userIDs[0]
+      print("user 1 id is \(currentUser.uid)")
+      print("user 2 will be \(users[1])")
     }
     
-
-    chatVC.user1ID = currentUser.uid
     chatVC.chatId = userChats[indexPath.row].id
     
     navigationController?.pushViewController(chatVC, animated: true)

@@ -19,6 +19,10 @@
 		5802D7E424882DF300A505FB /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802D7E324882DF300A505FB /* ChatListViewController.swift */; };
 		5802D7E624884C0400A505FB /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802D7E524884C0400A505FB /* UserCell.swift */; };
 		5802D7E824884C1F00A505FB /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5802D7E724884C1F00A505FB /* UserCell.xib */; };
+		58D5E757249766E500B32CFB /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5E755249766E500B32CFB /* ChatCell.swift */; };
+		58D5E758249766E500B32CFB /* ChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58D5E756249766E500B32CFB /* ChatCell.xib */; };
+		58D5E75A2497A60000B32CFB /* ChatTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5E7592497A60000B32CFB /* ChatTableView.swift */; };
+		58D5E75C2497A6E800B32CFB /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D5E75B2497A6E800B32CFB /* ChatVC.swift */; };
 		8D32684D248AEC8300065CAB /* ReservationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D32684C248AEC8300065CAB /* ReservationModel.swift */; };
 		8D363F9F24952B94009E4E2B /* ReservationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D363F9E24952B94009E4E2B /* ReservationDetailView.swift */; };
 		8D363FA12496E34B009E4E2B /* ReservationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D363FA02496E34B009E4E2B /* ReservationDetailViewController.swift */; };
@@ -96,6 +100,10 @@
 		5802D7E324882DF300A505FB /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		5802D7E524884C0400A505FB /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		5802D7E724884C1F00A505FB /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
+		58D5E755249766E500B32CFB /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
+		58D5E756249766E500B32CFB /* ChatCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatCell.xib; sourceTree = "<group>"; };
+		58D5E7592497A60000B32CFB /* ChatTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableView.swift; sourceTree = "<group>"; };
+		58D5E75B2497A6E800B32CFB /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		8D32684C248AEC8300065CAB /* ReservationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationModel.swift; sourceTree = "<group>"; };
 		8D363F9E24952B94009E4E2B /* ReservationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailView.swift; sourceTree = "<group>"; };
 		8D363FA02496E34B009E4E2B /* ReservationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailViewController.swift; sourceTree = "<group>"; };
@@ -212,7 +220,11 @@
 				F149D5072488E7F8006D77D2 /* SimpleCollapsedCell.xib */,
 				F149D5052488E714006D77D2 /* ExpandedCell.xib */,
 				F149D5092488FDF3006D77D2 /* FeedCollapsedCell.swift */,
+				5802D7E524884C0400A505FB /* UserCell.swift */,
+				5802D7E724884C1F00A505FB /* UserCell.xib */,
 				F149D50B24890E20006D77D2 /* FeedExpandedCell.swift */,
+				58D5E755249766E500B32CFB /* ChatCell.swift */,
+				58D5E756249766E500B32CFB /* ChatCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -287,6 +299,7 @@
 				8DBA856D247F3C2E0029598C /* ProfileViewController.swift */,
 				8DBA85B2248192520029598C /* ListingDetailViewController.swift */,
 				0FA8B0DF24857B030079A9B4 /* ChatViewController.swift */,
+				58D5E75B2497A6E800B32CFB /* ChatVC.swift */,
 				8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */,
 				F149D4F72486CF2A006D77D2 /* NavBarViewController.swift */,
 				5802D7E324882DF300A505FB /* ChatListViewController.swift */,
@@ -322,10 +335,9 @@
 				F1684C46247AD7BE00AA9A17 /* LoginView.swift */,
 				F1684C58247AE22200AA9A17 /* CardView.swift */,
 				8DBA856B247F2D560029598C /* ProfileView.swift */,
+				58D5E7592497A60000B32CFB /* ChatTableView.swift */,
 				8DBA85B0248192260029598C /* ListingDetailView.swift */,
 				5802D7E124882D2200A505FB /* ChatListView.swift */,
-				5802D7E524884C0400A505FB /* UserCell.swift */,
-				5802D7E724884C1F00A505FB /* UserCell.xib */,
 				F149D4FB24886F2C006D77D2 /* RootView.swift */,
 				F1DA145124920E360067B55B /* SearchResultsView.swift */,
 				8D363F9E24952B94009E4E2B /* ReservationDetailView.swift */,
@@ -450,6 +462,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F01D82F248EAB9E00B5BEE5 /* FirstProfileStoryboard.storyboard in Resources */,
+				58D5E758249766E500B32CFB /* ChatCell.xib in Resources */,
 				F1684C03247AC6EC00AA9A17 /* LaunchScreen.storyboard in Resources */,
 				F149D5082488E7F8006D77D2 /* SimpleCollapsedCell.xib in Resources */,
 				8D363FA32497C81F009E4E2B /* GoogleService-Info.plist in Resources */,
@@ -545,6 +558,7 @@
 				8DBA856A247EFD190029598C /* PostModel.swift in Sources */,
 				8DBA85B1248192260029598C /* ListingDetailView.swift in Sources */,
 				0F4E4842248FB39900C68CE6 /* PostViewController.swift in Sources */,
+				58D5E757249766E500B32CFB /* ChatCell.swift in Sources */,
 				F149D50E24892879006D77D2 /* ImageView+Animation.swift in Sources */,
 				8DCB76152486BD38005C1C04 /* CoreLocationSession.swift in Sources */,
 				F1684C59247AE22200AA9A17 /* CardView.swift in Sources */,
@@ -566,6 +580,7 @@
 				F149D4D42481B7EB006D77D2 /* UserModel.swift in Sources */,
 				8D6C2D4E24859CA4001A840D /* ReservePopupController.swift in Sources */,
 				F1684BFB247AC6E800AA9A17 /* ViewController.swift in Sources */,
+				58D5E75C2497A6E800B32CFB /* ChatVC.swift in Sources */,
 				5802D7E224882D2200A505FB /* ChatListView.swift in Sources */,
 				F1DA144A249109CF0067B55B /* CLLocationCoordinate2D+Extensions.swift in Sources */,
 				F149D50A2488FDF3006D77D2 /* FeedCollapsedCell.swift in Sources */,
@@ -574,6 +589,7 @@
 				F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */,
 				F149D4F82486CF2A006D77D2 /* NavBarViewController.swift in Sources */,
 				F1684C57247AE07200AA9A17 /* StorageService.swift in Sources */,
+				58D5E75A2497A60000B32CFB /* ChatTableView.swift in Sources */,
 				F149D5022488CC43006D77D2 /* MapView+CenterToLocation.swift in Sources */,
 				F149D4FA24886EA1006D77D2 /* RootViewController.swift in Sources */,
 				F1684C4F247ADDA800AA9A17 /* UIImage+Resize.swift in Sources */,

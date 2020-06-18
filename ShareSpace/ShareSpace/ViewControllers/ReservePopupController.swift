@@ -16,7 +16,6 @@ class ReservePopupController: UIViewController {
    private let storageService = StorageService.shared
     
     
-    
     @IBOutlet weak var totalPriceLabel: UILabel!
     
     
@@ -146,7 +145,7 @@ class ReservePopupController: UIViewController {
     }
     
     private func sendMessage(message: Message, destinationUserId: String, chatId: String){
-        DatabaseService.shared.sendChatMessage(message, user2ID: destinationUserId, chatId: chatId) { (result) in
+        DatabaseService.shared.sendChatMessage(message, chatId: chatId) { (result) in
             switch result {
             case .failure(let error):
                 self.showAlert(title: "Error", message: error.localizedDescription)

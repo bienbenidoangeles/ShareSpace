@@ -41,7 +41,7 @@ extension Message {
     self.id = dictionary["id"] as? String ?? "no id"
     self.content = dictionary["content"] as? String ?? "no content"
     self.created = dictionary["created"] as? Timestamp ?? Timestamp(date: Date())
-    self.senderID = dictionary["senderId"] as? String ?? "no sender id"
+    self.senderID = dictionary["senderID"] as? String ?? "no sender id"
     self.senderName = dictionary["senderName"] as? String ?? "no sender name"
 
   }
