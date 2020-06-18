@@ -155,31 +155,31 @@ class ReservePopupController: UIViewController {
             switch result{
             case .failure(let error):
             self.showAlert(title: "Error", message: error.localizedDescription)
-            case .success(let chatId):
-                self.sendMessage(message: messgae, destinationUserId: user2Id, chatId: chatId)
+            case .success:
+                self.showAlert(title: "Message sent", message: "Host will respond to you after reviewing yur request")
             }
         }
     }
     
-    private func sendMessage(message: Message, destinationUserId: String, chatId: String){
-        DatabaseService.shared.sendChatMessage(message, chatId: chatId) { (result) in
-            switch result {
-                case .failure(let error):
-                self.showAlert(title: "Error", message: error.localizedDescription)
-            case .success:
-                self.showAlert(title: "Message sent", message: "Host will respond to you after reviewing yur request")
-            }
-        
-        }
-//        createNewChat(user1ID: user1Id, user2ID: user2Id, chatId: chatId) { (result) in
-//            switch result{
-//            case .failure(let error):
-//            self.showAlert(title: "Error", message: error.localizedDescription)
-//            case .success(let chatId):
-//                self.sendMessage(message: messgae, destinationUserId: user2Id, chatId: chatId)
+//    private func sendMessage(message: Message, destinationUserId: String, chatId: String){
+//        DatabaseService.shared.sendChatMessage(message, chatId: chatId) { (result) in
+//            switch result {
+//                case .failure(let error):
+//                self.showAlert(title: "Error", message: error.localizedDescription)
+//            case .success:
+//                self.showAlert(title: "Message sent", message: "Host will respond to you after reviewing yur request")
 //            }
+//
 //        }
-    }
+////        createNewChat(user1ID: user1Id, user2ID: user2Id, chatId: chatId) { (result) in
+////            switch result{
+////            case .failure(let error):
+////            self.showAlert(title: "Error", message: error.localizedDescription)
+////            case .success(let chatId):
+////                self.sendMessage(message: messgae, destinationUserId: user2Id, chatId: chatId)
+////            }
+////        }
+//    }
     
 //    private func sendMessage(message: Message, destinationUserId: String, chatId: String){
 //        DatabaseService.shared.sendChatMessage(message, user2ID: destinationUserId, chatId: chatId) { (result) in

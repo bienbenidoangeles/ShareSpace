@@ -13,6 +13,7 @@ struct Chat {
   
   var users: [String]
   var id: String
+  var reservationId: String
   
   var dictionary: [String: Any] {
     return ["users": users]
@@ -31,6 +32,7 @@ extension Chat {
   init(_ dictionary: [String: Any]) {
     self.users = dictionary["users"] as? [String] ?? ["nil"]
     self.id = dictionary["chatId"] as? String ?? "no id"
+    self.reservationId = dictionary["reservationId"] as? String ?? "nil"
   }
   
 }

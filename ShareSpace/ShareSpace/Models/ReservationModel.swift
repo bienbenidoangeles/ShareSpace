@@ -22,7 +22,7 @@ struct Reservation: Codable {
     let timeIn: Date?
     let timeOut:Date?
     let chatId: String?
-    let status: Status.RawValue
+    var status: Status.RawValue
     let reservationId: String
 }
 extension Reservation {

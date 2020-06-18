@@ -341,19 +341,6 @@ class DatabaseService {
         postRef.whereField("location/fullAddress", arrayContains: fullStreetAddr.components(separatedBy: CharacterSet(charactersIn: ", ")))
     }
     
-    func loadPost(postId: String, completion: @escaping(Result<Post, Error>) -> ()){
-        let postRef = db.collection(DatabaseService.postCollection)
-        postRef.document(postId).getDocument { (snapshot, error) in
-            if let error = error {
-                completion(.failure(error))
-            } else if let data = snapshot?.data() {
-                let post = Post(data)
-                completion(.success(post))
-            }
-        }
-    }
-    
-    
     func editPost(postdictionary: [String: Any], completion: @escaping (Result<Bool, Error>) -> ()) {
         let postRef = db.collection(DatabaseService.postCollection)
         guard let postId = postdictionary["postId"] as? String else {
@@ -466,7 +453,9 @@ class DatabaseService {
     
     let users = [user1ID, user2ID]
     let data: [String: Any] = [DatabaseService.usersCollection: users,
-                               "reservationId": reservationId]
+                               "reservationId": reservationId,
+                               "chatId": UUID().uuidString
+    ]
     
     let message = Message(id: UUID().uuidString, content: message, created: Timestamp(date: Date()), senderID: currentUser.uid, senderName: currentUser.displayName ?? "no display name")
     let docRef = db.collection(DatabaseService.chatsCollection).document()

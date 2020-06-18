@@ -92,16 +92,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h7G-t9-stI">
-                                <rect key="frame" x="20" y="588" width="79" height="197"/>
+                                <rect key="frame" x="20" y="588" width="374" height="197"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reviews" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QtQ-7E-La3">
-                                        <rect key="frame" x="8" y="8" width="63" height="21"/>
+                                        <rect key="frame" x="8" y="8" width="358" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="A1V-fa-99M">
-                                        <rect key="frame" x="8" y="37" width="63" height="215"/>
+                                        <rect key="frame" x="8" y="37" width="358" height="215"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="215" id="UM5-wp-IwH"/>
@@ -114,7 +114,7 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="zfJ-g0-4Bv">
-                                                <rect key="frame" x="-148.5" y="0.0" width="360" height="175"/>
+                                                <rect key="frame" x="-1" y="0.0" width="360" height="175"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="V6X-Me-7Pa">
                                                     <rect key="frame" x="0.0" y="0.0" width="360" height="175"/>
@@ -265,9 +265,6 @@
                                             <segment title="My Spaces"/>
                                             <segment title="My reservations"/>
                                         </segments>
-                                        <connections>
-                                            <action selector="segmentedControlChanged:" destination="EIg-oz-ubD" eventType="valueChanged" id="ZAw-Z6-vNC"/>
-                                        </connections>
                                     </segmentedControl>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -311,7 +308,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="cvView" destination="ofL-uL-Y03" id="C4d-tR-fAW"/>
                         <outlet property="reviewsCollectionView" destination="A1V-fa-99M" id="DX4-S6-pi5"/>
                         <outlet property="spacesCollectionView" destination="6s2-RF-29O" id="SLM-Ao-uiR"/>
                         <outlet property="userEmail" destination="Bw9-MF-KZR" id="hxy-UE-qnD"/>

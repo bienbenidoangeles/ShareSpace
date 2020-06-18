@@ -74,6 +74,9 @@
 		F1DA144A249109CF0067B55B /* CLLocationCoordinate2D+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */; };
 		F1DA144E24920B730067B55B /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA144D24920B730067B55B /* SearchResultsViewController.swift */; };
 		F1DA145224920E360067B55B /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA145124920E360067B55B /* SearchResultsView.swift */; };
+		F1DA1456249BE5110067B55B /* ProgrammaticPostReservationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA1455249BE5100067B55B /* ProgrammaticPostReservationCell.swift */; };
+		F1DA1458249BE54E0067B55B /* MyPostsReservationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA1457249BE54D0067B55B /* MyPostsReservationsView.swift */; };
+		F1DA145A249BE56B0067B55B /* MyPostsReservationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA1459249BE56B0067B55B /* MyPostsReservationsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +165,9 @@
 		F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Extensions.swift"; sourceTree = "<group>"; };
 		F1DA144D24920B730067B55B /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		F1DA145124920E360067B55B /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
+		F1DA1455249BE5100067B55B /* ProgrammaticPostReservationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgrammaticPostReservationCell.swift; path = ../../../../../Downloads/ProgrammaticPostReservationCell.swift; sourceTree = "<group>"; };
+		F1DA1457249BE54D0067B55B /* MyPostsReservationsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyPostsReservationsView.swift; path = ../../../../../Downloads/MyPostsReservationsView.swift; sourceTree = "<group>"; };
+		F1DA1459249BE56B0067B55B /* MyPostsReservationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyPostsReservationsViewController.swift; path = ../../../../../Downloads/MyPostsReservationsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +220,7 @@
 		F149D48D247EF8E7006D77D2 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				F1DA1455249BE5100067B55B /* ProgrammaticPostReservationCell.swift */,
 				F149D497247F3348006D77D2 /* FeedCell.swift */,
 				8DBA85B62481C4DD0029598C /* ListingPhotosCell.swift */,
 				F149D5032488DDC1006D77D2 /* CollapsedCell.xib */,
@@ -292,6 +299,7 @@
 		F1684C1C247ACE9200AA9A17 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				F1DA1459249BE56B0067B55B /* MyPostsReservationsViewController.swift */,
 				F1684C2C247AD42E00AA9A17 /* LoginViewController.swift */,
 				F1DA144D24920B730067B55B /* SearchResultsViewController.swift */,
 				F1684C52247ADE1400AA9A17 /* TabBarController.swift */,
@@ -332,6 +340,7 @@
 		F1684C36247AD60400AA9A17 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F1DA1457249BE54D0067B55B /* MyPostsReservationsView.swift */,
 				F1684C46247AD7BE00AA9A17 /* LoginView.swift */,
 				F1684C58247AE22200AA9A17 /* CardView.swift */,
 				8DBA856B247F2D560029598C /* ProfileView.swift */,
@@ -558,6 +567,8 @@
 				8DBA856A247EFD190029598C /* PostModel.swift in Sources */,
 				8DBA85B1248192260029598C /* ListingDetailView.swift in Sources */,
 				0F4E4842248FB39900C68CE6 /* PostViewController.swift in Sources */,
+				F1DA1456249BE5110067B55B /* ProgrammaticPostReservationCell.swift in Sources */,
+				F1DA145A249BE56B0067B55B /* MyPostsReservationsViewController.swift in Sources */,
 				58D5E757249766E500B32CFB /* ChatCell.swift in Sources */,
 				F149D50E24892879006D77D2 /* ImageView+Animation.swift in Sources */,
 				8DCB76152486BD38005C1C04 /* CoreLocationSession.swift in Sources */,
@@ -586,6 +597,7 @@
 				F149D50A2488FDF3006D77D2 /* FeedCollapsedCell.swift in Sources */,
 				8DBA856C247F2D560029598C /* ProfileView.swift in Sources */,
 				F1DA144E24920B730067B55B /* SearchResultsViewController.swift in Sources */,
+				F1DA1458249BE54E0067B55B /* MyPostsReservationsView.swift in Sources */,
 				F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */,
 				F149D4F82486CF2A006D77D2 /* NavBarViewController.swift in Sources */,
 				F1684C57247AE07200AA9A17 /* StorageService.swift in Sources */,

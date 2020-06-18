@@ -19,15 +19,15 @@ class ReservationDetailViewController: UIViewController {
     private var selectedPost: Post?
     private var userWhoIsrequesting: UserModel?
     
-//    init(_ selectedReservation: Reservation, _ selectedPost: Post) {
-//        self.selectedReservation = selectedReservation
-//        self.selectedPost = selectedPost
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    init(_ selectedReservation: Reservation) {
+        self.selectedReservation = selectedReservation
+       // self.selectedPost = selectedPost
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private var reservationStatus: Int?
     private var selectedStatus: Status.RawValue = 2 {
@@ -84,21 +84,21 @@ class ReservationDetailViewController: UIViewController {
                 let reservation = Reservation(dict: data)
                 self?.selectedStatus = reservation.status
                 if self?.selectedStatus == 0 {
-                    self?.reservationDetailView.postLocationLabel.text = self?.selectedPost?.location?.fullAddress ?? ""
+                    self?.reservationDetailView.postLocationLabel.text = self?.selectedPost?.fullAddress ?? ""
                     self?.reservationDetailView.reservationStatusLabel.text = "Accepted"
                     self?.reservationDetailView.reservationStatusLabel.textColor = .systemGreen
                     self?.reservationDetailView.profileImageView.kf.setImage(with: URL(string: self?.userWhoIsrequesting?.profileImage ?? ""))
                     self?.reservationDetailView.acceptButton.setTitleColor(.systemGray, for: .disabled)
                     self?.reservationDetailView.declineButton.isHidden = true//setTitleColor(.systemGray, for: .disabled)
                 } else if self?.selectedStatus == 1 {
-                    self?.reservationDetailView.postLocationLabel.text = "\(self?.selectedPost?.location?.state ?? ""), \(self?.selectedPost?.location?.country ?? "") "
+                    self?.reservationDetailView.postLocationLabel.text = "\(self?.selectedPost?.state ?? ""), \(self?.selectedPost?.country ?? "") "
                     self?.reservationDetailView.reservationStatusLabel.text = "Declined"
                     self?.reservationDetailView.reservationStatusLabel.textColor = .systemRed
                     self?.reservationDetailView.profileImageView.image = UIImage(named: "person.fill")
                     self?.reservationDetailView.acceptButton.setTitleColor(.systemGray, for: .disabled)
                     self?.reservationDetailView.declineButton.setTitleColor(.systemGray, for: .disabled)
                 } else if self?.selectedStatus == 2 {
-                    self?.reservationDetailView.postLocationLabel.text = "\(self?.selectedPost?.location?.state ?? ""), \(self?.selectedPost?.location?.country ?? "") "
+                    self?.reservationDetailView.postLocationLabel.text = "\(self?.selectedPost?.state ?? ""), \(self?.selectedPost?.country ?? "") "
                     self?.reservationDetailView.reservationStatusLabel.text = "Pending"
                     self?.reservationDetailView.reservationStatusLabel.textColor = .systemRed
                     self?.reservationDetailView.profileImageView.image = UIImage(named: "person.fill")
@@ -145,7 +145,7 @@ class ReservationDetailViewController: UIViewController {
         reservationDetailView.postDescriptionLabel.text = "Description: \(selectedPost?.description ?? "no description")"
         
         // will need to fix this one after changing Post Model. If resewrvation is pending, do not show full address, if reservation is confirmed, show full address
-        reservationDetailView.postLocationLabel.text = selectedPost?.location?.city
+        reservationDetailView.postLocationLabel.text = selectedPost?.city
         
         reservationDetailView.checkInDateLabel.text = "check-in    \(selectedReservation?.checkIn.toString(givenFormat: "EEEE, MMM d, yyyy") ?? "no date")"
         reservationDetailView.checkOutDateLabel.text = "check-out    \(selectedReservation?.checkOut.toString(givenFormat: "EEEE, MMM d, yyyy") ?? "no date")"
@@ -219,20 +219,21 @@ class ReservationDetailViewController: UIViewController {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-       // guard let reservation = selectedReservation else {
-        //    return
-      //  }
+        guard var reservation = selectedReservation else {
+            return
+        }
+        reservation.status = 0
         
         // Create Firebase function to accept reservation and add it in the closure here
         let acceptAction = UIAlertAction(title: "Accept this reservation request", style: .default)
         { (alertAction) in
-            DatabaseService.shared.updateReservation(reservation: self.selectedReservation ?? Reservation(renterId: "LdWPXgGHHEeRTtqKvwTWCly97AN2", hostId: "0qtGZ0YxnWgsvX63aq1UBC4fpbC3", postId: "D1FA238C-E3C8-459F-A371-A3EEB9F32704", checkIn: Date(), checkOut: Date(), timeIn: nil, timeOut: nil, chatId: nil, status: 0, reservationId: "1CBEB248-A679-4AD9-AEA1-DBD9F81C47F7")) { [weak self](result) in
+            
+            DatabaseService.shared.updateReservation(reservation: reservation) { [weak self](result) in
                 switch result {
                 case .failure(let error):
                     self?.showAlert(title: "Error accepting reservation", message: error.localizedDescription)
                 case .success:
                     self?.updateUI()
-                    self?.selectedStatus = 0
                     self?.showAlert(title: "Success!", message: "Reservation was Successfully Accepted")
                 }
             }
