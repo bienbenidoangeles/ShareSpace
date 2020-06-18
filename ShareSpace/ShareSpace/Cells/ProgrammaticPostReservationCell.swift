@@ -26,6 +26,8 @@ class ProgrammaticPostReservationCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
        
         return imageView
+        
+        
     }()
     
     public lazy var postTitle: UILabel = {

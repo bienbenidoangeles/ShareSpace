@@ -20,7 +20,10 @@ class MyPostsReservationsView: UIView {
         sc.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
         sc.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
         return sc
+        
     }()
+    
+    
     
     public lazy var postsReservationsCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
