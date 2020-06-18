@@ -152,7 +152,7 @@ class ChatViewController: MessagesViewController {
   
   private func save(_ message: Message) {
     
-    DatabaseService.shared.sendChatMessage(message, user2ID: user2UID ?? "no user 2 ID", chatId: chatId ?? "no id") { (result) in
+    DatabaseService.shared.sendChatMessage(message, chatId: chatId ?? "no id") { (result) in
       switch result {
       case .failure(let error):
         print("Error sending message: \(error)")

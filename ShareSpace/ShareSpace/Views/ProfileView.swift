@@ -32,6 +32,18 @@ class ProfileView: UIView {
         profileImageView.layer.borderColor = UIColor.white.cgColor
     }
     
+    public lazy var userSegmentedControl: UISegmentedControl = {
+        let items = ["User", "Host"]
+        let segmentedControl = UISegmentedControl(items: items)
+        segmentedControl.frame = CGRect(x: 35, y: 200, width: 250, height: 50)
+        segmentedControl.selectedSegmentTintColor = .yummyOrange
+        segmentedControl.backgroundColor = .oceanBlue
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
+        segmentedControl.contentHorizontalAlignment = .center
+        return segmentedControl
+    }()
+    
     public lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "person.fill")
@@ -72,12 +84,12 @@ class ProfileView: UIView {
        }()
     
     //FIXME: change for segmented control?
-    public lazy var userTypeTextfield: UITextField = {
-        let textfield = UITextField()
-        textfield.placeholder = "Host or Renter"
-        textfield.textAlignment = .left
-        return textfield
-    }()
+//    public lazy var userTypeTextfield: UITextField = {
+//        let textfield = UITextField()
+//        textfield.placeholder = "Host or Renter"
+//        textfield.textAlignment = .left
+//        return textfield
+//    }()
     
     public lazy var userPhoneNumberTextfield: UITextField = {
         let textfield = UITextField()
@@ -139,7 +151,8 @@ class ProfileView: UIView {
         return textfield
     }()
     
-    public lazy var uploadIdButton: UIButton = {
+        /*
+     public lazy var uploadIdButton: UIButton = {
         let button = UIButton()
         button.setTitle("Upload ID", for: .normal)
         button.setTitleColor(.systemOrange, for: .normal)
@@ -156,6 +169,7 @@ class ProfileView: UIView {
         imageView.backgroundColor = .systemGray3
         return imageView
     }()
+ */
     
     public lazy var saveChangesButton: UIButton = {
         let button = UIButton()
@@ -247,17 +261,18 @@ class ProfileView: UIView {
     
     private func setUpStackViewTextFieldConstraints() {
         containerView.addSubview(stackView)
+        stackView.addArrangedSubview(userSegmentedControl)
         stackView.addArrangedSubview(userDisplayNameTextfield)
         stackView.addArrangedSubview(userFirstNameTextfield)
         stackView.addArrangedSubview(userLastNameTextfield)
-        stackView.addArrangedSubview(userTypeTextfield)
+       // stackView.addArrangedSubview(userTypeTextfield)
         stackView.addArrangedSubview(userPhoneNumberTextfield)
         stackView.addArrangedSubview(emailLabel)
         stackView.addArrangedSubview(userBioTextfield)
         stackView.addArrangedSubview(userOccupationTextfield)
         stackView.addArrangedSubview(governmentIdTextfield)
-        stackView.addArrangedSubview(uploadIdButton)
-        stackView.addArrangedSubview(idImageView)
+        //stackView.addArrangedSubview(uploadIdButton)
+        //stackView.addArrangedSubview(idImageView)
         stackView.addArrangedSubview(userCreditcardTextfield)
         stackView.addArrangedSubview(userCreditcardTextfield)
         stackView.addArrangedSubview(userCreditcardCVVNumberTextfield)

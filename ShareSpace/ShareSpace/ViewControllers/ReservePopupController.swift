@@ -16,7 +16,6 @@ class ReservePopupController: UIViewController {
    private let storageService = StorageService.shared
     
     
-    
     @IBOutlet weak var totalPriceLabel: UILabel!
     
     
@@ -107,7 +106,7 @@ class ReservePopupController: UIViewController {
            
        }
     func updateUI() {
-        pricePerNightLabel.text = "\(selectedPost.price.total.description)$/NIGHT"
+        pricePerNightLabel.text = "\(selectedPost.price.description)$/NIGHT"
     }
 
 
@@ -153,6 +152,17 @@ class ReservePopupController: UIViewController {
     
     private func creatingThread(user1Id: String, user2Id: String, reservationId: String, messgae: Message, chatId: String){
         DatabaseService.shared.beginChatConversation(user1ID: user1Id, user2ID: user2Id, reservationId: reservationId, message: messgae.content) { (result) in
+            switch result{
+            case .failure(let error):
+            self.showAlert(title: "Error", message: error.localizedDescription)
+            case .success(let chatId):
+                self.sendMessage(message: messgae, destinationUserId: user2Id, chatId: chatId)
+            }
+        }
+    }
+    
+    private func sendMessage(message: Message, destinationUserId: String, chatId: String){
+        DatabaseService.shared.sendChatMessage(message, chatId: chatId) { (result) in
             switch result {
                 case .failure(let error):
                 self.showAlert(title: "Error", message: error.localizedDescription)
@@ -217,7 +227,7 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
             }
 
             datesRange = range
-            totalPriceLabel.text = "Total for \(datesRange?.count ?? -1) days: \((datesRange?.count ?? 1 * Int(selectedPost.price.total)).description)$"
+            totalPriceLabel.text = "Total for \(datesRange?.count ?? -1) days: \((datesRange?.count ?? 1 * Int(selectedPost.price)).description)$"
             fromDateLabel.text = "From: \(datesRange?.first?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
             toDateLAbel.text = "To: \(datesRange?.last?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
             
