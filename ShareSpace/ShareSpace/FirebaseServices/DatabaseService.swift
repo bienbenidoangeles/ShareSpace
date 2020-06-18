@@ -450,20 +450,20 @@ class DatabaseService {
   
   func beginChatConversation(user1ID: String, user2ID: String, reservationId: String, message: String, completion: @escaping (Result<Bool, Error>) -> ()) {
     guard let currentUser = Auth.auth().currentUser else { return }
-    
+    let id = UUID().uuidString
+
     let users = [user1ID, user2ID]
     let data: [String: Any] = [DatabaseService.usersCollection: users,
                                "reservationId": reservationId,
-                               "chatId": UUID().uuidString
+                               "chatId": id
     ]
     
     let message = Message(id: UUID().uuidString, content: message, created: Timestamp(date: Date()), senderID: currentUser.uid, senderName: currentUser.displayName ?? "no display name")
-    let docRef = db.collection(DatabaseService.chatsCollection).document()
-    db.collection(DatabaseService.chatsCollection).document(docRef.documentID).setData(data)
-    docRef.collection(DatabaseService.threadCollection).addDocument(data: message.dictionary) { (error) in
+    db.collection(DatabaseService.chatsCollection).document(id).collection(DatabaseService.threadCollection).addDocument(data: message.dictionary) { (error) in
       if let error = error {
         completion(.failure(error))
       } else {
+        self.db.collection(DatabaseService.chatsCollection).document(id).setData(data)
         completion(.success(true))
       }
     }

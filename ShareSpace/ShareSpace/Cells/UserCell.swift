@@ -163,6 +163,7 @@ extension UserCell {
     guard let currentUser = Auth.auth().currentUser else { return }
     for (index, i) in ids.enumerated() {
       if i == currentUser.uid {
+        
         ids.remove(at: index)
       }
     }
