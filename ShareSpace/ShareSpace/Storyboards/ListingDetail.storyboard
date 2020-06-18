@@ -42,7 +42,7 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="306" height="203"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T2p-4G-xpZ">
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T2p-4G-xpZ">
                                                                     <rect key="frame" x="0.0" y="0.0" width="306" height="203"/>
                                                                 </imageView>
                                                             </subviews>
@@ -54,6 +54,9 @@
                                                             </constraints>
                                                         </collectionViewCellContentView>
                                                         <size key="customSize" width="306" height="203"/>
+                                                        <connections>
+                                                            <outlet property="imageView" destination="T2p-4G-xpZ" id="h8j-Qd-1MA"/>
+                                                        </connections>
                                                     </collectionViewCell>
                                                 </cells>
                                             </collectionView>
@@ -80,15 +83,31 @@
                                                 </constraints>
                                                 <viewLayoutGuide key="safeArea" id="tmS-u5-7sT"/>
                                             </mapView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3mY-4y-7n7">
+                                                <rect key="frame" x="143" y="1257" width="128" height="41"/>
+                                                <color key="backgroundColor" red="0.98431372549999996" green="0.78823529410000004" blue="0.30196078430000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="128" id="Q3e-KA-sEr"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <state key="normal" title="Inquire">
+                                                    <color key="titleColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="inquireUIButtonPressed:" destination="CRA-Yw-ME6" eventType="touchUpInside" id="znC-HO-8cJ"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="3FC-aE-IIx" secondAttribute="trailing" id="Fqx-kJ-HBZ"/>
+                                            <constraint firstAttribute="bottom" secondItem="3mY-4y-7n7" secondAttribute="bottom" constant="32" id="Peb-xK-pPU"/>
                                             <constraint firstItem="bYu-g6-kp1" firstAttribute="top" secondItem="pPL-fs-MAh" secondAttribute="bottom" constant="20" id="R33-zO-ssQ"/>
                                             <constraint firstAttribute="trailing" secondItem="pPL-fs-MAh" secondAttribute="trailing" constant="8" id="TI2-4I-nNd"/>
                                             <constraint firstItem="3FC-aE-IIx" firstAttribute="top" secondItem="fYj-TI-6ra" secondAttribute="top" constant="8" id="XQn-xR-O71"/>
                                             <constraint firstItem="pPL-fs-MAh" firstAttribute="top" secondItem="3FC-aE-IIx" secondAttribute="bottom" constant="8" id="YkR-Jx-PVm"/>
                                             <constraint firstAttribute="trailing" secondItem="bYu-g6-kp1" secondAttribute="trailing" constant="8" id="ctd-GA-EL2"/>
+                                            <constraint firstItem="3mY-4y-7n7" firstAttribute="centerX" secondItem="fYj-TI-6ra" secondAttribute="centerX" id="ej2-pA-pFX"/>
                                             <constraint firstItem="aAs-eJ-sjp" firstAttribute="leading" secondItem="fYj-TI-6ra" secondAttribute="leading" id="k1a-Xx-83W"/>
                                             <constraint firstAttribute="trailing" secondItem="aAs-eJ-sjp" secondAttribute="trailing" id="mUf-fR-g5t"/>
                                             <constraint firstItem="bYu-g6-kp1" firstAttribute="leading" secondItem="fYj-TI-6ra" secondAttribute="leading" constant="8" id="o8Z-7V-JU0"/>
@@ -113,10 +132,8 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PY2-Lj-eg2">
                                 <rect key="frame" x="0.0" y="1417" width="414" height="49"/>
                                 <items>
-                                    <barButtonItem title="Item" id="0Ex-DU-VNo">
-                                        <connections>
-                                            <action selector="inquireButtonPressed:" destination="CRA-Yw-ME6" id="Eq3-ft-NR8"/>
-                                        </connections>
+                                    <barButtonItem title="Inquire" id="0Ex-DU-VNo">
+                                        <color key="tintColor" name="systemOrangeColor" catalog="System" colorSpace="catalog"/>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="RyW-BM-zKb"/>
                                     <barButtonItem title="Price/Rating" id="4YR-VH-dUZ">
@@ -146,9 +163,11 @@
                     <connections>
                         <outlet property="collectionView" destination="3FC-aE-IIx" id="Pwt-b5-rso"/>
                         <outlet property="descriptionLabel" destination="bYu-g6-kp1" id="wSQ-OU-1ql"/>
+                        <outlet property="inquireButton" destination="3mY-4y-7n7" id="x60-GA-l8M"/>
                         <outlet property="map" destination="aAs-eJ-sjp" id="Kl0-SJ-NGt"/>
                         <outlet property="priceRating" destination="4YR-VH-dUZ" id="W8e-nl-Nt2"/>
                         <outlet property="titleLabel" destination="pPL-fs-MAh" id="Ndk-Sq-Jem"/>
+                        <outlet property="toolBar" destination="PY2-Lj-eg2" id="JTU-gs-rED"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Jb-Rz-gQo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -344,6 +363,7 @@
                         <outlet property="fromDateLabel" destination="u71-iW-Kp1" id="NQu-Dl-ZWd"/>
                         <outlet property="messageTextView" destination="LCr-JT-KOR" id="JMG-2d-R8x"/>
                         <outlet property="pricePerNightLabel" destination="Ssd-Uv-NK0" id="sJA-w3-bcV"/>
+                        <outlet property="sendButton" destination="9V2-5e-PyM" id="RM1-N2-aJv"/>
                         <outlet property="toDateLAbel" destination="lYJ-RA-TCM" id="Nx0-d3-LqI"/>
                         <outlet property="totalPriceLabel" destination="hUL-SI-nXV" id="1Ix-JJ-xOp"/>
                     </connections>

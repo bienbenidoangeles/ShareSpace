@@ -33,6 +33,9 @@ class ReservePopupController: UIViewController {
     @IBOutlet weak var messageTextView: UITextView!
     
     
+    @IBOutlet weak var sendButton: UIButton!
+    
+    
   private var selectedPost: Post
     
     init?(coder: NSCoder, selectedPost: Post) {
@@ -66,7 +69,19 @@ class ReservePopupController: UIViewController {
                setupCalendarAppearance()
             updateUI()
             setupDismissBar()
+            setupCalendarUI()
        }
+    
+    private func setupCalendarUI() {
+        calendar.clipsToBounds = true
+        calendar.layer.cornerRadius = 13
+        messageTextView.clipsToBounds = true
+        messageTextView.layer.cornerRadius = 13
+        sendButton.backgroundColor = .yummyOrange
+        sendButton.clipsToBounds = true
+        sendButton.layer.cornerRadius = 13
+        
+    }
     
     private func setupDismissBar() {
         dismissBar.isUserInteractionEnabled = true
@@ -99,6 +114,7 @@ class ReservePopupController: UIViewController {
     @IBAction func sendMessageButtonPressed(_ sender: UIButton) {
         
         guard let user = Auth.auth().currentUser else { return }
+        let hostId = selectedPost.userId
         let chatId = UUID().uuidString
         let renterId = user.uid
         let postId = selectedPost.postId
@@ -119,7 +135,8 @@ class ReservePopupController: UIViewController {
             "checkOut": checkOut,
             "chatId": chatId,
             "status": status.rawValue,
-            "reservationId": reservationId
+            "reservationId": reservationId,
+            "hostId": hostId
             ]
         DatabaseService.shared.createReservation(reservation: dict) { (result) in
             switch result {
@@ -128,33 +145,42 @@ class ReservePopupController: UIViewController {
                 
             case .success:
                 let message = Message(id: messageID, content: message, created: Timestamp(), senderID: renterId, senderName: user.displayName ?? "anonymous")
-                self.creatingThread(user1Id: renterId, user2Id: self.selectedPost.userId, messgae: message, chatId: chatId)
+                self.creatingThread(user1Id: renterId, user2Id: self.selectedPost.userId, reservationId: reservationId, messgae: message, chatId: chatId)
             }
         }
        
     }
     
-    private func creatingThread(user1Id: String, user2Id: String, messgae: Message, chatId: String){
-        DatabaseService.shared.createNewChat(user1ID: user1Id, user2ID: user2Id, chatId: chatId) { (result) in
-            switch result{
-            case .failure(let error):
-            self.showAlert(title: "Error", message: error.localizedDescription)
-            case .success(let chatId):
-                self.sendMessage(message: messgae, destinationUserId: user2Id, chatId: chatId)
-            }
-        }
-    }
-    
-    private func sendMessage(message: Message, destinationUserId: String, chatId: String){
-        DatabaseService.shared.sendChatMessage(message, user2ID: destinationUserId, chatId: chatId) { (result) in
+    private func creatingThread(user1Id: String, user2Id: String, reservationId: String, messgae: Message, chatId: String){
+        DatabaseService.shared.beginChatConversation(user1ID: user1Id, user2ID: user2Id, reservationId: reservationId, message: messgae.content) { (result) in
             switch result {
-            case .failure(let error):
+                case .failure(let error):
                 self.showAlert(title: "Error", message: error.localizedDescription)
             case .success:
-                self.showAlert(title: "Your message was successfully sent", message: "Your host will reply shortly!")
+                self.showAlert(title: "Message sent", message: "Host will respond to you after reviewing yur request")
             }
+        
         }
+//        createNewChat(user1ID: user1Id, user2ID: user2Id, chatId: chatId) { (result) in
+//            switch result{
+//            case .failure(let error):
+//            self.showAlert(title: "Error", message: error.localizedDescription)
+//            case .success(let chatId):
+//                self.sendMessage(message: messgae, destinationUserId: user2Id, chatId: chatId)
+//            }
+//        }
     }
+    
+//    private func sendMessage(message: Message, destinationUserId: String, chatId: String){
+//        DatabaseService.shared.sendChatMessage(message, user2ID: destinationUserId, chatId: chatId) { (result) in
+//            switch result {
+//            case .failure(let error):
+//                self.showAlert(title: "Error", message: error.localizedDescription)
+//            case .success:
+//                self.showAlert(title: "Your message was successfully sent", message: "Your host will reply shortly!")
+//            }
+//        }
+//    }
     
     
 }
@@ -230,6 +256,10 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
         }
 
         return array
+    }
+    
+    func minimumDate(for calendar: FSCalendar) -> Date {
+        return Date()
     }
 
 }

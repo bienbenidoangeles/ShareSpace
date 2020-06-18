@@ -14,9 +14,15 @@ import CoreLocation
 
 class ListingDetailViewController: UIViewController {
     
+    let arrayOfImages = [UIImage(named: "office"), UIImage(named: "office1"), UIImage(named: "office2"), UIImage(named: "office3")]
+    
     private let locationSession = CoreLocationSession.shared.locationManager
     private var annotation = MKPointAnnotation()
     private var isShowingNewAnnotation = false
+    
+    
+    @IBOutlet weak var imageView: UIImageView!
+    
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -33,7 +39,10 @@ class ListingDetailViewController: UIViewController {
     
     @IBOutlet weak var priceRating: UIBarButtonItem!
     
+    @IBOutlet weak var inquireButton: UIButton!
     
+    
+    @IBOutlet weak var toolBar: UIToolbar!
     
     private var selectedPost: Post
     
@@ -60,9 +69,21 @@ class ListingDetailViewController: UIViewController {
         map.delegate = self
         map.showsCompass = true
         map.showsUserLocation = true
+        configureButtonUI()
         updateUI()
         configureCollectionView()
         loadMap()
+    }
+    
+    
+    private func configureButtonUI() {
+        inquireButton.backgroundColor = .sunnyYellow
+        inquireButton.clipsToBounds = true
+        inquireButton.layer.cornerRadius = 13
+        toolBar.barTintColor = .oceanBlue
+        map.clipsToBounds = true
+        map.layer.cornerRadius = 13
+        
     }
     
     private func loadMap() {
@@ -89,7 +110,7 @@ class ListingDetailViewController: UIViewController {
         selectedPost = post
         let annotation = MKPointAnnotation()
        // let coordinate = CLLocationCoordinate2D
-        returnCoordinates(address: "\(post.location.streetAddress), \(post.location.city), \(post.location.state)", completion: { (result) in
+        returnCoordinates(address: "\(post.location?.streetAddress), \(post.location?.city), \(post.location?.state)", completion: { (result) in
             switch result {
             case .failure(let error):
                 print(error)
@@ -135,22 +156,25 @@ class ListingDetailViewController: UIViewController {
 //        }
 //    
 //    }
-//    
+//
     
-    @IBAction func inquireButtonPressed(_ sender: UIBarButtonItem) {
-     
+    
+    @IBAction func inquireUIButtonPressed(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "ListingDetail", bundle: nil)
          let popupVC = storyboard.instantiateViewController(identifier: "ReservePopupController", creator: { (coder) -> ReservePopupController? in
             return ReservePopupController(coder: coder, selectedPost: self.selectedPost)
         })
-        
-       // let popupVC = ReservePopupController(selectedPost: selectedPost)
-       // navigationController?.pushViewController(popupVC, animated: true)
         popupVC.modalTransitionStyle = .crossDissolve
         popupVC.modalPresentationStyle = .fullScreen
-        //navigationController?.pushViewController(popupVC, animated: true)
-        present(popupVC, animated: true) 
-        print("button pressed")
+        
+        present(popupVC, animated: true)
+               print("button pressed")
+        
+    }
+    
+    @IBAction func inquireButtonPressed(_ sender: UIBarButtonItem) {
+     
+
     }
     
     
@@ -158,21 +182,7 @@ class ListingDetailViewController: UIViewController {
         print("pressed")
     }
     
-//    @IBAction func reserveButtonPressed(_ sender: UIBarButtonItem) {
-//        print("pressed reserv button")
-//        let storyboard = UIStoryboard(name: "ListingDetail", bundle: nil)
-//        let detailVC = storyboard.instantiateViewController(identifier: "ReservePopupController")
-//        navigationController?.pushViewController(detailVC, animated:false)
-//
-//        let storyBoard: UIStoryboard = UIStoryboard(name: "ListingDetail", bundle: nil)
-//        let newViewController = storyBoard.instantiateViewController(withIdentifier: "newViewController") as! ReservePopupController
-//
-//
 
-       // self.present(newViewController, animated: true, completion: nil)
-//
- //       }
-    
     
     
 
@@ -180,12 +190,16 @@ class ListingDetailViewController: UIViewController {
 
 extension ListingDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10 //selectedPost.images.count
+        return arrayOfImages.count //selectedPost.images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listingPhotosCell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listingPhotosCell", for: indexPath) as? ListingPhotosCell else {
+            fatalError()
+        }
         cell.backgroundColor = .sunnyYellow
+        
+        cell.imageView.image = arrayOfImages[indexPath.row]
         return cell 
     }
     

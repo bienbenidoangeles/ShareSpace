@@ -11,6 +11,15 @@ import UIKit
 class ListingPhotosCell: UICollectionViewCell {
     
     
+    @IBOutlet weak var imageView: UIImageView!
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layer.cornerRadius = 13
+        imageView.clipsToBounds = true 
+        imageView.layer.cornerRadius = 13
+    }
+    
     public func updateCell() {
         
     }

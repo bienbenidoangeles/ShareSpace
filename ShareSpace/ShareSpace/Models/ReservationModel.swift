@@ -15,6 +15,7 @@ enum Status: Int, Codable {
 }
 struct Reservation: Codable {
     let renterId: String
+    let hostId: String
     let postId:String
     let checkIn: Date
     let checkOut:Date
@@ -27,6 +28,7 @@ struct Reservation: Codable {
 extension Reservation {
     init(dict: [String:Any]) {
         self.renterId = dict["renterId"] as? String ?? ""
+        self.hostId = dict["hostId"] as? String ?? ""
         self.postId = dict["postId"] as? String ?? ""
         self.checkIn = dict["checkIn"] as? Date ?? Date()
         self.checkOut = dict["checkOut"] as? Date ?? Date()
