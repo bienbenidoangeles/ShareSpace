@@ -196,7 +196,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         
         // Update this code:
         // create
-        storageService.uploadPhoto(userId: user.uid, image: selectedImage) { [weak self] (result) in
+        storageService.uploadPhoto(userPhotoId: user.uid, image: selectedImage) { [weak self] (result) in
             // code here to add the photoURL to the user's photoURL
             //     property then commit changes
             switch result {

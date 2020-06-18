@@ -10,6 +10,10 @@ import UIKit
 import CoreLocation
 import FirebaseAuth
 
+protocol CardViewControllerDelegate: AnyObject {
+    func postsFound(posts:[Post], coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>))
+}
+
 class CardViewController: UIViewController {
     
     private let mainView = CardView()
@@ -25,8 +29,10 @@ class CardViewController: UIViewController {
             }
         }
     }
-
-
+    
+    private var rootVC: RootViewController?
+    weak var delegate: CardViewControllerDelegate?
+    
     override func loadView() {
         view = mainView
     }
@@ -36,8 +42,8 @@ class CardViewController: UIViewController {
         view.backgroundColor = .systemBackground
         delegatesAndDataSources()
         let coordinate = CoreLocationSession.shared.locationManager.location?.coordinate.toString
-        let coorRang = (lat: 0...1.5, long: 0...1.5)
-        loadPost(given: coorRang)
+        let coorRang = (lat: 40.0...41.0, long: -75.0...(-74.0))
+        //loadPosts(given: coorRang)
         registerCell()
     }
     
@@ -47,53 +53,62 @@ class CardViewController: UIViewController {
         guard let rootVC = self.parent as? RootViewController else {
             return
         }
+        
+        self.rootVC = rootVC
         rootVC.delegate = self
     }
-  
-//  private var databaseServices = DatabaseService.shared
-  
-  
-    private func loadPost(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
+    
+    //  private var databaseServices = DatabaseService.shared
+    
+    
+    private func loadPosts(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
         
         DatabaseService.shared.loadPosts(coordinateRange: coordinateRange) { (result) in
-      switch result {
-      case .failure(let error):
-        print("It failed")
-      case .success(let posts):
-        guard let posts = posts else {
-            return // have an empty view
+            switch result {
+            case .failure(let error):
+                print("It failed")
+            case .success(let posts):
+                guard let posts = posts, !posts.isEmpty else {
+                    return // have an empty view
+                }
+                self.posts = posts
+                self.delegate?.postsFound(posts: posts, coordinateRange: coordinateRange)
+            }
         }
-        self.posts = posts
-      }
-    }
         
-//        for _ in 0...9{
-//            let genPost = Post.generatePostAsDict()
-//            DatabaseService.shared.postSpace(post: genPost) { (result) in
-//                switch result{
-//                case .failure:
-//                    break
-//                case .success:
-//                    let location = genPost["location"] as? [String:Any]
-//                    DatabaseService.shared.createDBLocation(location:  location!) { (result) in
-//                        switch result{
-//                        case .failure:
-//                            break
-//                        case.success(let locId):
-//                            //print(locId)
-//                            break
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        
+        //        for _ in 0...9{
+        //            let genPost = Post.generatePostAsDict()
+        //            DatabaseService.shared.postSpace(post: genPost) { (result) in
+        //                switch result{
+        //                case .failure:
+        //                    break
+        //                case .success:
+        //                    let location = genPost["location"] as? [String:Any]
+        //                    DatabaseService.shared.createDBLocation(location:  location!) { (result) in
+        //                        switch result{
+        //                        case .failure:
+        //                            break
+        //                        case.success(let locId):
+        //                            //print(locId)
+        //                            break
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        
+    }
     
-  }
+    private func loadPosts(given fulladdress: String, coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)){
+        //Call on db func
+        self.delegate?.postsFound(posts: posts, coordinateRange: coordinateRange)
+    }
     
     private func registerCell(){
         mainView.collectionView.register(UINib(nibName: "CollapsedCell", bundle: nil), forCellWithReuseIdentifier: "collapsedFeedCell")
     }
-
+    
 }
 
 extension CardViewController: UICollectionViewDataSource {
@@ -133,11 +148,11 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
 }
 
 extension CardViewController: SearchPostDelegate{
-    func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
-        loadPost(given: coordinateRange)
+    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String) {
+        
     }
     
-    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D) {
-        
+    func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
+        loadPosts(given: coordinateRange)
     }
 }
