@@ -24,7 +24,11 @@ class FeedExpandedCell: UICollectionViewCell {
     
     public func configureCell(for post: Post){
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         if let imgURLs = post.images?.compactMap({URL(string: $0)}), let cityState = post.cityState {
+=======
+        if let imgURLs = post.images?.compactMap({URL(string: $0)}), let cityState = post.location?.cityState {
+>>>>>>> Stashed changes
 =======
         if let imgURLs = post.images?.compactMap({URL(string: $0)}), let cityState = post.location?.cityState {
 >>>>>>> Stashed changes

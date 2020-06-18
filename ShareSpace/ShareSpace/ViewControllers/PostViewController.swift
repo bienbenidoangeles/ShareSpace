@@ -98,8 +98,11 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
         guard let user = Auth.auth().currentUser else { return }
         
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         let location = Location(country: "USA", streetAddress: streetTextField.text ?? "no street name", apartmentNumber: apartmentTextField.text ?? "no apartment name", city: cityTextField.text ?? "no city name", state: stateTextField.text ?? "no state name", zip: zipCodeTextField.text ?? "no zip code", locationId: "", postId: "",  longitude: nil, latitude: nil)
 =======
+=======
+>>>>>>> Stashed changes
         guard let postTitle = self.titleTextField.text, !postTitle.isEmpty,
              let price = priceTextField.text, !price.isEmpty,
             let postDescription = self.descriptionTextView.text, !postDescription.isEmpty,
@@ -118,6 +121,9 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
         
         var location = Location(country: "USA", streetAddress: streetTextField.text ?? "no street name", apartmentNumber: apartmentTextField.text ?? "no apartment name", city: cityTextField.text ?? "no city name", state: stateTextField.text ?? "no state name", zip: zipCodeTextField.text ?? "no zip code", locationId: "", postId: "",  longitude: 40.00, latitude: -73.00)
         
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         
         CoreLocationSession.shared.convertAddressToCoors(address: location.fullAddress ?? "no address found") {
@@ -130,7 +136,11 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                     return
                 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 //                let locationDict: [String: Any] =
+=======
+             //   let locationDict: [String: Any] =
+>>>>>>> Stashed changes
 =======
              //   let locationDict: [String: Any] =
 >>>>>>> Stashed changes
@@ -142,6 +152,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
 //                      "latitude": coordinate.latitude,
 //                      "longitutude": coordinate.longitude
 //                ]
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
                 
 //                let priceDict: [String: Any] =
@@ -179,6 +190,15 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                 var amenitiesArray = amenities.components(separatedBy: CharacterSet(charactersIn: " ,\n")).filter{$0 != ""}
 
 =======
+=======
+//
+                location.longitude = coordinate.longitude
+                location.latitude = coordinate.latitude
+                
+               
+                
+                
+>>>>>>> Stashed changes
                
                 var ameritiesArray = amenities.components(separatedBy: CharacterSet(charactersIn: " ,\n")).filter{$0 != ""}
 >>>>>>> Stashed changes
@@ -202,6 +222,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
 //                        "location": locationDict
 //                ]
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 let imageId = UUID().uuidString
                 let apartmentNum = self.apartmentTextField.text
                 let post = Post(postId: postId, price: price, postTitle:postTitle, userId: userId, listedDate: listedDate, mainImage: nil, images: nil, description: description, amenities: amenitiesArray, country: nil, streetAddress: streetAddr, apartmentNumber: apartmentNum, city: city, state: state, zip: zip, longitude: coordinate.longitude, latitude: coordinate.latitude, rating: nil, ratingImgURL: nil)
@@ -220,6 +241,10 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                             print(postId)
                         }
                     }
+=======
+                
+              
+>>>>>>> Stashed changes
 =======
                 
               

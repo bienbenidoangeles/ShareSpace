@@ -21,6 +21,7 @@ struct Post:Codable {
     let description: String // post vc
     let amenities: [String]
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     let country: String?
     let streetAddress: String
     let apartmentNumber: String?
@@ -81,11 +82,30 @@ struct Post:Codable {
     }
     //let reviews: [Review]? //sub-collection
 =======
+=======
+>>>>>>> Stashed changes
     let location: Location?    //let amenities: [String] // post
     let locationId: String
     let rating: Rating?
     let reviews: [Review]?
 >>>>>>> Stashed changes
+    
+    var dictionary: [String: Any]{
+      return ["postId": postId,
+              "price": price,
+              "postTitle": postTitle,
+              "userId": userId,
+              "listedDate": listedDate,
+              "mainImage": mainImage,
+              "images": images ?? [""],
+              "description": description,
+              "amenities": amenities,
+              "location": location?.dictionary,
+              "locationId": locationId,
+              "rating": rating ?? Rating.generateRatingAsDict(),
+              "reviews": reviews ?? [Review.generateReviewAsDict()]
+        ]
+    }
     
     var dictionary: [String: Any]{
       return ["postId": postId,
@@ -184,8 +204,13 @@ struct Location: Codable {
     }
     
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     let longitude: Double?
     let latitude:Double?
+=======
+    var longitude: Double?
+    var latitude:Double?
+>>>>>>> Stashed changes
 =======
     var longitude: Double?
     var latitude:Double?

@@ -58,9 +58,12 @@ class FeedCell: UICollectionViewCell {
     
     public func configureCell(for post: Post){
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         locationLabel.text = post.streetAddress
         ratingLabel.text = "\(post.rating ?? 0.0) out of 5 stars"
 =======
+=======
+>>>>>>> Stashed changes
         locationLabel.text = post.location?.fullAddress ?? "no address available"
         ratingLabel.text = "\(post.rating)"
 >>>>>>> Stashed changes

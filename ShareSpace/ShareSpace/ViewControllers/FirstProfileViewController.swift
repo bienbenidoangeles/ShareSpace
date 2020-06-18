@@ -74,12 +74,16 @@ class FirstProfileViewController: UIViewController {
     private let storageService = StorageService.shared
    // let databaseService = DatabaseService()
     
+<<<<<<< Updated upstream
     
     private var refreshControl: UIRefreshControl!
+=======
+>>>>>>> Stashed changes
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         userImage.layer.borderWidth = 1
         userImage.layer.masksToBounds = false
@@ -95,12 +99,83 @@ class FirstProfileViewController: UIViewController {
     }
     
 =======
+=======
+>>>>>>> Stashed changes
         loadUser()
         configureCollectionView()
         configureProfileImage()
         loadUserImage()
         loadData()
+<<<<<<< Updated upstream
     }
+    
+    private func configureCollectionView() {
+        spacesCollectionView.delegate = self
+        spacesCollectionView.dataSource = self
+    }
+    private func configureProfileImage() {
+        userImage.layer.borderWidth = 1
+        userImage.layer.masksToBounds = false
+        userImage.layer.borderColor = UIColor.black.cgColor
+        userImage.layer.cornerRadius = userImage.frame.height/2 //This will change with corners of image and height/2 will make this circle shape
+        userImage.clipsToBounds = true
+    }
+    
+    
+    private func configureRefreshControl() {
+        refreshControl = UIRefreshControl()
+        spacesCollectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(loadData), for: .valueChanged)
+    }
+    @objc private func loadData() {
+        fetchPosts()
+        fetchReservations()
+    }
+    
+    @objc private func fetchPosts() {
+        guard let user = Auth.auth().currentUser else {
+            refreshControl.endRefreshing()
+            return
+        }
+        DatabaseService.shared.loadPosts(userId: user.uid) { [weak self](result) in
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.showAlert(title: "error loading posts", message: error.localizedDescription)
+                }
+            case .success(let myPosts):
+                guard let myPosts = myPosts else {
+                    return
+                }
+                self?.myPosts = myPosts
+            }
+            DispatchQueue.main.async {
+               // self?.refreshControl.endRefreshing()
+            }
+        }
+    }
+    private func fetchReservations() {
+        guard let user = Auth.auth().currentUser else {
+            refreshControl.endRefreshing()
+            return
+        }
+        DatabaseService.shared.loadReservations(renterId: user.uid) {[weak self] (result) in
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.showAlert(title: "error loading reservations", message: error.localizedDescription)
+                }
+            case .success(let myReservations):
+                guard let myreservations = myReservations else {
+                    return
+                }
+                self?.myReservations = myreservations
+            }
+        }
+=======
+>>>>>>> Stashed changes
+    }
+   
     
     private func configureCollectionView() {
         spacesCollectionView.delegate = self
@@ -304,6 +379,48 @@ class FirstProfileViewController: UIViewController {
         }
     }
     
+<<<<<<< Updated upstream
+=======
+}
+
+extension FirstProfileViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+       // return 5
+        if viewState == .myPosts {
+          return myPosts.count
+      } else {
+           return myReservations.count
+      }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+       // let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mypostCell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "mypostCell", for: indexPath) as? PostReservationCell else {
+            fatalError("Could not downcase tp PostReservationCell")
+        }
+        if viewState == .myPosts {
+        let myPost = myPosts[indexPath.row]
+        cell.configureCell(for: myPost)
+        } else {
+            let reservation = myReservations[indexPath.row]
+            cell.configureCell(for: reservation)
+        }
+       // cell.backgroundColor = .yellow
+        return cell
+    }
+    
+    
+}
+
+extension FirstProfileViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let maxSize: CGSize = cvView.safeAreaLayoutGuide.layoutFrame.size
+        let itemWidth = maxSize.width
+        let itemHeight = maxSize.height * 0.80
+        return CGSize(width: itemWidth, height: itemHeight)
+    }
+>>>>>>> Stashed changes
 }
 
 extension FirstProfileViewController: UICollectionViewDataSource {
