@@ -60,6 +60,9 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         
         view.backgroundColor = .systemGroupedBackground
         
+        navigationItem.leftBarButtonItem?.tintColor = .oceanBlue
+        navigationItem.title = "Edit Your Profile"
+        
         //updateUI()
         
         profileView.scrollView.delegate = self

@@ -38,6 +38,8 @@ class ProfileView: UIView {
         segmentedControl.frame = CGRect(x: 35, y: 200, width: 250, height: 50)
         segmentedControl.selectedSegmentTintColor = .yummyOrange
         segmentedControl.backgroundColor = .oceanBlue
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
         segmentedControl.contentHorizontalAlignment = .center
         return segmentedControl
     }()
