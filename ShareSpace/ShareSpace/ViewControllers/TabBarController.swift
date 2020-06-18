@@ -30,12 +30,6 @@ class TabBarController: UITabBarController {
             return vc
         }()
     
-    private var reservVC: ReservationDetailViewController = {
-        let vc =  ReservationDetailViewController()
-        vc.tabBarItem = UITabBarItem(title: "test", image: UIImage(systemName: "message"), tag: 1)
-        return vc
-    }()
-    
     private var mypostReservVC: MyPostsReservationsViewController = {
         let vc =  MyPostsReservationsViewController()
         vc.tabBarItem = UITabBarItem(title: "MyCollections", image: UIImage(systemName: "message"), tag: 3)
@@ -46,7 +40,7 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //let controllers = [mainVC, profileVC]
-        let controllers = [mainVC, reservVC, chatVC, mypostReservVC]
+        let controllers = [mainVC, chatVC, mypostReservVC]
         viewControllers = controllers.map{UINavigationController(rootViewController: $0)}
 
     }

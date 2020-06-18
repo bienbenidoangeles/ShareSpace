@@ -17,6 +17,9 @@ class ChatTableView: UIView {
   
   public var chatId: String?
   
+    var controller:UIViewController?
+    var reservationId: String?
+    
   public lazy var headerView: UIView = {
     let view = UIView()
     view.backgroundColor = .white
@@ -243,6 +246,20 @@ extension ChatTableView {
 
 extension ChatTableView {
   @objc private func loadDetailsPage() {
+    guard let reservationId = reservationId, let controller = controller else {
+        return
+    }
+    DatabaseService.shared.readReservation(reservationId: reservationId) { (result) in
+        switch result {
+        case .failure:
+             break
+        case .success(let reservation):
+            let reservationDVC = ReservationDetailViewController(reservation)
+            controller.navigationController?.pushViewController(reservationDVC, animated: true)
+        }
+    }
+    
+    
     print("load details button works")
   }
   

@@ -14,7 +14,7 @@ class ChatVC: UIViewController {
   private let chatView = ChatTableView()
   
   private var listener: ListenerRegistration?
-  var chatId: String?
+  var chat: Chat?
   var user2ID = String() {
     didSet {
       print("user 2: \(user2ID)")
@@ -29,7 +29,9 @@ class ChatVC: UIViewController {
   
   override func loadView() {
     view = chatView
-    chatView.chatId = chatId
+    chatView.chatId = chat?.id
+    chatView.reservationId = chat?.reservationId
+    chatView.controller = self
   }
 
     override func viewDidLoad() {
@@ -51,7 +53,10 @@ class ChatVC: UIViewController {
   
   
   private func listenerSetup() {
-     listener = Firestore.firestore().collection(DatabaseService.chatsCollection).document(chatId ?? "no id").collection(DatabaseService.threadCollection).order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
+    guard let chatId = chat?.id else {
+        return
+    }
+    listener = Firestore.firestore().collection(DatabaseService.chatsCollection).document(chatId).collection(DatabaseService.threadCollection).order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
        if let error = error {
          print("no messages to load")
        } else if let snapshot = snapshot {

@@ -122,11 +122,11 @@ extension ChatListViewController: UITableViewDelegate {
       if id != currentUser.uid {
         chatVC.user2ID = id
       }
-      print("user 1 id is \(currentUser.uid)")
-      print("user 2 will be \(users[1])")
+      //print("user 1 id is \(currentUser.uid)")
+      //print("user 2 will be \(users[1])")
     }
     
-    chatVC.chatId = userChats[indexPath.row].id
+    chatVC.chat = userChats[indexPath.row]
     
     navigationController?.pushViewController(chatVC, animated: true)
     
