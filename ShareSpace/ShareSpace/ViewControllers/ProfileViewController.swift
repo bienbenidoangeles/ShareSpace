@@ -82,7 +82,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
        // addNavSignOutButton()
         
         profileView.userSegmentedControl.addTarget(self, action: #selector(segmentAction), for: .valueChanged)
-        profileView.userSegmentedControl.selectedSegmentIndex = 1
+        //profileView.userSegmentedControl.selectedSegmentIndex = 0
         
         loadUser()
     }
@@ -99,13 +99,10 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        // profileView.userSegmentedControl = userState,
+        profileView.userSegmentedControl.selectedSegmentIndex = user.userType.rawValue
         profileView.userDisplayNameTextfield.text = user.displayName
         profileView.userFirstNameTextfield.text = user.firstName
         profileView.userLastNameTextfield.text = user.lastName
-
-        //status
-
         profileView.userPhoneNumberTextfield.text = user.phoneNumber
         profileView.userBioTextfield.text = user.bio
         profileView.userOccupationTextfield.text = user.bio
@@ -137,19 +134,11 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     @objc func segmentAction(_ segmentedControl: UISegmentedControl) {
            switch (segmentedControl.selectedSegmentIndex) {
            case 0:
-            selectedUserState = .guest
-              // break // Uno
-           case 1:
             selectedUserState = .user
-              // break // Dos
-           case 2:
+           case 1:
             selectedUserState = .host
-              // break // Tres
-          // case 3:
-           // selectedUserState = .hostAndUser
            default:
             print("default")
-               //break
            }
        }
     

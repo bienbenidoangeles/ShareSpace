@@ -13,7 +13,7 @@ enum UserType: Int, Codable{
     case guest
     case user
     case host
-    case hostAndUser
+    //case hostAndUser
 }
 
 class AppState {
