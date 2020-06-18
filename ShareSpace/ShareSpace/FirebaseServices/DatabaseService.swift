@@ -211,16 +211,16 @@ class DatabaseService {
     
     
     //    public func createNewChat(user1ID: String, user2ID: String, completion: @escaping (Result<Bool, Error>) -> ()) {
-    //      let users = [user1ID, user2ID]
-    //      let data: [String: Any] = [DatabaseService.usersCollection: users]
-    //
-    //      db.collection(DatabaseService.chatsCollection).addDocument(data: data) { (error) in
-    //        if let error = error {
-    //          completion(.failure(error))
-    //        } else {
-    //          completion(.success(true))
-    //        }
-    //      }
+//          let users = [user1ID, user2ID]
+//          let data: [String: Any] = [DatabaseService.usersCollection: users]
+//
+//          db.collection(DatabaseService.chatsCollection).addDocument(data: data) { (error) in
+//            if let error = error {
+//              completion(.failure(error))
+//            } else {
+//              completion(.success(true))
+//            }
+//          }
     //    }
     
     func loadUser(userId: String, completion: @escaping (Result<UserModel, Error>) -> ()) {
@@ -245,7 +245,7 @@ class DatabaseService {
         }
     }
     
-    func sendChatMessage(_ message: Message, user2ID: String, chatId: String, completion: @escaping (Result<Bool, Error>) -> () ) {
+    func sendChatMessage(_ message: Message, chatId: String, completion: @escaping (Result<Bool, Error>) -> () ) {
         //    guard let user = Auth.auth().currentUser else { return }
         let message: [String: Any] = message.dictionary
         
@@ -257,17 +257,9 @@ class DatabaseService {
             }
         }
         
-        //    db.collection(DatabaseService.chatsCollection).document(chatId).collection(DatabaseService.threadCollection).addDocument(data: message) { (error) in
-        //      if let error = error {
-        //        completion(.failure(error))
-        //      } else {
-        //        completion(.success(true))
-        //      }
-        //    }
     }
     
     
-    //}
     
     
     func postSpace(post: [String:Any], createDBLocation: Bool? = nil, completion: @escaping (Result<Bool, Error>) -> ()) {
@@ -439,6 +431,27 @@ class DatabaseService {
             }
         }
     }
+  
+  func beginChatConversation(user1ID: String, user2ID: String, reservationId: String, message: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+    guard let currentUser = Auth.auth().currentUser else { return }
+    
+    let users = [user1ID, user2ID]
+    let data: [String: Any] = [DatabaseService.usersCollection: users,
+                               "reservationId": reservationId]
+    
+    let message = Message(id: UUID().uuidString, content: message, created: Timestamp(date: Date()), senderID: currentUser.uid, senderName: currentUser.displayName ?? "no display name")
+    let docRef = db.collection(DatabaseService.chatsCollection).document()
+    db.collection(DatabaseService.chatsCollection).document(docRef.documentID).setData(data)
+    docRef.collection(DatabaseService.threadCollection).addDocument(data: message.dictionary) { (error) in
+      if let error = error {
+        completion(.failure(error))
+      } else {
+        completion(.success(true))
+      }
+    }
+    
+    
+  }
 }
 
 
