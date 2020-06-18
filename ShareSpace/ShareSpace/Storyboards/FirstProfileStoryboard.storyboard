@@ -103,6 +103,9 @@
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="A1V-fa-99M">
                                         <rect key="frame" x="8" y="37" width="63" height="215"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="215" id="UM5-wp-IwH"/>
+                                        </constraints>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yy6-Cb-7pI">
                                             <size key="itemSize" width="360" height="175"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -190,24 +193,18 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ofL-uL-Y03">
                                 <rect key="frame" x="20" y="358" width="374" height="200"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Places available to rent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XhH-s4-qlu">
-                                        <rect key="frame" x="8" y="20" width="358" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6s2-RF-29O">
-                                        <rect key="frame" x="8" y="49" width="358" height="143"/>
+                                        <rect key="frame" x="8" y="47" width="358" height="145"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aWX-i9-3Pe">
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="aWX-i9-3Pe">
                                             <size key="itemSize" width="358" height="151"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gLB-S6-9OY">
-                                                <rect key="frame" x="0.0" y="0.0" width="358" height="151"/>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="mypostCell" id="gLB-S6-9OY" customClass="PostReservationCell" customModule="ShareSpace" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="-3" width="358" height="151"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="eVk-M7-G6U">
                                                     <rect key="frame" x="0.0" y="0.0" width="358" height="151"/>
@@ -253,25 +250,43 @@
                                                     </constraints>
                                                 </collectionViewCellContentView>
                                                 <size key="customSize" width="358" height="151"/>
+                                                <connections>
+                                                    <outlet property="locationLabel" destination="LzP-d6-eRl" id="lc8-Tt-hdM"/>
+                                                    <outlet property="priceLabel" destination="yaw-kR-Cy5" id="hbe-tQ-BXB"/>
+                                                    <outlet property="spacePhoto" destination="uO5-ap-bHF" id="zPU-ew-Vbd"/>
+                                                    <outlet property="titleLabel" destination="NGA-Y9-AXd" id="KMm-c0-HGg"/>
+                                                </connections>
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9CS-kA-zlp">
+                                        <rect key="frame" x="8" y="8" width="358" height="32"/>
+                                        <segments>
+                                            <segment title="My Spaces"/>
+                                            <segment title="My reservations"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="segmentedControlChanged:" destination="EIg-oz-ubD" eventType="valueChanged" id="ZAw-Z6-vNC"/>
+                                        </connections>
+                                    </segmentedControl>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="XhH-s4-qlu" secondAttribute="trailing" constant="8" id="83F-jR-wfV"/>
-                                    <constraint firstItem="XhH-s4-qlu" firstAttribute="leading" secondItem="ofL-uL-Y03" secondAttribute="leading" constant="8" id="I2h-jy-bVR"/>
-                                    <constraint firstItem="6s2-RF-29O" firstAttribute="leading" secondItem="ofL-uL-Y03" secondAttribute="leading" constant="8" id="LY0-0g-lg8"/>
-                                    <constraint firstAttribute="trailing" secondItem="6s2-RF-29O" secondAttribute="trailing" constant="8" id="SMO-ys-ajU"/>
-                                    <constraint firstAttribute="bottom" secondItem="6s2-RF-29O" secondAttribute="bottom" constant="8" id="XbI-cK-FAn"/>
+                                    <constraint firstItem="9CS-kA-zlp" firstAttribute="top" secondItem="ofL-uL-Y03" secondAttribute="top" constant="8" id="EOm-Ef-zaq"/>
+                                    <constraint firstAttribute="trailing" secondItem="9CS-kA-zlp" secondAttribute="trailing" constant="8" id="Ht3-sm-GFy"/>
+                                    <constraint firstAttribute="bottom" secondItem="6s2-RF-29O" secondAttribute="bottom" constant="8" id="W57-c5-OMl"/>
+                                    <constraint firstItem="9CS-kA-zlp" firstAttribute="leading" secondItem="ofL-uL-Y03" secondAttribute="leading" constant="8" id="Zbj-8K-iap"/>
                                     <constraint firstAttribute="height" constant="200" id="a0H-eT-6N9"/>
-                                    <constraint firstItem="XhH-s4-qlu" firstAttribute="top" secondItem="ofL-uL-Y03" secondAttribute="top" constant="20" id="e7c-5Z-KHe"/>
-                                    <constraint firstItem="6s2-RF-29O" firstAttribute="top" secondItem="XhH-s4-qlu" secondAttribute="bottom" constant="8" id="yF0-BY-ewS"/>
+                                    <constraint firstItem="6s2-RF-29O" firstAttribute="leading" secondItem="ofL-uL-Y03" secondAttribute="leading" constant="8" id="k1U-hd-17Y"/>
+                                    <constraint firstItem="6s2-RF-29O" firstAttribute="top" secondItem="9CS-kA-zlp" secondAttribute="bottom" constant="8" id="nGI-1j-a8x"/>
+                                    <constraint firstAttribute="trailing" secondItem="6s2-RF-29O" secondAttribute="trailing" constant="8" id="tHf-vf-1WH"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="h7G-t9-stI" firstAttribute="top" secondItem="ofL-uL-Y03" secondAttribute="bottom" constant="30" id="0Dq-Jn-eku"/>
+                            <constraint firstItem="h7G-t9-stI" firstAttribute="bottom" secondItem="aOA-LW-jOu" secondAttribute="bottom" id="8Fv-Nq-zNS"/>
                             <constraint firstItem="XQj-Rq-l27" firstAttribute="leading" secondItem="aOA-LW-jOu" secondAttribute="leading" constant="20" id="BUe-1d-jcv"/>
                             <constraint firstItem="h7G-t9-stI" firstAttribute="leading" secondItem="ofL-uL-Y03" secondAttribute="leading" id="CsE-31-nua"/>
                             <constraint firstItem="XQj-Rq-l27" firstAttribute="centerX" secondItem="bp3-Fe-sl8" secondAttribute="centerX" id="HNk-pD-I3l"/>
@@ -281,6 +296,7 @@
                             <constraint firstItem="aOA-LW-jOu" firstAttribute="bottom" secondItem="h7G-t9-stI" secondAttribute="bottom" constant="77" id="OGH-az-bA8"/>
                             <constraint firstItem="aOA-LW-jOu" firstAttribute="trailing" secondItem="XQj-Rq-l27" secondAttribute="trailing" constant="20" id="gtN-Ux-w2X"/>
                             <constraint firstItem="aOA-LW-jOu" firstAttribute="trailing" secondItem="ofL-uL-Y03" secondAttribute="trailing" constant="20" id="kN4-GH-in3"/>
+                            <constraint firstItem="aOA-LW-jOu" firstAttribute="trailing" secondItem="h7G-t9-stI" secondAttribute="trailing" constant="20" id="kNC-vS-ZfJ"/>
                             <constraint firstItem="eCN-ZL-HG5" firstAttribute="top" secondItem="aOA-LW-jOu" secondAttribute="top" constant="20" id="mgJ-lI-lCk"/>
                             <constraint firstItem="ofL-uL-Y03" firstAttribute="leading" secondItem="aOA-LW-jOu" secondAttribute="leading" constant="20" id="p4e-gF-uqb"/>
                             <constraint firstItem="ofL-uL-Y03" firstAttribute="top" secondItem="XQj-Rq-l27" secondAttribute="bottom" constant="30" id="skh-HK-8HO"/>
@@ -295,6 +311,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="cvView" destination="ofL-uL-Y03" id="C4d-tR-fAW"/>
                         <outlet property="reviewsCollectionView" destination="A1V-fa-99M" id="DX4-S6-pi5"/>
                         <outlet property="spacesCollectionView" destination="6s2-RF-29O" id="SLM-Ao-uiR"/>
                         <outlet property="userEmail" destination="Bw9-MF-KZR" id="hxy-UE-qnD"/>

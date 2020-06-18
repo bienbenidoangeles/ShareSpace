@@ -20,7 +20,7 @@ class DatabaseService {
     private var docRef: DocumentReference?
     static let reservationCollection = "reservations"
     static let locationCollection = "locations"
-    private let db = Firestore.firestore()
+    public let db = Firestore.firestore()
     
     private init() {}
     static let shared = DatabaseService()
@@ -237,6 +237,18 @@ class DatabaseService {
         }
     }
     
+    func loadPost(postId: String, completion: @escaping (Result<Post, Error>) ->()) {
+        db.collection(DatabaseService.postCollection).document(postId).getDocument { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = snapshot,
+                let data = snapshot.data() {
+                let post = Post(data)
+                completion(.success(post))
+            }
+        }
+    }
+    
     func deleteDatabaseUser(userId: String, completion: @escaping (Result<Bool, Error>) -> ()) {
         db.collection(DatabaseService.usersCollection).document(userId).delete { (error) in
             if let error = error {
@@ -263,8 +275,7 @@ class DatabaseService {
     
     
     
-    
-    func postSpace(post: Post, createDBLocation: Bool? = nil, completion: @escaping (Result<Bool, Error>) -> ()) {
+    func postSpace(post: Post, completion: @escaping (Result<Bool, Error>) -> ()) {
         guard let user = Auth.auth().currentUser else { return }
         
         db.collection(DatabaseService.postCollection)
@@ -278,9 +289,21 @@ class DatabaseService {
         }
     }
     
+    func loadReservations(renterId: String, completion: @escaping (Result<[Reservation]?, Error>) ->()) {
+        let reservationRef = db.collection(DatabaseService.reservationCollection)
+        reservationRef.whereField("renterId", isEqualTo: renterId).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = snapshot {
+                let reservations = snapshot.documents.map{Reservation( dict: $0.data())}
+                completion(.success(reservations))
+            }
+        }
+    }
+    
     func loadPosts(userId: String, completion: @escaping (Result<[Post]?, Error>) -> ()){
         let postRef = db.collection(DatabaseService.postCollection)
-        postRef.whereField(userId, isEqualTo: userId).getDocuments { (snapshot, error) in
+        postRef.whereField("userId", isEqualTo: userId).getDocuments { (snapshot, error) in
             if let error = error {
                 completion(.failure(error))
             } else if let snapshot = snapshot {
@@ -419,16 +442,16 @@ class DatabaseService {
         }
     }
     
-    func updateReservation(reservationId: String, reservation: Reservation, completion: @escaping(Result<Bool, Error>) -> ()) {
+    func updateReservation( reservation: Reservation, completion: @escaping(Result<Bool, Error>) -> ()) {
         let updatedDict:[String:Any] = [
             "checkIn":reservation.checkIn,
             "checkOut": reservation.checkOut,
-            "timeIn": reservation.timeIn,
-            "timeOut": reservation.timeOut,
-            "status": reservation.status
+            "timeIn": reservation.timeIn ?? "",
+            "timeOut": reservation.timeOut ?? "",
+            "status": reservation.status 
         ]
         
-        db.collection(DatabaseService.reservationCollection).document(reservationId).updateData(updatedDict) { (error) in
+        db.collection(DatabaseService.reservationCollection).document(reservation.reservationId).updateData(updatedDict) { (error) in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -436,6 +459,7 @@ class DatabaseService {
             }
         }
     }
+
   
   func beginChatConversation(user1ID: String, user2ID: String, reservationId: String, message: String, completion: @escaping (Result<Bool, Error>) -> ()) {
     guard let currentUser = Auth.auth().currentUser else { return }

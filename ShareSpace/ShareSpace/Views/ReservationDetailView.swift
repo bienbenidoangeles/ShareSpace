@@ -15,7 +15,7 @@ class ReservationDetailView: UIView {
         label.text = "status"
         label.font = .preferredFont(forTextStyle: .headline)
         label.numberOfLines = 1
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.backgroundColor = .systemGroupedBackground
         return label
     }()
@@ -57,14 +57,21 @@ class ReservationDetailView: UIView {
         let button = UIButton()
         button.setTitle("View Profile", for: .normal)
         button.setTitleColor(.oceanBlue, for: .normal)
+        //button.addTarget(self, action: #selector(viewProfileButtonPressed(_:)), for: .touchUpInside)
         return button
     }()
+    
+    
     
     override func layoutSubviews() {
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderWidth = 3
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
         profileImageView.layer.borderColor = UIColor.white.cgColor
+        acceptButton.clipsToBounds = true
+        acceptButton.layer.cornerRadius = 13
+        declineButton.clipsToBounds = true
+        declineButton.layer.cornerRadius = 13
     }
     
     public lazy var profileImageView: UIImageView = {
@@ -99,7 +106,7 @@ class ReservationDetailView: UIView {
         let label = UILabel()
         label.text = "Description"
         label.font = .preferredFont(forTextStyle: .headline)
-        label.numberOfLines = 0
+        label.numberOfLines = 3
         label.textAlignment = .left
         return label
     }()
@@ -186,7 +193,7 @@ class ReservationDetailView: UIView {
     public lazy var acceptButton: UIButton = {
         let button = UIButton()
         button.setTitle("ACCEPT", for: .normal)
-        button.setTitleColor(.oceanBlue, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .yummyOrange
         return button
     }()
@@ -195,6 +202,7 @@ class ReservationDetailView: UIView {
         let button = UIButton()
         button.setTitle("DECLINE", for: .normal)
         button.setTitleColor(.yummyOrange, for: .normal)
+        button.backgroundColor = .systemGroupedBackground
         return button
     }()
     
@@ -330,7 +338,8 @@ class ReservationDetailView: UIView {
         NSLayoutConstraint.activate([
             postDescriptionLabel.topAnchor.constraint(equalTo: postTitelLabel.bottomAnchor, constant: 8),
             postDescriptionLabel.leadingAnchor.constraint(equalTo: postInfoView.leadingAnchor, constant: 8),
-            postDescriptionLabel.trailingAnchor.constraint(equalTo: postInfoView.trailingAnchor, constant: -16)
+            postDescriptionLabel.trailingAnchor.constraint(equalTo: postInfoView.trailingAnchor, constant: -16),
+            postDescriptionLabel.heightAnchor.constraint(equalTo: postInfoView.heightAnchor, multiplier: 0.40)
         ])
     }
     
@@ -367,7 +376,7 @@ class ReservationDetailView: UIView {
         reservationDetailsView.addSubview(checkInDateLabel)
         checkInDateLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            checkInDateLabel.topAnchor.constraint(equalTo: reservationDetailsView.topAnchor, constant: 16),
+            checkInDateLabel.topAnchor.constraint(equalTo: reservationDetailsView.topAnchor, constant: 8),
             checkInDateLabel.leadingAnchor.constraint(equalTo:  reservationDetailsView.leadingAnchor, constant: 16),
             checkInDateLabel.trailingAnchor.constraint(equalTo: reservationDetailsView.trailingAnchor, constant: -16)
         ])
