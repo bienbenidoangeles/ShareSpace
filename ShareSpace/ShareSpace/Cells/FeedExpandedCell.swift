@@ -23,7 +23,11 @@ class FeedExpandedCell: UICollectionViewCell {
     @IBOutlet weak var bottomLabel: UILabel!
     
     public func configureCell(for post: Post){
+<<<<<<< Updated upstream
         if let imgURLs = post.images?.compactMap({URL(string: $0)}), let cityState = post.cityState {
+=======
+        if let imgURLs = post.images?.compactMap({URL(string: $0)}), let cityState = post.location?.cityState {
+>>>>>>> Stashed changes
              let imgprocessor = DownsamplingImageProcessor(size: cellImageView.bounds.size)
                 |> RoundCornerImageProcessor(cornerRadius: 8)
             let ratingImgprocessor = DownsamplingImageProcessor(size: ratingImageView.bounds.size)

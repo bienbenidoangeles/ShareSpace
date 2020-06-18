@@ -27,8 +27,12 @@
 		8D363F9F24952B94009E4E2B /* ReservationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D363F9E24952B94009E4E2B /* ReservationDetailView.swift */; };
 		8D363FA12496E34B009E4E2B /* ReservationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D363FA02496E34B009E4E2B /* ReservationDetailViewController.swift */; };
 		8D363FA32497C81F009E4E2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D363FA22497C81F009E4E2B /* GoogleService-Info.plist */; };
+		8D363FA52497CFA6009E4E2B /* PostReservationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D363FA42497CFA6009E4E2B /* PostReservationCell.swift */; };
 		8D6C2D4E24859CA4001A840D /* ReservePopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */; };
 		8D759B1F24895C4B006697F4 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D759B1E24895C4A006697F4 /* CalendarViewController.swift */; };
+		8DB2D6772499A9910047EFA9 /* MyPostsReservationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB2D6762499A9910047EFA9 /* MyPostsReservationsView.swift */; };
+		8DB2D6792499B0FE0047EFA9 /* ProgrammaticPostReservationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB2D6782499B0FE0047EFA9 /* ProgrammaticPostReservationCell.swift */; };
+		8DB2D67B2499B5540047EFA9 /* MyPostsReservationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB2D67A2499B5540047EFA9 /* MyPostsReservationsViewController.swift */; };
 		8DBA856A247EFD190029598C /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA8569247EFD190029598C /* PostModel.swift */; };
 		8DBA856C247F2D560029598C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA856B247F2D560029598C /* ProfileView.swift */; };
 		8DBA856E247F3C2E0029598C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA856D247F3C2E0029598C /* ProfileViewController.swift */; };
@@ -108,8 +112,12 @@
 		8D363F9E24952B94009E4E2B /* ReservationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailView.swift; sourceTree = "<group>"; };
 		8D363FA02496E34B009E4E2B /* ReservationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailViewController.swift; sourceTree = "<group>"; };
 		8D363FA22497C81F009E4E2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8D363FA42497CFA6009E4E2B /* PostReservationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReservationCell.swift; sourceTree = "<group>"; };
 		8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservePopupController.swift; sourceTree = "<group>"; };
 		8D759B1E24895C4A006697F4 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		8DB2D6762499A9910047EFA9 /* MyPostsReservationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostsReservationsView.swift; sourceTree = "<group>"; };
+		8DB2D6782499B0FE0047EFA9 /* ProgrammaticPostReservationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgrammaticPostReservationCell.swift; sourceTree = "<group>"; };
+		8DB2D67A2499B5540047EFA9 /* MyPostsReservationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostsReservationsViewController.swift; sourceTree = "<group>"; };
 		8DBA8569247EFD190029598C /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		8DBA856B247F2D560029598C /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		8DBA856D247F3C2E0029598C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -223,8 +231,13 @@
 				5802D7E524884C0400A505FB /* UserCell.swift */,
 				5802D7E724884C1F00A505FB /* UserCell.xib */,
 				F149D50B24890E20006D77D2 /* FeedExpandedCell.swift */,
+<<<<<<< Updated upstream
 				58D5E755249766E500B32CFB /* ChatCell.swift */,
 				58D5E756249766E500B32CFB /* ChatCell.xib */,
+=======
+				8D363FA42497CFA6009E4E2B /* PostReservationCell.swift */,
+				8DB2D6782499B0FE0047EFA9 /* ProgrammaticPostReservationCell.swift */,
+>>>>>>> Stashed changes
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -308,6 +321,7 @@
 				0F4E4841248FB39900C68CE6 /* PostViewController.swift */,
 				8D759B1E24895C4A006697F4 /* CalendarViewController.swift */,
 				8D363FA02496E34B009E4E2B /* ReservationDetailViewController.swift */,
+				8DB2D67A2499B5540047EFA9 /* MyPostsReservationsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -341,6 +355,7 @@
 				F149D4FB24886F2C006D77D2 /* RootView.swift */,
 				F1DA145124920E360067B55B /* SearchResultsView.swift */,
 				8D363F9E24952B94009E4E2B /* ReservationDetailView.swift */,
+				8DB2D6762499A9910047EFA9 /* MyPostsReservationsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -560,8 +575,10 @@
 				0F4E4842248FB39900C68CE6 /* PostViewController.swift in Sources */,
 				58D5E757249766E500B32CFB /* ChatCell.swift in Sources */,
 				F149D50E24892879006D77D2 /* ImageView+Animation.swift in Sources */,
+				8DB2D67B2499B5540047EFA9 /* MyPostsReservationsViewController.swift in Sources */,
 				8DCB76152486BD38005C1C04 /* CoreLocationSession.swift in Sources */,
 				F1684C59247AE22200AA9A17 /* CardView.swift in Sources */,
+				8DB2D6772499A9910047EFA9 /* MyPostsReservationsView.swift in Sources */,
 				F149D4FE2488946A006D77D2 /* DateToString.swift in Sources */,
 				F1684C2D247AD42E00AA9A17 /* LoginViewController.swift in Sources */,
 				8D363F9F24952B94009E4E2B /* ReservationDetailView.swift in Sources */,
@@ -583,6 +600,7 @@
 				58D5E75C2497A6E800B32CFB /* ChatVC.swift in Sources */,
 				5802D7E224882D2200A505FB /* ChatListView.swift in Sources */,
 				F1DA144A249109CF0067B55B /* CLLocationCoordinate2D+Extensions.swift in Sources */,
+				8D363FA52497CFA6009E4E2B /* PostReservationCell.swift in Sources */,
 				F149D50A2488FDF3006D77D2 /* FeedCollapsedCell.swift in Sources */,
 				8DBA856C247F2D560029598C /* ProfileView.swift in Sources */,
 				F1DA144E24920B730067B55B /* SearchResultsViewController.swift in Sources */,
@@ -597,6 +615,7 @@
 				0F01D831248EABDE00B5BEE5 /* FirstProfileViewController.swift in Sources */,
 				F1684C49247ADC6F00AA9A17 /* AuthenticationSession.swift in Sources */,
 				F1DA145224920E360067B55B /* SearchResultsView.swift in Sources */,
+				8DB2D6792499B0FE0047EFA9 /* ProgrammaticPostReservationCell.swift in Sources */,
 				F149D4FC24886F2C006D77D2 /* RootView.swift in Sources */,
 				F149D498247F3348006D77D2 /* FeedCell.swift in Sources */,
 				5802D7E424882DF300A505FB /* ChatListViewController.swift in Sources */,

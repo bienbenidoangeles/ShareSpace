@@ -199,6 +199,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                 return
         }
         
+       
+        
         guard let user = Auth.auth().currentUser else { return }
         //resize image before uploading to Firebase
         //let resizedImage = UIImage.resizeImage(originalImage: selectedImage, rect: profileView.profileImageView.bounds)

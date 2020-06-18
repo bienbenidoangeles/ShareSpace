@@ -74,6 +74,7 @@ class ShareSpaceTests: XCTestCase {
     wait(for: [exp], timeout: 6.0)
   }
    
+<<<<<<< Updated upstream
 //  func testDBFuncLoadPost() {
 //    let exp = XCTestExpectation(description: "Post loaded")
 //    DatabaseService.shared.loadPosts(zipcode: "") { (result) in
@@ -92,6 +93,25 @@ class ShareSpaceTests: XCTestCase {
 //    wait(for: [exp], timeout: 3.0)
 //  }
 
+=======
+  func testDBFuncLoadPost() {
+    let exp = XCTestExpectation(description: "Post loaded")
+    DatabaseService.shared.loadPosts(userId: "") { (result) in
+      exp.fulfill()
+      switch result {
+      case .failure(let error):
+        XCTFail("Failed to load any post: \(error)")
+      case .success(let post):
+        if post!.count > 0 {
+          XCTAssert(true)
+        } else {
+          XCTFail("No post test to load")
+        }
+      }
+    }
+    wait(for: [exp], timeout: 3.0)
+  }
+>>>>>>> Stashed changes
   
   func testDBFuncDeleteUser() {
     let exp = XCTestExpectation(description: "User deleted")
@@ -250,6 +270,29 @@ class ShareSpaceTests: XCTestCase {
 //    wait(for: [exp], timeout: 4.0)
 //  }
   
+    func testStartNewChat() {
+      let exp = XCTestExpectation(description: "success")
+      guard let user = Auth.auth().currentUser else {
+        XCTFail("NO current logged user")
+        return
+      }
+        DatabaseService.shared.beginChatConversation(
+        user1ID: "LdWPXgGHHEeRTtqKvwTWCly97AN2",
+        user2ID: "0qtGZ0YxnWgsvX63aq1UBC4fpbC3",
+        reservationId: "1CBEB248-A679-4AD9-AEA1-DBD9F81C47F7",
+        message: "Testing begin chat batabase function"
+        ) { (result) in
+        exp.fulfill()
+        switch result {
+        case .failure(let error):
+          XCTFail("Foled to create chat and swend message: \(error)")
+        case .success:
+          XCTAssert(true, "successfully created")
+        }
+      }
+      wait(for: [exp], timeout: 5.0)
+      
+    }
 
 }
 
@@ -284,4 +327,6 @@ extension ShareSpaceTests {
 //      }
 //    }
 //  }
+    
+    
 }

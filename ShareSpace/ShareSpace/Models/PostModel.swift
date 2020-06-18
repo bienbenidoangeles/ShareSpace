@@ -20,6 +20,7 @@ struct Post:Codable {
     let images: [String]? // sub-collection
     let description: String // post vc
     let amenities: [String]
+<<<<<<< Updated upstream
     let country: String?
     let streetAddress: String
     let apartmentNumber: String?
@@ -79,6 +80,29 @@ struct Post:Codable {
         ]
     }
     //let reviews: [Review]? //sub-collection
+=======
+    let location: Location?    //let amenities: [String] // post
+    let locationId: String
+    let rating: Rating?
+    let reviews: [Review]?
+>>>>>>> Stashed changes
+    
+    var dictionary: [String: Any]{
+      return ["postId": postId,
+              "price": price,
+              "postTitle": postTitle,
+              "userId": userId,
+              "listedDate": listedDate,
+              "mainImage": mainImage,
+              "images": images ?? [""],
+              "description": description,
+              "amenities": amenities,
+              "location": location?.dictionary,
+              "locationId": locationId,
+              "rating": rating ?? Rating.generateRatingAsDict(),
+              "reviews": reviews ?? [Review.generateReviewAsDict()]
+        ]
+    }
     
 //    enum postType: String {
 //        case gym
@@ -159,8 +183,13 @@ struct Location: Codable {
         }
     }
     
+<<<<<<< Updated upstream
     let longitude: Double?
     let latitude:Double?
+=======
+    var longitude: Double?
+    var latitude:Double?
+>>>>>>> Stashed changes
     
     var coordinate: CLLocationCoordinate2D? {
         guard let lat = latitude,
@@ -215,6 +244,29 @@ struct Location: Codable {
     }
     
     static func generateFullLocationWLatLongAsDict(locationId: String, postId:String) -> [String: Any] {
+        let countries:[String] = ["US", "CA", "MEX"]
+        let randomStreetNum = Int.random(in: 100...9999)
+        let randomStreetNames: [String] = ["Park Avenue", "Mason Street", "Carroll Street", "Pineapple Street"]
+        let randomApartments:String = String(Int.random(in: 1...16)) + String("ABCDEFGHIJKLMNOPQRSTUVWXYZ".randomElement()!)
+        let randomCity:String = ["Bx", "Ny", "Bk", "Q", "SI"].randomElement()!
+        let randomState:[String] = ["NY"]
+        let randomZip:String = ["10001", "10402", "10043"].randomElement()!
+        let dict:[String: Any] = [
+            "country": countries.randomElement()!,
+            "streetAddress": "\(randomStreetNum) \(randomStreetNames.randomElement()!)",
+            "apartmentNumber": randomApartments,
+            "city": randomCity,
+            "state": "NY",
+            "zip": randomZip,
+            "longitutde": Location.generateLongLatLocation().0,
+            "latitude": Location.generateLongLatLocation().1,
+            "locationId": locationId,
+            "postId":postId,
+        ]
+        return dict
+    }
+    
+    var dictionary: [String: Any] {
         let countries:[String] = ["US", "CA", "MEX"]
         let randomStreetNum = Int.random(in: 100...9999)
         let randomStreetNames: [String] = ["Park Avenue", "Mason Street", "Carroll Street", "Pineapple Street"]

@@ -97,7 +97,28 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
         
         guard let user = Auth.auth().currentUser else { return }
         
+<<<<<<< Updated upstream
         let location = Location(country: "USA", streetAddress: streetTextField.text ?? "no street name", apartmentNumber: apartmentTextField.text ?? "no apartment name", city: cityTextField.text ?? "no city name", state: stateTextField.text ?? "no state name", zip: zipCodeTextField.text ?? "no zip code", locationId: "", postId: "",  longitude: nil, latitude: nil)
+=======
+        guard let postTitle = self.titleTextField.text, !postTitle.isEmpty,
+             let price = priceTextField.text, !price.isEmpty,
+            let postDescription = self.descriptionTextView.text, !postDescription.isEmpty,
+            let amenities = self.amenititesTextView.text,
+            let mainImage = self.selectedImage
+            else {
+                print("missing field")
+                return
+        }
+        let priceDict: [String: Any] =
+            ["spaceRate": price,
+             "tax": 0.15
+        ]
+        
+        var post: Post
+        
+        var location = Location(country: "USA", streetAddress: streetTextField.text ?? "no street name", apartmentNumber: apartmentTextField.text ?? "no apartment name", city: cityTextField.text ?? "no city name", state: stateTextField.text ?? "no state name", zip: zipCodeTextField.text ?? "no zip code", locationId: "", postId: "",  longitude: 40.00, latitude: -73.00)
+        
+>>>>>>> Stashed changes
         
         CoreLocationSession.shared.convertAddressToCoors(address: location.fullAddress ?? "no address found") {
             (result) in
@@ -105,10 +126,14 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
             case .failure(let error):
                 break
             case .success(let coordinate):
-                guard let coordinate = coordinate?.first else {
+                guard var coordinate = coordinate?.first else {
                     return
                 }
+<<<<<<< Updated upstream
 //                let locationDict: [String: Any] =
+=======
+             //   let locationDict: [String: Any] =
+>>>>>>> Stashed changes
 //                    [ "streetAddress": self.streetTextField.text ?? "no street name",
 //                      "apartmentNumber": self.apartmentTextField.text ?? "no apartment number",
 //                      "city": self.cityTextField.text ?? "no city name",
@@ -117,16 +142,22 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
 //                      "latitude": coordinate.latitude,
 //                      "longitutude": coordinate.longitude
 //                ]
+<<<<<<< Updated upstream
                 
 //                let priceDict: [String: Any] =
 //                    ["spaceRate": self.priceTextField.text ?? "100",
 //                     "tax": 0.15
 //                ]
+=======
+//
+                location.longitude = coordinate.longitude
+                location.latitude = coordinate.latitude
                 
-                let postId = UUID().uuidString
-                let userId = user.uid
-                let listedDate = Date()
+               
+>>>>>>> Stashed changes
                 
+                
+<<<<<<< Updated upstream
                 guard let postTitle = self.titleTextField.text, !postTitle.isEmpty,
                     // let price = priceTextField.text, !price.isEmpty,
                     let description = self.descriptionTextView.text, !description.isEmpty,
@@ -147,8 +178,13 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                 // let resizedImage = UIImage.resizeImage(originalImage: mainImage, rect: imagePosting.bounds)
                 var amenitiesArray = amenities.components(separatedBy: CharacterSet(charactersIn: " ,\n")).filter{$0 != ""}
 
+=======
+               
+                var ameritiesArray = amenities.components(separatedBy: CharacterSet(charactersIn: " ,\n")).filter{$0 != ""}
+>>>>>>> Stashed changes
                 
                 let resizedImage = UIImage.resizeImageTwo(originalImage: mainImage, rect: self.imagePosting.bounds)
+                
                 
                 // print("original image size: \(mainImage.size)")
                 //  print("resized image size: \(resizedImage)")
@@ -165,6 +201,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
 //                        "amenities": ameritiesArray,
 //                        "location": locationDict
 //                ]
+<<<<<<< Updated upstream
                 let imageId = UUID().uuidString
                 let apartmentNum = self.apartmentTextField.text
                 let post = Post(postId: postId, price: price, postTitle:postTitle, userId: userId, listedDate: listedDate, mainImage: nil, images: nil, description: description, amenities: amenitiesArray, country: nil, streetAddress: streetAddr, apartmentNumber: apartmentNum, city: city, state: state, zip: zip, longitude: coordinate.longitude, latitude: coordinate.latitude, rating: nil, ratingImgURL: nil)
@@ -183,8 +220,31 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                             print(postId)
                         }
                     }
+=======
+                
+              
+>>>>>>> Stashed changes
                 }
             }
+        
+        
+        
+        post = Post(postId: UUID().uuidString, price: Price.generatePrice(), postTitle: postTitle, userId: user.uid, listedDate: Date(), mainImage: "photoHere" , images: ["String"], description: postDescription, amenities: ["amenities"], location: location, locationId: UUID().uuidString, rating: Rating.generateRating(), reviews: Review.generateReviews())
+        
+        DatabaseService.shared.postSpace(post: post.dictionary)
+                      { [weak self] (result) in
+                          switch result {
+                          case .failure(let error):
+                              DispatchQueue.main.async {
+                                  self?.showAlert(title: "Error posting space", message: error.localizedDescription)
+                              }
+                          case .success:
+                              DispatchQueue.main.async {
+                                 self?.showAlert(title: "Post was successfully created", message: nil)
+                                 // self?.uploadPhoto(photo: resizedImage, documentId: postId)
+                                 // self.navigationController?.popViewController(animated: true)
+                              }
+                          }
         }
 
     }
