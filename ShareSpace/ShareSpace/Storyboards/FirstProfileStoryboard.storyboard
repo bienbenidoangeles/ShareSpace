@@ -19,7 +19,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XQj-Rq-l27">
                                 <rect key="frame" x="20" y="158" width="374" height="170"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="EVL-cc-Yb1">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="EVL-cc-Yb1">
                                         <rect key="frame" x="124.5" y="-69" width="125" height="124"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="125" id="QES-S2-hmi"/>
@@ -91,18 +91,17 @@
                                     <constraint firstAttribute="height" constant="170" id="yjz-QY-pt4"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h7G-t9-stI">
-                                <rect key="frame" x="20" y="588" width="374" height="197"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h7G-t9-stI">
+                                <rect key="frame" x="20" y="588" width="79" height="197"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Reviews" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QtQ-7E-La3">
-                                        <rect key="frame" x="8" y="8" width="358" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reviews" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QtQ-7E-La3">
+                                        <rect key="frame" x="8" y="8" width="63" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="A1V-fa-99M">
-                                        <rect key="frame" x="8" y="37" width="358" height="215"/>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="A1V-fa-99M">
+                                        <rect key="frame" x="8" y="37" width="63" height="215"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yy6-Cb-7pI">
                                             <size key="itemSize" width="360" height="175"/>
@@ -112,7 +111,7 @@
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="zfJ-g0-4Bv">
-                                                <rect key="frame" x="-1" y="0.0" width="360" height="175"/>
+                                                <rect key="frame" x="-148.5" y="0.0" width="360" height="175"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="V6X-Me-7Pa">
                                                     <rect key="frame" x="0.0" y="0.0" width="360" height="175"/>
@@ -172,7 +171,13 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="QtQ-7E-La3" firstAttribute="trailing" secondItem="h7G-t9-stI" secondAttribute="trailingMargin" id="2I0-1v-tR5"/>
+                                    <constraint firstAttribute="bottom" secondItem="A1V-fa-99M" secondAttribute="bottom" constant="-55" id="5vr-YN-6RD"/>
+                                    <constraint firstItem="QtQ-7E-La3" firstAttribute="top" secondItem="h7G-t9-stI" secondAttribute="topMargin" id="AiX-uq-Uvi"/>
                                     <constraint firstItem="A1V-fa-99M" firstAttribute="top" secondItem="QtQ-7E-La3" secondAttribute="bottom" constant="8" id="UPz-yP-F7n"/>
+                                    <constraint firstItem="QtQ-7E-La3" firstAttribute="trailing" secondItem="A1V-fa-99M" secondAttribute="trailing" id="UpG-Y3-Wpi"/>
+                                    <constraint firstItem="QtQ-7E-La3" firstAttribute="leading" secondItem="A1V-fa-99M" secondAttribute="leading" id="eIc-qb-mxT"/>
+                                    <constraint firstItem="QtQ-7E-La3" firstAttribute="leading" secondItem="h7G-t9-stI" secondAttribute="leadingMargin" id="pBQ-MH-Lpu"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eCN-ZL-HG5">
@@ -268,9 +273,12 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="XQj-Rq-l27" firstAttribute="leading" secondItem="aOA-LW-jOu" secondAttribute="leading" constant="20" id="BUe-1d-jcv"/>
+                            <constraint firstItem="h7G-t9-stI" firstAttribute="leading" secondItem="ofL-uL-Y03" secondAttribute="leading" id="CsE-31-nua"/>
                             <constraint firstItem="XQj-Rq-l27" firstAttribute="centerX" secondItem="bp3-Fe-sl8" secondAttribute="centerX" id="HNk-pD-I3l"/>
+                            <constraint firstItem="h7G-t9-stI" firstAttribute="top" secondItem="ofL-uL-Y03" secondAttribute="bottom" constant="30" id="Jdr-Zt-mCU"/>
                             <constraint firstItem="XQj-Rq-l27" firstAttribute="top" secondItem="eCN-ZL-HG5" secondAttribute="bottom" constant="20" id="L8i-5n-70P"/>
                             <constraint firstItem="aOA-LW-jOu" firstAttribute="trailing" secondItem="eCN-ZL-HG5" secondAttribute="trailing" constant="20" id="MfA-31-rmZ"/>
+                            <constraint firstItem="aOA-LW-jOu" firstAttribute="bottom" secondItem="h7G-t9-stI" secondAttribute="bottom" constant="77" id="OGH-az-bA8"/>
                             <constraint firstItem="aOA-LW-jOu" firstAttribute="trailing" secondItem="XQj-Rq-l27" secondAttribute="trailing" constant="20" id="gtN-Ux-w2X"/>
                             <constraint firstItem="aOA-LW-jOu" firstAttribute="trailing" secondItem="ofL-uL-Y03" secondAttribute="trailing" constant="20" id="kN4-GH-in3"/>
                             <constraint firstItem="eCN-ZL-HG5" firstAttribute="top" secondItem="aOA-LW-jOu" secondAttribute="top" constant="20" id="mgJ-lI-lCk"/>
@@ -279,11 +287,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aOA-LW-jOu"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Bnw-Eo-z2T"/>
+                    <navigationItem key="navigationItem" id="Bnw-Eo-z2T">
+                        <barButtonItem key="rightBarButtonItem" title="Sign Out" id="xiv-Sp-EZH">
+                            <connections>
+                                <action selector="signOutButtonPressed:" destination="EIg-oz-ubD" id="SpN-Qi-Qhe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="reviewsCollectionView" destination="A1V-fa-99M" id="DX4-S6-pi5"/>
                         <outlet property="spacesCollectionView" destination="6s2-RF-29O" id="SLM-Ao-uiR"/>
                         <outlet property="userEmail" destination="Bw9-MF-KZR" id="hxy-UE-qnD"/>
+                        <outlet property="userImage" destination="EVL-cc-Yb1" id="6UK-b4-c68"/>
                         <outlet property="userNameLabel" destination="awK-X6-3LM" id="ALm-6c-dtp"/>
                         <outlet property="userPhoneNumber" destination="QKd-78-w2P" id="mOA-Mo-cvr"/>
                         <outlet property="userRating" destination="bbX-4j-SLY" id="DOK-AW-8Pv"/>

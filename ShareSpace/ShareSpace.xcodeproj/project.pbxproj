@@ -20,6 +20,9 @@
 		5802D7E624884C0400A505FB /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802D7E524884C0400A505FB /* UserCell.swift */; };
 		5802D7E824884C1F00A505FB /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5802D7E724884C1F00A505FB /* UserCell.xib */; };
 		8D32684D248AEC8300065CAB /* ReservationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D32684C248AEC8300065CAB /* ReservationModel.swift */; };
+		8D363F9F24952B94009E4E2B /* ReservationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D363F9E24952B94009E4E2B /* ReservationDetailView.swift */; };
+		8D363FA12496E34B009E4E2B /* ReservationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D363FA02496E34B009E4E2B /* ReservationDetailViewController.swift */; };
+		8D363FA32497C81F009E4E2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D363FA22497C81F009E4E2B /* GoogleService-Info.plist */; };
 		8D6C2D4E24859CA4001A840D /* ReservePopupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */; };
 		8D759B1F24895C4B006697F4 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D759B1E24895C4A006697F4 /* CalendarViewController.swift */; };
 		8DBA856A247EFD190029598C /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA8569247EFD190029598C /* PostModel.swift */; };
@@ -67,7 +70,6 @@
 		F1DA144A249109CF0067B55B /* CLLocationCoordinate2D+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */; };
 		F1DA144E24920B730067B55B /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA144D24920B730067B55B /* SearchResultsViewController.swift */; };
 		F1DA145224920E360067B55B /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA145124920E360067B55B /* SearchResultsView.swift */; };
-		F1DA14542493CD800067B55B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1DA14532493CD7F0067B55B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +97,9 @@
 		5802D7E524884C0400A505FB /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		5802D7E724884C1F00A505FB /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		8D32684C248AEC8300065CAB /* ReservationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationModel.swift; sourceTree = "<group>"; };
+		8D363F9E24952B94009E4E2B /* ReservationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailView.swift; sourceTree = "<group>"; };
+		8D363FA02496E34B009E4E2B /* ReservationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailViewController.swift; sourceTree = "<group>"; };
+		8D363FA22497C81F009E4E2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservePopupController.swift; sourceTree = "<group>"; };
 		8D759B1E24895C4A006697F4 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		8DBA8569247EFD190029598C /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
@@ -149,7 +154,6 @@
 		F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Extensions.swift"; sourceTree = "<group>"; };
 		F1DA144D24920B730067B55B /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		F1DA145124920E360067B55B /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
-		F1DA14532493CD7F0067B55B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,7 +262,7 @@
 				F1684C31247AD56300AA9A17 /* Extensions */,
 				F1684C1C247ACE9200AA9A17 /* ViewControllers */,
 				F1684BFA247AC6E800AA9A17 /* ViewController.swift */,
-				F1DA14532493CD7F0067B55B /* GoogleService-Info.plist */,
+				8D363FA22497C81F009E4E2B /* GoogleService-Info.plist */,
 				F1684C04247AC6EC00AA9A17 /* Info.plist */,
 			);
 			path = ShareSpace;
@@ -290,6 +294,7 @@
 				0F01D830248EABDE00B5BEE5 /* FirstProfileViewController.swift */,
 				0F4E4841248FB39900C68CE6 /* PostViewController.swift */,
 				8D759B1E24895C4A006697F4 /* CalendarViewController.swift */,
+				8D363FA02496E34B009E4E2B /* ReservationDetailViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -323,6 +328,7 @@
 				5802D7E724884C1F00A505FB /* UserCell.xib */,
 				F149D4FB24886F2C006D77D2 /* RootView.swift */,
 				F1DA145124920E360067B55B /* SearchResultsView.swift */,
+				8D363F9E24952B94009E4E2B /* ReservationDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -446,7 +452,7 @@
 				0F01D82F248EAB9E00B5BEE5 /* FirstProfileStoryboard.storyboard in Resources */,
 				F1684C03247AC6EC00AA9A17 /* LaunchScreen.storyboard in Resources */,
 				F149D5082488E7F8006D77D2 /* SimpleCollapsedCell.xib in Resources */,
-				F1DA14542493CD800067B55B /* GoogleService-Info.plist in Resources */,
+				8D363FA32497C81F009E4E2B /* GoogleService-Info.plist in Resources */,
 				F149D5042488DDC1006D77D2 /* CollapsedCell.xib in Resources */,
 				8DBA85B5248196B10029598C /* ListingDetail.storyboard in Resources */,
 				5802D7E824884C1F00A505FB /* UserCell.xib in Resources */,
@@ -544,8 +550,10 @@
 				F1684C59247AE22200AA9A17 /* CardView.swift in Sources */,
 				F149D4FE2488946A006D77D2 /* DateToString.swift in Sources */,
 				F1684C2D247AD42E00AA9A17 /* LoginViewController.swift in Sources */,
+				8D363F9F24952B94009E4E2B /* ReservationDetailView.swift in Sources */,
 				F149D500248899F9006D77D2 /* IntTimeIntervalAsSecondsToOther.swift in Sources */,
 				F1684C53247ADE1400AA9A17 /* TabBarController.swift in Sources */,
+				8D363FA12496E34B009E4E2B /* ReservationDetailViewController.swift in Sources */,
 				F1684C55247ADECC00AA9A17 /* CardViewController.swift in Sources */,
 				5802D7E624884C0400A505FB /* UserCell.swift in Sources */,
 				8D759B1F24895C4B006697F4 /* CalendarViewController.swift in Sources */,

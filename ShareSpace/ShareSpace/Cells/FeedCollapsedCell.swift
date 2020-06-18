@@ -20,6 +20,7 @@ class FeedCollapsedCell: UICollectionViewCell {
     
     public func configureCell(for post: Post){
         if let mainImgURL = post.mainImage {
+
              let mainImgprocessor = DownsamplingImageProcessor(size: feedMainImageView.bounds.size)
                 |> RoundCornerImageProcessor(cornerRadius: 8)
             //let ratingImgProcessor = DownsamplingImageProcessor(size: ratingImageView.bounds.size)
