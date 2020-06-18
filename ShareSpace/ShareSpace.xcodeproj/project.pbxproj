@@ -231,18 +231,10 @@
 				5802D7E524884C0400A505FB /* UserCell.swift */,
 				5802D7E724884C1F00A505FB /* UserCell.xib */,
 				F149D50B24890E20006D77D2 /* FeedExpandedCell.swift */,
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 				58D5E755249766E500B32CFB /* ChatCell.swift */,
 				58D5E756249766E500B32CFB /* ChatCell.xib */,
-=======
 				8D363FA42497CFA6009E4E2B /* PostReservationCell.swift */,
 				8DB2D6782499B0FE0047EFA9 /* ProgrammaticPostReservationCell.swift */,
->>>>>>> Stashed changes
-=======
-				8D363FA42497CFA6009E4E2B /* PostReservationCell.swift */,
-				8DB2D6782499B0FE0047EFA9 /* ProgrammaticPostReservationCell.swift */,
->>>>>>> Stashed changes
 			);
 			path = Cells;
 			sourceTree = "<group>";
