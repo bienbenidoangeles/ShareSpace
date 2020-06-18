@@ -74,23 +74,24 @@ class ShareSpaceTests: XCTestCase {
     wait(for: [exp], timeout: 6.0)
   }
    
-  func testDBFuncLoadPost() {
-    let exp = XCTestExpectation(description: "Post loaded")
-    DatabaseService.shared.loadPosts(zipcode: "") { (result) in
-      exp.fulfill()
-      switch result {
-      case .failure(let error):
-        XCTFail("Failed to load any post: \(error)")
-      case .success(let post):
-        if post.count > 0 {
-          XCTAssert(true)
-        } else {
-          XCTFail("No post test to load")
-        }
-      }
-    }
-    wait(for: [exp], timeout: 3.0)
-  }
+//  func testDBFuncLoadPost() {
+//    let exp = XCTestExpectation(description: "Post loaded")
+//    DatabaseService.shared.loadPosts(zipcode: "") { (result) in
+//      exp.fulfill()
+//      switch result {
+//      case .failure(let error):
+//        XCTFail("Failed to load any post: \(error)")
+//      case .success(let post):
+//        if post.count > 0 {
+//          XCTAssert(true)
+//        } else {
+//          XCTFail("No post test to load")
+//        }
+//      }
+//    }
+//    wait(for: [exp], timeout: 3.0)
+//  }
+
   
   func testDBFuncDeleteUser() {
     let exp = XCTestExpectation(description: "User deleted")
@@ -137,10 +138,10 @@ class ShareSpaceTests: XCTestCase {
 //          return
 //        }
         
-        for _ in 1...30 {
-            
-            
-        }
+//        for _ in 1...30 {
+//
+//
+//        }
         let post = Post.generatePostAsDict()
         
           DatabaseService.shared.postSpace(post: post) { (result) in
@@ -172,6 +173,27 @@ class ShareSpaceTests: XCTestCase {
       }
     }
     wait(for: [exp], timeout: 3.0)
+  }
+    
+    
+  
+  func testStartNewChat() {
+    let exp = XCTestExpectation(description: "success")
+    guard let user = Auth.auth().currentUser else {
+      XCTFail("NO current logged user")
+      return
+    }
+    DatabaseService.shared.beginChatConversation(user1ID: user.uid, user2ID: "LdWPXgGHHEeRTtqKvwTWCly97AN2", message: "Testing begin chat batabase function") { (result) in
+      exp.fulfill()
+      switch result {
+      case .failure(let error):
+        XCTFail("Foled to create chat and swend message: \(error)")
+      case .success:
+        XCTAssert(true, "successfully created")
+      }
+    }
+    wait(for: [exp], timeout: 5.0)
+    
   }
   
 //  func testChatLoad() {

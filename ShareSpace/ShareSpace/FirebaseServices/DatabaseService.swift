@@ -61,7 +61,7 @@ class DatabaseService {
     
     
     //FIXME: change userType from string to UserType
-    func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String , governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, //userType: Int,
+    func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String , governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, userType: Int,
         profileImage: String, completion: @escaping (Result<Bool, Error>) -> ()) {
         guard let user = Auth.auth().currentUser else { return }
         
@@ -73,7 +73,7 @@ class DatabaseService {
                          "phoneNumber": phoneNumber,
                          "bio": bio,
                          "work": work,
-                        // "userType": userType,
+                         "userType": userType,
                          "governmentId": governmentId,
                          "creditCard": creditCard,
                          "cardCVV": cardCVV,
@@ -213,16 +213,16 @@ class DatabaseService {
     
     
     //    public func createNewChat(user1ID: String, user2ID: String, completion: @escaping (Result<Bool, Error>) -> ()) {
-    //      let users = [user1ID, user2ID]
-    //      let data: [String: Any] = [DatabaseService.usersCollection: users]
-    //
-    //      db.collection(DatabaseService.chatsCollection).addDocument(data: data) { (error) in
-    //        if let error = error {
-    //          completion(.failure(error))
-    //        } else {
-    //          completion(.success(true))
-    //        }
-    //      }
+//          let users = [user1ID, user2ID]
+//          let data: [String: Any] = [DatabaseService.usersCollection: users]
+//
+//          db.collection(DatabaseService.chatsCollection).addDocument(data: data) { (error) in
+//            if let error = error {
+//              completion(.failure(error))
+//            } else {
+//              completion(.success(true))
+//            }
+//          }
     //    }
     
     func loadUser(userId: String, completion: @escaping (Result<UserModel, Error>) -> ()) {
@@ -259,7 +259,7 @@ class DatabaseService {
         }
     }
     
-    func sendChatMessage(_ message: Message, user2ID: String, chatId: String, completion: @escaping (Result<Bool, Error>) -> () ) {
+    func sendChatMessage(_ message: Message, chatId: String, completion: @escaping (Result<Bool, Error>) -> () ) {
         //    guard let user = Auth.auth().currentUser else { return }
         let message: [String: Any] = message.dictionary
         
@@ -271,49 +271,23 @@ class DatabaseService {
             }
         }
         
-        //    db.collection(DatabaseService.chatsCollection).document(chatId).collection(DatabaseService.threadCollection).addDocument(data: message) { (error) in
-        //      if let error = error {
-        //        completion(.failure(error))
-        //      } else {
-        //        completion(.success(true))
-        //      }
-        //    }
     }
     
     
-    //}
-   // let post = Post(postId: <#T##String#>, price: <#T##Price#>, postTitle: <#T##String#>, userId: <#T##String#>, listedDate: <#T##Date#>, mainImage: <#T##String#>, images: <#T##[String]?#>, description: <#T##String#>, amenities: <#T##[String]#>, location: <#T##Location#>, locationId: <#T##String#>, rating: <#T##Rating?#>, reviews: <#T##[Review]?#>)
     
-    func postSpace(post: [String: Any], createDBLocation: Bool? = nil, completion: @escaping (Result<Bool, Error>) -> ()) {
-        guard
-            let _ = Auth.auth().currentUser,
-            let postId: String = post["postId"] as? String else {
-                return
-        }
+    func postSpace(post: Post, completion: @escaping (Result<Bool, Error>) -> ()) {
+        guard let user = Auth.auth().currentUser else { return }
         
         db.collection(DatabaseService.postCollection)
-            .document(postId)
-            .setData(post) { (error) in
-                
+            .document(post.postId)
+            .setData(post.postDict) { (error) in
                 if let error = error {
                     completion(.failure(error))
                 } else {
-//                    if let createDBLocation = createDBLocation, createDBLocation == true, let location = post["location"] as? [String:Any] {
-//                        self.createDBLocation(location: location) { (result) in
-//                            switch result{
-//                            case .failure(let error):
-//                                completion(.failure(error))
-//                            case .success:
-//                                completion(.success(true))
-//                            }
-//                        }
-//                    } else {
-                
-                        completion(.success(true))
-                    }
+                    completion(.success(true))
                 }
         }
- //  }
+    }
     
     func loadReservations(renterId: String, completion: @escaping (Result<[Reservation]?, Error>) ->()) {
         let reservationRef = db.collection(DatabaseService.reservationCollection)
@@ -341,25 +315,40 @@ class DatabaseService {
     
     func loadPosts(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion: @escaping (Result<[Post]?, Error>) -> ()) {
         let postRef = db.collection(DatabaseService.postCollection)
-        readDBLocations(coordinateRange: coordinateRange) { (result) in
-            switch result{
-            case .failure(let error):
+        let latUpper = coordinateRange.lat.upperBound.magnitude
+        let latLower = coordinateRange.lat.lowerBound.magnitude
+        let longUpper = coordinateRange.long.upperBound.magnitude
+        let longLower = coordinateRange.long.lowerBound.magnitude
+        postRef.whereField("latitude", isGreaterThanOrEqualTo: latLower).whereField("latitude", isLessThanOrEqualTo: latUpper).getDocuments { (snapshot, error) in
+            if let error = error {
                 completion(.failure(error))
-            case .success(let locations):
-                if let locations = locations {
-                    postRef.whereField("locationId", in: locations.map{$0.locationId})
-                        .getDocuments { (snapshot, error) in
-                            if let error = error {
-                                completion(.failure(error))
-                            } else if let snapshot = snapshot {
-                                let posts = snapshot.documents.map{Post($0.data())}
-                                completion(.success(posts))
-                            }
-                    }
-                } else {
+            } else if let snapshot = snapshot {
+                let documents = snapshot.documents
+                if documents.isEmpty {
                     completion(.success(nil))
+                } else {
+                    let posts = documents.map{Post($0.data())}
+                    completion(.success(posts))
                 }
                 
+            }
+        }
+        
+    }
+    
+    func loadPosts(fullStreetAddr: String, completion: @escaping (Result<[Post], Error>) ->()){
+        let postRef = db.collection(DatabaseService.postCollection)
+        postRef.whereField("location/fullAddress", arrayContains: fullStreetAddr.components(separatedBy: CharacterSet(charactersIn: ", ")))
+    }
+    
+    func loadPost(postId: String, completion: @escaping(Result<Post, Error>) -> ()){
+        let postRef = db.collection(DatabaseService.postCollection)
+        postRef.document(postId).getDocument { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let data = snapshot?.data() {
+                let post = Post(data)
+                completion(.success(post))
             }
         }
     }
@@ -470,26 +459,28 @@ class DatabaseService {
             }
         }
     }
+
+  
+  func beginChatConversation(user1ID: String, user2ID: String, reservationId: String, message: String, completion: @escaping (Result<Bool, Error>) -> ()) {
+    guard let currentUser = Auth.auth().currentUser else { return }
     
-    func beginChatConversation(user1ID: String, user2ID: String, reservationId: String, message: String, completion: @escaping (Result<Bool, Error>) -> ()) {
-        guard let currentUser = Auth.auth().currentUser else { return }
-        
-        let users = [user1ID, user2ID]
-        let data: [String: Any] = [DatabaseService.usersCollection: users, "reservationId": reservationId]
-        let message = Message(id: UUID().uuidString, content: message, created: Timestamp(date: Date()), senderID: currentUser.uid, senderName: currentUser.displayName ?? "no display name")
-        let docRef = db.collection(DatabaseService.chatsCollection).document()
-        db.collection(DatabaseService.chatsCollection).document(docRef.documentID).setData(data)
-        docRef.collection(DatabaseService.threadCollection).addDocument(data: message.dictionary) { (error) in
-          if let error = error {
-            completion(.failure(error))
-          } else {
-            completion(.success(true))
-          }
-        }
-        
-        
+    let users = [user1ID, user2ID]
+    let data: [String: Any] = [DatabaseService.usersCollection: users,
+                               "reservationId": reservationId]
+    
+    let message = Message(id: UUID().uuidString, content: message, created: Timestamp(date: Date()), senderID: currentUser.uid, senderName: currentUser.displayName ?? "no display name")
+    let docRef = db.collection(DatabaseService.chatsCollection).document()
+    db.collection(DatabaseService.chatsCollection).document(docRef.documentID).setData(data)
+    docRef.collection(DatabaseService.threadCollection).addDocument(data: message.dictionary) { (error) in
+      if let error = error {
+        completion(.failure(error))
+      } else {
+        completion(.success(true))
       }
+    }
     
+    
+  }
 }
 
 

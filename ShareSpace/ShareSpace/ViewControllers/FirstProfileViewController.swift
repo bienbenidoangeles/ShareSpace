@@ -35,8 +35,6 @@ class FirstProfileViewController: UIViewController {
     @IBOutlet weak var reviewsCollectionView: UICollectionView!
     @IBOutlet weak var userEmail: UILabel!
     
-    
-    
     private var selectedImage: UIImage? {
         didSet {
             userImage.image = selectedImage
@@ -45,13 +43,24 @@ class FirstProfileViewController: UIViewController {
     
     private let storageService = StorageService.shared
     
+    private var refreshControl: UIRefreshControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadUser()
         
+        userImage.layer.borderWidth = 1
+        userImage.layer.masksToBounds = false
+        userImage.layer.borderColor = UIColor.black.cgColor
+        userImage.layer.cornerRadius = userImage.frame.height/2 //This will change with corners of image and height/2 will make this circle shape
+        userImage.clipsToBounds = true
+        
         loadUserImage()
+        
+        refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(loadUser), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(loadUserImage), for: .valueChanged)
     }
-    
     
     @IBAction func signOutButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -67,6 +76,7 @@ class FirstProfileViewController: UIViewController {
     
     func updateUI() {
         guard let user = user else {
+            refreshControl.endRefreshing()
             return
         }
         if let user = Auth.auth().currentUser {
@@ -78,22 +88,27 @@ class FirstProfileViewController: UIViewController {
         }
         userNameLabel.text = user.displayName
         userPhoneNumber.text = user.phoneNumber
-        //userImage.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
-       // userImage.kf.setImage(with: URL(string: user.profileImage ?? "no "))
-        userImage.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
-        
-       // loadUserImage()
-        //loadImage(imageURL: user.profileImage ?? "no image url")
-    
+               //userImage.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
+              // userImage.kf.setImage(with: URL(string: user.profileImage ?? "no "))
+        DispatchQueue.main.async {
+            
+            self.userImage.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
+                   
+                  // loadUserImage()
+                   //loadImage(imageURL: user.profileImage ?? "no image url")
+        }
+       
     }
     
     
     func loadImage(imageURL: String) {
-              userImage.kf.setImage(with: URL(string: imageURL))
+        DispatchQueue.main.async {
+            self.userImage.kf.setImage(with: URL(string: imageURL))
+        }
     }
     
     
-    func loadUserImage() {
+    @objc func loadUserImage() {
         guard let displayName = userNameLabel.text,
             let selectedImage = selectedImage else {
                           print("missing field")
@@ -130,6 +145,7 @@ class FirstProfileViewController: UIViewController {
                            //print("CommitCjanges error: \(error)")
                            DispatchQueue.main.async {
                                self?.showAlert(title: "Error updating profile", message: "Error changing profile: \(error.localizedDescription)")
+                            self?.refreshControl.endRefreshing()
                            }
                        } else {
                            //print("profile successfully updated")
@@ -145,7 +161,7 @@ class FirstProfileViewController: UIViewController {
     }
   
     
-    func loadUser() {
+    @objc func loadUser() {
         DatabaseService.shared.loadUser(userId: userId) {
             (result) in
             switch result {
@@ -162,7 +178,10 @@ class FirstProfileViewController: UIViewController {
         guard let user = Auth.auth().currentUser else {
             return
         }
-        let editProfilelVC = ProfileViewController()
+        let userId = user.uid
+        let editProfilelVC = ProfileViewController(userId)
         navigationController?.pushViewController(editProfilelVC, animated: true)
+        //navigationController?.popViewController(animated: true)
     }
 }
+
