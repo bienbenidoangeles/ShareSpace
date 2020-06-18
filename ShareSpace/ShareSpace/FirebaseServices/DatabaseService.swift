@@ -61,7 +61,8 @@ class DatabaseService {
     
     
     //FIXME: change userType from string to UserType
-    func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String , governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, userType: Int, completion: @escaping (Result<Bool, Error>) -> ()) {
+    func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String , governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, userType: Int,
+        profileImage: String, completion: @escaping (Result<Bool, Error>) -> ()) {
         guard let user = Auth.auth().currentUser else { return }
         
         db.collection(DatabaseService.usersCollection)
@@ -76,7 +77,8 @@ class DatabaseService {
                          "governmentId": governmentId,
                          "creditCard": creditCard,
                          "cardCVV": cardCVV,
-                         "cardExpDate": cardExpDate
+                         "cardExpDate": cardExpDate,
+                         "profileImage": profileImage
             ]) { (error) in
                 if let error = error {
                     completion(.failure(error))
@@ -262,28 +264,16 @@ class DatabaseService {
     
     
     
-    func postSpace(post: [String:Any], createDBLocation: Bool? = nil, completion: @escaping (Result<Bool, Error>) -> ()) {
+    func postSpace(post: Post, createDBLocation: Bool? = nil, completion: @escaping (Result<Bool, Error>) -> ()) {
         guard let user = Auth.auth().currentUser else { return }
         
         db.collection(DatabaseService.postCollection)
-            .document((post["postId"] as? String)!)
-            .setData(post) { (error) in
-                
+            .document(post.postId)
+            .setData(post.postDict) { (error) in
                 if let error = error {
                     completion(.failure(error))
                 } else {
-                    if let createDBLocation = createDBLocation, createDBLocation == true, let location = post["location"] as? [String:Any] {
-                        self.createDBLocation(location: location) { (result) in
-                            switch result{
-                            case .failure(let error):
-                                completion(.failure(error))
-                            case .success:
-                                completion(.success(true))
-                            }
-                        }
-                    } else {
-                        completion(.success(true))
-                    }
+                    completion(.success(true))
                 }
         }
     }
@@ -302,25 +292,40 @@ class DatabaseService {
     
     func loadPosts(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion: @escaping (Result<[Post]?, Error>) -> ()) {
         let postRef = db.collection(DatabaseService.postCollection)
-        readDBLocations(coordinateRange: coordinateRange) { (result) in
-            switch result{
-            case .failure(let error):
+        let latUpper = coordinateRange.lat.upperBound.magnitude
+        let latLower = coordinateRange.lat.lowerBound.magnitude
+        let longUpper = coordinateRange.long.upperBound.magnitude
+        let longLower = coordinateRange.long.lowerBound.magnitude
+        postRef.whereField("latitude", isGreaterThanOrEqualTo: latLower).whereField("latitude", isLessThanOrEqualTo: latUpper).getDocuments { (snapshot, error) in
+            if let error = error {
                 completion(.failure(error))
-            case .success(let locations):
-                if let locations = locations {
-                    postRef.whereField("locationId", in: locations.map{$0.locationId})
-                        .getDocuments { (snapshot, error) in
-                            if let error = error {
-                                completion(.failure(error))
-                            } else if let snapshot = snapshot {
-                                let posts = snapshot.documents.map{Post($0.data())}
-                                completion(.success(posts))
-                            }
-                    }
-                } else {
+            } else if let snapshot = snapshot {
+                let documents = snapshot.documents
+                if documents.isEmpty {
                     completion(.success(nil))
+                } else {
+                    let posts = documents.map{Post($0.data())}
+                    completion(.success(posts))
                 }
                 
+            }
+        }
+        
+    }
+    
+    func loadPosts(fullStreetAddr: String, completion: @escaping (Result<[Post], Error>) ->()){
+        let postRef = db.collection(DatabaseService.postCollection)
+        postRef.whereField("location/fullAddress", arrayContains: fullStreetAddr.components(separatedBy: CharacterSet(charactersIn: ", ")))
+    }
+    
+    func loadPost(postId: String, completion: @escaping(Result<Post, Error>) -> ()){
+        let postRef = db.collection(DatabaseService.postCollection)
+        postRef.document(postId).getDocument { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let data = snapshot?.data() {
+                let post = Post(data)
+                completion(.success(post))
             }
         }
     }

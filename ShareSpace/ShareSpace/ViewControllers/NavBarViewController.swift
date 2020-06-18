@@ -16,13 +16,10 @@ class NavBarViewController: UIViewController {
         addNavBarItems()
     }
     
-    
-    
        private func addNavBarItems(){
             let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.circle"), style: .plain, target: self, action: #selector(pushToFirstProfileViewController))
             navigationItem.rightBarButtonItem = barButtonItem
         }
-    
     
     @objc private func pushToFirstProfileViewController(){
         guard let user = Auth.auth().currentUser else {

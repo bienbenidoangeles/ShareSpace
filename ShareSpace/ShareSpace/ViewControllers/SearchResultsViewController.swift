@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 protocol SearchPostDelegate: AnyObject {
-    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D)
+    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String)
     func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>))
 }
 
@@ -76,7 +76,7 @@ class SearchResultsViewController: UIViewController {
                     //show alert
                     return
                 }
-                self?.delegate?.readPostsFromSearchBar(given: coor)
+                self?.delegate?.readPostsFromSearchBar(given: coor, searchResult: address)
                 //self.searchResultsView.searchTextField.resignFirstResponder()
                 self?.navigationController?.popViewController(animated: true)
             }

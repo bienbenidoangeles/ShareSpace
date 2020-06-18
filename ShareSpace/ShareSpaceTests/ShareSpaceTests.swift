@@ -91,6 +91,7 @@ class ShareSpaceTests: XCTestCase {
 //    }
 //    wait(for: [exp], timeout: 3.0)
 //  }
+
   
   func testDBFuncDeleteUser() {
     let exp = XCTestExpectation(description: "User deleted")
@@ -137,10 +138,10 @@ class ShareSpaceTests: XCTestCase {
 //          return
 //        }
         
-        for _ in 1...30 {
-            
-            
-        }
+//        for _ in 1...30 {
+//
+//
+//        }
         let post = Post.generatePostAsDict()
         
           DatabaseService.shared.postSpace(post: post) { (result) in
@@ -173,6 +174,8 @@ class ShareSpaceTests: XCTestCase {
     }
     wait(for: [exp], timeout: 3.0)
   }
+    
+    
   
   func testStartNewChat() {
     let exp = XCTestExpectation(description: "success")

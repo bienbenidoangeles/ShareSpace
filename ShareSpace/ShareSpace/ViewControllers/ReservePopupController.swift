@@ -91,7 +91,7 @@ class ReservePopupController: UIViewController {
            
        }
     func updateUI() {
-        pricePerNightLabel.text = "\(selectedPost.price.total.description)$/NIGHT"
+        pricePerNightLabel.text = "\(selectedPost.price.description)$/NIGHT"
     }
 
 
@@ -190,7 +190,7 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
             }
 
             datesRange = range
-            totalPriceLabel.text = "Total for \(datesRange?.count ?? -1) days: \((datesRange?.count ?? 1 * Int(selectedPost.price.total)).description)$"
+            totalPriceLabel.text = "Total for \(datesRange?.count ?? -1) days: \((datesRange?.count ?? 1 * Int(selectedPost.price)).description)$"
             fromDateLabel.text = "From: \(datesRange?.first?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
             toDateLAbel.text = "To: \(datesRange?.last?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
             
