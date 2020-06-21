@@ -71,21 +71,21 @@ class UserModel: Codable {
     
     init(_ dictionary: [String: Any]) {
         
-        self.userEmail = dictionary["email"] as? String ?? "nil"
-        self.userId = dictionary["userId"] as? String ?? "nil"
-        self.firstName = dictionary["firstName"] as? String ?? "nil"
-        self.lastName = dictionary["lastName"] as? String ?? "nil"
-        self.displayName = dictionary["displayName"] as? String ?? "nil"
+        self.userEmail = dictionary["email"] as? String ?? ""
+        self.userId = dictionary["userId"] as? String ?? ""
+        self.firstName = dictionary["firstName"] as? String ?? ""
+        self.lastName = dictionary["lastName"] as? String ?? ""
+        self.displayName = dictionary["displayName"] as? String ?? ""
         self.bio = dictionary["bio"] as? String ?? "nil"
-        self.phoneNumber = dictionary["phoneNumber"] as? String ?? "nil"
-        self.work = dictionary["work"] as? String ?? "nil"
+        self.phoneNumber = dictionary["phoneNumber"] as? String ?? ""
+        self.work = dictionary["work"] as? String ?? ""
         self.reviews = dictionary["reviews"] as? [Review] ?? [Review]()
         self.userType = dictionary["userType"] as? UserType ?? UserType.user
         self.profileImage = dictionary["profileImage"] as? String ?? ""
-        self.governmentId = dictionary["governmentId"] as? String ?? "nil"
-        self.creditCard = dictionary["creditCard"] as? String ?? "nil"
-        self.cardCVV = dictionary["cardCVV"] as? String ?? "nil"
-        self.cardExpDate = dictionary["cardExpDate"] as? String ?? "nil"
+        self.governmentId = dictionary["governmentId"] as? String ?? ""
+        self.creditCard = dictionary["creditCard"] as? String ?? ""
+        self.cardCVV = dictionary["cardCVV"] as? String ?? ""
+        self.cardExpDate = dictionary["cardExpDate"] as? String ?? ""
     }
     
 }
