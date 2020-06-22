@@ -54,6 +54,21 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     
     private let storageService = StorageService.shared
     
+    override func viewDidLayoutSubviews() {
+      super.viewDidLayoutSubviews()
+        profileView.userDisplayNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
+        profileView.userFirstNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
+        profileView.userLastNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
+        profileView.userPhoneNumberTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
+        profileView.emailLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
+        profileView.userBioTextview.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
+        profileView.userOccupationTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
+        profileView.governmentIdTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
+        profileView.userCreditcardTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
+        profileView.userCreditcardCVVNumberTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
+        profileView.userExpirationDateTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,12 +87,14 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.userLastNameTextfield.delegate = self
         //profileView.userTypeTextfield.delegate = self
         profileView.userPhoneNumberTextfield.delegate = self
-        profileView.userBioTextfield.delegate = self
+        profileView.userBioTextview.delegate = self
         profileView.userOccupationTextfield.delegate = self
         profileView.governmentIdTextfield.delegate = self
         profileView.userCreditcardTextfield.delegate = self
         profileView.userCreditcardCVVNumberTextfield.delegate = self
         profileView.userExpirationDateTextfield.delegate = self
+        
+        
         
         profileView.editProfileImageButton.addTarget(self, action: #selector(userImageEditButtonPressed), for: .touchUpInside)
        // profileView.uploadIdButton.addTarget(self, action: #selector(uploadIdButtonPressed), for: .touchUpInside)
@@ -107,7 +124,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.userFirstNameTextfield.text = user.firstName
         profileView.userLastNameTextfield.text = user.lastName
         profileView.userPhoneNumberTextfield.text = user.phoneNumber
-        profileView.userBioTextfield.text = user.bio
+        profileView.userBioTextview.text = user.bio
         profileView.userOccupationTextfield.text = user.bio
         profileView.governmentIdTextfield.text = user.governmentId
         profileView.userCreditcardTextfield.text = user.creditCard
@@ -116,8 +133,16 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
 
         DispatchQueue.main.async {
 
-            self.profileView.profileImageView.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
+           // self.profileView.profileImageView.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
             
+            self.profileView.profileImageView.kf.setImage(with: URL(string: user.profileImage ?? "no image url"), placeholder: UIImage(systemName: "person.fill"), options: nil, progressBlock: nil) { [weak self](result) in
+              switch result {
+              case .failure(let error):
+                print("error to add image")
+              case .success(let imageResult):
+                self?.selectedImage = imageResult.image
+              }
+            }
         }
     }
     
@@ -178,7 +203,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             !userLastName.isEmpty,
             let userPhoneNumber = profileView.userPhoneNumberTextfield.text,
             !userPhoneNumber.isEmpty,
-            let userBio = profileView.userBioTextfield.text,
+            let userBio = profileView.userBioTextview.text,
             !userBio.isEmpty,
             let userGovenmentId = profileView.governmentIdTextfield.text,
             !userGovenmentId.isEmpty,
@@ -272,4 +297,34 @@ extension ProfileViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+}
+
+extension ProfileViewController: UITextViewDelegate {
+    
+}
+
+extension CALayer {
+  func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
+    let border = CALayer()
+    switch edge {
+    case UIRectEdge.top:
+      border.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: thickness)
+      break
+    case UIRectEdge.bottom:
+      border.frame = CGRect(x: 0, y: self.frame.height - thickness, width: self.frame.width, height: thickness)
+      break
+    case UIRectEdge.left:
+      border.frame = CGRect(x: 0, y: 0, width: thickness, height: self.frame.height)
+      break
+    case UIRectEdge.right:
+      border.frame = CGRect(x: self.frame.width - thickness, y: 0, width: thickness, height: self.frame.height)
+      break
+    default:
+      //For Center Line
+      border.frame = CGRect(x: self.frame.width/2 - thickness, y: 0, width: thickness, height: self.frame.height)
+      break
+    }
+    border.backgroundColor = color.cgColor;
+    self.addSublayer(border)
+  }
 }
