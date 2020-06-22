@@ -94,14 +94,12 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.userCreditcardCVVNumberTextfield.delegate = self
         profileView.userExpirationDateTextfield.delegate = self
         
-        
-        
         profileView.editProfileImageButton.addTarget(self, action: #selector(userImageEditButtonPressed), for: .touchUpInside)
        // profileView.uploadIdButton.addTarget(self, action: #selector(uploadIdButtonPressed), for: .touchUpInside)
         profileView.saveChangesButton.addTarget(self, action: #selector(saveUserProfileButtonPressed), for: .touchUpInside)
        // addNavSignOutButton()
         
-        profileView.userSegmentedControl.addTarget(self, action: #selector(segmentAction), for: .valueChanged)
+        //profileView.userSegmentedControl.addTarget(self, action: #selector(segmentAction), for: .valueChanged)
         //profileView.userSegmentedControl.selectedSegmentIndex = 0
         
         loadUser()
@@ -119,7 +117,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        profileView.userSegmentedControl.selectedSegmentIndex = user.userType.rawValue
+        //profileView.userSegmentedControl.selectedSegmentIndex = user.userType.rawValue
         profileView.userDisplayNameTextfield.text = user.displayName
         profileView.userFirstNameTextfield.text = user.firstName
         profileView.userLastNameTextfield.text = user.lastName

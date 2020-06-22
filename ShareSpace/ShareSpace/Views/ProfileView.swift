@@ -34,17 +34,17 @@ class ProfileView: UIView {
         
     }
     
-    public lazy var userSegmentedControl: UISegmentedControl = {
-        let items = ["User", "Host"]
-        let segmentedControl = UISegmentedControl(items: items)
-        segmentedControl.frame = CGRect(x: 35, y: 200, width: 250, height: 50)
-        segmentedControl.selectedSegmentTintColor = .yummyOrange
-        segmentedControl.backgroundColor = .oceanBlue
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
-        segmentedControl.contentHorizontalAlignment = .center
-        return segmentedControl
-    }()
+//    public lazy var userSegmentedControl: UISegmentedControl = {
+//        let items = ["User", "Host"]
+//        let segmentedControl = UISegmentedControl(items: items)
+//        segmentedControl.frame = CGRect(x: 35, y: 200, width: 250, height: 50)
+//        segmentedControl.selectedSegmentTintColor = .yummyOrange
+//        segmentedControl.backgroundColor = .oceanBlue
+//        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+//        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
+//        segmentedControl.contentHorizontalAlignment = .center
+//        return segmentedControl
+//    }()
     
     public lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -417,7 +417,7 @@ class ProfileView: UIView {
     
     private func setUpStackViewTextFieldConstraints() {
         containerView.addSubview(stackView)
-        stackView.addArrangedSubview(userSegmentedControl)
+        //stackView.addArrangedSubview(userSegmentedControl)
         stackView.addArrangedSubview(userDisplayNameLabel)
         stackView.addArrangedSubview(userDisplayNameTextfield)
        stackView.addArrangedSubview(userFirstNameLabel)
