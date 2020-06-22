@@ -54,8 +54,12 @@ class MyPostsReservationsViewController: UIViewController {
         navigationItem.title = "My Collections"
         
         view.backgroundColor = .systemGroupedBackground
+        
+       refreshControl = UIRefreshControl()
+        prView.postsReservationsCV.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(loadData), for: .valueChanged)
         configureCollectionView()
-        loadData()
+       // loadData()
         segmentedControllChanged()
     }
     private func configureCollectionView() {
@@ -87,7 +91,7 @@ class MyPostsReservationsViewController: UIViewController {
                  self?.myPosts = myPosts
              }
              DispatchQueue.main.async {
-                // self?.refreshControl.endRefreshing()
+                 self?.refreshControl.endRefreshing()
              }
          }
      }

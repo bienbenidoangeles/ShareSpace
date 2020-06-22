@@ -84,7 +84,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.saveChangesButton.addTarget(self, action: #selector(saveUserProfileButtonPressed), for: .touchUpInside)
        // addNavSignOutButton()
         
-        profileView.userSegmentedControl.addTarget(self, action: #selector(segmentAction), for: .valueChanged)
+       // profileView.userSegmentedControl.addTarget(self, action: #selector(segmentAction), for: .valueChanged)
         //profileView.userSegmentedControl.selectedSegmentIndex = 0
         
         loadUser()
@@ -102,7 +102,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        profileView.userSegmentedControl.selectedSegmentIndex = user.userType.rawValue
+       // profileView.userSegmentedControl.selectedSegmentIndex = user.userType.rawValue
         profileView.userDisplayNameTextfield.text = user.displayName
         profileView.userFirstNameTextfield.text = user.firstName
         profileView.userLastNameTextfield.text = user.lastName
@@ -134,17 +134,17 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
           }
       }
     
-    @objc func segmentAction(_ segmentedControl: UISegmentedControl) {
-           switch (segmentedControl.selectedSegmentIndex) {
-           case 0:
-            selectedUserState = .user
-           case 1:
-            selectedUserState = .host
-           default:
-            print("default")
-           }
-       }
-    
+//    @objc func segmentAction(_ segmentedControl: UISegmentedControl) {
+//           switch (segmentedControl.selectedSegmentIndex) {
+//           case 0:
+//            selectedUserState = .user
+//           case 1:
+//            selectedUserState = .host
+//           default:
+//            print("default")
+//           }
+//       }
+//
     @objc func userImageEditButtonPressed() {
         
         let alertController = UIAlertController(title: "Choose Photo Option", message: nil, preferredStyle: .actionSheet)
@@ -169,7 +169,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     
     @objc func saveUserProfileButtonPressed() {
         
-        guard let userType = userState,
+        guard //let userType = userState,
             let displayName = profileView.userDisplayNameTextfield.text,
             !displayName.isEmpty,
             let userFirstName = profileView.userFirstNameTextfield.text,
@@ -212,7 +212,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         
         // Update this code:
         // create
-        storageService.uploadPhoto(userPhotoId: user.uid, image: selectedImage) { [weak self] (result) in
+        storageService.uploadPhoto(userId: user.uid, image: selectedImage) { [weak self] (result) in
             // code here to add the photoURL to the user's photoURL
             //     property then commit changes
             switch result {
@@ -221,7 +221,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                     self?.showAlert(title: "Error uploading photo", message: "\(error.localizedDescription)")
                 }
             case .success(let url):
-                self?.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId:userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate, userType: userType, profileImage: url.absoluteString)
+                self?.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId:userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate,  profileImage: url.absoluteString)
                 
                 let request = Auth.auth().currentUser?.createProfileChangeRequest()
                 request?.displayName = displayName
@@ -244,8 +244,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    private func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String, governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, userType: Int, profileImage: String) {
-      DatabaseService.shared.updateDatabaseUser(firstName: firstName, lastName: lastName, displayName: displayName, phoneNumber: phoneNumber, bio: bio, work: work, governmentId: governmentId, creditCard: creditCard, cardCVV: cardCVV, cardExpDate: cardExpDate, userType: userType, profileImage: profileImage) { [weak self] (result) in
+    private func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String, governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, profileImage: String) {
+      DatabaseService.shared.updateDatabaseUser(firstName: firstName, lastName: lastName, displayName: displayName, phoneNumber: phoneNumber, bio: bio, work: work, governmentId: governmentId, creditCard: creditCard, cardCVV: cardCVV, cardExpDate: cardExpDate, profileImage: profileImage) { [weak self] (result) in
                switch result {
                case .failure(let error):
                    print("failed to update db user: \(error.localizedDescription)")

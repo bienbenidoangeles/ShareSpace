@@ -16,6 +16,12 @@ class ReservePopupController: UIViewController {
    private let storageService = StorageService.shared
     
     
+    
+    @IBOutlet weak var litingTitle: UILabel!
+    
+    
+    @IBOutlet weak var listingBy: UILabel!
+    
     @IBOutlet weak var totalPriceLabel: UILabel!
     
     
@@ -33,6 +39,8 @@ class ReservePopupController: UIViewController {
     
     
     @IBOutlet weak var sendButton: UIButton!
+    
+    private var hostOfThisListing: UserModel?
     
     
   private var selectedPost: Post
@@ -58,10 +66,21 @@ class ReservePopupController: UIViewController {
        private var lastDate: Date?
        
        private var datesRange: [Date]?
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        listingBy.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        pricePerNightLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        toDateLAbel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        totalPriceLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+    
+    }
+    
        
            override func viewDidLoad() {
                super.viewDidLoad()
             view.backgroundColor = .systemGroupedBackground
+           
                calendar.delegate = self
                calendar.dataSource = self
                calendar.allowsMultipleSelection = true
@@ -105,8 +124,26 @@ class ReservePopupController: UIViewController {
            
            
        }
+    
+    private func loadUser() {
+        
+    }
     func updateUI() {
-        pricePerNightLabel.text = "\(selectedPost.price.description)$/NIGHT"
+        
+        //guard let host = hostOfThisListing else { return }
+        
+        DatabaseService.shared.loadUser(userId: selectedPost.userId) { (result) in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let user):
+                self.hostOfThisListing = user
+                self.listingBy.text = "Listing by: \(self.hostOfThisListing?.displayName ?? "no name")"
+            }
+        }
+        pricePerNightLabel.text = "\(selectedPost.price.description)$/Day"
+        litingTitle.text = selectedPost.postTitle
+        
     }
 
 
@@ -227,7 +264,7 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
             }
 
             datesRange = range
-            totalPriceLabel.text = "Total for \(datesRange?.count ?? -1) days: \((datesRange?.count ?? 1 * Int(selectedPost.price)).description)$"
+            totalPriceLabel.text = "Total for \(datesRange?.count ?? -1) days: \(((datesRange?.count ?? 1) * Int(selectedPost.price)).description)$"
             fromDateLabel.text = "From: \(datesRange?.first?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
             toDateLAbel.text = "To: \(datesRange?.last?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
             
