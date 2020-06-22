@@ -60,6 +60,11 @@ class FirstProfileViewController: UIViewController {
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(loadUser), for: .valueChanged)
        // refreshControl.addTarget(self, action: #selector(loadUserImage), for: .valueChanged)
+        
+//        spacesCollectionView.isHidden = true
+//        reviewsCollectionView.isHidden = true
+        
+        
     }
     
     @IBAction func signOutButtonPressed(_ sender: UIBarButtonItem) {

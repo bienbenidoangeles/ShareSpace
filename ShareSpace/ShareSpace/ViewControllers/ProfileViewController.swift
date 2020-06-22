@@ -56,17 +56,21 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLayoutSubviews() {
       super.viewDidLayoutSubviews()
-        profileView.userDisplayNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userFirstNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userLastNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userPhoneNumberTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.emailLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userBioTextview.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userOccupationTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.governmentIdTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userCreditcardTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userCreditcardCVVNumberTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userExpirationDateTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
+        profileView.userDisplayNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.userFirstNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.userLastNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.userLocationTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.userPhoneNumberTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //profileView.emailLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //profileView.emailLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.userBioTextview.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.userOccupationTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //profileView.governmentIdLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.governmentIdNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //profileView.governmentIdNumberTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //profileView.userCreditcardTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //profileView.userCreditcardCVVNumberTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.userExpirationDateTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
     }
     
     
@@ -89,7 +93,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.userPhoneNumberTextfield.delegate = self
         profileView.userBioTextview.delegate = self
         profileView.userOccupationTextfield.delegate = self
-        profileView.governmentIdTextfield.delegate = self
+        profileView.governmentIdNameTextfield.delegate = self
+       // profileView.governmentIdNumberTextfield.delegate = self
         profileView.userCreditcardTextfield.delegate = self
         profileView.userCreditcardCVVNumberTextfield.delegate = self
         profileView.userExpirationDateTextfield.delegate = self
@@ -123,10 +128,11 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.userDisplayNameTextfield.text = user.displayName
         profileView.userFirstNameTextfield.text = user.firstName
         profileView.userLastNameTextfield.text = user.lastName
+       // profileView.userLocationTextfield.text = user.cityState
         profileView.userPhoneNumberTextfield.text = user.phoneNumber
         profileView.userBioTextview.text = user.bio
         profileView.userOccupationTextfield.text = user.bio
-        profileView.governmentIdTextfield.text = user.governmentId
+        profileView.governmentIdNameTextfield.text = user.governmentId
         profileView.userCreditcardTextfield.text = user.creditCard
         profileView.userCreditcardCVVNumberTextfield.text = user.cardCVV
         profileView.userExpirationDateTextfield.text = user.cardExpDate
@@ -205,7 +211,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             !userPhoneNumber.isEmpty,
             let userBio = profileView.userBioTextview.text,
             !userBio.isEmpty,
-            let userGovenmentId = profileView.governmentIdTextfield.text,
+            let userGovenmentId = profileView.governmentIdNameTextfield.text,
             !userGovenmentId.isEmpty,
             let userOccupation = profileView.userOccupationTextfield.text,
             !userOccupation.isEmpty,
@@ -303,28 +309,28 @@ extension ProfileViewController: UITextViewDelegate {
     
 }
 
-extension CALayer {
-  func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
-    let border = CALayer()
-    switch edge {
-    case UIRectEdge.top:
-      border.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: thickness)
-      break
-    case UIRectEdge.bottom:
-      border.frame = CGRect(x: 0, y: self.frame.height - thickness, width: self.frame.width, height: thickness)
-      break
-    case UIRectEdge.left:
-      border.frame = CGRect(x: 0, y: 0, width: thickness, height: self.frame.height)
-      break
-    case UIRectEdge.right:
-      border.frame = CGRect(x: self.frame.width - thickness, y: 0, width: thickness, height: self.frame.height)
-      break
-    default:
-      //For Center Line
-      border.frame = CGRect(x: self.frame.width/2 - thickness, y: 0, width: thickness, height: self.frame.height)
-      break
-    }
-    border.backgroundColor = color.cgColor;
-    self.addSublayer(border)
-  }
-}
+//extension CALayer {
+//  func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
+//    let border = CALayer()
+//    switch edge {
+//    case UIRectEdge.top:
+//      border.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: thickness)
+//      break
+//    case UIRectEdge.bottom:
+//      border.frame = CGRect(x: 0, y: self.frame.height - thickness, width: self.frame.width, height: thickness)
+//      break
+//    case UIRectEdge.left:
+//      border.frame = CGRect(x: 0, y: 0, width: thickness, height: self.frame.height)
+//      break
+//    case UIRectEdge.right:
+//      border.frame = CGRect(x: self.frame.width - thickness, y: 0, width: thickness, height: self.frame.height)
+//      break
+//    default:
+//      //For Center Line
+//      border.frame = CGRect(x: self.frame.width/2 - thickness, y: 0, width: thickness, height: self.frame.height)
+//      break
+//    }
+//    border.backgroundColor = color.cgColor;
+//    self.addSublayer(border)
+//  }
+//}
