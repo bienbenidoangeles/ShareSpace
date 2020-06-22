@@ -246,7 +246,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                     self?.showAlert(title: "Error uploading photo", message: "\(error.localizedDescription)")
                 }
             case .success(let url):
-                self?.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId:userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate,  profileImage: url.absoluteString)
+                self?.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId:userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate, cityState: "Brooklyn, NY",  profileImage: url.absoluteString)
                 
                 let request = Auth.auth().currentUser?.createProfileChangeRequest()
                 request?.displayName = displayName
@@ -269,8 +269,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    private func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String, governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, profileImage: String) {
-      DatabaseService.shared.updateDatabaseUser(firstName: firstName, lastName: lastName, displayName: displayName, phoneNumber: phoneNumber, bio: bio, work: work, governmentId: governmentId, creditCard: creditCard, cardCVV: cardCVV, cardExpDate: cardExpDate, profileImage: profileImage) { [weak self] (result) in
+    private func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String, governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, cityState: String, profileImage: String) {
+        DatabaseService.shared.updateDatabaseUser(firstName: firstName, lastName: lastName, displayName: displayName, phoneNumber: phoneNumber, bio: bio, work: work, governmentId: governmentId, creditCard: creditCard, cardCVV: cardCVV, cardExpDate: cardExpDate, cityState: cityState, profileImage: profileImage) { [weak self] (result) in
                switch result {
                case .failure(let error):
                    print("failed to update db user: \(error.localizedDescription)")
@@ -303,28 +303,3 @@ extension ProfileViewController: UITextViewDelegate {
     
 }
 
-extension CALayer {
-  func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
-    let border = CALayer()
-    switch edge {
-    case UIRectEdge.top:
-      border.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: thickness)
-      break
-    case UIRectEdge.bottom:
-      border.frame = CGRect(x: 0, y: self.frame.height - thickness, width: self.frame.width, height: thickness)
-      break
-    case UIRectEdge.left:
-      border.frame = CGRect(x: 0, y: 0, width: thickness, height: self.frame.height)
-      break
-    case UIRectEdge.right:
-      border.frame = CGRect(x: self.frame.width - thickness, y: 0, width: thickness, height: self.frame.height)
-      break
-    default:
-      //For Center Line
-      border.frame = CGRect(x: self.frame.width/2 - thickness, y: 0, width: thickness, height: self.frame.height)
-      break
-    }
-    border.backgroundColor = color.cgColor;
-    self.addSublayer(border)
-  }
-}

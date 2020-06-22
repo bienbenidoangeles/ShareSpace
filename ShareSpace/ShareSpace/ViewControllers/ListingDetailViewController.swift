@@ -102,7 +102,7 @@ class ListingDetailViewController: UIViewController {
         inquireButton.backgroundColor = .sunnyYellow
         inquireButton.clipsToBounds = true
         inquireButton.layer.cornerRadius = 13
-        toolBar.barTintColor = .oceanBlue
+        toolBar.barTintColor = .white
         map.clipsToBounds = true
         map.layer.cornerRadius = 13
         
