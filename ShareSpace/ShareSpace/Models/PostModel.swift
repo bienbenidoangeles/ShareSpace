@@ -29,7 +29,7 @@ struct Post:Codable {
     //let locationId: String
     var fullAddress: String? {
         get {
-            return "\(streetAddress) \(apartmentNumber ?? "") \(city), \(state) \(zip) \(country)"
+            return "\(streetAddress) \(apartmentNumber ?? "") \(city), \(state) \(zip) \(country ?? "")"
         }
     }
     var cityState: String? {
@@ -273,7 +273,7 @@ extension Post {
         self.streetAddress = dictionary["streetAddress"] as? String ?? ""
         self.apartmentNumber = dictionary["apartmentNumber"] as? String ?? ""
         self.city = dictionary["city"] as? String ?? ""
-        self.state = dictionary["city"] as? String ?? ""
+        self.state = dictionary["state"] as? String ?? ""
         self.zip = dictionary["zip"] as? String ?? ""
         //self.fullAddress = dictionary["fullAddress"] as? String ?? ""
         //self.cityState = dictionary["cityState"] as? String ?? ""

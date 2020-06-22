@@ -73,7 +73,7 @@ class FirstProfileViewController: UIViewController {
             }
         }
     }
-    
+        
     func updateUI() {
         guard let user = user else {
             refreshControl.endRefreshing()
@@ -107,8 +107,8 @@ class FirstProfileViewController: UIViewController {
         }
     }
     
-    
     /*
+
     @objc func loadUserImage() {
         guard let displayName = userNameLabel.text,
             let selectedImage = selectedImage else {

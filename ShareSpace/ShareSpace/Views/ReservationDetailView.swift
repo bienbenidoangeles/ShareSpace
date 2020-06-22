@@ -10,6 +10,8 @@ import UIKit
 
 class ReservationDetailView: UIView {
     
+    
+    
     public lazy var reservationStatusLabel: UILabel = {
         let label = UILabel()
         label.text = "status"

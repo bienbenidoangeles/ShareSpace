@@ -25,10 +25,11 @@ class StorageService {
     var photoReference: StorageReference! // nil
     
     //MARK:- Subject to change
-    if //let userPhotoId = userPhotoId,
-        let userId = userId { // coming from ProfileViewController
+
+    if  let userId = userId { // coming from ProfileViewController
       photoReference = storageRef.child("UserProfilePhotos/\(userId)/.jpg")
-        //\(userPhotoId)
+        //let userPhotoId = userPhotoId,
+      //  \(userPhotoId)
     } else if let postPhotoId = postPhotoId, let postId = postId { // coming from AddPostsVC
       photoReference = storageRef.child("Photos/\(postId)/\(postPhotoId).jpg")
     }

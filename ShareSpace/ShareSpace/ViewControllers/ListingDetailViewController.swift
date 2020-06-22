@@ -30,9 +30,21 @@ class ListingDetailViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     
     
-    @IBOutlet weak var descriptionLabel: UITextView!
+    @IBOutlet weak var locationLabel: UILabel!
     
-   
+    @IBOutlet weak var listedByLabel: UILabel!
+    
+    
+    @IBOutlet weak var descriptionTV: UITextView!
+    
+    
+    
+    @IBOutlet weak var amenitiesLabel: UILabel!
+    
+    
+    
+    @IBOutlet weak var priceRatingLAbel: UILabel!
+    
     @IBOutlet weak var map: MKMapView!
     
     
@@ -43,6 +55,8 @@ class ListingDetailViewController: UIViewController {
     
     
     @IBOutlet weak var toolBar: UIToolbar!
+    
+    private var host: UserModel?
     
     private var selectedPost: Post
     
@@ -62,7 +76,15 @@ class ListingDetailViewController: UIViewController {
             }
         }
     }
-  
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        titleLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray, thickness: 1)
+        listedByLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray, thickness: 1)
+        descriptionTV.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray, thickness: 1)
+        amenitiesLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray, thickness: 1)
+    
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,8 +159,22 @@ class ListingDetailViewController: UIViewController {
     }
     
     private func updateUI() {
+        
+        DatabaseService.shared.loadUser(userId: selectedPost.userId) { (result) in
+            switch result {
+            case .failure(let error):
+                print("error loading user: \(error.localizedDescription)")
+            case.success(let user):
+                self.host = user
+                self.listedByLabel.text = "Hosted by \(self.host?.displayName ?? "no name")"
+            }
+        }
+        
         titleLabel.text = selectedPost.postTitle
-        descriptionLabel.text = selectedPost.description
+        descriptionTV.text = selectedPost.description
+        locationLabel.text = "\(selectedPost.cityState ?? "" )"
+        amenitiesLabel.text = "Amenities: \(selectedPost.amenities.joined(separator: ", "))"
+        priceRatingLAbel.text = "\(String(format: "%.0f", selectedPost.price))$/DAY"
     }
     
     private func configureCollectionView() {
@@ -249,3 +285,34 @@ extension ListingDetailViewController: MKMapViewDelegate {
     }
     
 }
+
+extension CALayer {
+
+    func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
+
+        let border = CALayer()
+
+        switch edge {
+        case UIRectEdge.top:
+            border.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: thickness)
+            break
+        case UIRectEdge.bottom:
+            border.frame = CGRect(x: 0, y: self.frame.height - thickness, width: self.frame.width, height: thickness)
+            break
+        case UIRectEdge.left:
+            border.frame = CGRect(x: 0, y: 0, width: thickness, height: self.frame.height)
+            break
+        case UIRectEdge.right:
+            border.frame = CGRect(x: self.frame.width - thickness, y: 0, width: thickness, height: self.frame.height)
+            break
+        default:
+            //For Center Line
+            border.frame = CGRect(x: self.frame.width/2 - thickness, y: 0, width: thickness, height: self.frame.height)
+            break
+        }
+
+        border.backgroundColor = color.cgColor;
+        self.addSublayer(border)
+    }
+}
+
