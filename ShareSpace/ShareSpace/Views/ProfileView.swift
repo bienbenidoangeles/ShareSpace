@@ -248,6 +248,10 @@ class ProfileView: UIView {
         
         //textview.font = UIFont(name: "System", size: 14)
         
+        //label.font = .preferredFont(forTextStyle: .headline)
+        
+        textview.font = .preferredFont(forTextStyle: .body)
+        
         textview.isScrollEnabled = true
         
         return textview

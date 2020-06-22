@@ -128,7 +128,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.userDisplayNameTextfield.text = user.displayName
         profileView.userFirstNameTextfield.text = user.firstName
         profileView.userLastNameTextfield.text = user.lastName
-       // profileView.userLocationTextfield.text = user.cityState
+        profileView.userLocationTextfield.text = user.cityState
         profileView.userPhoneNumberTextfield.text = user.phoneNumber
         profileView.userBioTextview.text = user.bio
         profileView.userOccupationTextfield.text = user.bio
