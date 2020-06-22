@@ -55,11 +55,11 @@ class FirstProfileViewController: UIViewController {
         userImage.layer.cornerRadius = userImage.frame.height/2 //This will change with corners of image and height/2 will make this circle shape
         userImage.clipsToBounds = true
         
-        loadUserImage()
+      //  loadUserImage()
         
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(loadUser), for: .valueChanged)
-        refreshControl.addTarget(self, action: #selector(loadUserImage), for: .valueChanged)
+       // refreshControl.addTarget(self, action: #selector(loadUserImage), for: .valueChanged)
     }
     
     @IBAction func signOutButtonPressed(_ sender: UIBarButtonItem) {
@@ -107,6 +107,8 @@ class FirstProfileViewController: UIViewController {
         }
     }
     
+    /*
+
     @objc func loadUserImage() {
         guard let displayName = userNameLabel.text,
             let selectedImage = selectedImage else {
@@ -158,6 +160,7 @@ class FirstProfileViewController: UIViewController {
                }
         }
     }
+ */
   
     
     @objc func loadUser() {

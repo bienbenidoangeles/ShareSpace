@@ -27,59 +27,121 @@ class ProfileView: UIView {
     
     override func layoutSubviews() {
         profileImageView.clipsToBounds = true
-        profileImageView.layer.borderWidth = 3
+        profileImageView.layer.borderWidth = 1
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
-        profileImageView.layer.borderColor = UIColor.white.cgColor
+        profileImageView.layer.borderColor = UIColor.black.cgColor
+        //UIButton.layer.cornerRadius = 13
+        
     }
     
-    public lazy var userSegmentedControl: UISegmentedControl = {
-        let items = ["User", "Host"]
-        let segmentedControl = UISegmentedControl(items: items)
-        segmentedControl.frame = CGRect(x: 35, y: 200, width: 250, height: 50)
-        segmentedControl.selectedSegmentTintColor = .yummyOrange
-        segmentedControl.backgroundColor = .oceanBlue
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
-        segmentedControl.contentHorizontalAlignment = .center
-        return segmentedControl
-    }()
+//    public lazy var userSegmentedControl: UISegmentedControl = {
+//        let items = ["User", "Host"]
+//        let segmentedControl = UISegmentedControl(items: items)
+//        segmentedControl.frame = CGRect(x: 35, y: 200, width: 250, height: 50)
+//        segmentedControl.selectedSegmentTintColor = .yummyOrange
+//        segmentedControl.backgroundColor = .oceanBlue
+//        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+//        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
+//        segmentedControl.contentHorizontalAlignment = .center
+//        return segmentedControl
+//    }()
     
     public lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "person.fill")
         imageView.contentMode = .scaleAspectFill
         imageView.layoutSubviews()
-        imageView.backgroundColor = .systemOrange
-        imageView.tintColor = .systemYellow
+        imageView.backgroundColor = .yummyOrange
+        imageView.tintColor = .sunnyYellow
         imageView.clipsToBounds = true
+        //imageView.layer.borderColor = UIColor.black.cgColor
+        
+        imageView.layer.borderWidth = 1
+        imageView.layer.masksToBounds = false
+        imageView.layer.borderColor = UIColor.black.cgColor
+        imageView.layer.cornerRadius = imageView.frame.height/2 //This will change with corners of image and height/2 will make this circle shape
+        //imageView.clipsToBounds = true
+        
         return imageView
     }()
     
     public lazy var editProfileImageButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "camera.circle"), for: .normal)
-        button.tintColor = .systemOrange
+        button.tintColor = .yummyOrange
+        button.clipsToBounds = true
+//        button.layer.borderColor = UIColor.black.cgColor
+//    button.layer.borderWidth = 1
+//    button.layer.masksToBounds = false
+//    button.layer.borderColor = UIColor.black.cgColor
+//        button.layer.cornerRadius = button.frame.height/2
+        
         return button
+    }()
+    
+    public lazy var userDisplayNameLabel: UILabel = {
+      let label = UILabel()
+      label.text = "Enter username:"
+      //label.font = .preferredFont(forTextStyle: .headline)
+      //label.backgroundColor = .systemGreen
+      return label
     }()
     
     public lazy var userDisplayNameTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.placeholder = "Enter username"
+        //textfield.placeholder = "Enter username"
+        
+//        textfield.layer.borderWidth = 1
+//        textfield.layer.masksToBounds = false
+//        textfield.layer.borderColor = UIColor.oceanBlue.cgColor
+//        textfield.layer.cornerRadius = 12 //This will change with corners of image and height/2 will make this circle shape
+//        textfield.clipsToBounds = true
+        
         textfield.textAlignment = .left
         return textfield
+    }()
+    
+    public lazy var userFirstNameLabel: UILabel = {
+      let label = UILabel()
+      label.text = "Enter your first name"
+      //label.font = .preferredFont(forTextStyle: .headline)
+      //label.backgroundColor = .systemGreen
+      return label
     }()
     
     public lazy var userFirstNameTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.placeholder = "Enter your first name"
+        //textfield.placeholder = ""
         textfield.textAlignment = .left
+        
+//        textfield.layer.borderWidth = 1
+//        textfield.layer.masksToBounds = false
+//        textfield.layer.borderColor = UIColor.oceanBlue.cgColor
+//        textfield.layer.cornerRadius = 7 //This will change with corners of image and height/2 will make this circle shape
+//        textfield.clipsToBounds = true
+        
         return textfield
+    }()
+    
+    public lazy var userLastNameLabel: UILabel = {
+      let label = UILabel()
+      label.text = "Enter your last name:"
+      //label.font = .preferredFont(forTextStyle: .headline)
+      //label.backgroundColor = .systemGreen
+      return label
     }()
     
     public lazy var userLastNameTextfield: UITextField = {
            let textfield = UITextField()
-           textfield.placeholder = "Enter your last name"
+           //textfield.placeholder = "Enter your last name"
            textfield.textAlignment = .left
+        
+//        textfield.layer.borderWidth = 1
+//        textfield.layer.masksToBounds = false
+//        textfield.layer.borderColor = UIColor.oceanBlue.cgColor
+//        textfield.layer.cornerRadius = 7 //This will change with corners of image and height/2 will make this circle shape
+//        textfield.clipsToBounds = true
+        
            return textfield
        }()
     
@@ -91,32 +153,92 @@ class ProfileView: UIView {
 //        return textfield
 //    }()
     
+    public lazy var userPhoneLabel: UILabel = {
+         let label = UILabel()
+         label.text = "Enter your phone number:"
+         //label.font = .preferredFont(forTextStyle: .headline)
+         //label.backgroundColor = .systemGreen
+         return label
+       }()
+    
     public lazy var userPhoneNumberTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.placeholder = "Enter your phone number"
+        //textfield.placeholder = "Enter your phone number"
         textfield.textAlignment = .left
+        
+//        textfield.layer.borderWidth = 1
+//        textfield.layer.masksToBounds = false
+//        textfield.layer.borderColor = UIColor.oceanBlue.cgColor
+//        textfield.layer.cornerRadius = 7 //This will change with corners of image and height/2 will make this circle shape
+//        textfield.clipsToBounds = true
+        
         return textfield
     }()
     
+    public lazy var emailNameLabel: UILabel = {
+           let label = UILabel()
+           label.text = "Your email is (not changing):"
+           label.numberOfLines = 1
+           label.textAlignment = .left
+           return label
+       }()
+    
     public lazy var emailLabel: UILabel = {
         let label = UILabel()
-        label.text = "email"
+        //label.text = "email"
+        label.numberOfLines = 1
+        label.textAlignment = .left
+        
+//        label.layer.borderWidth = 1
+//        label.layer.masksToBounds = false
+//        label.layer.borderColor = UIColor.oceanBlue.cgColor
+//        label.layer.cornerRadius = 7 //This will change with corners of image and height/2 will make this circle shape
+//        label.clipsToBounds = true
+        
+        return label
+    }()
+    
+    public lazy var userBioLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Type your bio:"
         label.numberOfLines = 1
         label.textAlignment = .left
         return label
     }()
     
-    public lazy var userBioTextfield: UITextField = {
-        let textfield = UITextField()
-        textfield.placeholder = "Type your bio"
-        textfield.textAlignment = .left
-        return textfield
+    public lazy var userBioTextview: UITextView = {
+        let textview = UITextView()
+        //textfield.placeholder = "Type your bio"
+        textview.textAlignment = .left
+        
+//        textview.layer.borderWidth = 1
+//        textview.layer.masksToBounds = false
+//        textview.layer.borderColor = UIColor.oceanBlue.cgColor
+//        textview.layer.cornerRadius = 7 //This will change with corners of image and height/2 will make this circle shape
+//        textview.clipsToBounds = true
+        
+        return textview
+    }()
+    
+    public lazy var userOccupationLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Enter your occupation:"
+        label.numberOfLines = 1
+        label.textAlignment = .left
+        return label
     }()
     
     public lazy var userOccupationTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.placeholder = "Enter your occupation"
+        //textfield.placeholder = "Enter your occupation"
         textfield.textAlignment = .left
+        
+//        textfield.layer.borderWidth = 1
+//        textfield.layer.masksToBounds = false
+//        textfield.layer.borderColor = UIColor.oceanBlue.cgColor
+//        textfield.layer.cornerRadius = 7 //This will change with corners of image and height/2 will make this circle shape
+//        textfield.clipsToBounds = true
+        
         return textfield
     }()
     
@@ -128,10 +250,26 @@ class ProfileView: UIView {
     }()
     
     //Should be nil if host!
+    
+    public lazy var usercardLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Enter your credit ot debit card information:"
+        label.numberOfLines = 1
+        label.textAlignment = .left
+        return label
+    }()
+    
     public lazy var userCreditcardTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.placeholder = "Enter your credit ot debit card number"
+        textfield.placeholder = "Card number"
         textfield.textAlignment = .left
+        
+//        textfield.layer.borderWidth = 1
+//               textfield.layer.masksToBounds = false
+//               textfield.layer.borderColor = UIColor.oceanBlue.cgColor
+//               textfield.layer.cornerRadius = 7 //This will change with corners of image and height/2 will make this circle shape
+//               textfield.clipsToBounds = true
+        
         return textfield
     }()
     
@@ -140,6 +278,13 @@ class ProfileView: UIView {
         let textfield = UITextField()
         textfield.placeholder = "Enter your card CVV number"
         textfield.textAlignment = .left
+        
+//        textfield.layer.borderWidth = 1
+//               textfield.layer.masksToBounds = false
+//               textfield.layer.borderColor = UIColor.oceanBlue.cgColor
+//               textfield.layer.cornerRadius = 7 //This will change with corners of image and height/2 will make this circle shape
+//               textfield.clipsToBounds = true
+        
         return textfield
     }()
     
@@ -148,6 +293,13 @@ class ProfileView: UIView {
         let textfield = UITextField()
         textfield.placeholder = "Enter your card expiration date"
         textfield.textAlignment = .left
+        
+//        textfield.layer.borderWidth = 1
+//               textfield.layer.masksToBounds = false
+//               textfield.layer.borderColor = UIColor.oceanBlue.cgColor
+//               textfield.layer.cornerRadius = 7 //This will change with corners of image and height/2 will make this circle shape
+//               textfield.clipsToBounds = true
+        
         return textfield
     }()
     
@@ -173,15 +325,19 @@ class ProfileView: UIView {
     
     public lazy var saveChangesButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Save", for: .normal)
-        button.setTitleColor(.systemOrange, for: .normal)
+        button.setTitle("  Save  ", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .oceanBlue
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 7
+        button.layer.borderColor = UIColor.black.cgColor
         return button
     }()
     
     private var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.distribution = .fillEqually
-        stackView.spacing = 5
+        stackView.spacing = 8
         stackView.axis = .vertical
         stackView.backgroundColor = .systemYellow
         return stackView
@@ -261,19 +417,26 @@ class ProfileView: UIView {
     
     private func setUpStackViewTextFieldConstraints() {
         containerView.addSubview(stackView)
-        stackView.addArrangedSubview(userSegmentedControl)
+        //stackView.addArrangedSubview(userSegmentedControl)
+        stackView.addArrangedSubview(userDisplayNameLabel)
         stackView.addArrangedSubview(userDisplayNameTextfield)
+       stackView.addArrangedSubview(userFirstNameLabel)
         stackView.addArrangedSubview(userFirstNameTextfield)
+        stackView.addArrangedSubview(userLastNameLabel)
         stackView.addArrangedSubview(userLastNameTextfield)
        // stackView.addArrangedSubview(userTypeTextfield)
+        stackView.addArrangedSubview(userPhoneLabel)
         stackView.addArrangedSubview(userPhoneNumberTextfield)
+        stackView.addArrangedSubview(emailNameLabel)
         stackView.addArrangedSubview(emailLabel)
-        stackView.addArrangedSubview(userBioTextfield)
+        stackView.addArrangedSubview(userBioLabel)
+        stackView.addArrangedSubview(userBioTextview)
+        stackView.addArrangedSubview(userOccupationLabel)
         stackView.addArrangedSubview(userOccupationTextfield)
         stackView.addArrangedSubview(governmentIdTextfield)
         //stackView.addArrangedSubview(uploadIdButton)
         //stackView.addArrangedSubview(idImageView)
-        stackView.addArrangedSubview(userCreditcardTextfield)
+        stackView.addArrangedSubview(usercardLabel)
         stackView.addArrangedSubview(userCreditcardTextfield)
         stackView.addArrangedSubview(userCreditcardCVVNumberTextfield)
         stackView.addArrangedSubview(userExpirationDateTextfield)

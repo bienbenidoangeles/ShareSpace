@@ -25,6 +25,7 @@ class StorageService {
     var photoReference: StorageReference! // nil
     
     //MARK:- Subject to change
+
     if  let userId = userId { // coming from ProfileViewController
       photoReference = storageRef.child("UserProfilePhotos/\(userId)/.jpg")
         //let userPhotoId = userPhotoId,
