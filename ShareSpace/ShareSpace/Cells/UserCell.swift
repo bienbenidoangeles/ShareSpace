@@ -25,6 +25,7 @@ class UserCell: UITableViewCell {
   public lazy var userImageView: UIImageView = {
     let iv = UIImageView()
     iv.image = UIImage(systemName: "photo.fill")
+    iv.layer.cornerRadius = 4
     return iv
   }()
 
