@@ -25,8 +25,8 @@ class ChatCell: UITableViewCell {
   
   var isIncoming: Bool! {
     didSet {
-      messageBackgroundView.backgroundColor = isIncoming ? .yummyOrange : .magenta
-      messageLabel.textColor = isIncoming ? .black : .white
+      messageBackgroundView.backgroundColor = isIncoming ? .yummyOrange : .white
+      messageLabel.textColor = isIncoming ? .white : .yummyOrange
     }
   }
   
