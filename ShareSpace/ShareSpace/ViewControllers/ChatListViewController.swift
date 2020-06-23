@@ -22,11 +22,17 @@ class ChatListViewController: UIViewController {
     }
   }
   
-  
+  private var listener: ListenerRegistration?
   
   var userIDs = [String]() {
     didSet {
       print("user ids: \(userIDs)")
+    }
+  }
+  
+  var threads = [[Thread]]() {
+    didSet {
+      print("thread updated")
     }
   }
   
@@ -79,6 +85,7 @@ class ChatListViewController: UIViewController {
       }
     }
   }
+
   
 }
 
@@ -95,9 +102,26 @@ extension ChatListViewController: UITableViewDataSource {
     
     
     let chat = userChats[indexPath.row]
+    
+    listener = Firestore.firestore().collection(DatabaseService.chatsCollection).document(chat.id).collection(DatabaseService.threadCollection).order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
+            if let error = error {
+              print("no messages to load \(error) ")
+            } else if let snapshot = snapshot {
+              for message in snapshot.documents {
+                let msg = Message(message.data())
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MMM dd HH:mm a"
+                let dateString = dateFormatter.string(from: msg.created.dateValue())
+                cell.textSnapshot.text = msg.content
+                cell.dateLabel.text = "\(dateString)"
+              }
+            }
+          }
+        
+  
     userIDs = chat.users
     //    print(chat)
-        cell.configureCell(chat, userIDs: userIDs)
+        cell.configureCell(chat, ids: userIDs)
     //    cell.userNameLabel.text = "\(chat.id)"
     //    cell.backgroundColor = .white
     return cell

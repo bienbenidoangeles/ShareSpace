@@ -56,17 +56,21 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLayoutSubviews() {
       super.viewDidLayoutSubviews()
-        profileView.userDisplayNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userFirstNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userLastNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userPhoneNumberTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.emailLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userBioTextview.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userOccupationTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.governmentIdTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userCreditcardTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userCreditcardCVVNumberTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
-        profileView.userExpirationDateTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .oceanBlue, thickness: 1)
+        profileView.userDisplayNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.userFirstNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.userLastNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.userLocationTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.userPhoneNumberTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //profileView.emailLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //profileView.emailLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.userBioTextview.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.userOccupationTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //profileView.governmentIdLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.governmentIdNameTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //profileView.governmentIdNumberTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //profileView.userCreditcardTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //profileView.userCreditcardCVVNumberTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        profileView.userExpirationDateTextfield.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
     }
     
     
@@ -89,7 +93,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.userPhoneNumberTextfield.delegate = self
         profileView.userBioTextview.delegate = self
         profileView.userOccupationTextfield.delegate = self
-        profileView.governmentIdTextfield.delegate = self
+        profileView.governmentIdNameTextfield.delegate = self
+       // profileView.governmentIdNumberTextfield.delegate = self
         profileView.userCreditcardTextfield.delegate = self
         profileView.userCreditcardCVVNumberTextfield.delegate = self
         profileView.userExpirationDateTextfield.delegate = self
@@ -123,10 +128,11 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.userDisplayNameTextfield.text = user.displayName
         profileView.userFirstNameTextfield.text = user.firstName
         profileView.userLastNameTextfield.text = user.lastName
+       // profileView.userLocationTextfield.text = user.cityState
         profileView.userPhoneNumberTextfield.text = user.phoneNumber
         profileView.userBioTextview.text = user.bio
         profileView.userOccupationTextfield.text = user.bio
-        profileView.governmentIdTextfield.text = user.governmentId
+        profileView.governmentIdNameTextfield.text = user.governmentId
         profileView.userCreditcardTextfield.text = user.creditCard
         profileView.userCreditcardCVVNumberTextfield.text = user.cardCVV
         profileView.userExpirationDateTextfield.text = user.cardExpDate
@@ -205,7 +211,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             !userPhoneNumber.isEmpty,
             let userBio = profileView.userBioTextview.text,
             !userBio.isEmpty,
-            let userGovenmentId = profileView.governmentIdTextfield.text,
+            let userGovenmentId = profileView.governmentIdNameTextfield.text,
             !userGovenmentId.isEmpty,
             let userOccupation = profileView.userOccupationTextfield.text,
             !userOccupation.isEmpty,
@@ -246,7 +252,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                     self?.showAlert(title: "Error uploading photo", message: "\(error.localizedDescription)")
                 }
             case .success(let url):
-                self?.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId:userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate,  profileImage: url.absoluteString)
+                self?.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId:userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate, cityState: "Brooklyn, NY",  profileImage: url.absoluteString)
                 
                 let request = Auth.auth().currentUser?.createProfileChangeRequest()
                 request?.displayName = displayName
@@ -269,8 +275,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    private func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String, governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, profileImage: String) {
-      DatabaseService.shared.updateDatabaseUser(firstName: firstName, lastName: lastName, displayName: displayName, phoneNumber: phoneNumber, bio: bio, work: work, governmentId: governmentId, creditCard: creditCard, cardCVV: cardCVV, cardExpDate: cardExpDate, profileImage: profileImage) { [weak self] (result) in
+    private func updateDatabaseUser(firstName: String, lastName: String, displayName: String, phoneNumber: String, bio: String, work: String, governmentId: String, creditCard: String, cardCVV: String, cardExpDate: String, cityState: String, profileImage: String) {
+        DatabaseService.shared.updateDatabaseUser(firstName: firstName, lastName: lastName, displayName: displayName, phoneNumber: phoneNumber, bio: bio, work: work, governmentId: governmentId, creditCard: creditCard, cardCVV: cardCVV, cardExpDate: cardExpDate, cityState: cityState, profileImage: profileImage) { [weak self] (result) in
                switch result {
                case .failure(let error):
                    print("failed to update db user: \(error.localizedDescription)")
@@ -302,7 +308,6 @@ extension ProfileViewController: UITextFieldDelegate {
 extension ProfileViewController: UITextViewDelegate {
     
 }
-
 //extension CALayer {
 //  func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
 //    let border = CALayer()

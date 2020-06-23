@@ -84,6 +84,7 @@ class ProfileView: UIView {
       label.text = "Enter username:"
       //label.font = .preferredFont(forTextStyle: .headline)
       //label.backgroundColor = .systemGreen
+        label.textColor = .systemGray
       return label
     }()
     
@@ -104,6 +105,7 @@ class ProfileView: UIView {
     public lazy var userFirstNameLabel: UILabel = {
       let label = UILabel()
       label.text = "Enter your first name"
+        label.textColor = .systemGray
       //label.font = .preferredFont(forTextStyle: .headline)
       //label.backgroundColor = .systemGreen
       return label
@@ -128,6 +130,7 @@ class ProfileView: UIView {
       label.text = "Enter your last name:"
       //label.font = .preferredFont(forTextStyle: .headline)
       //label.backgroundColor = .systemGreen
+        label.textColor = .systemGray
       return label
     }()
     
@@ -153,11 +156,35 @@ class ProfileView: UIView {
 //        return textfield
 //    }()
     
+    public lazy var userLocationLabel: UILabel = {
+      let label = UILabel()
+      label.text = "Enter your location:"
+      //label.font = .preferredFont(forTextStyle: .headline)
+      //label.backgroundColor = .systemGreen
+     label.textColor = .systemGray
+      return label
+    }()
+    
+     public lazy var userLocationTextfield: UITextField = {
+               let textfield = UITextField()
+               //textfield.placeholder = "Enter your last name"
+               textfield.textAlignment = .left
+            
+    //        textfield.layer.borderWidth = 1
+    //        textfield.layer.masksToBounds = false
+    //        textfield.layer.borderColor = UIColor.oceanBlue.cgColor
+    //        textfield.layer.cornerRadius = 7 //This will change with corners of image and height/2 will make this circle shape
+    //        textfield.clipsToBounds = true
+            
+               return textfield
+           }()
+    
     public lazy var userPhoneLabel: UILabel = {
          let label = UILabel()
          label.text = "Enter your phone number:"
          //label.font = .preferredFont(forTextStyle: .headline)
          //label.backgroundColor = .systemGreen
+        label.textColor = .systemGray
          return label
        }()
     
@@ -180,6 +207,7 @@ class ProfileView: UIView {
            label.text = "Your email is (not changing):"
            label.numberOfLines = 1
            label.textAlignment = .left
+        label.textColor = .systemGray
            return label
        }()
     
@@ -203,6 +231,7 @@ class ProfileView: UIView {
         label.text = "Type your bio:"
         label.numberOfLines = 1
         label.textAlignment = .left
+        label.textColor = .systemGray
         return label
     }()
     
@@ -217,6 +246,10 @@ class ProfileView: UIView {
 //        textview.layer.cornerRadius = 7 //This will change with corners of image and height/2 will make this circle shape
 //        textview.clipsToBounds = true
         
+        //textview.font = UIFont(name: "System", size: 14)
+        
+        textview.isScrollEnabled = true
+        
         return textview
     }()
     
@@ -225,12 +258,13 @@ class ProfileView: UIView {
         label.text = "Enter your occupation:"
         label.numberOfLines = 1
         label.textAlignment = .left
+        label.textColor = .systemGray
         return label
     }()
     
     public lazy var userOccupationTextfield: UITextField = {
         let textfield = UITextField()
-        //textfield.placeholder = "Enter your occupation"
+        textfield.placeholder = "Enter your occupation"
         textfield.textAlignment = .left
         
 //        textfield.layer.borderWidth = 1
@@ -242,12 +276,28 @@ class ProfileView: UIView {
         return textfield
     }()
     
-    public lazy var governmentIdTextfield: UITextField = {
+    public lazy var governmentIdLabel: UILabel = {
+    let label = UILabel()
+    label.text = "Enter government ID name and number:"
+    label.numberOfLines = 1
+    label.textAlignment = .left
+        label.textColor = .systemGray
+    return label
+        }()
+    
+    public lazy var governmentIdNameTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.placeholder = "Enter government ID name and number"
+        //textfield.placeholder = "Enter government ID name"
         textfield.textAlignment = .left
         return textfield
     }()
+        
+//        public lazy var governmentIdNumberTextfield: UITextField = {
+//            let textfield = UITextField()
+//            textfield.placeholder = "Enter government ID number"
+//            textfield.textAlignment = .left
+//            return textfield
+//        }()
     
     //Should be nil if host!
     
@@ -256,6 +306,7 @@ class ProfileView: UIView {
         label.text = "Enter your credit ot debit card information:"
         label.numberOfLines = 1
         label.textAlignment = .left
+        label.textColor = .systemGray
         return label
     }()
     
@@ -327,7 +378,7 @@ class ProfileView: UIView {
         let button = UIButton()
         button.setTitle("  Save  ", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .oceanBlue
+        button.backgroundColor = .yummyOrange
         button.clipsToBounds = true
         button.layer.cornerRadius = 7
         button.layer.borderColor = UIColor.black.cgColor
@@ -336,8 +387,9 @@ class ProfileView: UIView {
     
     private var stackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.distribution = .fillEqually
-        stackView.spacing = 8
+        //stackView.distribution = .fillEqually
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 20
         stackView.axis = .vertical
         stackView.backgroundColor = .systemYellow
         return stackView
@@ -424,6 +476,8 @@ class ProfileView: UIView {
         stackView.addArrangedSubview(userFirstNameTextfield)
         stackView.addArrangedSubview(userLastNameLabel)
         stackView.addArrangedSubview(userLastNameTextfield)
+        stackView.addArrangedSubview(userLocationLabel)
+        stackView.addArrangedSubview(userLocationTextfield)
        // stackView.addArrangedSubview(userTypeTextfield)
         stackView.addArrangedSubview(userPhoneLabel)
         stackView.addArrangedSubview(userPhoneNumberTextfield)
@@ -433,7 +487,9 @@ class ProfileView: UIView {
         stackView.addArrangedSubview(userBioTextview)
         stackView.addArrangedSubview(userOccupationLabel)
         stackView.addArrangedSubview(userOccupationTextfield)
-        stackView.addArrangedSubview(governmentIdTextfield)
+        stackView.addArrangedSubview(governmentIdLabel)
+        stackView.addArrangedSubview(governmentIdNameTextfield)
+        //stackView.addArrangedSubview(governmentIdNumberTextfield)
         //stackView.addArrangedSubview(uploadIdButton)
         //stackView.addArrangedSubview(idImageView)
         stackView.addArrangedSubview(usercardLabel)
@@ -446,8 +502,13 @@ class ProfileView: UIView {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 20),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            userBioTextview.heightAnchor.constraint(equalToConstant: 100)
         ])
+        
+//        NSLayoutConstraint.activate([
+//            userBioTextview.heightAnchor.constraint(equalToConstant: 100)
+//        ])
     }
     
     private func setUpSaveChangesButtonConstraints() {
@@ -455,8 +516,9 @@ class ProfileView: UIView {
         saveChangesButton.translatesAutoresizingMaskIntoConstraints =  false
         
         NSLayoutConstraint.activate([
-            saveChangesButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 8),
-            saveChangesButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            saveChangesButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 40),
+           saveChangesButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            saveChangesButton.widthAnchor.constraint(equalToConstant: 370),
             saveChangesButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -275)
         ])
     }

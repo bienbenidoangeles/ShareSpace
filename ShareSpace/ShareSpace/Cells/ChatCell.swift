@@ -11,118 +11,64 @@ import Firebase
 
 class ChatCell: UITableViewCell {
   
-  //  @IBOutlet weak var usernameLabel: UILabel!
-  public lazy var usernameLabel: UILabel = {
-    let label = UILabel()
-    label.text = "userName Label"
-    return label
-  }()
-  
-  //  @IBOutlet weak var messageLabel: UILabel!
-  public lazy var messageLabel: UILabel = {
-    let label = UILabel()
-    label.text = "mesage text here"
-    return label
-  }()
-  
-  //  @IBOutlet weak var dateLabel: UILabel!
-  public lazy var dateLabel: UILabel = {
-    let label = UILabel()
-    label.text = "date label"
-    return label
-  }()
-  
-  //  @IBOutlet weak var leftView: UIView!
-  public lazy var leftView: UIView = {
-    let view = UIView()
-    view.backgroundColor = .systemRed
-    return view
-  }()
-  
-  //  @IBOutlet weak var rightView: UIView!
-  public lazy var rightView: UIView = {
-    let view = UIView()
-    view.backgroundColor = .systemBlue
-    return view
-  }()
-  
-  public lazy var topStackView: UIStackView = {
-    let sv = UIStackView()
-    sv.alignment = .fill
-    sv.distribution = .fill
-    sv.spacing = 8
-    sv.axis = .horizontal
-    sv.backgroundColor = .gray
-    return sv
-  }()
-  
-  public lazy var innerStackView: UIStackView = {
-    let sv = UIStackView()
-    sv.axis = .vertical
-    sv.alignment = .fill
-    sv.distribution = .fill
-    sv.spacing = 8
-    sv.backgroundColor = .green
-    return sv
-  }()
-  
-  public var message: Message? {
+  var message: Message! {
     didSet {
-//      print("cell message: \(message?.content)")
+      updateUI()
     }
   }
   
+  var leadingConstraint: NSLayoutConstraint!
+  var trailingConstraint: NSLayoutConstraint!
+  
+  var incomeDateConstraints: NSLayoutConstraint!
+  var outgoingDateConstraint: NSLayoutConstraint!
+  
+  var isIncoming: Bool! {
+    didSet {
+      messageBackgroundView.backgroundColor = isIncoming ? .yummyOrange : .white
+      messageLabel.textColor = isIncoming ? .white : .yummyOrange
+    }
+  }
+  
+  public lazy var messageLabel: UILabel = {
+    let label = UILabel()
+    label.text = "Message here is needed to use ehway hedkfh it should be allowed to extende the cell further down because the number of lines will be set to zero. TYhere words are just so the string has a lot in side of it"
+    label.numberOfLines = 0
+    return label
+  }()
+  
+  public lazy var messageBackgroundView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .orange
+    return view
+  }()
+  
+  public lazy var dateLabel: UILabel = {
+    let label = UILabel()
+    label.font = .preferredFont(forTextStyle: .footnote)
+    label.text = "date label here"
+    return label
+  }()
+  
+
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    commonInit()
+    setupConstraints()
+    backgroundColor = .clear
   }
-  
+
   required init?(coder: NSCoder) {
     super.init(coder: coder)
-    commonInit()
-  }
-  
-  private func commonInit() {
     setupConstraints()
   }
   
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    //        setupCell()
-//    configureCell()
-    //    self.setNeedsLayout()
-    //    self.layoutIfNeeded()
+  private func updateUI() {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm a"
+    let dateString = dateFormatter.string(from: message.created.dateValue())
+    self.dateLabel.text = dateString
   }
-  
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-    
-    // Configure the view for the selected state
-  }
-  
-  public func setupCell() {
-    guard let currentUser = Auth.auth().currentUser else { return }
-    if self.message?.senderID == currentUser.uid {
-      usernameLabel.textAlignment = .right
-      dateLabel.textAlignment = .right
-      messageLabel.textAlignment = .right
-      rightView.isHidden = true
-    } else if self.message?.senderID != currentUser.uid {
-      usernameLabel.textAlignment = .left
-      dateLabel.textAlignment = .left
-      messageLabel.textAlignment = .left
-      leftView.isHidden = true
-    }
-  }
-  
-  public func configureCell(_ msg: Message) {
-//    guard let msg = message else { return }
-//    print("configure cell: \(msg.senderID)")
-    self.usernameLabel.text = msg.senderName
-    self.messageLabel.text = msg.content
-    self.dateLabel.text = "06/07/20"
-    self.backgroundColor = .systemGroupedBackground
-  }
+ 
   
 }
 
@@ -130,46 +76,54 @@ class ChatCell: UITableViewCell {
 
 extension ChatCell {
   private func setupConstraints() {
-    leftViewConstraints()
-    topStackConstaints()
-    innerStackSetUp()
+    addSubview(messageBackgroundView)
+    addSubview(messageLabel)
+    addSubview(dateLabel)
+    messageLabelConstraints()
+    bkViewConstraints()
+    dateLabelConstraints()
   }
-  
-  private func topStackConstaints() {
-    addSubview(topStackView)
-    topStackView.addArrangedSubview(leftView)
-    topStackView.addArrangedSubview(innerStackView)
-    topStackView.addArrangedSubview(rightView)
-    topStackView.translatesAutoresizingMaskIntoConstraints = false
+
+  private func bkViewConstraints() {
+    messageBackgroundView.layer.cornerRadius = 10
+    messageBackgroundView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-      topStackView.topAnchor.constraint(equalTo: self.topAnchor),
-      topStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-      topStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-      topStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+      messageBackgroundView.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -16),
+      messageBackgroundView.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -16),
+      messageBackgroundView.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor, constant: 16),
+      messageBackgroundView.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 16)
+
     ])
   }
-  
-  private func innerStackSetUp() {
-    innerStackView.addArrangedSubview(usernameLabel)
-    innerStackView.addArrangedSubview(messageLabel)
-    innerStackView.addArrangedSubview(dateLabel)
-    innerStackView.translatesAutoresizingMaskIntoConstraints = false
-    usernameLabel.translatesAutoresizingMaskIntoConstraints = false
+
+  private func messageLabelConstraints() {
     messageLabel.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 32),
+      messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -32),
+      messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 250)
+    ])
+    
+    leadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32)
+    leadingConstraint.isActive = false
+    
+    trailingConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
+    trailingConstraint.isActive = true
+  }
+  
+  private func dateLabelConstraints() {
     dateLabel.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-    
+      dateLabel.topAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: 4),
+      dateLabel.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: 0)
     ])
+    incomeDateConstraints = dateLabel.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: 0)
+    incomeDateConstraints.isActive = true
+    
+    outgoingDateConstraint = dateLabel.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 0)
+    outgoingDateConstraint.isActive = false
   }
   
-  private func leftViewConstraints() {
-    NSLayoutConstraint.activate([
-      leftView.widthAnchor.constraint(equalToConstant: 20),
-      rightView.widthAnchor.constraint(equalToConstant: 20)
-    ])
-  }
   
-  private func rightViewConstraints() {
-    
-  }
+
 }

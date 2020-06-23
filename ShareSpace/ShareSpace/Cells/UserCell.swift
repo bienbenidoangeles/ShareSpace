@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Kingfisher
 
 class UserCell: UITableViewCell {
   
@@ -71,10 +72,12 @@ class UserCell: UITableViewCell {
     imageViewConstrainst()
     constaintNameLabel()
     constaintTextSnapshot()
-    constraintMoreButton()
+//    constraintMoreButton()
     constraintDateLabel()
 //    constraintBackgroundView()
   }
+  
+  
 
   
 
@@ -124,24 +127,14 @@ class UserCell: UITableViewCell {
     ])
   }
   
-  private func constraintMoreButton() {
-    addSubview(moreButton)
-    moreButton.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      moreButton.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-      moreButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-      moreButton.widthAnchor.constraint(equalToConstant: 44)
-    ])
-  }
-  
   private func constraintDateLabel() {
     addSubview(dateLabel)
     dateLabel.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
       dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
       dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-      dateLabel.topAnchor.constraint(equalTo: textSnapshot.bottomAnchor, constant: 2),
-      dateLabel.widthAnchor.constraint(equalToConstant: 65)
+      dateLabel.topAnchor.constraint(equalTo: textSnapshot.bottomAnchor, constant: 2)
+//      dateLabel.widthAnchor.constraint(equalToConstant: 65
     ])
   }
   
@@ -158,29 +151,43 @@ extension UserCell {
     cellBackgroundView.layer.borderColor = UIColor.black.cgColor
   }
   
-  func configureCell(_ chat: Chat, userIDs: [String]) {
-    var ids = userIDs
+  func configureCell(_ chat: Chat, ids: [String]) {
     guard let currentUser = Auth.auth().currentUser else { return }
-    for (index, i) in ids.enumerated() {
-      if i == currentUser.uid {
+    for i in ids {
+      if i != currentUser.uid {
+        DatabaseService.shared.loadUser(userId: i) { (result) in
+              switch result {
+              case .failure(let error):
+                print("Error loading user: \(error)")
+              case .success(let user):
+                self.nameLabel.text = user.displayName
+                if let profileString = user.profileImage {
+                self.userImageView.kf.setImage(with: URL(string: profileString))
+                } else {
+                  self.userImageView.image = UIImage(systemName: "person.fill")
+                }
+              }
+            }
+            
+//            nameLabel.text = "user id: \(chat.users.description)"
         
-        ids.remove(at: index)
       }
     }
     
-    DatabaseService.shared.loadUser(userId: ids[0]) { (result) in
-      switch result {
-      case .failure(let error):
-        print("Error loading user: \(error)")
-      case .success(let user):
-        self.nameLabel.text = user.userEmail
-//        userImageView.image
-      }
-    }
     
-    nameLabel.text = "user id: \(chat.users.description)"
   }
   
   
 }
+
+/*
+ self.profileView.profileImageView.kf.setImage(with: URL(string: user.profileImage ?? "no image url"), placeholder: UIImage(systemName: "person.fill"), options: nil, progressBlock: nil) { [weak self](result) in
+   switch result {
+   case .failure(let error):
+     break
+   case .success(let imageResult):
+     self?.selectedImage = imageResult.image
+   }
+ }
+ */
 
