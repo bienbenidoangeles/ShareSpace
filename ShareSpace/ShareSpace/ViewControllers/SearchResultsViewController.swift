@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 protocol SearchPostDelegate: AnyObject {
-    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String)
+    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String, region: MKCoordinateRegion?)
     func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>))
 }
 
@@ -66,18 +66,37 @@ class SearchResultsViewController: UIViewController {
     }
     
     func convertAddressToCoor(address: String){
-        CoreLocationSession.shared.convertAddressToCoors(address: address) {[weak self] (result) in
+        CoreLocationSession.shared.convertAddressToPlaceMarks(address: address) {[weak self] (result) in
             switch result{
             case .failure(let error):
                 //message pop-up for errors
-                break
-            case .success(let coordinates):
-                guard let coors = coordinates, let coor = coors.first else {
-                    //show alert
+                self?.showAlert(title: "GeoCoder Error", message: error.localizedDescription)
+            case .success(let placemarks):
+                guard let placemarks = placemarks, let placemark = placemarks.first, let coor = placemark.location?.coordinate else {
+                    self?.showAlert(title: nil, message: "Could not parse location")
                     return
                 }
-                self?.delegate?.readPostsFromSearchBar(given: coor, searchResult: address)
+                
+                
+                self?.delegate?.readPostsFromSearchBar(given: coor, searchResult: address, region: nil)
                 //self.searchResultsView.searchTextField.resignFirstResponder()
+                self?.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+    
+    func getRegion(localSearch: MKLocalSearchCompletion){
+        CoreLocationSession.shared.getMKRegion(given: localSearch) { [weak self](result) in
+            switch result {
+            case .failure(let error):
+                self?.showAlert(title: "GeoCoder Error", message: error.localizedDescription)
+            case .success(let region):
+                let centerCoor = region.center
+                let searchTitle = localSearch.title
+                let searchSubtitle = localSearch.subtitle
+                guard let firstCharOfTitle = searchTitle.first else { return }
+                let searchResult = searchSubtitle.isEmpty || !firstCharOfTitle.isNumber ? searchTitle : searchTitle + " " + searchSubtitle
+                self?.delegate?.readPostsFromSearchBar(given: centerCoor, searchResult: searchResult, region: region)
                 self?.navigationController?.popViewController(animated: true)
             }
         }
@@ -107,7 +126,12 @@ extension SearchResultsViewController: UITableViewDelegate{
         let selectedQuery = searchResults[indexPath.row]
         let addressTitle = selectedQuery.title
         let addressSubTitle = selectedQuery.subtitle
-        addressSubTitle.isEmpty || !addressTitle.first!.isNumber ? convertAddressToCoor(address: addressTitle): convertAddressToCoor(address: addressTitle + " " + addressSubTitle)
+//        addressSubTitle.isEmpty || !addressTitle.first!.isNumber ? convertAddressToCoor(address: addressTitle): convertAddressToCoor(address: addressTitle + " " + addressSubTitle)
+//        if addressSubTitle.isEmpty || !addressTitle.first!.isNumber {
+//            getRegion(localSearch: selectedQuery)
+//        }
+        
+        getRegion(localSearch: selectedQuery)
     }
 }
 
@@ -134,5 +158,6 @@ extension SearchResultsViewController: MKLocalSearchCompleterDelegate{
     
     func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
         //handle error
+        showAlert(title: "SearchCompleter Error", message: error.localizedDescription)
     }
 }

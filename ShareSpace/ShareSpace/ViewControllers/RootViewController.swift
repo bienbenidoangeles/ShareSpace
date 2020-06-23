@@ -307,17 +307,35 @@ class RootViewController: NavBarViewController {
             annotation.coordinate = coordinates
             annotations.append(annotation)
         }
-//        let region = MKCoordinateRegion(center: coordinates, latitudinalMeters: 1500, longitudinalMeters: 1500)
-//        mapView.setRegion(region, animated: true)
+        //        let region = MKCoordinateRegion(center: coordinates, latitudinalMeters: 1500, longitudinalMeters: 1500)
+        //        mapView.setRegion(region, animated: true)
         return annotations
+    }
+    
+    private func validateMapRegion(_ region: MKCoordinateRegion?) -> MKCoordinateRegion?{
+        guard let region = region else { return nil }
+        if ( (region.center.latitude >= -90) && (region.center.latitude <= 90)     && (region.center.longitude >= -180)     && (region.center.longitude <= 180)) {
+            return region
+            } else {
+            return nil
+        }
     }
 }
 
 extension RootViewController: SearchPostDelegate{
-    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String) {
-        //map view to center location from addrr
-        self.rootView.mapView.centerToLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
+    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String, region: MKCoordinateRegion?) {
+        guard let region = validateMapRegion(region) else {
+            return
+        }
+        mapView.setRegion(region, animated: true)
+        
     }
+    
+    //    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String) {
+    //        //map view to center location from addrr
+    //
+    //        self.rootView.mapView.centerToLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
+    //    }
     
     func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
         
@@ -335,6 +353,18 @@ extension RootViewController: MKMapViewDelegate {
 }
 
 extension RootViewController: CardViewControllerDelegate{
+    func postsFound(posts: [Post], coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>), region: MKCoordinateRegion) {
+        guard let annotations = makeAnnotations(posts: posts) else {
+            return
+        }
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotations(annotations)
+    }
+    
+    func postsFound(posts: [Post], geoHash: String, geoHashNeighbors: [String]?) {
+        
+    }
+    
     func postsFound(posts: [Post], coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
         guard let annotations = makeAnnotations(posts: posts) else {
             return

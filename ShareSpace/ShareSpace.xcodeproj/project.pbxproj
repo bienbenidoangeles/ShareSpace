@@ -77,6 +77,9 @@
 		F1DA144A249109CF0067B55B /* CLLocationCoordinate2D+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */; };
 		F1DA144E24920B730067B55B /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA144D24920B730067B55B /* SearchResultsViewController.swift */; };
 		F1DA145224920E360067B55B /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA145124920E360067B55B /* SearchResultsView.swift */; };
+		F1DA146224A148D10067B55B /* Geohash.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA146124A148D10067B55B /* Geohash.swift */; };
+		F1DA146424A1524C0067B55B /* GeohashBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA146324A1524C0067B55B /* GeohashBox.swift */; };
+		F1DA146624A1B6FE0067B55B /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA146524A1B6FE0067B55B /* EmptyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +171,9 @@
 		F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Extensions.swift"; sourceTree = "<group>"; };
 		F1DA144D24920B730067B55B /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		F1DA145124920E360067B55B /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
+		F1DA146124A148D10067B55B /* Geohash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geohash.swift; sourceTree = "<group>"; };
+		F1DA146324A1524C0067B55B /* GeohashBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeohashBox.swift; sourceTree = "<group>"; };
+		F1DA146524A1B6FE0067B55B /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EmptyView.swift; path = ShareSpace/Views/EmptyView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -271,6 +277,7 @@
 		F1684BF5247AC6E800AA9A17 /* ShareSpace */ = {
 			isa = PBXGroup;
 			children = (
+				F1684C31247AD56300AA9A17 /* Extensions */,
 				F149D48E247EF8EA006D77D2 /* Models */,
 				F149D48D247EF8E7006D77D2 /* Cells */,
 				F149D48C247EF8D4006D77D2 /* Secrets */,
@@ -339,6 +346,7 @@
 		F1684C36247AD60400AA9A17 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F1DA146524A1B6FE0067B55B /* EmptyView.swift */,
 				58491308249C1BA700CFDC2A /* MyPostsReservationsView.swift */,
 				F1684C46247AD7BE00AA9A17 /* LoginView.swift */,
 				F1684C58247AE22200AA9A17 /* CardView.swift */,
@@ -369,6 +377,8 @@
 				F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */,
 				F1684BF8247AC6E800AA9A17 /* SceneDelegate.swift */,
 				F1684BFF247AC6EC00AA9A17 /* Assets.xcassets */,
+				F1DA146124A148D10067B55B /* Geohash.swift */,
+				F1DA146324A1524C0067B55B /* GeohashBox.swift */,
 			);
 			path = SupportFiles;
 			sourceTree = "<group>";
@@ -380,7 +390,6 @@
 				F1684C01247AC6EC00AA9A17 /* LaunchScreen.storyboard */,
 				8DBA85B4248196B10029598C /* ListingDetail.storyboard */,
 				0F01D82E248EAB9E00B5BEE5 /* FirstProfileStoryboard.storyboard */,
-				F1684C31247AD56300AA9A17 /* Extensions */,
 				0F01D832248EB90D00B5BEE5 /* Post.storyboard */,
 			);
 			path = Storyboards;
@@ -584,6 +593,7 @@
 				8D759B1F24895C4B006697F4 /* CalendarViewController.swift in Sources */,
 				F1684C55247ADECC00AA9A17 /* CardViewController.swift in Sources */,
 				F1684C4B247ADCCF00AA9A17 /* DatabaseService.swift in Sources */,
+				F1DA146624A1B6FE0067B55B /* EmptyView.swift in Sources */,
 				8DBA856E247F3C2E0029598C /* ProfileViewController.swift in Sources */,
 				0FA8B0E424857D310079A9B4 /* Message.swift in Sources */,
 				8DBA85B3248192520029598C /* ListingDetailViewController.swift in Sources */,
@@ -610,6 +620,8 @@
 				F1DA145224920E360067B55B /* SearchResultsView.swift in Sources */,
 				F149D4FC24886F2C006D77D2 /* RootView.swift in Sources */,
 				F149D498247F3348006D77D2 /* FeedCell.swift in Sources */,
+				F1DA146424A1524C0067B55B /* GeohashBox.swift in Sources */,
+				F1DA146224A148D10067B55B /* Geohash.swift in Sources */,
 				58491309249C1BA700CFDC2A /* MyPostsReservationsView.swift in Sources */,
 				5802D7E424882DF300A505FB /* ChatListViewController.swift in Sources */,
 				F149D50C24890E20006D77D2 /* FeedExpandedCell.swift in Sources */,
