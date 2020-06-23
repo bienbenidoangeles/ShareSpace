@@ -9,25 +9,27 @@
 import Foundation
 import Firebase
 
-enum UserType: Int, Codable{
+@objc enum UserType: Int, Codable{
     case guest
     case user
     case host
     //case hostAndUser
 }
 
-class AppState {
+class AppState: NSObject {
     
-    private init() {}
+    private init(userType: UserType? = nil) {
+        self.userType = userType ?? UserType.guest
+    }
     static let shared = AppState()
     
-    var userType:UserType?
+    @objc dynamic var userType:UserType
     
     func setAppState(userType: UserType){
         self.userType = userType
     }
     
-    func getAppState() -> UserType?{
+    func getAppState() -> UserType{
         return userType
     }
 }

@@ -56,6 +56,7 @@ class SearchResultsViewController: UIViewController {
     
     private func addFakeNavBar(){
         self.navigationController?.navigationBar.backIndicatorImage = UIImage(systemName: "xmark")
+        self.searchResultsView.searchTextField.becomeFirstResponder()
     }
     
     private func delegatesAndDataSources(){
@@ -64,6 +65,7 @@ class SearchResultsViewController: UIViewController {
         searchResultsView.tableView.dataSource = self
         searchCompletor.delegate = self
     }
+    
     
 //    func convertAddressToCoor(address: String){
 //        CoreLocationSession.shared.convertAddressToPlaceMarks(address: address) {[weak self] (result) in
@@ -133,6 +135,10 @@ extension SearchResultsViewController: UITableViewDelegate{
 //        }
         
         getRegion(localSearch: selectedQuery)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        searchResultsView.searchTextField.resignFirstResponder()
     }
 }
 

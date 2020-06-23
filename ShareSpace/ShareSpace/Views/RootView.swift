@@ -57,6 +57,13 @@ class RootView: UIView {
         button.isHidden = true
         return button
     }()
+    
+//    public lazy var sideBarIV: UIImageView = {
+//        let iv = UIImageView(image: UIImage(systemName: "line.horizontal.3"))
+//        iv.tintColor = .systemTeal
+//        iv.isUserInteractionEnabled = true
+//        return iv
+//    }()
 
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
@@ -70,6 +77,7 @@ class RootView: UIView {
     
     private func commonInit(){
         setupMapView()
+        //setupSideBarImageView()
         setupSearchbarView()
         setupSearchBarTFConstrainsts()
         setupDateTimeConstrainsts()
@@ -87,6 +95,18 @@ class RootView: UIView {
         ])
         
     }
+    
+//    private func setupSideBarImageView(){
+//        addSubview(sideBarIV)
+//        sideBarIV.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            sideBarIV.topAnchor.constraint(equalTo: mapView.topAnchor, constant: 4),
+//            sideBarIV.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 8),
+//            sideBarIV.heightAnchor.constraint(equalTo: mapView.heightAnchor, multiplier: 0.05),
+//            sideBarIV.widthAnchor.constraint(equalToConstant: 32)
+//        ])
+//    }
+    
     private func setupSearchbarView(){
         addSubview(searchBarView)
         searchBarView.translatesAutoresizingMaskIntoConstraints = false

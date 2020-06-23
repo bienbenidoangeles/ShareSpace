@@ -80,6 +80,9 @@
 		F1DA146224A148D10067B55B /* Geohash.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA146124A148D10067B55B /* Geohash.swift */; };
 		F1DA146424A1524C0067B55B /* GeohashBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA146324A1524C0067B55B /* GeohashBox.swift */; };
 		F1DA146624A1B6FE0067B55B /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA146524A1B6FE0067B55B /* EmptyView.swift */; };
+		F1DA146824A1F3B60067B55B /* SideBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA146724A1F3B50067B55B /* SideBarViewController.swift */; };
+		F1DA146A24A1F40B0067B55B /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA146924A1F40B0067B55B /* SideBarView.swift */; };
+		F1DA146C24A201A10067B55B /* UINavigationController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA146B24A201A10067B55B /* UINavigationController+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +177,9 @@
 		F1DA146124A148D10067B55B /* Geohash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geohash.swift; sourceTree = "<group>"; };
 		F1DA146324A1524C0067B55B /* GeohashBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeohashBox.swift; sourceTree = "<group>"; };
 		F1DA146524A1B6FE0067B55B /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EmptyView.swift; path = ShareSpace/Views/EmptyView.swift; sourceTree = SOURCE_ROOT; };
+		F1DA146724A1F3B50067B55B /* SideBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarViewController.swift; sourceTree = "<group>"; };
+		F1DA146924A1F40B0067B55B /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; };
+		F1DA146B24A201A10067B55B /* UINavigationController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -322,6 +328,7 @@
 				0F4E4841248FB39900C68CE6 /* PostViewController.swift */,
 				8D759B1E24895C4A006697F4 /* CalendarViewController.swift */,
 				8D363FA02496E34B009E4E2B /* ReservationDetailViewController.swift */,
+				F1DA146724A1F3B50067B55B /* SideBarViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -334,6 +341,7 @@
 				8DBA856F24800FBA0029598C /* CustomColors.swift */,
 				F1684C4E247ADDA800AA9A17 /* UIImage+Resize.swift */,
 				F1684C50247ADDE400AA9A17 /* UIViewController+Nav.swift */,
+				F1DA146B24A201A10067B55B /* UINavigationController+Extensions.swift */,
 				F149D4FF248899F9006D77D2 /* IntTimeIntervalAsSecondsToOther.swift */,
 				8DCB76142486BD38005C1C04 /* CoreLocationSession.swift */,
 				F149D4FD2488946A006D77D2 /* DateToString.swift */,
@@ -357,6 +365,7 @@
 				F149D4FB24886F2C006D77D2 /* RootView.swift */,
 				F1DA145124920E360067B55B /* SearchResultsView.swift */,
 				8D363F9E24952B94009E4E2B /* ReservationDetailView.swift */,
+				F1DA146924A1F40B0067B55B /* SideBarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -579,6 +588,7 @@
 				58491305249C1B8400CFDC2A /* ProgrammaticPostReservationCell.swift in Sources */,
 				58D5E757249766E500B32CFB /* ChatCell.swift in Sources */,
 				F149D50E24892879006D77D2 /* ImageView+Animation.swift in Sources */,
+				F1DA146824A1F3B60067B55B /* SideBarViewController.swift in Sources */,
 				8DCB76152486BD38005C1C04 /* CoreLocationSession.swift in Sources */,
 				F1684C59247AE22200AA9A17 /* CardView.swift in Sources */,
 				F149D4FE2488946A006D77D2 /* DateToString.swift in Sources */,
@@ -612,6 +622,7 @@
 				F1684C57247AE07200AA9A17 /* StorageService.swift in Sources */,
 				58D5E75A2497A60000B32CFB /* ChatTableView.swift in Sources */,
 				F149D5022488CC43006D77D2 /* MapView+CenterToLocation.swift in Sources */,
+				F1DA146A24A1F40B0067B55B /* SideBarView.swift in Sources */,
 				F149D4FA24886EA1006D77D2 /* RootViewController.swift in Sources */,
 				F1684C4F247ADDA800AA9A17 /* UIImage+Resize.swift in Sources */,
 				F1684C47247AD7BE00AA9A17 /* LoginView.swift in Sources */,
@@ -627,6 +638,7 @@
 				F149D50C24890E20006D77D2 /* FeedExpandedCell.swift in Sources */,
 				0FA8B0E8248587720079A9B4 /* Chat.swift in Sources */,
 				8D32684D248AEC8300065CAB /* ReservationModel.swift in Sources */,
+				F1DA146C24A201A10067B55B /* UINavigationController+Extensions.swift in Sources */,
 				8DBA857024800FBA0029598C /* CustomColors.swift in Sources */,
 				F1684C51247ADDE400AA9A17 /* UIViewController+Nav.swift in Sources */,
 				F1684BF9247AC6E800AA9A17 /* SceneDelegate.swift in Sources */,

@@ -79,7 +79,9 @@ class RootViewController: NavBarViewController {
     
     private func setupGestures(){
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(searchLabelTapped(_:)))
+       // let sideBarTapGesture = UITapGestureRecognizer(target: self, action: #selector(sideBarTapped(_:)))
         rootView.searchLabel.addGestureRecognizer(tapGesture)
+//        rootView.sideBarIV.addGestureRecognizer(sideBarTapGesture)
     }
     
     private func addTargets(){
@@ -89,7 +91,24 @@ class RootViewController: NavBarViewController {
     
     private func addNavButtons(){
         let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "calendar.circle"), style: .plain, target: self, action: #selector(calenderButtonPressed))
+        let sideBarButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3"), style: .plain, target: self, action: #selector(sideBarTapped(_:)))
+        
+        
+        let customView = UIImageView(image: UIImage(systemName: "line.horizontal.3"))
+        customView.isUserInteractionEnabled = true
+        let sideBarButtonC = UIBarButtonItem(customView: customView)
+        sideBarButtonC.action = #selector(sideBarTapped(_:))
+        sideBarButtonC.tintColor = .systemTeal
+        
+        sideBarButton.tintColor = .systemTeal
+        navigationItem.leftBarButtonItem = sideBarButton
         navigationItem.rightBarButtonItems?.append(barButtonItem)
+    }
+    
+    @objc private func sideBarTapped(_ recognizer: UITapGestureRecognizer){
+        //print("test")
+        let sideBarVC = SideBarViewController()
+        navigationController?.fadeTo(sideBarVC)
     }
     
     @objc private func searchLabelTapped(_ recognizer: UITapGestureRecognizer){
