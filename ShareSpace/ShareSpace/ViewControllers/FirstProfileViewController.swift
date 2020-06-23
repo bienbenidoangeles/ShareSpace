@@ -28,12 +28,16 @@ class FirstProfileViewController: UIViewController {
     
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var userTypeLabel: UILabel!
-    @IBOutlet weak var userRating: UILabel!
-    @IBOutlet weak var userPhoneNumber: UILabel!
+    @IBOutlet weak var userLocation: UILabel!
+  //  @IBOutlet weak var userRating: UILabel!
+   // @IBOutlet weak var userPhoneNumber: UILabel!
     @IBOutlet weak var spacesCollectionView: UICollectionView!
-    @IBOutlet weak var reviewsCollectionView: UICollectionView!
-    @IBOutlet weak var userEmail: UILabel!
+    //@IBOutlet weak var userEmail: UILabel!
+    
+    @IBOutlet weak var editButtonOutlet: UIButton!
+    
+    @IBOutlet weak var textView: UITextView!
+    
     
     private var selectedImage: UIImage? {
         didSet {
@@ -54,6 +58,14 @@ class FirstProfileViewController: UIViewController {
         userImage.layer.borderColor = UIColor.black.cgColor
         userImage.layer.cornerRadius = userImage.frame.height/2 //This will change with corners of image and height/2 will make this circle shape
         userImage.clipsToBounds = true
+        
+        editButtonOutlet.tintColor = .white
+        editButtonOutlet.backgroundColor = .yummyOrange
+        
+        editButtonOutlet.clipsToBounds = true
+        editButtonOutlet.layer.cornerRadius = 7
+        editButtonOutlet.layer.borderColor = UIColor.black.cgColor
+        
         
       //  loadUserImage()
         
@@ -87,17 +99,19 @@ class FirstProfileViewController: UIViewController {
         if let user = Auth.auth().currentUser {
             if user.uid == self.userId {
                 //works
-                userEmail.text = user.email ?? "no email"
+               // userEmail.text = user.email ?? "no email"
                 
             }
         }
-        userNameLabel.text = user.displayName
-        userPhoneNumber.text = user.phoneNumber
+        userNameLabel.text = "Hi, I am \(user.displayName)"
+        userLocation.text = "I am from \(user.cityState)"
+        textView.text = user.bio
                //userImage.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
               // userImage.kf.setImage(with: URL(string: user.profileImage ?? "no "))
         DispatchQueue.main.async {
             
             self.userImage.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
+            
                    
                   // loadUserImage()
                    //loadImage(imageURL: user.profileImage ?? "no image url")
