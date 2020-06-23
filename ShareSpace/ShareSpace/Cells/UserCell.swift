@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Kingfisher
 
 class UserCell: UITableViewCell {
   
@@ -75,6 +76,8 @@ class UserCell: UITableViewCell {
     constraintDateLabel()
 //    constraintBackgroundView()
   }
+  
+  
 
   
 
@@ -158,29 +161,43 @@ extension UserCell {
     cellBackgroundView.layer.borderColor = UIColor.black.cgColor
   }
   
-  func configureCell(_ chat: Chat, userIDs: [String]) {
-    var ids = userIDs
+  func configureCell(_ chat: Chat, ids: [String]) {
     guard let currentUser = Auth.auth().currentUser else { return }
-    for (index, i) in ids.enumerated() {
-      if i == currentUser.uid {
+    for i in ids {
+      if i != currentUser.uid {
+        DatabaseService.shared.loadUser(userId: i) { (result) in
+              switch result {
+              case .failure(let error):
+                print("Error loading user: \(error)")
+              case .success(let user):
+                self.nameLabel.text = user.userEmail
+                if let profileString = user.profileImage {
+                self.userImageView.kf.setImage(with: URL(string: profileString))
+                } else {
+                  self.userImageView.image = UIImage(systemName: "person.fill")
+                }
+              }
+            }
+            
+//            nameLabel.text = "user id: \(chat.users.description)"
         
-        ids.remove(at: index)
       }
     }
     
-    DatabaseService.shared.loadUser(userId: ids[0]) { (result) in
-      switch result {
-      case .failure(let error):
-        print("Error loading user: \(error)")
-      case .success(let user):
-        self.nameLabel.text = user.userEmail
-//        userImageView.image
-      }
-    }
     
-    nameLabel.text = "user id: \(chat.users.description)"
   }
   
   
 }
+
+/*
+ self.profileView.profileImageView.kf.setImage(with: URL(string: user.profileImage ?? "no image url"), placeholder: UIImage(systemName: "person.fill"), options: nil, progressBlock: nil) { [weak self](result) in
+   switch result {
+   case .failure(let error):
+     break
+   case .success(let imageResult):
+     self?.selectedImage = imageResult.image
+   }
+ }
+ */
 

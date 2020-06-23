@@ -51,8 +51,8 @@ class ChatTableView: UIView {
   
   public lazy var tableView: UITableView = {
     let tv = UITableView()
-    tv.backgroundColor = .purple
-    tv.separatorColor = .systemRed
+    tv.backgroundColor = .systemGroupedBackground
+    tv.separatorStyle = .none
     return tv
   }()
   
