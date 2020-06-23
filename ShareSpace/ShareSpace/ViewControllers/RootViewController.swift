@@ -9,6 +9,10 @@
 import UIKit
 import MapKit
 
+protocol RootViewControllerDelegate: AnyObject {
+    func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>))
+}
+
 class RootViewController: NavBarViewController {
     private let locationSession = CoreLocationSession.shared.locationManager
     
@@ -29,7 +33,7 @@ class RootViewController: NavBarViewController {
     
     var cardVisible = false
     
-    weak var delegate: SearchPostDelegate?
+    weak var delegate: RootViewControllerDelegate?
     
     var nextState: CardState {
         return cardVisible ? .collapsed : .expanded
@@ -45,6 +49,8 @@ class RootViewController: NavBarViewController {
     
     private lazy var topRightCoor = rootView.mapView.convert(CGPoint(x: rootView.mapView.bounds.width, y: 0), toCoordinateFrom: rootView.mapView)
     private lazy var bottomLeftCoor = rootView.mapView.convert(CGPoint(x: 0, y: rootView.mapView.bounds.height), toCoordinateFrom: rootView.mapView)
+    
+    private var searchVC: SearchResultsViewController?
     
     override func loadView() {
         super.loadView()
@@ -64,6 +70,11 @@ class RootViewController: NavBarViewController {
     
     private func delegatesAndDataSources(){
         rootView.mapView.delegate = self
+        let searchCompletor =  CoreLocationSession.shared.searchCompletor
+        let searchVC = SearchResultsViewController(searchCompletor: searchCompletor)
+        self.searchVC = searchVC
+        cardVC = CardViewController(rootVC: self, searchResultsVC: searchVC)
+        cardVC.delegate = self
     }
     
     private func setupGestures(){
@@ -82,11 +93,11 @@ class RootViewController: NavBarViewController {
     }
     
     @objc private func searchLabelTapped(_ recognizer: UITapGestureRecognizer){
-        let searchCompletor =  CoreLocationSession.shared.searchCompletor
-        let searchResultsVC = SearchResultsViewController(searchCompletor: searchCompletor)
-        searchResultsVC.modalTransitionStyle = .crossDissolve
-        searchResultsVC.delegate = self
-        navigationController?.pushViewController(searchResultsVC, animated: true)
+        guard let searchVC = searchVC else{
+            return
+        }
+        searchVC.modalTransitionStyle = .crossDissolve
+        navigationController?.pushViewController(searchVC, animated: true)
     }
     
     @objc private func calenderButtonPressed(){
@@ -126,8 +137,6 @@ class RootViewController: NavBarViewController {
         visualEffectView = UIVisualEffectView()
         visualEffectView.frame = self.rootView.mapView.frame
         self.rootView.mapView.addSubview(visualEffectView)
-        cardVC = CardViewController()
-        cardVC.delegate = self
         self.addChild(cardVC)
         self.rootView.addSubview(cardVC.view)
         
@@ -322,26 +331,27 @@ class RootViewController: NavBarViewController {
     }
 }
 
-extension RootViewController: SearchPostDelegate{
-    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String, region: MKCoordinateRegion?) {
-        guard let region = validateMapRegion(region) else {
-            return
-        }
-        mapView.setRegion(region, animated: true)
-        
-    }
-    
-    //    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String) {
-    //        //map view to center location from addrr
-    //
-    //        self.rootView.mapView.centerToLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
-    //    }
-    
-    func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
-        
-    }
-    
-}
+//extension RootViewController: SearchResultsViewControllerDelegate{
+//    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String, region: MKCoordinateRegion?) {
+//        guard let region = validateMapRegion(region) else {
+//            return
+//        }
+//        let regionThatFits = mapView.regionThatFits(region)
+//        mapView.setRegion(regionThatFits, animated: true)
+//
+//    }
+//
+//    //    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String) {
+//    //        //map view to center location from addrr
+//    //
+//    //        self.rootView.mapView.centerToLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
+//    //    }
+//
+//    func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
+//
+//    }
+//
+//}
 
 extension RootViewController: MKMapViewDelegate {
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
@@ -353,19 +363,17 @@ extension RootViewController: MKMapViewDelegate {
 }
 
 extension RootViewController: CardViewControllerDelegate{
-    func postsFound(posts: [Post], coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>), region: MKCoordinateRegion) {
-        guard let annotations = makeAnnotations(posts: posts) else {
+    func postsFoundFromSearchBar(posts: [Post], coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>), region: MKCoordinateRegion) {
+        guard let region = validateMapRegion(region), let annotations = makeAnnotations(posts: posts) else {
             return
         }
+        let regionThatFits = mapView.regionThatFits(region)
+        mapView.setRegion(regionThatFits, animated: true)
         mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotations(annotations)
     }
     
-    func postsFound(posts: [Post], geoHash: String, geoHashNeighbors: [String]?) {
-        
-    }
-    
-    func postsFound(posts: [Post], coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
+    func postsFoundFromMapView(posts: [Post], coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
         guard let annotations = makeAnnotations(posts: posts) else {
             return
         }

@@ -9,16 +9,16 @@
 import UIKit
 import MapKit
 
-protocol SearchPostDelegate: AnyObject {
+protocol SearchResultsViewControllerDelegate: AnyObject {
     func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String, region: MKCoordinateRegion?)
-    func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>))
+    //func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>))
 }
 
 class SearchResultsViewController: UIViewController {
         
     private let searchResultsView = SearchResultsView()
     
-    weak var delegate: SearchPostDelegate?
+    weak var delegate: SearchResultsViewControllerDelegate?
     
     private var searchResults = [MKLocalSearchCompletion]() {
         didSet{
@@ -65,25 +65,25 @@ class SearchResultsViewController: UIViewController {
         searchCompletor.delegate = self
     }
     
-    func convertAddressToCoor(address: String){
-        CoreLocationSession.shared.convertAddressToPlaceMarks(address: address) {[weak self] (result) in
-            switch result{
-            case .failure(let error):
-                //message pop-up for errors
-                self?.showAlert(title: "GeoCoder Error", message: error.localizedDescription)
-            case .success(let placemarks):
-                guard let placemarks = placemarks, let placemark = placemarks.first, let coor = placemark.location?.coordinate else {
-                    self?.showAlert(title: nil, message: "Could not parse location")
-                    return
-                }
-                
-                
-                self?.delegate?.readPostsFromSearchBar(given: coor, searchResult: address, region: nil)
-                //self.searchResultsView.searchTextField.resignFirstResponder()
-                self?.navigationController?.popViewController(animated: true)
-            }
-        }
-    }
+//    func convertAddressToCoor(address: String){
+//        CoreLocationSession.shared.convertAddressToPlaceMarks(address: address) {[weak self] (result) in
+//            switch result{
+//            case .failure(let error):
+//                //message pop-up for errors
+//                self?.showAlert(title: "GeoCoder Error", message: error.localizedDescription)
+//            case .success(let placemarks):
+//                guard let placemarks = placemarks, let placemark = placemarks.first, let coor = placemark.location?.coordinate else {
+//                    self?.showAlert(title: nil, message: "Could not parse location")
+//                    return
+//                }
+//
+//
+//                self?.delegate?.readPostsFromSearchBar(given: coor, searchResult: address, region: nil)
+//                //self.searchResultsView.searchTextField.resignFirstResponder()
+//                self?.navigationController?.popViewController(animated: true)
+//            }
+//        }
+//    }
     
     func getRegion(localSearch: MKLocalSearchCompletion){
         CoreLocationSession.shared.getMKRegion(given: localSearch) { [weak self](result) in
@@ -106,10 +106,11 @@ class SearchResultsViewController: UIViewController {
 
 extension SearchResultsViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let address = textField.text, !address.isEmpty else {
+        guard let address = textField.text, !address.isEmpty, let searchResult = searchResults.first else {
             return false
         }
-        convertAddressToCoor(address: address)
+        
+        getRegion(localSearch: searchResult)
         return true
     }
     
@@ -124,8 +125,8 @@ extension SearchResultsViewController: UITextFieldDelegate{
 extension SearchResultsViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedQuery = searchResults[indexPath.row]
-        let addressTitle = selectedQuery.title
-        let addressSubTitle = selectedQuery.subtitle
+        //let addressTitle = selectedQuery.title
+        //let addressSubTitle = selectedQuery.subtitle
 //        addressSubTitle.isEmpty || !addressTitle.first!.isNumber ? convertAddressToCoor(address: addressTitle): convertAddressToCoor(address: addressTitle + " " + addressSubTitle)
 //        if addressSubTitle.isEmpty || !addressTitle.first!.isNumber {
 //            getRegion(localSearch: selectedQuery)
