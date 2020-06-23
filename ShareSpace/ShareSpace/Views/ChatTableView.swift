@@ -17,9 +17,10 @@ class ChatTableView: UIView {
   
   public var chatId: String?
   
-    var controller:UIViewController?
-    var reservationId: String?
-    
+  var controller: UIViewController?
+  var reservationId: String?
+  var hostId: String?
+  
   public lazy var headerView: UIView = {
     let view = UIView()
     view.backgroundColor = .white
@@ -98,14 +99,14 @@ class ChatTableView: UIView {
     let sv = UIStackView()
     sv.axis = .horizontal
     sv.spacing = 4
-//    sv.distribution = .fillEqually
+    //    sv.distribution = .fillEqually
     sv.alignment = .fill
-//    sv.backgroundColor = .white
+    //    sv.backgroundColor = .white
     return sv
   }()
   
- 
-   
+  
+  
   override init(frame: CGRect) {
     super.init(frame: UIScreen.main.bounds)
     commonInit()
@@ -163,16 +164,7 @@ class ChatTableView: UIView {
     ])
   }
   
-//  private func statusLabelConstraints() {
-//    headerView.addSubview(statusLabel)
-//    statusLabel.translatesAutoresizingMaskIntoConstraints = false
-//    NSLayoutConstraint.activate([
-//      statusLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-//      statusLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
-//      statusLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 4),
-//      statusLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -4)
-//    ])
-//  }
+  
   
   private func statusStackConstraints() {
     headerView.addSubview(statusStackView)
@@ -186,13 +178,9 @@ class ChatTableView: UIView {
     NSLayoutConstraint.activate([
       statusStackView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
       statusStackView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-//      statusStackView.heightAnchor.constraint(equalToConstant: 65),
-//      statusStackView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -4),
-//      leftStatusView.heightAnchor.constraint(equalTo: headerView.heightAnchor, multiplier: 0.35),
-//      leftStatusView.heightAnchor.constraint(equalTo: headerView.heightAnchor, multiplier: 0.35)
     ])
   }
-
+  
   private func messageStackConstraints() {
     addSubview(messageStack)
     messageStack.translatesAutoresizingMaskIntoConstraints = false
@@ -221,7 +209,7 @@ class ChatTableView: UIView {
     ])
     
   }
-
+  
 }
 
 
@@ -230,15 +218,16 @@ extension ChatTableView {
     headerViewConstraints()
     messageStackConstraints()
     tableViewContraints()
-//    messageFieldConstraints()
+    //    messageFieldConstraints()
     detailButtonConstraints()
     imageViewConstraints()
     statusStackConstraints()
+//    updateUI()
   }
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    userProfileImageView.layer.cornerRadius = 8
+    userProfileImageView.layer.cornerRadius = userProfileImageView.frame.width / 2
     sendButton.layer.cornerRadius = 10
   }
 }
@@ -247,16 +236,16 @@ extension ChatTableView {
 extension ChatTableView {
   @objc private func loadDetailsPage() {
     guard let reservationId = reservationId, let controller = controller else {
-        return
+      return
     }
     DatabaseService.shared.readReservation(reservationId: reservationId) { (result) in
-        switch result {
-        case .failure:
-             break
-        case .success(let reservation):
-            let reservationDVC = ReservationDetailViewController(reservation)
-            controller.navigationController?.pushViewController(reservationDVC, animated: true)
-        }
+      switch result {
+      case .failure:
+        break
+      case .success(let reservation):
+        let reservationDVC = ReservationDetailViewController(reservation)
+        controller.navigationController?.pushViewController(reservationDVC, animated: true)
+      }
     }
     
     
@@ -264,12 +253,12 @@ extension ChatTableView {
   }
   
   @objc private func sendMessage() {
-     print("message button works")
+    print("message button works")
     guard let chatId = chatId,
       let user = Auth.auth().currentUser,
       let text = messageField.text, !text.isEmpty else {
-      print("missing message")
-      return
+        print("missing message")
+        return
     }
     let message = Message(id: UUID().uuidString, content: text, created: Timestamp(date: Date()), senderID: user.uid, senderName: user.displayName ?? "no display name")
     
@@ -282,5 +271,60 @@ extension ChatTableView {
         self?.messageField.text = ""
       }
     }
-   }
+  }
+  
+  public func updateUI() {
+//    guard let user = Auth.auth().currentUser else { return }
+
+//    userProfileImageView.layer.cornerRadius = userProfileImageView.frame.width / 2
+
+    
+    guard let reservationID = reservationId else { return }
+    DatabaseService.shared.readReservation(reservationId: reservationID) { [weak self] (result) in
+      switch result {
+      case .failure:
+        break
+      case .success(let reservation):
+        self?.hostId = reservation.hostId
+        if reservation.status == 2 {
+          self?.statusLabel.text = "PENDING"
+          self?.statusLabel.textColor = .systemRed
+          self?.statusLabel.backgroundColor = .clear
+          self?.rightStatusView.backgroundColor = .clear
+          self?.leftStatusView.backgroundColor = .clear
+
+        } else if reservation.status == 1  {
+          self?.statusLabel.text = "DECLINED"
+          self?.statusLabel.textColor = .black
+          self?.statusLabel.backgroundColor = .systemRed
+          self?.rightStatusView.backgroundColor = .systemRed
+          self?.leftStatusView.backgroundColor = .systemRed
+
+        } else if reservation.status == 0 {
+          self?.statusLabel.text = "ACCEPTED"
+          self?.statusLabel.textColor = .black
+          self?.statusLabel.backgroundColor = .systemGreen
+          self?.rightStatusView.backgroundColor = .systemGreen
+          self?.leftStatusView.backgroundColor = .systemGreen
+
+        }
+      }
+    }
+    
+    guard let hostId = hostId else { return }
+    DatabaseService.shared.loadUser(userId: hostId) { [weak self] (result) in
+      switch result {
+      case .failure(let error):
+        print("Error loading user: \(error)")
+      case .success(let user):
+        print("user loaded \n\(user.profileImage)")
+        if let profileString = user.profileImage {
+          self?.userProfileImageView.kf.setImage(with: URL(string: profileString))
+        } else {
+          self?.userProfileImageView.image = UIImage(systemName: "person.fill")
+        }
+      }
+    }
+  }
+  
 }

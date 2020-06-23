@@ -109,8 +109,11 @@ extension ChatListViewController: UITableViewDataSource {
             } else if let snapshot = snapshot {
               for message in snapshot.documents {
                 let msg = Message(message.data())
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MMM dd HH:mm a"
+                let dateString = dateFormatter.string(from: msg.created.dateValue())
                 cell.textSnapshot.text = msg.content
-                cell.dateLabel.text = "\(msg.sentDate)"
+                cell.dateLabel.text = "\(dateString)"
               }
             }
           }

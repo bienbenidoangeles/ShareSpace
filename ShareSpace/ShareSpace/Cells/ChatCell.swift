@@ -11,18 +11,17 @@ import Firebase
 
 class ChatCell: UITableViewCell {
   
-//  public var message: Message {
-//    didSet {
-//      if message.senderID == user.uid {
-//        cell.
-//      } else {
-//        
-//      }
-//      
-//    }
-//  }
+  var message: Message! {
+    didSet {
+      updateUI()
+    }
+  }
+  
   var leadingConstraint: NSLayoutConstraint!
   var trailingConstraint: NSLayoutConstraint!
+  
+  var incomeDateConstraints: NSLayoutConstraint!
+  var outgoingDateConstraint: NSLayoutConstraint!
   
   var isIncoming: Bool! {
     didSet {
@@ -44,6 +43,13 @@ class ChatCell: UITableViewCell {
     return view
   }()
   
+  public lazy var dateLabel: UILabel = {
+    let label = UILabel()
+    label.font = .preferredFont(forTextStyle: .footnote)
+    label.text = "date label here"
+    return label
+  }()
+  
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -55,6 +61,13 @@ class ChatCell: UITableViewCell {
     super.init(coder: coder)
     setupConstraints()
   }
+  
+  private func updateUI() {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm a"
+    let dateString = dateFormatter.string(from: message.created.dateValue())
+    self.dateLabel.text = dateString
+  }
  
   
 }
@@ -65,8 +78,10 @@ extension ChatCell {
   private func setupConstraints() {
     addSubview(messageBackgroundView)
     addSubview(messageLabel)
+    addSubview(dateLabel)
     messageLabelConstraints()
     bkViewConstraints()
+    dateLabelConstraints()
   }
 
   private func bkViewConstraints() {
@@ -95,5 +110,20 @@ extension ChatCell {
     trailingConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
     trailingConstraint.isActive = true
   }
+  
+  private func dateLabelConstraints() {
+    dateLabel.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      dateLabel.topAnchor.constraint(equalTo: messageBackgroundView.bottomAnchor, constant: 4),
+      dateLabel.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: 0)
+    ])
+    incomeDateConstraints = dateLabel.trailingAnchor.constraint(equalTo: messageBackgroundView.trailingAnchor, constant: 0)
+    incomeDateConstraints.isActive = true
+    
+    outgoingDateConstraint = dateLabel.leadingAnchor.constraint(equalTo: messageBackgroundView.leadingAnchor, constant: 0)
+    outgoingDateConstraint.isActive = false
+  }
+  
+  
 
 }

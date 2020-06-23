@@ -72,7 +72,7 @@ class UserCell: UITableViewCell {
     imageViewConstrainst()
     constaintNameLabel()
     constaintTextSnapshot()
-    constraintMoreButton()
+//    constraintMoreButton()
     constraintDateLabel()
 //    constraintBackgroundView()
   }
@@ -127,24 +127,14 @@ class UserCell: UITableViewCell {
     ])
   }
   
-  private func constraintMoreButton() {
-    addSubview(moreButton)
-    moreButton.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      moreButton.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-      moreButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-      moreButton.widthAnchor.constraint(equalToConstant: 44)
-    ])
-  }
-  
   private func constraintDateLabel() {
     addSubview(dateLabel)
     dateLabel.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
       dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
       dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-      dateLabel.topAnchor.constraint(equalTo: textSnapshot.bottomAnchor, constant: 2),
-      dateLabel.widthAnchor.constraint(equalToConstant: 65)
+      dateLabel.topAnchor.constraint(equalTo: textSnapshot.bottomAnchor, constant: 2)
+//      dateLabel.widthAnchor.constraint(equalToConstant: 65
     ])
   }
   
@@ -170,7 +160,7 @@ extension UserCell {
               case .failure(let error):
                 print("Error loading user: \(error)")
               case .success(let user):
-                self.nameLabel.text = user.userEmail
+                self.nameLabel.text = user.displayName
                 if let profileString = user.profileImage {
                 self.userImageView.kf.setImage(with: URL(string: profileString))
                 } else {

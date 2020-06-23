@@ -14,6 +14,11 @@ class ChatVC: UIViewController {
   
   private let chatView = ChatTableView()
   
+  private var keyboardIsVisible = false
+  
+  private var originalYConstraint: NSLayoutConstraint!
+  private var messageStachConstraint: NSLayoutConstraint!
+  
   private var listener: ListenerRegistration?
   var chat: Chat?
   var user2ID = String() {
@@ -30,15 +35,21 @@ class ChatVC: UIViewController {
   
   override func loadView() {
     view = chatView
-    chatView.chatId = chat?.id
-    chatView.reservationId = chat?.reservationId
-    chatView.controller = self
+//    chatView.chatId = chat?.id
+//    chatView.reservationId = chat?.reservationId
+//    chatView.controller = self
   }
 
     override func viewDidLoad() {
         super.viewDidLoad()
       listenerSetup()
       tableViewSetup()
+//      messageStachConstraint = chatView.messageStack.constraintsAffectingLayout(for: .horizontal)
+      chatView.chatId = chat?.id
+      chatView.reservationId = chat?.reservationId
+      chatView.controller = self
+      chatView.hostId = user2ID
+      chatView.updateUI()
 //      updateUI()
     }
   
@@ -52,6 +63,63 @@ class ChatVC: UIViewController {
     chatView.tableView.delegate = self
     chatView.tableView.register(ChatCell.self, forCellReuseIdentifier: "chatCell")
   }
+  // TODO: Keyboard handling to be completed
+//  private func registerForKeyboardNotifications() {
+//    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+//
+//    NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+//  }
+//
+//  private func unregisterForKeyboardNotifications() {
+//    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+//    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+//
+//  }
+//
+//  @objc private func keyboardWillShow(_ notification: NSNotification) {
+//
+//    // UIKeyboardFrameBeginUserInfoKey
+//    // retrieving keyboard height
+//    guard let keyboardFrame = notification.userInfo?["UIKeyboardFrameBeginUserInfoKey"] as? CGRect else {
+//      return
+//    }
+//
+//
+//    movedKeyboardUp(keyboardFrame.size.height)
+//  }
+//
+//  @objc private func keyboardWillHide(_ notification: NSNotification) {
+//    resetUI()
+//  }
+//
+//  private func movedKeyboardUp(_ height: CGFloat) {
+//    if keyboardIsVisible { return }  // prevents it from moving constraints multiple times
+//    originalYConstraint = NSLayoutConstraint(item: chatView.messageStack, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 0, constant: 0) // save original value
+//
+//    print("Original Y = \(originalYConstraint.constant)")
+//    originalYConstraint.constant -= (height * 0.80)
+//
+//    UIView.animateKeyframes(withDuration: 1, delay: 0.0, options: nil, animations: {
+//      self.view.layoutIfNeeded()
+//    }, completion: nil)
+//
+////    UIView.animate(withDuration: 1, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 10, options:[] , animations: {
+////      self.view.layoutIfNeeded()
+////    }, completion: nil)
+//
+//    keyboardIsVisible = true
+//  }
+//
+//  private func resetUI() {
+//    keyboardIsVisible = false
+//    print("Original Y = \(originalYConstraint.constant)")
+//
+//    pursuitLogoCenterYConstraint.constant -= originalYConstraint.constant
+//
+//    UIView.animate(withDuration: 1.0) {
+//      self.view.layoutIfNeeded()
+//    }
+//  }
   
   
   private func listenerSetup() {
@@ -73,26 +141,26 @@ class ChatVC: UIViewController {
      }
    }
   
-  private func updateUI() {
-    // MARK: Issue: Not loading photo
-    guard let user = Auth.auth().currentUser else { return }
-    DatabaseService.shared.loadUser(userId: user.uid) { [weak self] (result) in
-      switch result {
-      case .failure(let error):
-        print("Error loading user: \(error)")
-      case .success(let user):
-        DispatchQueue.main.async {
-          if let profileString = user.profileImage {
-            self?.chatView.userProfileImageView.kf.setImage(with: URL(string: profileString))
-          } else {
-            self?.chatView.userProfileImageView.image = UIImage(systemName: "person.fill")
-          }
-        }
-        
-      }
-    }
-    
-  }
+//  private func updateUI() {
+//    // MARK: Issue: Not loading photo
+//    guard let user = Auth.auth().currentUser else { return }
+//    DatabaseService.shared.loadUser(userId: user.uid) { [weak self] (result) in
+//      switch result {
+//      case .failure(let error):
+//        print("Error loading user: \(error)")
+//      case .success(let user):
+//        DispatchQueue.main.async {
+//          if let profileString = user.profileImage {
+//            self?.chatView.userProfileImageView.kf.setImage(with: URL(string: profileString))
+//          } else {
+//            self?.chatView.userProfileImageView.image = UIImage(systemName: "person.fill")
+//          }
+//        }
+//
+//      }
+//    }
+//
+//  }
     
 
 }
@@ -110,6 +178,7 @@ extension ChatVC: UITableViewDataSource {
       fatalError("unable to downcast cell")
     }
     let message = thread[indexPath.row]
+    cell.message = message
     cell.messageLabel.text = message.content
     if message.senderID == user.uid {
       cell.isIncoming = false
@@ -117,6 +186,9 @@ extension ChatVC: UITableViewDataSource {
       cell.isIncoming = true
       cell.trailingConstraint.isActive = false
       cell.leadingConstraint.isActive = true
+      
+      cell.incomeDateConstraints.isActive = false
+      cell.outgoingDateConstraint.isActive = true
     }
 //    cell.message = message
 //    cell.backgroundColor = .cyan
@@ -125,6 +197,15 @@ extension ChatVC: UITableViewDataSource {
     return cell
     
   }
+  
+  //TODO: seperate messages by date using header
+//  func numberOfSections(in tableView: UITableView) -> Int {
+//
+//  }
+//
+//  func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//
+//  }
   
   
 
