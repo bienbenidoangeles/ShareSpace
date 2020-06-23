@@ -81,7 +81,7 @@ class ReservationDetailView: UIView {
         imageView.image = UIImage(systemName: "person.fill")
         imageView.contentMode = .scaleAspectFill
         imageView.layoutSubviews()
-        imageView.backgroundColor = .yummyOrange
+       // imageView.backgroundColor = .yummyOrange
         imageView.tintColor = .sunnyYellow
         imageView.clipsToBounds = true
         return imageView

@@ -93,14 +93,14 @@ class ReservationDetailViewController: UIViewController {
                     self?.reservationDetailView.postLocationLabel.text = "\(self?.selectedPost?.state ?? ""), \(self?.selectedPost?.country ?? "") "
                     self?.reservationDetailView.reservationStatusLabel.text = "Declined"
                     self?.reservationDetailView.reservationStatusLabel.textColor = .systemRed
-                    self?.reservationDetailView.profileImageView.image = UIImage(named: "person.fill")
+                    self?.reservationDetailView.profileImageView.image = UIImage(systemName: "person.fill")
                     self?.reservationDetailView.acceptButton.setTitleColor(.systemGray, for: .disabled)
                     self?.reservationDetailView.declineButton.setTitleColor(.systemGray, for: .disabled)
                 } else if self?.selectedStatus == 2 {
                     self?.reservationDetailView.postLocationLabel.text = "\(self?.selectedPost?.state ?? ""), \(self?.selectedPost?.country ?? "") "
                     self?.reservationDetailView.reservationStatusLabel.text = "Pending"
                     self?.reservationDetailView.reservationStatusLabel.textColor = .systemRed
-                    self?.reservationDetailView.profileImageView.image = UIImage(named: "person.fill")
+                    self?.reservationDetailView.profileImageView.image = UIImage(systemName: "person.fill")
                     self?.reservationDetailView.acceptButton.setTitleColor(.systemGray, for: .disabled)
                     self?.reservationDetailView.declineButton.setTitleColor(.systemGray, for: .disabled)
                 }
