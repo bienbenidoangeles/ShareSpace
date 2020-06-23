@@ -90,7 +90,7 @@ class ProfileView: UIView {
     
     public lazy var userDisplayNameTextfield: UITextField = {
         let textfield = UITextField()
-        //textfield.placeholder = "Enter username"
+        textfield.placeholder = "Username"
         
 //        textfield.layer.borderWidth = 1
 //        textfield.layer.masksToBounds = false
@@ -113,7 +113,7 @@ class ProfileView: UIView {
     
     public lazy var userFirstNameTextfield: UITextField = {
         let textfield = UITextField()
-        //textfield.placeholder = ""
+        textfield.placeholder = "First name"
         textfield.textAlignment = .left
         
 //        textfield.layer.borderWidth = 1
@@ -136,7 +136,7 @@ class ProfileView: UIView {
     
     public lazy var userLastNameTextfield: UITextField = {
            let textfield = UITextField()
-           //textfield.placeholder = "Enter your last name"
+           textfield.placeholder = "Last name"
            textfield.textAlignment = .left
         
 //        textfield.layer.borderWidth = 1
@@ -167,7 +167,7 @@ class ProfileView: UIView {
     
      public lazy var userLocationTextfield: UITextField = {
                let textfield = UITextField()
-               //textfield.placeholder = "Enter your last name"
+               textfield.placeholder = "Location"
                textfield.textAlignment = .left
             
     //        textfield.layer.borderWidth = 1
@@ -190,7 +190,7 @@ class ProfileView: UIView {
     
     public lazy var userPhoneNumberTextfield: UITextField = {
         let textfield = UITextField()
-        //textfield.placeholder = "Enter your phone number"
+        textfield.placeholder = "Phone number"
         textfield.textAlignment = .left
         
 //        textfield.layer.borderWidth = 1
@@ -237,7 +237,7 @@ class ProfileView: UIView {
     
     public lazy var userBioTextview: UITextView = {
         let textview = UITextView()
-        //textfield.placeholder = "Type your bio"
+        //textview.placeholder = "Bio"
         textview.textAlignment = .left
         
 //        textview.layer.borderWidth = 1
@@ -268,7 +268,7 @@ class ProfileView: UIView {
     
     public lazy var userOccupationTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.placeholder = "Enter your occupation"
+        textfield.placeholder = "Occupation"
         textfield.textAlignment = .left
         
 //        textfield.layer.borderWidth = 1
@@ -291,7 +291,7 @@ class ProfileView: UIView {
     
     public lazy var governmentIdNameTextfield: UITextField = {
         let textfield = UITextField()
-        //textfield.placeholder = "Enter government ID name"
+        textfield.placeholder = "Government ID name"
         textfield.textAlignment = .left
         return textfield
     }()
@@ -325,13 +325,18 @@ class ProfileView: UIView {
 //               textfield.layer.cornerRadius = 7 //This will change with corners of image and height/2 will make this circle shape
 //               textfield.clipsToBounds = true
         
+        
+      //  textField setKeyboardType:UIKeyboardTypeNumberPad]
+        
+        textfield.keyboardType = .numbersAndPunctuation
+        
         return textfield
     }()
     
      //Should be nil if host!
     public lazy var userCreditcardCVVNumberTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.placeholder = "Enter your card CVV number"
+        textfield.placeholder = "CVV number"
         textfield.textAlignment = .left
         
 //        textfield.layer.borderWidth = 1
@@ -339,6 +344,8 @@ class ProfileView: UIView {
 //               textfield.layer.borderColor = UIColor.oceanBlue.cgColor
 //               textfield.layer.cornerRadius = 7 //This will change with corners of image and height/2 will make this circle shape
 //               textfield.clipsToBounds = true
+        
+        textfield.keyboardType = .numbersAndPunctuation
         
         return textfield
     }()
@@ -346,7 +353,7 @@ class ProfileView: UIView {
      //Should be nil if host!
     public lazy var userExpirationDateTextfield: UITextField = {
         let textfield = UITextField()
-        textfield.placeholder = "Enter your card expiration date"
+        textfield.placeholder = "Card expiration date"
         textfield.textAlignment = .left
         
 //        textfield.layer.borderWidth = 1
@@ -354,6 +361,8 @@ class ProfileView: UIView {
 //               textfield.layer.borderColor = UIColor.oceanBlue.cgColor
 //               textfield.layer.cornerRadius = 7 //This will change with corners of image and height/2 will make this circle shape
 //               textfield.clipsToBounds = true
+        
+        textfield.keyboardType = .numbersAndPunctuation
         
         return textfield
     }()
