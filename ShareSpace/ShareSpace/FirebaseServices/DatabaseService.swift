@@ -316,20 +316,40 @@ class DatabaseService {
     
     func loadPosts(coordinateRange: (lat: ClosedRange<Double>, long: ClosedRange<Double>), completion: @escaping (Result<[Post]?, Error>) -> ()) {
         let postRef = db.collection(DatabaseService.postCollection)
-        let latUpper = coordinateRange.lat.upperBound.magnitude
-        let latLower = coordinateRange.lat.lowerBound.magnitude
-        let longUpper = coordinateRange.long.upperBound.magnitude
-        let longLower = coordinateRange.long.lowerBound.magnitude
-        postRef.whereField("latitude", isGreaterThanOrEqualTo: latLower).whereField("latitude", isLessThanOrEqualTo: latUpper).getDocuments { (snapshot, error) in
+        let latUpper = coordinateRange.lat.upperBound
+        let latLower = coordinateRange.lat.lowerBound
+        let longUpper = coordinateRange.long.upperBound
+        let longLower = coordinateRange.long.lowerBound
+        postRef.whereField("longitude", isGreaterThanOrEqualTo: longLower).whereField("longitude", isLessThanOrEqualTo: longUpper).limit(to: 256).getDocuments { (snapshot, error) in
             if let error = error {
                 completion(.failure(error))
             } else if let snapshot = snapshot {
+                
+                
+//                snapshot.query.whereField("longitude", isGreaterThanOrEqualTo: longLower).whereField("longitude", isLessThanOrEqualTo: longUpper).limit(to: 16).getDocuments { (snapshot, error) in
+//                    if let error = error {
+//                        completion(.failure(error))
+//                    } else if let snapshot = snapshot  {
+//                        let documents = snapshot.documents
+//                        if documents.isEmpty {
+//                            completion(.success(nil))
+//                        } else {
+//                            let posts = documents.map{Post($0.data())}
+//                            completion(.success(posts))
+//                        }
+//                    }
+//                }
+                
                 let documents = snapshot.documents
+
                 if documents.isEmpty {
                     completion(.success(nil))
                 } else {
-                    let posts = documents.map{Post($0.data())}
-                    completion(.success(posts))
+                    let mappedPosts =  snapshot.documents.map{Post($0.data())}
+                    let filteredPosts = mappedPosts.filter{$0.latitude! >= latLower && $0.latitude! <= latUpper}
+                    let selectedPosts = Array(filteredPosts.prefix(16))
+//                    let posts = documents.map{Post($0.data())}
+                    completion(.success(selectedPosts))
                 }
                 
             }
@@ -337,10 +357,10 @@ class DatabaseService {
         
     }
     
-    func loadPosts(fullStreetAddr: String, completion: @escaping (Result<[Post], Error>) ->()){
-        let postRef = db.collection(DatabaseService.postCollection)
-        postRef.whereField("location/fullAddress", arrayContains: fullStreetAddr.components(separatedBy: CharacterSet(charactersIn: ", ")))
-    }
+//    func loadPosts(fullStreetAddr: String, geoHash: String, geoHashNeighbors:[String]?, completion: @escaping (Result<[Post], Error>) ->()){
+//        let postRef = db.collection(DatabaseService.postCollection)
+//        postRef.order(by: "").
+//    }
     
     func editPost(postdictionary: [String: Any], completion: @escaping (Result<Bool, Error>) -> ()) {
         let postRef = db.collection(DatabaseService.postCollection)

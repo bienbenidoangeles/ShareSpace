@@ -26,6 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UIViewController.showViewController(viewcontroller: TabBarController())
         } else { // no logged in user
           UIViewController.showViewController(viewcontroller: LoginViewController())
+            AppState.shared.setAppState(userType: .guest)
         }
         
         window?.makeKeyAndVisible()

@@ -7,11 +7,13 @@
 //
 
 import UIKit
-import CoreLocation
+import MapKit
 import FirebaseAuth
 
 protocol CardViewControllerDelegate: AnyObject {
-    func postsFound(posts:[Post], coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>))
+    func postsFoundFromMapView(posts:[Post], coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>))
+    //func postsFound(posts:[Post], geoHash: String, geoHashNeighbors: [String]?)
+    func postsFoundFromSearchBar(posts:[Post], coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>), region: MKCoordinateRegion)
 }
 
 class CardViewController: UIViewController {
@@ -27,11 +29,27 @@ class CardViewController: UIViewController {
             DispatchQueue.main.async {
                 self.mainView.collectionView.reloadData()
             }
+            if posts.isEmpty {
+                mainView.collectionView.backgroundView = EmptyView(title: "No posts found", messege: "Why no search for some?")
+            } else {
+                mainView.collectionView.backgroundView = nil
+            }
         }
     }
     
-    private var rootVC: RootViewController?
+    private var rootVC: RootViewController
+    private var searchVC: SearchResultsViewController
     weak var delegate: CardViewControllerDelegate?
+    
+    init(rootVC: RootViewController, searchResultsVC: SearchResultsViewController) {
+        self.rootVC = rootVC
+        self.searchVC = searchResultsVC
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         view = mainView
@@ -50,31 +68,41 @@ class CardViewController: UIViewController {
     private func delegatesAndDataSources(){
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
-        guard let rootVC = self.parent as? RootViewController else {
-            return
-        }
+//        guard let rootVC = self.parent as? RootViewController else {
+//            return
+//        }
+//
+//        self.rootVC = rootVC
         
-        self.rootVC = rootVC
+        searchVC.delegate = self
         rootVC.delegate = self
     }
     
     //  private var databaseServices = DatabaseService.shared
     
     
-    private func loadPosts(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
+    private func callDelegate(region: MKCoordinateRegion?, coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)){
+        if let region = region {
+            self.delegate?.postsFoundFromSearchBar(posts: self.posts , coordinateRange: coordinateRange, region: region)
+        } else {
+            self.delegate?.postsFoundFromMapView(posts: self.posts , coordinateRange: coordinateRange)
+        }
+    }
+    
+    private func loadPosts(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>), region: MKCoordinateRegion? = nil) {
         
-        DatabaseService.shared.loadPosts(coordinateRange: coordinateRange) { (result) in
+        DatabaseService.shared.loadPosts(coordinateRange: coordinateRange) {[weak self] (result) in
             switch result {
             case .failure(let error):
-                print("It failed")
+                self?.rootVC.showAlert(title: error.localizedDescription, message: nil)
             case .success(let posts):
                 guard let posts = posts, !posts.isEmpty else {
-                    self.posts.removeAll() // have an empty view
-                    self.delegate?.postsFound(posts: self.posts, coordinateRange: coordinateRange)
+                    self?.posts.removeAll() // have an empty view
+                    self?.callDelegate(region: region, coordinateRange: coordinateRange)
                     return
                 }
-                self.posts = posts
-                self.delegate?.postsFound(posts: posts, coordinateRange: coordinateRange)
+                self?.posts = posts
+                self?.callDelegate(region: region, coordinateRange: coordinateRange)
             }
         }
         
@@ -102,10 +130,10 @@ class CardViewController: UIViewController {
         
     }
     
-    private func loadPosts(given fulladdress: String, coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)){
-        //Call on db func
-        self.delegate?.postsFound(posts: posts, coordinateRange: coordinateRange)
-    }
+    //    private func loadPosts(given fulladdress: String, geoHash: String, geoHashNeighbors: [String]?){
+    //        //Call on db func
+    //        self.delegate?.postsFound(posts: posts, geoHash: geoHash, geoHashNeighbors: geoHashNeighbors)
+    //    }
     
     private func registerCell(){
         mainView.collectionView.register(UINib(nibName: "CollapsedCell", bundle: nil), forCellWithReuseIdentifier: "collapsedFeedCell")
@@ -149,12 +177,28 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
     }
 }
 
-extension CardViewController: SearchPostDelegate{
-    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String) {
-        
-    }
-    
+extension CardViewController: RootViewControllerDelegate{
     func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
         loadPosts(given: coordinateRange)
     }
+}
+
+extension CardViewController: SearchResultsViewControllerDelegate{
+    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String, region: MKCoordinateRegion?) {
+        guard let region = region else { return }
+        let range = CoreLocationSession.shared.getRegionDetails(region: region)
+        loadPosts(given: range, region: region)
+    }
+    
+    //    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String) {
+    ////        let geoHash = Geohash.encode(latitude: coordinate.latitude, longitude: coordinate.longitude)
+    ////        let geoHashNeighbors = Geohash.neighbors(geoHash)
+    //        let latLower = coordinate.latitude-1.0
+    //        let latUpper = coordinate.latitude+1.0
+    //        let longLower = coordinate.longitude-1.0
+    //        let longUpper = coordinate.longitude+1.0
+    //
+    //        let coorRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>) = (lat: latLower...latUpper, long:longLower...longUpper)
+    //        loadPosts(given: coorRange)
+    //    }
 }

@@ -9,6 +9,10 @@
 import UIKit
 import MapKit
 
+protocol RootViewControllerDelegate: AnyObject {
+    func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>))
+}
+
 class RootViewController: NavBarViewController {
     private let locationSession = CoreLocationSession.shared.locationManager
     
@@ -29,7 +33,7 @@ class RootViewController: NavBarViewController {
     
     var cardVisible = false
     
-    weak var delegate: SearchPostDelegate?
+    weak var delegate: RootViewControllerDelegate?
     
     var nextState: CardState {
         return cardVisible ? .collapsed : .expanded
@@ -45,6 +49,8 @@ class RootViewController: NavBarViewController {
     
     private lazy var topRightCoor = rootView.mapView.convert(CGPoint(x: rootView.mapView.bounds.width, y: 0), toCoordinateFrom: rootView.mapView)
     private lazy var bottomLeftCoor = rootView.mapView.convert(CGPoint(x: 0, y: rootView.mapView.bounds.height), toCoordinateFrom: rootView.mapView)
+    
+    private var searchVC: SearchResultsViewController?
     
     override func loadView() {
         super.loadView()
@@ -64,11 +70,18 @@ class RootViewController: NavBarViewController {
     
     private func delegatesAndDataSources(){
         rootView.mapView.delegate = self
+        let searchCompletor =  CoreLocationSession.shared.searchCompletor
+        let searchVC = SearchResultsViewController(searchCompletor: searchCompletor)
+        self.searchVC = searchVC
+        cardVC = CardViewController(rootVC: self, searchResultsVC: searchVC)
+        cardVC.delegate = self
     }
     
     private func setupGestures(){
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(searchLabelTapped(_:)))
+       // let sideBarTapGesture = UITapGestureRecognizer(target: self, action: #selector(sideBarTapped(_:)))
         rootView.searchLabel.addGestureRecognizer(tapGesture)
+//        rootView.sideBarIV.addGestureRecognizer(sideBarTapGesture)
     }
     
     private func addTargets(){
@@ -78,15 +91,32 @@ class RootViewController: NavBarViewController {
     
     private func addNavButtons(){
         let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "calendar.circle"), style: .plain, target: self, action: #selector(calenderButtonPressed))
+        let sideBarButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3"), style: .plain, target: self, action: #selector(sideBarTapped(_:)))
+        
+        
+        let customView = UIImageView(image: UIImage(systemName: "line.horizontal.3"))
+        customView.isUserInteractionEnabled = true
+        let sideBarButtonC = UIBarButtonItem(customView: customView)
+        sideBarButtonC.action = #selector(sideBarTapped(_:))
+        sideBarButtonC.tintColor = .systemTeal
+        
+        sideBarButton.tintColor = .systemTeal
+        navigationItem.leftBarButtonItem = sideBarButton
         navigationItem.rightBarButtonItems?.append(barButtonItem)
     }
     
+    @objc private func sideBarTapped(_ recognizer: UITapGestureRecognizer){
+        //print("test")
+        let sideBarVC = SideBarViewController()
+        navigationController?.fadeTo(sideBarVC)
+    }
+    
     @objc private func searchLabelTapped(_ recognizer: UITapGestureRecognizer){
-        let searchCompletor =  CoreLocationSession.shared.searchCompletor
-        let searchResultsVC = SearchResultsViewController(searchCompletor: searchCompletor)
-        searchResultsVC.modalTransitionStyle = .crossDissolve
-        searchResultsVC.delegate = self
-        navigationController?.pushViewController(searchResultsVC, animated: true)
+        guard let searchVC = searchVC else{
+            return
+        }
+        searchVC.modalTransitionStyle = .crossDissolve
+        navigationController?.pushViewController(searchVC, animated: true)
     }
     
     @objc private func calenderButtonPressed(){
@@ -126,8 +156,6 @@ class RootViewController: NavBarViewController {
         visualEffectView = UIVisualEffectView()
         visualEffectView.frame = self.rootView.mapView.frame
         self.rootView.mapView.addSubview(visualEffectView)
-        cardVC = CardViewController()
-        cardVC.delegate = self
         self.addChild(cardVC)
         self.rootView.addSubview(cardVC.view)
         
@@ -307,23 +335,42 @@ class RootViewController: NavBarViewController {
             annotation.coordinate = coordinates
             annotations.append(annotation)
         }
-//        let region = MKCoordinateRegion(center: coordinates, latitudinalMeters: 1500, longitudinalMeters: 1500)
-//        mapView.setRegion(region, animated: true)
+        //        let region = MKCoordinateRegion(center: coordinates, latitudinalMeters: 1500, longitudinalMeters: 1500)
+        //        mapView.setRegion(region, animated: true)
         return annotations
+    }
+    
+    private func validateMapRegion(_ region: MKCoordinateRegion?) -> MKCoordinateRegion?{
+        guard let region = region else { return nil }
+        if ( (region.center.latitude >= -90) && (region.center.latitude <= 90)     && (region.center.longitude >= -180)     && (region.center.longitude <= 180)) {
+            return region
+            } else {
+            return nil
+        }
     }
 }
 
-extension RootViewController: SearchPostDelegate{
-    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String) {
-        //map view to center location from addrr
-        self.rootView.mapView.centerToLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
-    }
-    
-    func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
-        
-    }
-    
-}
+//extension RootViewController: SearchResultsViewControllerDelegate{
+//    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String, region: MKCoordinateRegion?) {
+//        guard let region = validateMapRegion(region) else {
+//            return
+//        }
+//        let regionThatFits = mapView.regionThatFits(region)
+//        mapView.setRegion(regionThatFits, animated: true)
+//
+//    }
+//
+//    //    func readPostsFromSearchBar(given coordinate: CLLocationCoordinate2D, searchResult: String) {
+//    //        //map view to center location from addrr
+//    //
+//    //        self.rootView.mapView.centerToLocation(CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
+//    //    }
+//
+//    func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
+//
+//    }
+//
+//}
 
 extension RootViewController: MKMapViewDelegate {
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
@@ -335,7 +382,17 @@ extension RootViewController: MKMapViewDelegate {
 }
 
 extension RootViewController: CardViewControllerDelegate{
-    func postsFound(posts: [Post], coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
+    func postsFoundFromSearchBar(posts: [Post], coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>), region: MKCoordinateRegion) {
+        guard let region = validateMapRegion(region), let annotations = makeAnnotations(posts: posts) else {
+            return
+        }
+        let regionThatFits = mapView.regionThatFits(region)
+        mapView.setRegion(regionThatFits, animated: true)
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotations(annotations)
+    }
+    
+    func postsFoundFromMapView(posts: [Post], coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
         guard let annotations = makeAnnotations(posts: posts) else {
             return
         }
