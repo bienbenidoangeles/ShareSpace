@@ -59,7 +59,7 @@ class CardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor.white.withAlphaComponent(0.3)
         delegatesAndDataSources()
         let coordinate = CoreLocationSession.shared.locationManager.location?.coordinate.toString
         let coorRang = (lat: 40.0...41.0, long: -75.0...(-74.0))
@@ -153,6 +153,7 @@ extension CardViewController: UICollectionViewDataSource {
             fatalError()
         }
         let post = posts[indexPath.row]
+        
         cell.configureCell(for: post)
         return cell
     }
@@ -181,12 +182,12 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
+        return 8
     }
     
     //scroll view dragging
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        <#code#>
+        
     }
 }
 
