@@ -184,7 +184,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             self?.imagePickerController.sourceType = .camera
             self?.present(self!.imagePickerController, animated: true)
         }
-        let phototLibararyAction = UIAlertAction(title: "Photo Libarary", style: .default)
+        let phototLibararyAction = UIAlertAction(title: "Photo Library", style: .default)
         { [weak self] alertAction in
             self?.imagePickerController.sourceType = .photoLibrary
             self?.present(self!.imagePickerController, animated: true)
