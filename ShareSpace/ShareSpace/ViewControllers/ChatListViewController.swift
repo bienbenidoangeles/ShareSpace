@@ -35,19 +35,6 @@ class ChatListViewController: UIViewController {
       print("thread updated")
     }
   }
-  
-  
-  private func loadtest() {
-    guard let currentUser = Auth.auth().currentUser else { return }
-    DatabaseService.shared.loadChatOptions(userId: currentUser.uid) { (result) in
-      switch result {
-      case .failure(let error):
-        print("error \(error)")
-      case .success(let chat):
-        self.userChats = chat
-      }
-    }
-  }
 
   override func loadView() {
     view = chatList
@@ -55,19 +42,13 @@ class ChatListViewController: UIViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(true)
-    loadtest()
+    loadUserChats()
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     tableViewSetup()
-//    loadChatOptions()
-//    loadUserChats()
-//    loadtest()
-    
     navigationItem.title = "Inbox"
-    
-    // Do any additional setup after loading the view.
   }
   
   private func tableViewSetup() {
@@ -77,15 +58,17 @@ class ChatListViewController: UIViewController {
   }
   
   private func loadUserChats() {
-    guard let user = Auth.auth().currentUser else { return }
-    DatabaseService.shared.loadUserChats(userId: user.uid) { [weak self] (results) in
-      switch results {
+    guard let currentUser = Auth.auth().currentUser else { return }
+    DatabaseService.shared.loadChatOptions(userId: currentUser.uid) { (result) in
+      switch result {
       case .failure(let error):
-        print("No chats: \(error)")
-      case .success(let chats):
-        self?.userChats = chats
+        print("error \(error)")
+      case .success(let chat):
+        self.userChats = chat
       }
     }
+    
+    
   }
 
   
@@ -106,26 +89,23 @@ extension ChatListViewController: UITableViewDataSource {
     let chat = userChats[indexPath.row]
     
     listener = Firestore.firestore().collection(DatabaseService.chatsCollection).document(chat.id).collection(DatabaseService.threadCollection).order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
-            if let error = error {
-              print("no messages to load \(error) ")
-            } else if let snapshot = snapshot {
-              for message in snapshot.documents {
-                let msg = Message(message.data())
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "MMM dd HH:mm a"
-                let dateString = dateFormatter.string(from: msg.created.dateValue())
-                cell.textSnapshot.text = msg.content
-                cell.dateLabel.text = "\(dateString)"
-              }
-            }
-          }
-        
-  
+      if let error = error {
+        print("no messages to load \(error) ")
+      } else if let snapshot = snapshot {
+        for message in snapshot.documents {
+          let msg = Message(message.data())
+          let dateFormatter = DateFormatter()
+          dateFormatter.dateFormat = "MMM dd HH:mm a"
+          let dateString = dateFormatter.string(from: msg.created.dateValue())
+          cell.textSnapshot.text = msg.content
+          cell.dateLabel.text = "\(dateString)"
+        }
+      }
+    }
+    
+    
     userIDs = chat.users
-    //    print(chat)
-        cell.configureCell(chat, ids: userIDs)
-    //    cell.userNameLabel.text = "\(chat.id)"
-    //    cell.backgroundColor = .white
+    cell.configureCell(chat, ids: userIDs)
     return cell
   }
 }
@@ -141,15 +121,13 @@ extension ChatListViewController: UITableViewDelegate {
     
     let users = userChats[indexPath.row].users
     guard let currentUser = Auth.auth().currentUser else {
-      print("no current user")
       return
     }
     for id in users {
       if id != currentUser.uid {
         chatVC.user2ID = id
       }
-      //print("user 1 id is \(currentUser.uid)")
-      //print("user 2 will be \(users[1])")
+
     }
     
     chatVC.chat = userChats[indexPath.row]

@@ -180,7 +180,7 @@ class ReservePopupController: UIViewController {
                 self.showAlert(title: "Error", message: error.localizedDescription)
                 
             case .success:
-                let message = Message(id: messageID, content: message, created: Timestamp(), senderID: renterId, senderName: user.displayName ?? "anonymous")
+              let message = Message(id: messageID, content: message, created: Timestamp(), senderID: renterId, senderName: user.displayName ?? "anonymous", wasRead: false)
                 self.creatingThread(user1Id: renterId, user2Id: self.selectedPost.userId, reservationId: reservationId, messgae: message, chatId: chatId)
             }
         }

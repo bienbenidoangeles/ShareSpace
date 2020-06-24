@@ -35,9 +35,7 @@ class ChatVC: UIViewController {
   
   override func loadView() {
     view = chatView
-//    chatView.chatId = chat?.id
-//    chatView.reservationId = chat?.reservationId
-//    chatView.controller = self
+    view.backgroundColor = .systemGroupedBackground
   }
 
     override func viewDidLoad() {
@@ -141,27 +139,7 @@ class ChatVC: UIViewController {
      }
    }
   
-//  private func updateUI() {
-//    // MARK: Issue: Not loading photo
-//    guard let user = Auth.auth().currentUser else { return }
-//    DatabaseService.shared.loadUser(userId: user.uid) { [weak self] (result) in
-//      switch result {
-//      case .failure(let error):
-//        print("Error loading user: \(error)")
-//      case .success(let user):
-//        DispatchQueue.main.async {
-//          if let profileString = user.profileImage {
-//            self?.chatView.userProfileImageView.kf.setImage(with: URL(string: profileString))
-//          } else {
-//            self?.chatView.userProfileImageView.image = UIImage(systemName: "person.fill")
-//          }
-//        }
-//
-//      }
-//    }
-//
-//  }
-    
+
 
 }
 
@@ -190,10 +168,7 @@ extension ChatVC: UITableViewDataSource {
       cell.incomeDateConstraints.isActive = false
       cell.outgoingDateConstraint.isActive = true
     }
-//    cell.message = message
-//    cell.backgroundColor = .cyan
-//    cell.configureCell(message)
-//    cell.setupCell()
+
     return cell
     
   }
@@ -213,11 +188,13 @@ extension ChatVC: UITableViewDataSource {
 
 
 extension ChatVC: UITableViewDelegate {
-//  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//    return 120
-//  }
+
 }
 
 extension ChatVC: UITextFieldDelegate {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
+  }
   
 }

@@ -80,10 +80,17 @@ class ChatTableView: UIView {
   }()
   
   public lazy var messageField: UITextField = {
-    let tf = UITextField()
-    tf.placeholder = "enter message"
-    tf.backgroundColor = .white
-    return tf
+    let tv = UITextField()
+    tv.returnKeyType = .send
+    tv.rightView = self.sendButton
+    tv.rightViewMode = .always
+    
+    //    tv.placeholder = "enter message"
+    //    tv.
+    tv.layer.cornerRadius = 20
+    tv.backgroundColor = .white
+    //    tf.linebr
+    return tv
   }()
   
   public lazy var sendButton: UIButton = {
@@ -92,6 +99,8 @@ class ChatTableView: UIView {
     button.backgroundColor = .purple
     button.isUserInteractionEnabled = true
     button.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
+//    button.
+    button.layer.cornerRadius = 10
     return button
   }()
   
@@ -101,8 +110,14 @@ class ChatTableView: UIView {
     sv.spacing = 4
     //    sv.distribution = .fillEqually
     sv.alignment = .fill
-    //    sv.backgroundColor = .white
+    sv.backgroundColor = .green
     return sv
+  }()
+  
+  public lazy var messageBackView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .systemRed
+    return view
   }()
   
   
@@ -128,7 +143,8 @@ class ChatTableView: UIView {
       tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
       tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
       tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-      tableView.bottomAnchor.constraint(equalTo: messageStack.topAnchor)
+      //      tableView.bottomAnchor.constraint(equalTo: messageStack.topAnchor),
+      tableView.heightAnchor.constraint(equalTo: layoutMarginsGuide.heightAnchor, multiplier: 0.85)
     ])
   }
   
@@ -192,23 +208,34 @@ class ChatTableView: UIView {
       messageStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
       messageStack.leadingAnchor.constraint(equalTo: leadingAnchor),
       messageStack.trailingAnchor.constraint(equalTo: trailingAnchor),
-      messageStack.heightAnchor.constraint(equalToConstant: 45),
-      sendButton.heightAnchor.constraint(equalToConstant: 35)
+      //      messageStack.heightAnchor.constraint(equalToConstant: 88),
+      sendButton.heightAnchor.constraint(equalToConstant: 35),
+      sendButton.widthAnchor.constraint(lessThanOrEqualTo: sendButton.heightAnchor)
     ])
   }
   
-  private func messageFieldConstraints() {
+  private func customMessageStackConstraints() {
+    addSubview(messageBackView)
     addSubview(messageField)
+    addSubview(sendButton)
+    messageBackView.translatesAutoresizingMaskIntoConstraints = false
     messageField.translatesAutoresizingMaskIntoConstraints = false
+    sendButton.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-      messageField.topAnchor.constraint(equalTo: tableView.bottomAnchor),
-      messageField.leadingAnchor.constraint(equalTo: leadingAnchor),
-      messageField.trailingAnchor.constraint(equalTo: trailingAnchor),
-      messageField.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-      sendButton.heightAnchor.constraint(equalToConstant: 35)
+      messageBackView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 0),
+      messageBackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+      messageBackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+      messageBackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+      
+      messageField.topAnchor.constraint(equalTo: messageBackView.topAnchor, constant: 4),
+      messageField.leadingAnchor.constraint(equalTo: messageBackView.leadingAnchor, constant: 4),
+      messageField.trailingAnchor.constraint(equalTo: messageBackView.trailingAnchor, constant: -4),
+      messageField.bottomAnchor.constraint(equalTo: messageBackView.bottomAnchor, constant: -20)
+//      sendButton.trailingAnchor.constraint(equalTo: messageField.trailingAnchor, constant: -4),
+//      sendButton.bottomAnchor.constraint(equalToSystemSpacingBelow: messageField.bottomAnchor, multiplier: -4)
     ])
-    
   }
+  
   
 }
 
@@ -216,19 +243,17 @@ class ChatTableView: UIView {
 extension ChatTableView {
   private func constraintLayout() {
     headerViewConstraints()
-    messageStackConstraints()
+    //    messageStackConstraints()
     tableViewContraints()
-    //    messageFieldConstraints()
     detailButtonConstraints()
     imageViewConstraints()
     statusStackConstraints()
-//    updateUI()
+    customMessageStackConstraints()
   }
   
   override func layoutSubviews() {
     super.layoutSubviews()
     userProfileImageView.layer.cornerRadius = userProfileImageView.frame.width / 2
-    sendButton.layer.cornerRadius = 10
   }
 }
 
@@ -247,38 +272,28 @@ extension ChatTableView {
         controller.navigationController?.pushViewController(reservationDVC, animated: true)
       }
     }
-    
-    
-    print("load details button works")
   }
   
   @objc private func sendMessage() {
-    print("message button works")
     guard let chatId = chatId,
       let user = Auth.auth().currentUser,
       let text = messageField.text, !text.isEmpty else {
         print("missing message")
         return
     }
-    let message = Message(id: UUID().uuidString, content: text, created: Timestamp(date: Date()), senderID: user.uid, senderName: user.displayName ?? "no display name")
+    let message = Message(id: UUID().uuidString, content: text, created: Timestamp(date: Date()), senderID: user.uid, senderName: user.displayName ?? "no display name", wasRead: false)
     
     DatabaseService.shared.sendChatMessage(message, chatId: chatId) { [weak self] (result) in
       switch result {
       case .failure(let error):
         print("failed \(error)")
       case .success:
-        print("check fire base")
         self?.messageField.text = ""
       }
     }
   }
   
   public func updateUI() {
-//    guard let user = Auth.auth().currentUser else { return }
-
-//    userProfileImageView.layer.cornerRadius = userProfileImageView.frame.width / 2
-
-    
     guard let reservationID = reservationId else { return }
     DatabaseService.shared.readReservation(reservationId: reservationID) { [weak self] (result) in
       switch result {
@@ -292,21 +307,21 @@ extension ChatTableView {
           self?.statusLabel.backgroundColor = .clear
           self?.rightStatusView.backgroundColor = .clear
           self?.leftStatusView.backgroundColor = .clear
-
+          
         } else if reservation.status == 1  {
           self?.statusLabel.text = "DECLINED"
           self?.statusLabel.textColor = .black
           self?.statusLabel.backgroundColor = .systemRed
           self?.rightStatusView.backgroundColor = .systemRed
           self?.leftStatusView.backgroundColor = .systemRed
-
+          
         } else if reservation.status == 0 {
           self?.statusLabel.text = "ACCEPTED"
           self?.statusLabel.textColor = .black
           self?.statusLabel.backgroundColor = .systemGreen
           self?.rightStatusView.backgroundColor = .systemGreen
           self?.leftStatusView.backgroundColor = .systemGreen
-
+          
         }
       }
     }
