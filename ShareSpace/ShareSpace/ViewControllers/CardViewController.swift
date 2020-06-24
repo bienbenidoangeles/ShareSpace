@@ -179,6 +179,15 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
         navigationController?.pushViewController(detailVC, animated: true)
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
+    //scroll view dragging
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        <#code#>
+    }
 }
 
 extension CardViewController: RootViewControllerDelegate{

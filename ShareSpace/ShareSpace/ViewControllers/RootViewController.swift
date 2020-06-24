@@ -224,6 +224,7 @@ class RootViewController: NavBarViewController {
                     self.cardVC.view.frame.origin.y = (self.view.frame.height ) - self.expandedCardHeight - self.navBarHeight
                     self.cardVC.view.frame.size = self.expandedCardSize
                     if let layout = self.cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
+                        self.cardVC.cv.layoutIfNeeded()
                         layout.scrollDirection = .vertical
                     }
                 case .collapsed:
@@ -231,7 +232,9 @@ class RootViewController: NavBarViewController {
                     let newCardSize = CGSize(width: self.collaspedCardSize.width, height: self.collaspedCardSize.height + self.cardHandleAreaHeight)
                     self.cardVC.view.frame.size = newCardSize
                     if let layout = self.cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
+                        self.cardVC.cv.layoutIfNeeded()
                         layout.scrollDirection = .horizontal
+                        
                     }
                 }
             }
