@@ -25,6 +25,7 @@ class FirstProfileViewController: UIViewController {
     }
     
     
+    @IBOutlet weak var signOutButtonOutlet: UIBarButtonItem!
     
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
@@ -66,6 +67,16 @@ class FirstProfileViewController: UIViewController {
         editButtonOutlet.layer.cornerRadius = 7
         editButtonOutlet.layer.borderColor = UIColor.black.cgColor
         
+        //FIXME: does not work
+//        guard let user = Auth.auth().currentUser else {
+//                   //FIXME: will this code work?
+//                   return editButtonOutlet.isHidden = true
+//        }
+        
+        editButtonOutlet.isHidden = true
+        //navigationItem.rightBarButtonItem = nil
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        navigationItem.rightBarButtonItem?.tintColor = .clear
         
       //  loadUserImage()
         
@@ -76,6 +87,12 @@ class FirstProfileViewController: UIViewController {
 //        spacesCollectionView.isHidden = true
 //        reviewsCollectionView.isHidden = true
         
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+      super.viewDidLayoutSubviews()
+        textView.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
         
     }
     
@@ -96,13 +113,22 @@ class FirstProfileViewController: UIViewController {
             refreshControl.endRefreshing()
             return
         }
-        if let user = Auth.auth().currentUser {
-            if user.uid == self.userId {
+        if let currentUser = Auth.auth().currentUser {
+            if currentUser.uid == self.userId {
                 //works
                // userEmail.text = user.email ?? "no email"
                 
+                //FIXME: does not work
+                          editButtonOutlet.isHidden = false
+                          //navigationItem.rightBarButtonItem != nil
+                      navigationItem.rightBarButtonItem?.isEnabled = true
+                          navigationItem.rightBarButtonItem?.tintColor = .systemBlue
             }
         }
+        
+      
+        
+        
         userNameLabel.text = "Hi, I am \(user.displayName)"
         userLocation.text = "I am from \(user.cityState)"
         textView.text = user.bio
@@ -116,7 +142,6 @@ class FirstProfileViewController: UIViewController {
                   // loadUserImage()
                    //loadImage(imageURL: user.profileImage ?? "no image url")
         }
-       
     }
     
     
@@ -197,7 +222,8 @@ class FirstProfileViewController: UIViewController {
     
     @IBAction func editButton(_ sender: UIButton) {
         guard let user = Auth.auth().currentUser else {
-            return
+            //FIXME: will this code work?
+            return editButtonOutlet.isHidden = true
         }
         let userId = user.uid
         let editProfilelVC = ProfileViewController(userId)
