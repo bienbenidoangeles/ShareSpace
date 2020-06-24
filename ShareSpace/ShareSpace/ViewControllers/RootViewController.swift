@@ -42,10 +42,10 @@ class RootViewController: NavBarViewController {
     var runningAnimations = [UIViewPropertyAnimator]()
     var animationProgressWhenInterrupted: CGFloat = 0
     
-    lazy var tabBarheight:CGFloat = self.tabBarController!.tabBar.frame.size.height
+    //lazy var tabBarheight:CGFloat = self.tabBarController!.tabBar.frame.size.height
     lazy var navBarHeight:CGFloat = self.navigationController!.navigationBar.frame.size.height
     lazy var searchBarHeight:CGFloat = self.rootView.searchBarView.frame.size.height
-    lazy var totalHeight = tabBarheight + navBarHeight + searchBarHeight
+    lazy var totalHeight =  navBarHeight + searchBarHeight
     
     private lazy var topRightCoor = rootView.mapView.convert(CGPoint(x: rootView.mapView.bounds.width, y: 0), toCoordinateFrom: rootView.mapView)
     private lazy var bottomLeftCoor = rootView.mapView.convert(CGPoint(x: 0, y: rootView.mapView.bounds.height), toCoordinateFrom: rootView.mapView)
