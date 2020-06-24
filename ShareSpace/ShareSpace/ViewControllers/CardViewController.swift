@@ -24,6 +24,8 @@ class CardViewController: UIViewController {
     
     public lazy var cv = mainView.collectionView
     
+    public var cvCellSize:CGSize?
+    
     private var posts = [Post](){
         didSet{
             DispatchQueue.main.async {
@@ -162,7 +164,9 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
         let maxSize:CGSize = UIScreen.main.bounds.size
         let itemWidth:CGFloat = maxSize.width
         let itemHeight:CGFloat = itemWidth*0.25
-        return CGSize(width: itemWidth, height: itemHeight)
+        let cellSize = CGSize(width: itemWidth, height: itemHeight)
+        cvCellSize = cellSize
+        return cellSize
     }
     
     // ADDED BY ME LET BIEN KNOW

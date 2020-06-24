@@ -19,6 +19,14 @@ class RootViewController: NavBarViewController {
     let rootView = RootView()
     
     private lazy var mapView = rootView.mapView
+    //lazy var tabBarheight:CGFloat = self.tabBarController!.tabBar.frame.size.height
+    private lazy var navBarHeight:CGFloat = self.navigationController!.navigationBar.frame.size.height
+    private lazy var searchBarHeight:CGFloat = self.rootView.searchBarView.frame.size.height
+    private lazy var searchThisAreaHeight = rootView.searchByMapViewButton.frame.size.height
+    private lazy var safeAreaHeight = view.frame.size.height
+    private lazy var totalHeight =  navBarHeight + searchBarHeight + searchThisAreaHeight
+    
+    
     
     enum CardState {
         case expanded
@@ -28,8 +36,13 @@ class RootViewController: NavBarViewController {
     var cardVC: CardViewController!
     var visualEffectView: UIVisualEffectView!
     
-    let cardHeight:CGFloat = 600
-    let cardHandleAreaHeight: CGFloat = 65
+    let screenWidth = UIScreen.main.bounds.width
+    
+    private lazy var collaspedCardSize:CGSize = cardVC.cvCellSize ?? CGSize(width: screenWidth, height: screenWidth * 0.25)
+    let expandedCardHeight:CGFloat = 600
+    private lazy var expandedCardSize: CGSize = CGSize(width: screenWidth, height: expandedCardHeight)
+    
+    let cardHandleAreaHeight: CGFloat = 30
     
     var cardVisible = false
     
@@ -42,10 +55,7 @@ class RootViewController: NavBarViewController {
     var runningAnimations = [UIViewPropertyAnimator]()
     var animationProgressWhenInterrupted: CGFloat = 0
     
-    //lazy var tabBarheight:CGFloat = self.tabBarController!.tabBar.frame.size.height
-    lazy var navBarHeight:CGFloat = self.navigationController!.navigationBar.frame.size.height
-    lazy var searchBarHeight:CGFloat = self.rootView.searchBarView.frame.size.height
-    lazy var totalHeight =  navBarHeight + searchBarHeight
+    
     
     private lazy var topRightCoor = rootView.mapView.convert(CGPoint(x: rootView.mapView.bounds.width, y: 0), toCoordinateFrom: rootView.mapView)
     private lazy var bottomLeftCoor = rootView.mapView.convert(CGPoint(x: 0, y: rootView.mapView.bounds.height), toCoordinateFrom: rootView.mapView)
@@ -66,6 +76,16 @@ class RootViewController: NavBarViewController {
         setupMap()
         addNavButtons()
         setupGestures()
+        print(
+            """
+            navBarHeight \(navBarHeight)
+            searchBarHeight \(searchBarHeight)
+            searchThisAreaHeight \(searchThisAreaHeight)
+            safeAreaHeight \(safeAreaHeight)
+            totalHeight \(totalHeight)
+            cardHeight \(expandedCardHeight)
+ """
+        )
     }
     
     private func delegatesAndDataSources(){
@@ -159,7 +179,7 @@ class RootViewController: NavBarViewController {
         self.addChild(cardVC)
         self.rootView.addSubview(cardVC.view)
         
-        cardVC.view.frame = CGRect(x: 0, y: (self.view.frame.height - totalHeight) - cardHandleAreaHeight, width: self.view.bounds.width, height: cardHeight)
+        cardVC.view.frame = CGRect(x: 0, y: (self.view.frame.height - collaspedCardSize.height - navBarHeight - cardHandleAreaHeight), width: collaspedCardSize.width, height: collaspedCardSize.height + cardHandleAreaHeight)
         cardVC.view.clipsToBounds = true
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleCardTap(recognizer:)))
@@ -185,7 +205,7 @@ class RootViewController: NavBarViewController {
         case .changed:
             //updateTransition
             let translation = recognizer.translation(in: self.cardVC.handleArea)
-            var fractionComplete = translation.y / cardHeight
+            var fractionComplete = translation.y / expandedCardHeight
             fractionComplete = cardVisible ? fractionComplete : -fractionComplete
             updateInteractiveTransition(fractionCompleted: fractionComplete)
         case .ended:
@@ -201,12 +221,15 @@ class RootViewController: NavBarViewController {
             let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
                 switch state {
                 case .expanded:
-                    self.cardVC.view.frame.origin.y = (self.view.frame.height ) - self.cardHeight
+                    self.cardVC.view.frame.origin.y = (self.view.frame.height ) - self.expandedCardHeight - self.navBarHeight
+                    self.cardVC.view.frame.size = self.expandedCardSize
                     if let layout = self.cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
                         layout.scrollDirection = .vertical
                     }
                 case .collapsed:
-                    self.cardVC.view.frame.origin.y = (self.view.frame.height - self.totalHeight) - self.cardHandleAreaHeight
+                    self.cardVC.view.frame.origin.y = (self.view.frame.height - self.collaspedCardSize.height - self.navBarHeight - self.cardHandleAreaHeight)
+                    let newCardSize = CGSize(width: self.collaspedCardSize.width, height: self.collaspedCardSize.height + self.cardHandleAreaHeight)
+                    self.cardVC.view.frame.size = newCardSize
                     if let layout = self.cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
                         layout.scrollDirection = .horizontal
                     }
