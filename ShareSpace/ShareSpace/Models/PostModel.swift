@@ -29,7 +29,7 @@ struct Post:Codable {
     //let locationId: String
     var fullAddress: String? {
         get {
-            return "\(streetAddress) \(apartmentNumber ?? "") \(city), \(state) \(zip) \(country ?? "")"
+            return "\(streetAddress) \(apartmentNumber ?? ""), \(city), \(state) \(zip) \(country ?? "")"
         }
     }
     var cityState: String? {

@@ -141,7 +141,7 @@ class ReservePopupController: UIViewController {
                 self.listingBy.text = "Listing by: \(self.hostOfThisListing?.displayName ?? "no name")"
             }
         }
-        pricePerNightLabel.text = "\(selectedPost.price.description)$/Day"
+        pricePerNightLabel.text = "$\(Int(selectedPost.price).description)/Day"
         litingTitle.text = selectedPost.postTitle
         
     }
@@ -264,9 +264,9 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
             }
 
             datesRange = range
-            totalPriceLabel.text = "Total for \(datesRange?.count ?? -1) days: \(((datesRange?.count ?? 1) * Int(selectedPost.price)).description)$"
-            fromDateLabel.text = "From: \(datesRange?.first?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
-            toDateLAbel.text = "To: \(datesRange?.last?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
+            totalPriceLabel.text = "Total for \(datesRange?.count ?? -1) days:         $\(((datesRange?.count ?? 1) * Int(selectedPost.price)).description)"
+            fromDateLabel.text = "From:                           \(datesRange?.first?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
+            toDateLAbel.text = "To:                                \(datesRange?.last?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
             
             print("datesRange contains: \(datesRange!)")
 
