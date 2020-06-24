@@ -290,7 +290,19 @@ class DatabaseService {
         }
     }
     
-    func loadReservations(renterId: String, completion: @escaping (Result<[Reservation]?, Error>) ->()) {
+    func loadReservations(hostId: String, completion: @escaping (Result<[Reservation]?, Error>) ->()) {
+        let reservationRef = db.collection(DatabaseService.reservationCollection)
+        reservationRef.whereField("hostId", isEqualTo: hostId).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = snapshot {
+                let reservations = snapshot.documents.map{Reservation( dict: $0.data())}
+                completion(.success(reservations))
+            }
+        }
+    }
+    
+    func loadReservedByMe(renterId: String, completion: @escaping (Result<[Reservation]?, Error>) ->()) {
         let reservationRef = db.collection(DatabaseService.reservationCollection)
         reservationRef.whereField("renterId", isEqualTo: renterId).getDocuments { (snapshot, error) in
             if let error = error {
