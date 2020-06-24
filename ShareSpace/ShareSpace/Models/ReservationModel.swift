@@ -17,7 +17,7 @@ struct Reservation: Codable {
     let renterId: String
     let hostId: String
     let postId:String
-    let checkIn: Date
+let checkIn: Date
     let checkOut:Date
     let timeIn: Date?
     let timeOut:Date?
