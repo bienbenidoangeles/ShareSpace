@@ -22,7 +22,7 @@ class SideBarView: UIView {
         label.text = "Login"
         label.isUserInteractionEnabled = true
         label.textAlignment = .center
-        label.font = .preferredFont(forTextStyle: .largeTitle)
+        label.font = .preferredFont(forTextStyle: .title2)
         return label
     }()
     
@@ -34,7 +34,7 @@ class SideBarView: UIView {
     
     public lazy var myProfileLabel: UILabel = {
         let label = UILabel()
-        label.text = "My Profile"
+        label.text = "My Collections"
         return label
     }()
     
@@ -74,8 +74,9 @@ class SideBarView: UIView {
     
     private func commonInit(){
 //        setupSideBarImageView()
-        setupLoginLabel()
         setupStackView()
+        setupLoginLabel()
+        
     }
     
 //    private func setupSideBarImageView(){
@@ -96,7 +97,7 @@ class SideBarView: UIView {
             loginLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             loginLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             loginLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            loginLabel.bottomAnchor.constraint(equalTo: centerYAnchor, constant: -16)
+            loginLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 32)
         ])
     }
     
@@ -107,7 +108,7 @@ class SideBarView: UIView {
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            stackView.topAnchor.constraint(equalTo: centerYAnchor, constant: 16)
+            stackView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     

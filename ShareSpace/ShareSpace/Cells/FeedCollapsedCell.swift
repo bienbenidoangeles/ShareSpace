@@ -32,6 +32,9 @@ class FeedCollapsedCell: UICollectionViewCell {
                 //self.ratingImageView.kf.setImage(with: URL(string: mainImgURL), placeholder: UIImage(systemName: "star.fill"), options: [.cacheOriginalImage, .processor(ratingImgProcessor)], progressBlock: nil)
             }
         }
+        cellBackGroundView.backgroundColor =  UIColor.white.withAlphaComponent(0.8)
+        infoView.backgroundColor = UIColor.white.withAlphaComponent(0)
         topLabel.text = post.postTitle
+        
     }
 }
