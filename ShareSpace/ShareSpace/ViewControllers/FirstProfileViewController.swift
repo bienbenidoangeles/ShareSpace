@@ -27,13 +27,16 @@ class FirstProfileViewController: UIViewController {
     
     @IBOutlet weak var signOutButtonOutlet: UIBarButtonItem!
     
+    @IBOutlet weak var occupationLabel: UILabel!
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var userLocation: UILabel!
-  //  @IBOutlet weak var userRating: UILabel!
-   // @IBOutlet weak var userPhoneNumber: UILabel!
     @IBOutlet weak var spacesCollectionView: UICollectionView!
-    //@IBOutlet weak var userEmail: UILabel!
+    
+    //FIXME: add user rating
+    
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    
     
     @IBOutlet weak var editButtonOutlet: UIButton!
     
@@ -67,32 +70,27 @@ class FirstProfileViewController: UIViewController {
         editButtonOutlet.layer.cornerRadius = 7
         editButtonOutlet.layer.borderColor = UIColor.black.cgColor
         
-        //FIXME: does not work
-//        guard let user = Auth.auth().currentUser else {
-//                   //FIXME: will this code work?
-//                   return editButtonOutlet.isHidden = true
-//        }
-        
         editButtonOutlet.isHidden = true
-        //navigationItem.rightBarButtonItem = nil
         navigationItem.rightBarButtonItem?.isEnabled = false
         navigationItem.rightBarButtonItem?.tintColor = .clear
+       // navigationItem.leftBarButtonItem?.tintColor = .systemTeal
+        navigationController?.navigationBar.tintColor = .systemTeal
         
-      //  loadUserImage()
+        textView.font = .preferredFont(forTextStyle: .body)
+        
+//        profileView.userSegmentedControl.addTarget(self, action: #selector(segmentAction), for: .valueChanged)
+//        profileView.userSegmentedControl.selectedSegmentIndex = 0
         
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(loadUser), for: .valueChanged)
-       // refreshControl.addTarget(self, action: #selector(loadUserImage), for: .valueChanged)
-        
-//        spacesCollectionView.isHidden = true
-//        reviewsCollectionView.isHidden = true
-        
-        
     }
     
     override func viewDidLayoutSubviews() {
       super.viewDidLayoutSubviews()
         textView.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+//        userNameLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+//        userLocation.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+//        occupationLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
         
     }
     
@@ -115,34 +113,41 @@ class FirstProfileViewController: UIViewController {
         }
         if let currentUser = Auth.auth().currentUser {
             if currentUser.uid == self.userId {
-                //works
-               // userEmail.text = user.email ?? "no email"
-                
-                //FIXME: does not work
                           editButtonOutlet.isHidden = false
                           //navigationItem.rightBarButtonItem != nil
                       navigationItem.rightBarButtonItem?.isEnabled = true
-                          navigationItem.rightBarButtonItem?.tintColor = .systemBlue
+                          navigationItem.rightBarButtonItem?.tintColor = .systemTeal
             }
         }
         
-      
-        
-        
         userNameLabel.text = "Hi, I am \(user.displayName)"
         userLocation.text = "I am from \(user.cityState)"
+        occupationLabel.text = "I am working as \(user.work)"
         textView.text = user.bio
-               //userImage.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
-              // userImage.kf.setImage(with: URL(string: user.profileImage ?? "no "))
+//        segmentedControl.insertSegment(withTitle: "My Spaces", at: 0, animated: true)
+//        segmentedControl.insertSegment(withTitle: "My Reservations", at: 1, animated: true)
+        
+        segmentedControl.selectedSegmentTintColor = .yummyOrange
+        segmentedControl.backgroundColor = .oceanBlue
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
+        
         DispatchQueue.main.async {
             
             self.userImage.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
-            
-                   
-                  // loadUserImage()
-                   //loadImage(imageURL: user.profileImage ?? "no image url")
         }
     }
+    
+//    public lazy var segmentedControl: UISegmentedControl = {
+//           let sc = UISegmentedControl()
+//           sc.insertSegment(withTitle: "My Listings", at: 0, animated: true)
+//           sc.insertSegment(withTitle: "My reservations", at: 1, animated: true)
+//           sc.insertSegment(withTitle: "My Stays", at: 2, animated: true)
+//           sc.selectedSegmentTintColor = .yummyOrange
+//           sc.backgroundColor = .oceanBlue
+//           sc.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+//           sc.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
+//           return sc
     
     
     func loadImage(imageURL: String) {
@@ -150,61 +155,6 @@ class FirstProfileViewController: UIViewController {
             self.userImage.kf.setImage(with: URL(string: imageURL))
         }
     }
-    
-    /*
-
-    @objc func loadUserImage() {
-        guard let displayName = userNameLabel.text,
-            let selectedImage = selectedImage else {
-                          print("missing field")
-                          return
-                  }
-          guard let user = Auth.auth().currentUser else { return }
-           //resize image before uploading to Firebase
-           //let resizedImage = UIImage.resizeImage(originalImage: selectedImage, rect: profileView.profileImageView.bounds)
-           let resizedImage = UIImage.resizeImage(selectedImage)
-           
-           print("original image size: \(selectedImage.size)")
-           print("resized image size: \(resizedImage)")
-           
-           //TODO: call storageService.upload
-           //need to update to user userId ot itemId
-           
-           // Update this code:
-           // create
-           storageService.uploadPhoto(userId: user.uid, image: selectedImage) { [weak self] (result) in
-               // code here to add the photoURL to the user's photoURL
-               //     property then commit changes
-               switch result {
-               case .failure(let error):
-                   DispatchQueue.main.async {
-                       self?.showAlert(title: "Error uploading photo", message: "\(error.localizedDescription)")
-                   }
-               case .success(let url):
-                   let request = Auth.auth().currentUser?.createProfileChangeRequest()
-                   request?.displayName = displayName
-                   request?.photoURL = url // url.absoluteString for the updateDbUser func
-                   request?.commitChanges(completion: { [unowned self] (error) in
-                       if let error = error {
-                           //TODO: show alert
-                           //print("CommitCjanges error: \(error)")
-                           DispatchQueue.main.async {
-                               self?.showAlert(title: "Error updating profile", message: "Error changing profile: \(error.localizedDescription)")
-                            self?.refreshControl.endRefreshing()
-                           }
-                       } else {
-                           //print("profile successfully updated")
-                           //update user code
-                           
-                           DispatchQueue.main.async {
-                               self?.showAlert(title: "Profile Updated", message: "Profile successfully updated")
-                           }
-                       }
-                   })
-               }
-        }
-    }
- */
   
     
     @objc func loadUser() {
@@ -222,13 +172,11 @@ class FirstProfileViewController: UIViewController {
     
     @IBAction func editButton(_ sender: UIButton) {
         guard let user = Auth.auth().currentUser else {
-            //FIXME: will this code work?
             return editButtonOutlet.isHidden = true
         }
         let userId = user.uid
         let editProfilelVC = ProfileViewController(userId)
         navigationController?.pushViewController(editProfilelVC, animated: true)
-        //navigationController?.popViewController(animated: true)
     }
 }
 

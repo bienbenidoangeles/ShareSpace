@@ -44,7 +44,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Kdu-Yf-81o">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Kdu-Yf-81o">
                                         <rect key="frame" x="8" y="199" width="358" height="121"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
@@ -56,7 +56,6 @@
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="EVL-cc-Yb1" firstAttribute="top" secondItem="XQj-Rq-l27" secondAttribute="top" constant="-69.5" id="32T-Q4-jpz"/>
                                     <constraint firstAttribute="height" constant="329" id="4pP-NO-JzX"/>
@@ -177,7 +176,6 @@
                                         </segments>
                                     </segmentedControl>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="241" id="6k1-Z0-h3Y"/>
                                     <constraint firstItem="9CS-kA-zlp" firstAttribute="top" secondItem="ofL-uL-Y03" secondAttribute="top" constant="8" id="SpS-5a-nPH"/>
@@ -199,7 +197,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aOA-LW-jOu"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Bnw-Eo-z2T">
+                    <navigationItem key="navigationItem" title="Profile" id="Bnw-Eo-z2T">
                         <barButtonItem key="rightBarButtonItem" title="Sign Out" id="xiv-Sp-EZH">
                             <connections>
                                 <action selector="signOutButtonPressed:" destination="EIg-oz-ubD" id="SpN-Qi-Qhe"/>
@@ -208,6 +206,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="editButtonOutlet" destination="eCN-ZL-HG5" id="7dN-Zc-OiF"/>
+                        <outlet property="occupationLabel" destination="x4Q-QZ-AKX" id="qzu-6H-pVu"/>
+                        <outlet property="segmentedControl" destination="9CS-kA-zlp" id="QpS-bL-4cl"/>
                         <outlet property="signOutButtonOutlet" destination="xiv-Sp-EZH" id="8ft-kO-c4i"/>
                         <outlet property="spacesCollectionView" destination="6s2-RF-29O" id="SLM-Ao-uiR"/>
                         <outlet property="textView" destination="Kdu-Yf-81o" id="9Dn-oS-dnL"/>
