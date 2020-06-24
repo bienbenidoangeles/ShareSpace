@@ -7,18 +7,19 @@
 //
 
 import Foundation
+import Firebase
 
 enum Status: Int, Codable {
     case accepted
     case declined
     case undetermined
 }
-struct Reservation: Codable {
+struct Reservation {
     let renterId: String
     let hostId: String
     let postId:String
-    let checkIn: Date
-    let checkOut:Date
+    let checkIn: Timestamp
+    let checkOut: Timestamp
     let timeIn: Date?
     let timeOut:Date?
     let chatId: String?
@@ -32,8 +33,8 @@ extension Reservation {
         self.renterId = dict["renterId"] as? String ?? ""
         self.hostId = dict["hostId"] as? String ?? ""
         self.postId = dict["postId"] as? String ?? ""
-        self.checkIn = dict["checkIn"] as? Date ?? Date()
-        self.checkOut = dict["checkOut"] as? Date ?? Date()
+        self.checkIn = dict["checkIn"] as? Timestamp ?? Timestamp()
+        self.checkOut = dict["checkOut"] as? Timestamp ?? Timestamp()
         self.timeIn = dict["timeIn"] as? Date ?? Date()
         self.timeOut = dict["timeOut"] as? Date ?? Date()
         self.chatId = dict["chatId"] as? String

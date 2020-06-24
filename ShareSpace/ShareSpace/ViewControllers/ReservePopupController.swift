@@ -10,6 +10,7 @@ import UIKit
 import FSCalendar
 import FirebaseAuth
 import FirebaseFirestore
+import Firebase
 
 class ReservePopupController: UIViewController {
     
@@ -170,8 +171,8 @@ class ReservePopupController: UIViewController {
             = [
                 "renterId": renterId,
             "postId": postId,
-            "checkIn": checkIn,
-            "checkOut": checkOut,
+            "checkIn": Timestamp(date: checkIn),
+            "checkOut": Timestamp(date: checkOut),
             "chatId": chatId,
             "status": status.rawValue,
             "reservationId": reservationId,

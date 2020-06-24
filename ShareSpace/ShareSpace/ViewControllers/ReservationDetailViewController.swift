@@ -158,8 +158,10 @@ class ReservationDetailViewController: UIViewController {
         // will need to fix this one after changing Post Model. If resewrvation is pending, do not show full address, if reservation is confirmed, show full address
         reservationDetailView.postLocationLabel.text = selectedPost?.city
         
-        reservationDetailView.checkInDateLabel.text = "check-in:                  \(selectedReservation.checkIn.toString(givenFormat: "EEEE, MMM d, yyyy") )"
-        reservationDetailView.checkOutDateLabel.text = "check-out:               \(selectedReservation.checkOut.toString(givenFormat: "EEEE, MMM d, yyyy") )"
+        reservationDetailView.checkInDateLabel.text = "check-in:                  \( selectedReservation.checkIn.dateValue().toString(givenFormat: "EEEE, MMM d, yyyy") )"
+        //.toString(givenFormat: "EEEE, MMM d, yyyy")
+        reservationDetailView.checkOutDateLabel.text = "check-out:               \(selectedReservation.checkOut.dateValue().toString(givenFormat: "EEEE, MMM d, yyyy") )"
+        //
         // DO NOT HAVE CHECKIN< CHECKOUT TIMES NOW
         reservationDetailView.totalDaysLabel.text = "total days:      \(selectedReservation.totalDays)"
         reservationDetailView.totalPriceLabel.text = "total earnings: $\(Int(selectedReservation.totalPrice))"
