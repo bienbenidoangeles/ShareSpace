@@ -221,7 +221,7 @@ class RootViewController: NavBarViewController {
             let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
                 switch state {
                 case .expanded:
-                    self.cardVC.view.frame.origin.y = (self.view.frame.height ) - self.expandedCardHeight
+                    self.cardVC.view.frame.origin.y = (self.view.frame.height ) - self.expandedCardHeight - self.navBarHeight
                     self.cardVC.view.frame.size = self.expandedCardSize
                     if let layout = self.cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
                         layout.scrollDirection = .vertical
@@ -230,7 +230,6 @@ class RootViewController: NavBarViewController {
                     self.cardVC.view.frame.origin.y = (self.view.frame.height - self.collaspedCardSize.height - self.navBarHeight - self.cardHandleAreaHeight)
                     let newCardSize = CGSize(width: self.collaspedCardSize.width, height: self.collaspedCardSize.height + self.cardHandleAreaHeight)
                     self.cardVC.view.frame.size = newCardSize
-                    
                     if let layout = self.cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
                         layout.scrollDirection = .horizontal
                     }
