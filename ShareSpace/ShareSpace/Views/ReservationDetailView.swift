@@ -158,7 +158,7 @@ class ReservationDetailView: UIView {
         return label
     }()
     
-    public lazy var checkInTimeLabel: UILabel = {
+    public lazy var totalDaysLabel: UILabel = {
         let label = UILabel()
         label.text = "check in time"
         label.font = .preferredFont(forTextStyle: .body)
@@ -167,7 +167,7 @@ class ReservationDetailView: UIView {
         return label
     }()
     
-    public lazy var checkOutTimeLabel: UILabel = {
+    public lazy var totalPriceLabel: UILabel = {
         let label = UILabel()
         label.text = "check out time"
         label.font = .preferredFont(forTextStyle: .body)
@@ -176,7 +176,7 @@ class ReservationDetailView: UIView {
         return label
     }()
     
-    public lazy var numberOfGuestsLabel: UILabel = {
+    public lazy var pricePerDayLabel: UILabel = {
         let label = UILabel()
         label.text = "number of guests"
         label.font = .preferredFont(forTextStyle: .body)
@@ -399,32 +399,32 @@ class ReservationDetailView: UIView {
     }
     
     private func setupCheckInTimeLabelConstraints() {
-        reservationDetailsView.addSubview(checkInTimeLabel)
-        checkInTimeLabel.translatesAutoresizingMaskIntoConstraints = false
+        reservationDetailsView.addSubview(totalDaysLabel)
+        totalDaysLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            checkInTimeLabel.topAnchor.constraint(equalTo: checkOutDateLabel.bottomAnchor, constant: 16),
-            checkInTimeLabel.leadingAnchor.constraint(equalTo:  reservationDetailsView.leadingAnchor, constant: 16),
-            checkInTimeLabel.trailingAnchor.constraint(equalTo: reservationDetailsView.trailingAnchor, constant: -16)
+            totalDaysLabel.topAnchor.constraint(equalTo: checkOutDateLabel.bottomAnchor, constant: 16),
+            totalDaysLabel.leadingAnchor.constraint(equalTo:  reservationDetailsView.leadingAnchor, constant: 16),
+            totalDaysLabel.trailingAnchor.constraint(equalTo: reservationDetailsView.trailingAnchor, constant: -16)
         ])
     }
     
     private func setupCheckOutTimeLabelConstraints() {
-        reservationDetailsView.addSubview(checkOutTimeLabel)
-        checkOutTimeLabel.translatesAutoresizingMaskIntoConstraints = false
+        reservationDetailsView.addSubview(totalPriceLabel)
+        totalPriceLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            checkOutTimeLabel.topAnchor.constraint(equalTo: checkInTimeLabel.bottomAnchor, constant: 16),
-            checkOutTimeLabel.leadingAnchor.constraint(equalTo:  reservationDetailsView.leadingAnchor, constant: 16),
-            checkOutTimeLabel.trailingAnchor.constraint(equalTo: reservationDetailsView.trailingAnchor, constant: -16)
+            totalPriceLabel.topAnchor.constraint(equalTo: totalDaysLabel.bottomAnchor, constant: 16),
+            totalPriceLabel.leadingAnchor.constraint(equalTo:  reservationDetailsView.leadingAnchor, constant: 16),
+            totalPriceLabel.trailingAnchor.constraint(equalTo: reservationDetailsView.trailingAnchor, constant: -16)
         ])
     }
     
     private func setupNumberOfGuestsLabelConstraints() {
-        reservationDetailsView.addSubview(numberOfGuestsLabel)
-        numberOfGuestsLabel.translatesAutoresizingMaskIntoConstraints = false
+        reservationDetailsView.addSubview(pricePerDayLabel)
+        pricePerDayLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            numberOfGuestsLabel.bottomAnchor.constraint(equalTo: reservationDetailsView.bottomAnchor, constant: -8),
-            numberOfGuestsLabel.leadingAnchor.constraint(equalTo:  reservationDetailsView.leadingAnchor, constant: 16),
-            numberOfGuestsLabel.trailingAnchor.constraint(equalTo: reservationDetailsView.trailingAnchor, constant: -16)
+            pricePerDayLabel.bottomAnchor.constraint(equalTo: reservationDetailsView.bottomAnchor, constant: -8),
+            pricePerDayLabel.leadingAnchor.constraint(equalTo:  reservationDetailsView.leadingAnchor, constant: 16),
+            pricePerDayLabel.trailingAnchor.constraint(equalTo: reservationDetailsView.trailingAnchor, constant: -16)
         ])
     }
     

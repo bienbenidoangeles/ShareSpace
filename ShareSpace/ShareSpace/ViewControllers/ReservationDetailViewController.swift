@@ -139,6 +139,7 @@ class ReservationDetailViewController: UIViewController {
                 self.selectedPost = post
                 self.reservationDetailView.postTitelLabel.text = self.selectedPost?.postTitle
                 self.reservationDetailView.postDescriptionLabel.text = "\(self.selectedPost?.description ?? "no description")"
+                self.reservationDetailView.totalPriceLabel.text = "$\(Int(self.selectedPost?.price ?? 0)) x \(self.selectedReservation.totalDays) days         $\(self.selectedReservation.totalPrice)"
             }
         }
         //FIX: Add if statement for status 1,2,3?
@@ -157,9 +158,12 @@ class ReservationDetailViewController: UIViewController {
         // will need to fix this one after changing Post Model. If resewrvation is pending, do not show full address, if reservation is confirmed, show full address
         reservationDetailView.postLocationLabel.text = selectedPost?.city
         
-        reservationDetailView.checkInDateLabel.text = "check-in:                     \(selectedReservation.checkIn.toString(givenFormat: "EEEE, MMM d, yyyy") )"
-        reservationDetailView.checkOutDateLabel.text = "check-out:                  \(selectedReservation.checkOut.toString(givenFormat: "EEEE, MMM d, yyyy") )"
+        reservationDetailView.checkInDateLabel.text = "check-in:                  \(selectedReservation.checkIn.toString(givenFormat: "EEEE, MMM d, yyyy") )"
+        reservationDetailView.checkOutDateLabel.text = "check-out:               \(selectedReservation.checkOut.toString(givenFormat: "EEEE, MMM d, yyyy") )"
         // DO NOT HAVE CHECKIN< CHECKOUT TIMES NOW
+        reservationDetailView.totalDaysLabel.text = "total days:      \(selectedReservation.totalDays)"
+        reservationDetailView.totalPriceLabel.text = "total earnings: $\(Int(selectedReservation.totalPrice))"
+        //reservationDetailView.pricePerDayLabel.text = "
         
         // NEED TO ADD NUMBER OF GUESTS TO RESERVEPOPUP VC and to RESERVATION MODEL
         

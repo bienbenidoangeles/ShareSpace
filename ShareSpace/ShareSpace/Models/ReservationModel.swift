@@ -24,6 +24,8 @@ struct Reservation: Codable {
     let chatId: String?
     var status: Status.RawValue
     let reservationId: String
+    let totalPrice: Double
+    let totalDays: Int
 }
 extension Reservation {
     init(dict: [String:Any]) {
@@ -37,5 +39,7 @@ extension Reservation {
         self.chatId = dict["chatId"] as? String
         self.status = dict["status"] as? Status.RawValue ?? Status.undetermined.rawValue
         self.reservationId = dict["reservationId"] as? String ?? ""
+        self.totalPrice = dict["totalPrice"] as? Double ?? 0
+        self.totalDays = dict["totalDays"] as? Int ?? 0
     }
 }

@@ -156,9 +156,12 @@ class ReservePopupController: UIViewController {
         let postId = selectedPost.postId
         let status = Status.undetermined
         let reservationId = UUID().uuidString
+        let totalPrice = (Double((datesRange?.count ?? 1)) * selectedPost.price)
         guard let checkIn = datesRange?.first,
             
             let checkOut = datesRange?.last,
+            let totalDays = datesRange?.count,
+            
            
             let message = messageTextView.text,
             !message.isEmpty else { return }
@@ -172,7 +175,9 @@ class ReservePopupController: UIViewController {
             "chatId": chatId,
             "status": status.rawValue,
             "reservationId": reservationId,
-            "hostId": hostId
+            "hostId": hostId,
+            "totalPrice": totalPrice,
+            "totalDays": totalDays
             ]
         DatabaseService.shared.createReservation(reservation: dict) { (result) in
             switch result {
