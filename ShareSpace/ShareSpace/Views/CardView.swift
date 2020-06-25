@@ -10,23 +10,28 @@ import UIKit
 
 class CardView: UIView {
     
+    override func layoutSubviews() {
+        handleBarView.clipsToBounds = true
+        handleBarView.layer.cornerRadius = 4
+    }
+    
     public lazy var topView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemTeal
+        view.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.5)
         return view
     }()
     
     public lazy var handleBarView: UIView = {
         let view = UIView()
-        view.backgroundColor = .darkGray
+        view.backgroundColor = .white
         return view
     }()
     
     public lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
+        layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        cv.backgroundColor = .systemOrange
+        cv.backgroundColor = UIColor.white.withAlphaComponent(0.1)
         return cv
     }()
             
@@ -53,7 +58,7 @@ class CardView: UIView {
             topView.leadingAnchor.constraint(equalTo: leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: trailingAnchor),
             topView.topAnchor.constraint(equalTo: topAnchor),
-            topView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.05),
+            topView.heightAnchor.constraint(equalToConstant: 30),
         ])
     }
     
@@ -72,9 +77,9 @@ class CardView: UIView {
         addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             collectionView.topAnchor.constraint(equalTo: topView.bottomAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }

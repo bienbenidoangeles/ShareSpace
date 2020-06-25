@@ -24,6 +24,8 @@ class CardViewController: UIViewController {
     
     public lazy var cv = mainView.collectionView
     
+    public var cvCellSize:CGSize?
+    
     private var posts = [Post](){
         didSet{
             DispatchQueue.main.async {
@@ -57,7 +59,7 @@ class CardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor.white.withAlphaComponent(0.3)
         delegatesAndDataSources()
         let coordinate = CoreLocationSession.shared.locationManager.location?.coordinate.toString
         let coorRang = (lat: 40.0...41.0, long: -75.0...(-74.0))
@@ -151,6 +153,7 @@ extension CardViewController: UICollectionViewDataSource {
             fatalError()
         }
         let post = posts[indexPath.row]
+        
         cell.configureCell(for: post)
         return cell
     }
@@ -162,7 +165,9 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
         let maxSize:CGSize = UIScreen.main.bounds.size
         let itemWidth:CGFloat = maxSize.width
         let itemHeight:CGFloat = itemWidth*0.25
-        return CGSize(width: itemWidth, height: itemHeight)
+        let cellSize = CGSize(width: itemWidth, height: itemHeight)
+        cvCellSize = cellSize
+        return cellSize
     }
     
     // ADDED BY ME LET BIEN KNOW
@@ -173,6 +178,15 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
             return ListingDetailViewController(coder: coder, selectedPost: aPost)
         }
         navigationController?.pushViewController(detailVC, animated: true)
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+    
+    //scroll view dragging
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         
     }
 }

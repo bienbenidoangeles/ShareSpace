@@ -65,6 +65,8 @@ class ChatListViewController: UIViewController {
 //    loadUserChats()
 //    loadtest()
     
+    navigationItem.title = "Inbox"
+    
     // Do any additional setup after loading the view.
   }
   

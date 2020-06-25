@@ -91,7 +91,7 @@ class RootView: UIView {
             mapView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             mapView.leadingAnchor.constraint(equalTo: leadingAnchor),
             mapView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            mapView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            mapView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         
     }

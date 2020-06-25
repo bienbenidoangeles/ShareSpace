@@ -93,14 +93,14 @@ class ReservationDetailViewController: UIViewController {
                     self?.reservationDetailView.postLocationLabel.text = "\(self?.selectedPost?.state ?? ""), \(self?.selectedPost?.country ?? "") "
                     self?.reservationDetailView.reservationStatusLabel.text = "Declined"
                     self?.reservationDetailView.reservationStatusLabel.textColor = .systemRed
-                    self?.reservationDetailView.profileImageView.image = UIImage(named: "person.fill")
+                    self?.reservationDetailView.profileImageView.image = UIImage(systemName: "person.fill")
                     self?.reservationDetailView.acceptButton.setTitleColor(.systemGray, for: .disabled)
                     self?.reservationDetailView.declineButton.setTitleColor(.systemGray, for: .disabled)
                 } else if self?.selectedStatus == 2 {
                     self?.reservationDetailView.postLocationLabel.text = "\(self?.selectedPost?.state ?? ""), \(self?.selectedPost?.country ?? "") "
                     self?.reservationDetailView.reservationStatusLabel.text = "Pending"
                     self?.reservationDetailView.reservationStatusLabel.textColor = .systemRed
-                    self?.reservationDetailView.profileImageView.image = UIImage(named: "person.fill")
+                    self?.reservationDetailView.profileImageView.image = UIImage(systemName: "person.fill")
                     self?.reservationDetailView.acceptButton.setTitleColor(.systemGray, for: .disabled)
                     self?.reservationDetailView.declineButton.setTitleColor(.systemGray, for: .disabled)
                 }
@@ -125,6 +125,7 @@ class ReservationDetailViewController: UIViewController {
             case .success(let userRequesting):
                 self.userWhoIsrequesting = userRequesting
                 self.reservationDetailView.userNameLabel.text = self.userWhoIsrequesting?.firstName
+                self.reservationDetailView.userLocationLabel.text =  "Lives in:   \(self.userWhoIsrequesting?.cityState ?? "no info")"
               //  self.reservationDetailView.userLocationLabel.text = self.userWhoIsrequesting.
 
             }
@@ -137,7 +138,8 @@ class ReservationDetailViewController: UIViewController {
             case .success(let post):
                 self.selectedPost = post
                 self.reservationDetailView.postTitelLabel.text = self.selectedPost?.postTitle
-                self.reservationDetailView.postDescriptionLabel.text = "Description: \(self.selectedPost?.description ?? "no description")"
+                self.reservationDetailView.postDescriptionLabel.text = "\(self.selectedPost?.description ?? "no description")"
+                self.reservationDetailView.totalPriceLabel.text = "$\(Int(self.selectedPost?.price ?? 0)) x \(self.selectedReservation.totalDays) days         $\(self.selectedReservation.totalPrice)"
             }
         }
         //FIX: Add if statement for status 1,2,3?
@@ -149,16 +151,21 @@ class ReservationDetailViewController: UIViewController {
         // ADD RATING TO USERMODEL
        // reservationDetailView.userRatingLabel.text = "Rating: \(userWhoIsrequesting.rating)"
         
-       
+        
         
         
         
         // will need to fix this one after changing Post Model. If resewrvation is pending, do not show full address, if reservation is confirmed, show full address
         reservationDetailView.postLocationLabel.text = selectedPost?.city
         
-        reservationDetailView.checkInDateLabel.text = "check-in    \(selectedReservation.checkIn.toString(givenFormat: "EEEE, MMM d, yyyy") )"
-        reservationDetailView.checkOutDateLabel.text = "check-out    \(selectedReservation.checkOut.toString(givenFormat: "EEEE, MMM d, yyyy") )"
+        reservationDetailView.checkInDateLabel.text = "check-in:                  \( selectedReservation.checkIn.dateValue().toString(givenFormat: "EEEE, MMM d, yyyy") )"
+        //.toString(givenFormat: "EEEE, MMM d, yyyy")
+        reservationDetailView.checkOutDateLabel.text = "check-out:               \(selectedReservation.checkOut.dateValue().toString(givenFormat: "EEEE, MMM d, yyyy") )"
+        //
         // DO NOT HAVE CHECKIN< CHECKOUT TIMES NOW
+        reservationDetailView.totalDaysLabel.text = "total days:      \(selectedReservation.totalDays)"
+        reservationDetailView.totalPriceLabel.text = "total earnings: $\(Int(selectedReservation.totalPrice))"
+        //reservationDetailView.pricePerDayLabel.text = "
         
         // NEED TO ADD NUMBER OF GUESTS TO RESERVEPOPUP VC and to RESERVATION MODEL
         

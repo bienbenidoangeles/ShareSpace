@@ -53,4 +53,28 @@ class AuthenticationSession {
         }
         
     }
+    
+    public func isSignedIn() -> Bool {
+        if let _ = auth.currentUser {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    private func promptLoginVC(){
+        UIViewController.showViewController(viewcontroller: LoginViewController())
+    }
+    
+    public func ifSignInOutOrPromptLoginVC() throws{
+        if isSignedIn() == true {
+            do {
+                try logout()
+            } catch {
+                throw error
+            }
+        } else {
+            promptLoginVC()
+        }
+    }
 }

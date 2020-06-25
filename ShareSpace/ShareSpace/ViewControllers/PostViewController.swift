@@ -11,7 +11,9 @@ import FirebaseAuth
 import Kingfisher
 import FirebaseFirestore
 
+
 class PostViewController: UIViewController, UIScrollViewDelegate {
+    
     
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -70,6 +72,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
         imagePosting.tintColor = .yummyOrange
         
     }
+    
     
     @IBAction func uploadPhotosButtonPressed(_ sender: UIButton) {
         
@@ -265,6 +268,8 @@ extension PostViewController: UITextViewDelegate {
         return true
     }
 }
+
+
 
 extension String {
     func toDouble() -> Double? {
