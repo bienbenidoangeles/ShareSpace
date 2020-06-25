@@ -140,6 +140,7 @@ class ReservationDetailViewController: UIViewController {
                 self.reservationDetailView.postTitelLabel.text = self.selectedPost?.postTitle
                 self.reservationDetailView.postDescriptionLabel.text = "\(self.selectedPost?.description ?? "no description")"
                 self.reservationDetailView.totalPriceLabel.text = "$\(Int(self.selectedPost?.price ?? 0)) x \(self.selectedReservation.totalDays) days         $\(self.selectedReservation.totalPrice)"
+                self.reservationDetailView.pricePerDayLabel.text = "number of guests:        \(self.selectedPost?.numberOfGuests.description ?? "0")"
             }
         }
         //FIX: Add if statement for status 1,2,3?
@@ -168,6 +169,7 @@ class ReservationDetailViewController: UIViewController {
         //reservationDetailView.pricePerDayLabel.text = "
         
         // NEED TO ADD NUMBER OF GUESTS TO RESERVEPOPUP VC and to RESERVATION MODEL
+        
         
         if selectedStatus == 0 {
            
