@@ -211,7 +211,7 @@ class RootViewController: NavBarViewController {
             updateInteractiveTransition(fractionCompleted: fractionComplete)
         case .ended:
             //continueTransition
-            continueInteractiveTransition()
+            continueInteractiveTransition(state: nextState)
         default:
             break
         }
@@ -224,24 +224,33 @@ class RootViewController: NavBarViewController {
                 case .expanded:
                     self.cardVC.view.frame.origin.y = (self.view.frame.height ) - self.expandedCardHeight - self.navBarHeight
                     self.cardVC.view.frame.size = self.expandedCardSize
-                    if let layout = self.cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
-                        self.cardVC.cv.layoutIfNeeded()
-                        layout.scrollDirection = .vertical
-                    }
+//                    if let layout = self.cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
+//                        self.cardVC.cv.layoutIfNeeded()
+//                        layout.scrollDirection = .vertical
+//                    }
                 case .collapsed:
                     self.cardVC.view.frame.origin.y = (self.view.frame.height - self.collaspedCardSize.height - self.navBarHeight - self.cardHandleAreaHeight)
                     let newCardSize = CGSize(width: self.collaspedCardSize.width, height: self.collaspedCardSize.height + self.cardHandleAreaHeight)
                     self.cardVC.view.frame.size = newCardSize
-                    if let layout = self.cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
-                        self.cardVC.cv.layoutIfNeeded()
-                        layout.scrollDirection = .horizontal
-                        
-                    }
+//                    if let layout = self.cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
+//                        self.cardVC.cv.layoutIfNeeded()
+//                        layout.scrollDirection = .horizontal
+//
+//                    }
                 }
             }
             frameAnimator.addCompletion { (anim) in
                 self.cardVisible = !self.cardVisible
                 self.runningAnimations.removeAll()
+                if let layout = self.cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
+                    switch state {
+                    case .collapsed:
+                        layout.animateScrollDirection(scrollDir: .horizontal, progress: nil, duration: duration)
+                    case .expanded:
+                        layout.animateScrollDirection(scrollDir: .vertical, progress: nil, duration: duration)
+                    }
+                }
+                
             }
             frameAnimator.startAnimation()
             runningAnimations.append(frameAnimator)
@@ -288,12 +297,29 @@ class RootViewController: NavBarViewController {
             animator.fractionComplete = fractionCompleted
             + animationProgressWhenInterrupted
         }
+        if let layout = cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.animateScrollDirection(scrollDir: nil, progress: fractionCompleted
+                + animationProgressWhenInterrupted, duration: nil)
+        }
     }
     
-    func continueInteractiveTransition() {
+    func continueInteractiveTransition(state: CardState) {
+        var animatorProgress: CGFloat = 0
         for animator in runningAnimations {
             animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+            animatorProgress = animator.fractionComplete
         }
+        let scrollDir:UICollectionView.ScrollDirection
+        switch state {
+        case .collapsed:
+            scrollDir = .horizontal
+        case .expanded:
+            scrollDir = .vertical
+        }
+        if let layout = cardVC.cv.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.animateScrollDirection(scrollDir: scrollDir, progress: animatorProgress, duration: nil)
+        }
+        
     }
     
     @objc private func mapViewButtonPressed(){
