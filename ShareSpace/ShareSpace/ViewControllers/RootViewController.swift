@@ -423,6 +423,31 @@ class RootViewController: NavBarViewController {
             return nil
         }
     }
+    
+    func didSearchViewBGColorOrange(view: UIView, textField: UITextField, dateTimeButton: UIButton, eval: Bool) {
+         let transitation = CATransition()
+         transitation.type = .fade
+         transitation.subtype = .fromBottom
+         transitation.duration = 0.3
+         let items = [view, textField, dateTimeButton]
+         for item in items {
+             item.layer.add(transitation, forKey: nil)
+         }
+         
+         if eval == true {
+             view.backgroundColor = .systemBackground
+             textField.textColor = .systemOrange
+             dateTimeButton.backgroundColor = .systemOrange
+             dateTimeButton.tintColor = .systemBackground
+             dateTimeButton.setTitleColor(.systemBackground, for: .normal)
+         } else {
+             view.backgroundColor = .systemOrange
+             textField.textColor = .systemBackground
+             dateTimeButton.backgroundColor = .systemBackground
+             dateTimeButton.tintColor = .systemOrange
+             dateTimeButton.setTitleColor(.systemOrange, for: .normal)
+         }
+     }
 }
 
 //extension RootViewController: SearchResultsViewControllerDelegate{
@@ -482,32 +507,6 @@ extension RootViewController: MKMapViewDelegate {
         
     }
     
-    func didSearchViewBGColorOrange(view: UIView, textField: UITextField, dateTimeButton: UIButton, eval: Bool) {
-        let transitation = CATransition()
-        transitation.type = .fade
-        transitation.subtype = .fromBottom
-        transitation.duration = 1
-        let items = [view, textField, dateTimeButton]
-        for item in items {
-            item.layer.add(transitation, forKey: nil)
-        }
-        
-        if eval == true {
-            view.backgroundColor = .systemBackground
-            textField.textColor = .systemOrange
-            dateTimeButton.backgroundColor = .systemOrange
-            dateTimeButton.tintColor = .systemBackground
-            dateTimeButton.setTitleColor(.systemBackground, for: .normal)
-        } else {
-            view.backgroundColor = .systemOrange
-            textField.textColor = .systemBackground
-            dateTimeButton.backgroundColor = .systemBackground
-            dateTimeButton.tintColor = .systemOrange
-            dateTimeButton.setTitleColor(.systemOrange, for: .normal)
-        }
-    }
-    
-    
 }
 
 extension RootViewController: UITextFieldDelegate{
@@ -551,6 +550,7 @@ extension RootViewController: CardViewControllerDelegate{
         mapView.setRegion(regionThatFits, animated: true)
         mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotations(annotations)
+        didSearchViewBGColorOrange(view: rootView.searchBarView, textField: rootView.searchLabel, dateTimeButton: rootView.dateTimeButton, eval: true)
         posts.isEmpty ?
             animateTransitionIfNeeded(state: .expanded, duration: 0.9) : animateTransitionIfNeeded(state: .collapsed, duration: 0.9)
     }
@@ -561,6 +561,7 @@ extension RootViewController: CardViewControllerDelegate{
         }
         mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotations(annotations)
+        didSearchViewBGColorOrange(view: rootView.searchBarView, textField: rootView.searchLabel, dateTimeButton: rootView.dateTimeButton, eval: true)
         //posts.isEmpty ?
         //animateTransitionIfNeeded(state: .collapsed, duration: 0.9) : animateTransitionIfNeeded(state: .collapsed, duration: 0.9)
     }
