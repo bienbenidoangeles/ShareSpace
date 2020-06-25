@@ -26,9 +26,10 @@ class RootView: UIView {
         return view
     }()
     
-    public lazy var searchLabel : UILabel = {
-        let tf = UILabel()
-        tf.text = "I want to go to..."
+    public lazy var searchLabel : UITextField = {
+        let tf = UITextField()
+        //tf.placeholder = "I want to go to..."
+        tf.attributedPlaceholder = NSAttributedString(string: "I want to go to...", attributes: [NSAttributedString.Key.foregroundColor : UIColor.systemTeal])
         tf.textColor = .systemTeal
         tf.isUserInteractionEnabled = true
         return tf

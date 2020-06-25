@@ -64,7 +64,7 @@ class ChatCell: UITableViewCell {
   
   private func updateUI() {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "HH:mm a"
+    dateFormatter.dateFormat = "h:mm a"
     let dateString = dateFormatter.string(from: message.created.dateValue())
     self.dateLabel.text = dateString
   }

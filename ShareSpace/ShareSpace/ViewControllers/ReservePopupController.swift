@@ -45,6 +45,9 @@ class ReservePopupController: UIViewController {
     
     
   private var selectedPost: Post
+    private var selectedReservation: Reservation?
+    
+    private var listener: ListenerRegistration?
     
     init?(coder: NSCoder, selectedPost: Post) {
         self.selectedPost = selectedPost
@@ -90,6 +93,23 @@ class ReservePopupController: UIViewController {
             setupDismissBar()
             setupCalendarUI()
        }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        listener = DatabaseService.shared.isReservationReserved(postId: selectedPost.postId, completion: { (result) in
+            switch result {
+            case .failure:
+                break
+            case .success(let listenerResult):
+                if listenerResult.isReserved == true {
+                    let reservations = listenerResult.reservations ?? [Reservation]()
+                    self.selectedReservation = reservations.first
+                }
+            }
+        })
+        
+        
+    }
     
     private func setupCalendarUI() {
         calendar.clipsToBounds = true

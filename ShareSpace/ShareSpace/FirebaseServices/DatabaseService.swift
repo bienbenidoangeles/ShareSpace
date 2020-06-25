@@ -302,6 +302,7 @@ class DatabaseService {
         }
     }
     
+    
     func loadReservedByMe(renterId: String, completion: @escaping (Result<[Reservation]?, Error>) ->()) {
         let reservationRef = db.collection(DatabaseService.reservationCollection)
         reservationRef.whereField("renterId", isEqualTo: renterId).getDocuments { (snapshot, error) in
@@ -460,6 +461,47 @@ class DatabaseService {
                 completion(.success(reservation))
             }
         }
+    }
+    
+    func readReservation(postId: String, completion: @escaping(Result<Reservation, Error>) -> ()) {
+        db.collection(DatabaseService.reservationCollection).whereField("postId", isEqualTo: postId).getDocuments { (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = snapshot, let data = snapshot.documents.first?.data(){
+                completion(.success(Reservation(dict: data)))
+            }
+        }
+    }
+    
+    func readReservationsAsListener(postId: String, completion:  @escaping(Result<[Reservation], Error>) -> ()) -> ListenerRegistration {
+        let listner = db.collection(DatabaseService.reservationCollection).whereField("postId", isEqualTo: postId).addSnapshotListener({ (snapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = snapshot{
+                let reservations = snapshot.documents.map{Reservation(dict: $0.data())}
+                
+                completion(.success(reservations))
+            }
+        })
+        return listner
+    }
+    
+    func isReservationReserved(postId: String, completion:  @escaping(Result<(isReserved: Bool, reservations: [Reservation]?), Error>) -> ()) -> ListenerRegistration {
+        let listener = readReservationsAsListener(postId: postId) { (result) in
+            switch result{
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let reservations):
+                if reservations.count >= 0 {
+                    let tuple = (isReserved: true, reservations: reservations)
+                    completion(.success(tuple))
+                } else {
+                    let tuple:(isReserved: Bool, reservations: [Reservation]?) = (isReserved: false, reservations: nil)
+                    completion(.success(tuple))
+                }
+            }
+        }
+        return listener
     }
     
     func updateReservation( reservation: Reservation, completion: @escaping(Result<Bool, Error>) -> ()) {
