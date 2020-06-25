@@ -34,6 +34,13 @@ class CardView: UIView {
         cv.backgroundColor = UIColor.white.withAlphaComponent(0.1)
         return cv
     }()
+    
+    public lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.1)
+        tableView.isHidden = true
+        return tableView
+    }()
             
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
@@ -49,6 +56,7 @@ class CardView: UIView {
         setUpTopView()
         setUpHandleBarView()
         setUpCollectionViewConstrainsts()
+        setupTableViewConstrainsts()
     }
     
     private func setUpTopView(){
@@ -81,6 +89,17 @@ class CardView: UIView {
             collectionView.topAnchor.constraint(equalTo: topView.bottomAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+    }
+    
+    private func setupTableViewConstrainsts(){
+        addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: topView.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
