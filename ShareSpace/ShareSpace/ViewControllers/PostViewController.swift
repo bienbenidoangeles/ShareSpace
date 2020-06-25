@@ -65,7 +65,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
         cityTextField.delegate = self
         stateTextField.delegate = self
         zipCodeTextField.delegate = self
-        
+        numberOfGuestsTextField.delegate = self
         descriptionTextView.delegate = self
         amenititesTextView.delegate = self
         
@@ -152,6 +152,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                     // let price = priceTextField.text, !price.isEmpty,
                     let description = self.descriptionTextView.text, !description.isEmpty,
                     let amenities = self.amenititesTextView.text,
+                    let numberOfGuests = Int(self.numberOfGuestsTextField.text ?? ""),
                     let mainImage = self.selectedImage,
                     let price = Double(self.priceTextField.text ?? ""),
                     let streetAddr = self.streetTextField.text,
@@ -188,7 +189,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
 //                ]
                 let imageId = UUID().uuidString
                 let apartmentNum = self.apartmentTextField.text
-                let post = Post(postId: postId, price: price, postTitle:postTitle, userId: userId, listedDate: listedDate, mainImage: nil, images: nil, description: description, amenities: amenitiesArray, country: nil, streetAddress: streetAddr, apartmentNumber: apartmentNum, city: city, state: state, zip: zip, longitude: coordinate.longitude, latitude: coordinate.latitude, rating: nil, ratingImgURL: nil)
+                let post = Post(postId: postId, price: price, postTitle:postTitle, userId: userId, listedDate: listedDate, mainImage: nil, images: nil, description: description, amenities: amenitiesArray, numberOfGuests: numberOfGuests, country: nil, streetAddress: streetAddr, apartmentNumber: apartmentNum, city: city, state: state, zip: zip, longitude: coordinate.longitude, latitude: coordinate.latitude, rating: nil, ratingImgURL: nil)
                 
                 DatabaseService.shared.postSpace(post: post)
                 { [weak self] (result) in

@@ -20,6 +20,7 @@ struct Post:Codable {
     let images: [String]? // sub-collection
     let description: String // post vc
     let amenities: [String]
+    let numberOfGuests: Int
     let country: String?
     let streetAddress: String
     let apartmentNumber: String?
@@ -64,6 +65,7 @@ struct Post:Codable {
             "images": images ?? [String](),
             "description": description,
             "amenities": amenities,
+            "numberOfGuests": numberOfGuests,
             "country": country,
             "streetAddress": streetAddress,
             "apartmentNumber":apartmentNumber ?? "",
@@ -265,7 +267,9 @@ extension Post {
         self.images = dictionary["images"] as? [String] ?? ["nil"]
         //self.location = dictionary["location"] as? Location ?? Location(["country": "nil", "streetAddress": "nil", "city": "nil", "state": "nil", "zip": -1.0])
         self.description = dictionary["description"] as? String ?? ""
+        
         self.amenities = dictionary["amenities"] as? [String] ?? [""]
+        self.numberOfGuests = dictionary["numberOfGuests"] as? Int ?? 0
         //self.rating = dictionary["rating"] as? Rating ?? Rating(["rating": -1.0, "ratingImage": "nil"])
         //self.reviews = dictionary["reviews"] as? [Review] ?? [Review]()
        // self.locationId = dictionary["locationId"] as? String ?? "nil"
