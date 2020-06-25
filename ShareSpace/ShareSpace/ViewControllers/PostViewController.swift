@@ -15,6 +15,7 @@ import FirebaseFirestore
 class PostViewController: UIViewController, UIScrollViewDelegate {
     
     
+    @IBOutlet weak var numberOfGuestsTextField: UITextField!
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var titleTextField: UITextField!
@@ -70,6 +71,23 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
         
         imagePosting.image = UIImage(systemName: "house.fill")
         imagePosting.tintColor = .yummyOrange
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+         titleTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        priceTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        streetTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        apartmentTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        cityTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        streetTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        zipCodeTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        descriptionTextView.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        descriptionTextView.layer.addBorder(edge: UIRectEdge.left, color: .systemGray4, thickness: 1)
+        amenititesTextView.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        amenititesTextView.layer.addBorder(edge: UIRectEdge.left, color: .systemGray4, thickness: 1)
+        numberOfGuestsTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        stateTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
         
     }
     
