@@ -428,9 +428,18 @@ class RootViewController: NavBarViewController {
 
 extension RootViewController: MKMapViewDelegate {
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+        if rootView.searchByMapViewButton.isHidden == false {
+            return
+        }
         topRightCoor = rootView.mapView.convert(CGPoint(x: rootView.mapView.bounds.width, y: 0), toCoordinateFrom: rootView.mapView)
         bottomLeftCoor = rootView.mapView.convert(CGPoint(x: 0, y: rootView.mapView.bounds.height), toCoordinateFrom: rootView.mapView)
+        let transitation = CATransition()
+        transitation.type = .reveal
+        transitation.subtype = .fromRight
+        transitation.duration = 1
+        rootView.searchByMapViewButton.layer.add(transitation, forKey: nil)
         rootView.searchByMapViewButton.isHidden = false
+
         //print("topRight",topRightCoor,"bottomLeft", bottomLeftCoor)
     }
     
