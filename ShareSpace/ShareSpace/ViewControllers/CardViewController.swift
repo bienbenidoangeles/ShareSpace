@@ -39,6 +39,8 @@ class CardViewController: UIViewController {
         }
     }
     
+   // private var selectedAnnotation: MKPointAnnotation?
+    
     private var rootVC: RootViewController
     private var searchVC: SearchResultsViewController
     weak var delegate: CardViewControllerDelegate?
@@ -192,9 +194,20 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
 }
 
 extension CardViewController: RootViewControllerDelegate{
+    func annontationPressed(given annotation: MKPointAnnotation, cardState: Int) {
+        //selectedAnnotation = annotation
+        let coordinate = annotation.coordinate
+        let postIndex = posts.firstIndex{$0.coordinate == coordinate} ?? 0
+        
+        let indexPath = IndexPath(row: postIndex, section: 0)
+        cv.selectItem(at: indexPath, animated: true, scrollPosition: cardState == 0 ? .left : .top)
+    }
+    
     func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
         loadPosts(given: coordinateRange)
     }
+    
+    
 }
 
 extension CardViewController: SearchResultsViewControllerDelegate{

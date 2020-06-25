@@ -11,6 +11,7 @@ import MapKit
 
 protocol RootViewControllerDelegate: AnyObject {
     func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>))
+    func annontationPressed(given annotation: MKPointAnnotation, cardState: Int)
 }
 
 class RootViewController: NavBarViewController {
@@ -284,7 +285,8 @@ class RootViewController: NavBarViewController {
     
     func updateInteractiveTransition(fractionCompleted: CGFloat) {
         for animator in runningAnimations {
-            animator.fractionComplete = fractionCompleted + animationProgressWhenInterrupted
+            animator.fractionComplete = fractionCompleted
+            + animationProgressWhenInterrupted
         }
     }
     
@@ -404,6 +406,19 @@ extension RootViewController: MKMapViewDelegate {
         bottomLeftCoor = rootView.mapView.convert(CGPoint(x: 0, y: rootView.mapView.bounds.height), toCoordinateFrom: rootView.mapView)
         rootView.searchByMapViewButton.isHidden = false
         //print("topRight",topRightCoor,"bottomLeft", bottomLeftCoor)
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let selectedAnnotation = view.annotation as? MKPointAnnotation else {
+            return
+        }
+        var cardState = 0
+        if nextState == .collapsed{
+            cardState = 1
+        }
+        
+        delegate?.annontationPressed(given: selectedAnnotation, cardState: cardState)
+        
     }
 }
 

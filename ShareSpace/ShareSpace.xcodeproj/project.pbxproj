@@ -56,6 +56,7 @@
 		F149D50A2488FDF3006D77D2 /* FeedCollapsedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D5092488FDF3006D77D2 /* FeedCollapsedCell.swift */; };
 		F149D50C24890E20006D77D2 /* FeedExpandedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D50B24890E20006D77D2 /* FeedExpandedCell.swift */; };
 		F149D50E24892879006D77D2 /* ImageView+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D50D24892879006D77D2 /* ImageView+Animation.swift */; };
+		F15190BD24A4468800DD4F32 /* CL2DCoordinate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15190BC24A4468800DD4F32 /* CL2DCoordinate+Extensions.swift */; };
 		F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */; };
 		F1684BF9247AC6E800AA9A17 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684BF8247AC6E800AA9A17 /* SceneDelegate.swift */; };
 		F1684BFB247AC6E800AA9A17 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684BFA247AC6E800AA9A17 /* ViewController.swift */; };
@@ -149,6 +150,7 @@
 		F149D5092488FDF3006D77D2 /* FeedCollapsedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCollapsedCell.swift; sourceTree = "<group>"; };
 		F149D50B24890E20006D77D2 /* FeedExpandedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedExpandedCell.swift; sourceTree = "<group>"; };
 		F149D50D24892879006D77D2 /* ImageView+Animation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageView+Animation.swift"; sourceTree = "<group>"; };
+		F15190BC24A4468800DD4F32 /* CL2DCoordinate+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CL2DCoordinate+Extensions.swift"; sourceTree = "<group>"; };
 		F1684BF3247AC6E800AA9A17 /* ShareSpace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShareSpace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1684BF8247AC6E800AA9A17 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				F149D4FD2488946A006D77D2 /* DateToString.swift */,
 				F149D50D24892879006D77D2 /* ImageView+Animation.swift */,
 				F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */,
+				F15190BC24A4468800DD4F32 /* CL2DCoordinate+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -621,6 +624,7 @@
 				F149D4F82486CF2A006D77D2 /* NavBarViewController.swift in Sources */,
 				F1684C57247AE07200AA9A17 /* StorageService.swift in Sources */,
 				58D5E75A2497A60000B32CFB /* ChatTableView.swift in Sources */,
+				F15190BD24A4468800DD4F32 /* CL2DCoordinate+Extensions.swift in Sources */,
 				F149D5022488CC43006D77D2 /* MapView+CenterToLocation.swift in Sources */,
 				F1DA146A24A1F40B0067B55B /* SideBarView.swift in Sources */,
 				F149D4FA24886EA1006D77D2 /* RootViewController.swift in Sources */,
