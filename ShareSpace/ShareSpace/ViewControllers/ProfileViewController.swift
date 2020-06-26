@@ -131,7 +131,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
         profileView.userLocationTextfield.text = user.cityState
         profileView.userPhoneNumberTextfield.text = user.phoneNumber
         profileView.userBioTextview.text = user.bio
-        profileView.userOccupationTextfield.text = user.bio
+        profileView.userOccupationTextfield.text = user.work
         profileView.governmentIdNameTextfield.text = user.governmentId
         profileView.userCreditcardTextfield.text = user.creditCard
         profileView.userCreditcardCVVNumberTextfield.text = user.cardCVV
@@ -184,7 +184,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             self?.imagePickerController.sourceType = .camera
             self?.present(self!.imagePickerController, animated: true)
         }
-        let phototLibararyAction = UIAlertAction(title: "Photo Libarary", style: .default)
+        let phototLibararyAction = UIAlertAction(title: "Photo Library", style: .default)
         { [weak self] alertAction in
             self?.imagePickerController.sourceType = .photoLibrary
             self?.present(self!.imagePickerController, animated: true)
@@ -308,28 +308,3 @@ extension ProfileViewController: UITextFieldDelegate {
 extension ProfileViewController: UITextViewDelegate {
     
 }
-//extension CALayer {
-//  func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
-//    let border = CALayer()
-//    switch edge {
-//    case UIRectEdge.top:
-//      border.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: thickness)
-//      break
-//    case UIRectEdge.bottom:
-//      border.frame = CGRect(x: 0, y: self.frame.height - thickness, width: self.frame.width, height: thickness)
-//      break
-//    case UIRectEdge.left:
-//      border.frame = CGRect(x: 0, y: 0, width: thickness, height: self.frame.height)
-//      break
-//    case UIRectEdge.right:
-//      border.frame = CGRect(x: self.frame.width - thickness, y: 0, width: thickness, height: self.frame.height)
-//      break
-//    default:
-//      //For Center Line
-//      border.frame = CGRect(x: self.frame.width/2 - thickness, y: 0, width: thickness, height: self.frame.height)
-//      break
-//    }
-//    border.backgroundColor = color.cgColor;
-//    self.addSublayer(border)
-//  }
-//}

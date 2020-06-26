@@ -24,14 +24,17 @@ class FeedCollapsedCell: UICollectionViewCell {
              let mainImgprocessor = DownsamplingImageProcessor(size: feedMainImageView.bounds.size)
                 |> RoundCornerImageProcessor(cornerRadius: 8)
             //let ratingImgProcessor = DownsamplingImageProcessor(size: ratingImageView.bounds.size)
-                |> RoundCornerImageProcessor(cornerRadius: 8)
+                //|> RoundCornerImageProcessor(cornerRadius: 8)
             DispatchQueue.main.async {
                 self.feedMainImageView.kf.indicatorType = .activity
-                self.feedMainImageView.kf.setImage(with: URL(string: mainImgURL), placeholder: UIImage(systemName: "photo.fill"), options: [.processor(mainImgprocessor)], progressBlock: nil)
+                self.feedMainImageView.kf.setImage(with: URL(string: mainImgURL), placeholder: nil, options: [.processor(mainImgprocessor)], progressBlock: nil)
                 //self.ratingImageView.kf.indicatorType = .activity
                 //self.ratingImageView.kf.setImage(with: URL(string: mainImgURL), placeholder: UIImage(systemName: "star.fill"), options: [.cacheOriginalImage, .processor(ratingImgProcessor)], progressBlock: nil)
             }
         }
+        cellBackGroundView.backgroundColor =  UIColor.white.withAlphaComponent(0.8)
+        infoView.backgroundColor = UIColor.white.withAlphaComponent(0)
         topLabel.text = post.postTitle
+        
     }
 }

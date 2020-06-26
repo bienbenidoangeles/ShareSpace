@@ -10,6 +10,7 @@ import UIKit
 import FSCalendar
 import FirebaseAuth
 import FirebaseFirestore
+import Firebase
 
 class ReservePopupController: UIViewController {
     
@@ -38,12 +39,17 @@ class ReservePopupController: UIViewController {
     @IBOutlet weak var messageTextView: UITextView!
     
     
+    @IBOutlet weak var numberOgGuestsTextField: UITextField!
+    
     @IBOutlet weak var sendButton: UIButton!
     
     private var hostOfThisListing: UserModel?
     
     
   private var selectedPost: Post
+    private var selectedReservation: Reservation?
+    
+    private var listener: ListenerRegistration?
     
     init?(coder: NSCoder, selectedPost: Post) {
         self.selectedPost = selectedPost
@@ -89,6 +95,23 @@ class ReservePopupController: UIViewController {
             setupDismissBar()
             setupCalendarUI()
        }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        listener = DatabaseService.shared.isReservationReserved(postId: selectedPost.postId, completion: { (result) in
+            switch result {
+            case .failure:
+                break
+            case .success(let listenerResult):
+                if listenerResult.isReserved == true {
+                    let reservations = listenerResult.reservations ?? [Reservation]()
+                    self.selectedReservation = reservations.first
+                }
+            }
+        })
+        
+        
+    }
     
     private func setupCalendarUI() {
         calendar.clipsToBounds = true
@@ -141,7 +164,7 @@ class ReservePopupController: UIViewController {
                 self.listingBy.text = "Listing by: \(self.hostOfThisListing?.displayName ?? "no name")"
             }
         }
-        pricePerNightLabel.text = "\(selectedPost.price.description)$/Day"
+        pricePerNightLabel.text = "$\(Int(selectedPost.price).description)/Day"
         litingTitle.text = selectedPost.postTitle
         
     }
@@ -156,9 +179,12 @@ class ReservePopupController: UIViewController {
         let postId = selectedPost.postId
         let status = Status.undetermined
         let reservationId = UUID().uuidString
+        let totalPrice = (Double((datesRange?.count ?? 1)) * selectedPost.price)
         guard let checkIn = datesRange?.first,
             
             let checkOut = datesRange?.last,
+            let totalDays = datesRange?.count,
+            
            
             let message = messageTextView.text,
             !message.isEmpty else { return }
@@ -167,12 +193,14 @@ class ReservePopupController: UIViewController {
             = [
                 "renterId": renterId,
             "postId": postId,
-            "checkIn": checkIn,
-            "checkOut": checkOut,
+            "checkIn": Timestamp(date: checkIn),
+            "checkOut": Timestamp(date: checkOut),
             "chatId": chatId,
             "status": status.rawValue,
             "reservationId": reservationId,
-            "hostId": hostId
+            "hostId": hostId,
+            "totalPrice": totalPrice,
+            "totalDays": totalDays
             ]
         DatabaseService.shared.createReservation(reservation: dict) { (result) in
             switch result {
@@ -264,9 +292,9 @@ extension ReservePopupController: FSCalendarDelegate, FSCalendarDataSource {
             }
 
             datesRange = range
-            totalPriceLabel.text = "Total for \(datesRange?.count ?? -1) days: \(((datesRange?.count ?? 1) * Int(selectedPost.price)).description)$"
-            fromDateLabel.text = "From: \(datesRange?.first?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
-            toDateLAbel.text = "To: \(datesRange?.last?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
+            totalPriceLabel.text = "Total for \(datesRange?.count ?? -1) days:         $\(((datesRange?.count ?? 1) * Int(selectedPost.price)).description)"
+            fromDateLabel.text = "From:                           \(datesRange?.first?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
+            toDateLAbel.text = "To:                                \(datesRange?.last?.toString(givenFormat: "MMM d, yyyy") ?? "no date")"
             
             print("datesRange contains: \(datesRange!)")
 

@@ -24,26 +24,53 @@ class CardViewController: UIViewController {
     
     public lazy var cv = mainView.collectionView
     
+    public var cvCellSize:CGSize?
+    
     private var posts = [Post](){
         didSet{
             DispatchQueue.main.async {
                 self.mainView.collectionView.reloadData()
             }
             if posts.isEmpty {
-                mainView.collectionView.backgroundView = EmptyView(title: "No posts found", messege: "Why no search for some?")
+                mainView.collectionView.backgroundView = EmptyView(title: "No lisitings found", messege: "Why not search for some?")
             } else {
                 mainView.collectionView.backgroundView = nil
             }
         }
     }
     
+    private var searchResults = [MKLocalSearchCompletion]() {
+        didSet{
+            DispatchQueue.main.async {
+                self.mainView.tableView.reloadData()
+            }
+            if searchResults.isEmpty {
+                mainView.collectionView.backgroundView = EmptyView(title: "Invalid Search", messege: "Why not try again?")
+            } else {
+                mainView.collectionView.backgroundView = nil
+            }
+        }
+    }
+    
+    private var selectedResult: MKLocalSearchCompletion?
+    
+    private var searchCompletor: MKLocalSearchCompleter
+    
+    // private var selectedAnnotation: MKPointAnnotation?
+    
     private var rootVC: RootViewController
-    private var searchVC: SearchResultsViewController
+    //private var searchVC: SearchResultsViewController
     weak var delegate: CardViewControllerDelegate?
     
-    init(rootVC: RootViewController, searchResultsVC: SearchResultsViewController) {
+    //    init(rootVC: RootViewController, searchResultsVC: SearchResultsViewController) {
+    //        self.rootVC = rootVC
+    //        self.searchVC = searchResultsVC
+    //        super.init(nibName: nil, bundle: nil)
+    //    }
+    
+    init(rootVC: RootViewController, searchCompletor: MKLocalSearchCompleter) {
         self.rootVC = rootVC
-        self.searchVC = searchResultsVC
+        self.searchCompletor = searchCompletor
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -57,29 +84,87 @@ class CardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = UIColor.white.withAlphaComponent(0.3)
         delegatesAndDataSources()
         let coordinate = CoreLocationSession.shared.locationManager.location?.coordinate.toString
         let coorRang = (lat: 40.0...41.0, long: -75.0...(-74.0))
         //loadPosts(given: coorRang)
         registerCell()
+        addNFCobservers()
+    }
+    
+    //    override func viewWillAppear(_ animated: Bool) {
+    //        super.viewWillAppear(true)
+    //        addNFCobservers()
+    //    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
     }
     
     private func delegatesAndDataSources(){
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
-//        guard let rootVC = self.parent as? RootViewController else {
-//            return
-//        }
-//
-//        self.rootVC = rootVC
+        //        guard let rootVC = self.parent as? RootViewController else {
+        //            return
+        //        }
+        //
+        //        self.rootVC = rootVC
         
-        searchVC.delegate = self
+        //searchVC.delegate = self
+        mainView.tableView.delegate = self
+        mainView.tableView.dataSource = self
+        searchCompletor.delegate = self
         rootVC.delegate = self
+        //addNFCobservers()
+    }
+    
+    private func addNFCobservers(){
+        NotificationCenterManager.shared.nfc.addObserver(self, selector: #selector(searchCompletorFragment(_:)), name: NotificationCenterManager.textFieldshouldChangeCharactersIn, object: nil)
+        NotificationCenterManager.shared.nfc.addObserver(self, selector: #selector(getInitialResult(_:)), name: NotificationCenterManager.textFieldShouldReturn, object: nil)
+        NotificationCenterManager.shared.nfc.addObserver(self, selector: #selector(textFieldBeganEditing(_:)), name: NotificationCenterManager.textFieldDidBeginEditing, object: nil)
+        NotificationCenterManager.shared.nfc.addObserver(self, selector: #selector(searchButtonPressed(_:)), name: NotificationCenterManager.mapViewDidChangeVisibleRegion, object: nil)
+    }
+    
+    private func removeNFCobservers(){
+        NotificationCenterManager.shared.nfc.removeObserver(self, name: NotificationCenterManager.textFieldshouldChangeCharactersIn, object: nil)
+        NotificationCenterManager.shared.nfc.removeObserver(self, name: NotificationCenterManager.textFieldShouldReturn, object: nil)
+        NotificationCenterManager.shared.nfc.removeObserver(self, name: NotificationCenterManager.textFieldDidBeginEditing, object: nil)
+        NotificationCenterManager.shared.nfc.removeObserver(self, name: NotificationCenterManager.mapViewDidChangeVisibleRegion, object: nil)
     }
     
     //  private var databaseServices = DatabaseService.shared
+    @objc private func textFieldBeganEditing(_ notification: NSNotification){
+        hideTableViewButNotCV(false)
+    }
     
+    @objc private func searchCompletorFragment( _ notification: NSNotification){
+        if let queryFrag = notification.userInfo?[NotificationCenterManager.textFieldshouldChangeCharactersIn] as? String {
+            searchCompletor.queryFragment = queryFrag
+            hideTableViewButNotCV(false)
+        }
+    }
+    
+    @objc private func getInitialResult(_ notification: NSNotification){
+        guard let searchResult = searchResults.first else {
+            return
+        }
+        getRegion(localSearch: searchResult)
+        hideTableViewButNotCV(true)
+    }
+    
+    @objc private func searchButtonPressed(_ notification: NSNotification){
+        hideTableViewButNotCV(true)
+    }
+    
+    private func hideTableViewButNotCV(_ temp : Bool) {
+        if mainView.collectionView.isHidden == true && mainView.tableView.isHidden == true {
+            return
+        }
+        mainView.tableView.isHidden = temp
+        cv.isHidden = !temp
+    }
     
     private func callDelegate(region: MKCoordinateRegion?, coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)){
         if let region = region {
@@ -99,10 +184,14 @@ class CardViewController: UIViewController {
                 guard let posts = posts, !posts.isEmpty else {
                     self?.posts.removeAll() // have an empty view
                     self?.callDelegate(region: region, coordinateRange: coordinateRange)
+                    self?.hideTableViewButNotCV(true)
                     return
+                        
                 }
+                
                 self?.posts = posts
                 self?.callDelegate(region: region, coordinateRange: coordinateRange)
+                
             }
         }
         
@@ -139,6 +228,31 @@ class CardViewController: UIViewController {
         mainView.collectionView.register(UINib(nibName: "CollapsedCell", bundle: nil), forCellWithReuseIdentifier: "collapsedFeedCell")
     }
     
+    func getRegion(localSearch: MKLocalSearchCompletion){
+        CoreLocationSession.shared.getMKRegion(given: localSearch) { [weak self](result) in
+            switch result {
+            case .failure(let error):
+                self?.showAlert(title: "GeoCoder Error", message: error.localizedDescription)
+            case .success(let region):
+                let coordinate = region.center
+                let latDelta = region.span.latitudeDelta
+                let longDelta = region.span.longitudeDelta
+                let searchTitle = localSearch.title
+                let searchSubtitle = localSearch.subtitle
+                guard let firstCharOfTitle = searchTitle.first else { return }
+                let searchResult = searchSubtitle.isEmpty || !firstCharOfTitle.isNumber ? searchTitle : searchTitle + " " + searchSubtitle
+                let latLower = coordinate.latitude-latDelta
+                let latUpper = coordinate.latitude+latDelta
+                let longLower = coordinate.longitude-longDelta
+                let longUpper = coordinate.longitude+longDelta
+                
+                let coorRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>) = (lat: latLower...latUpper, long:longLower...longUpper)
+                
+                self?.loadPosts(given: coorRange, region: region)
+                self?.hideTableViewButNotCV(true)
+            }
+        }
+    }
 }
 
 extension CardViewController: UICollectionViewDataSource {
@@ -151,6 +265,7 @@ extension CardViewController: UICollectionViewDataSource {
             fatalError()
         }
         let post = posts[indexPath.row]
+        
         cell.configureCell(for: post)
         return cell
     }
@@ -162,7 +277,9 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
         let maxSize:CGSize = UIScreen.main.bounds.size
         let itemWidth:CGFloat = maxSize.width
         let itemHeight:CGFloat = itemWidth*0.25
-        return CGSize(width: itemWidth, height: itemHeight)
+        let cellSize = CGSize(width: itemWidth, height: itemHeight)
+        cvCellSize = cellSize
+        return cellSize
     }
     
     // ADDED BY ME LET BIEN KNOW
@@ -175,11 +292,69 @@ extension CardViewController: UICollectionViewDelegateFlowLayout{
         navigationController?.pushViewController(detailVC, animated: true)
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+    
+    //scroll view dragging
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        
+    }
 }
 
 extension CardViewController: RootViewControllerDelegate{
+    func annontationPressed(given annotation: MKPointAnnotation, cardState: Int) {
+        //selectedAnnotation = annotation
+        let coordinate = annotation.coordinate
+        let postIndex = posts.firstIndex{$0.coordinate == coordinate} ?? 0
+        
+        let indexPath = IndexPath(row: postIndex, section: 0)
+        hideTableViewButNotCV(true)
+        cv.selectItem(at: indexPath, animated: true, scrollPosition: cardState == 0 ? .left : .top)
+    }
+    
     func readPostsFromMapView(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>)) {
         loadPosts(given: coordinateRange)
+    }
+    
+    
+}
+
+extension CardViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedQuery = searchResults[indexPath.row]
+        getRegion(localSearch: selectedQuery)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        rootVC.rootView.searchLabel.resignFirstResponder()
+    }
+}
+
+extension CardViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return searchResults.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let searchResult = searchResults[indexPath.row]
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+        cell.textLabel?.text = searchResult.title
+        cell.detailTextLabel?.text = searchResult.subtitle
+        return cell
+    }
+    
+}
+
+extension CardViewController: MKLocalSearchCompleterDelegate{
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        searchResults = completer.results
+    }
+    
+    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+        //handle error
+        showAlert(title: "SearchCompleter Error", message: error.localizedDescription)
     }
 }
 

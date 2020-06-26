@@ -11,8 +11,11 @@ import FirebaseAuth
 import Kingfisher
 import FirebaseFirestore
 
+
 class PostViewController: UIViewController, UIScrollViewDelegate {
     
+    
+    @IBOutlet weak var numberOfGuestsTextField: UITextField!
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var titleTextField: UITextField!
@@ -62,7 +65,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
         cityTextField.delegate = self
         stateTextField.delegate = self
         zipCodeTextField.delegate = self
-        
+        numberOfGuestsTextField.delegate = self
         descriptionTextView.delegate = self
         amenititesTextView.delegate = self
         
@@ -70,6 +73,24 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
         imagePosting.tintColor = .yummyOrange
         
     }
+    
+    override func viewDidLayoutSubviews() {
+         titleTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        priceTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        streetTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        apartmentTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        cityTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        streetTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        zipCodeTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        descriptionTextView.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        descriptionTextView.layer.addBorder(edge: UIRectEdge.left, color: .systemGray4, thickness: 1)
+        amenititesTextView.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        amenititesTextView.layer.addBorder(edge: UIRectEdge.left, color: .systemGray4, thickness: 1)
+        numberOfGuestsTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        stateTextField.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        
+    }
+    
     
     @IBAction func uploadPhotosButtonPressed(_ sender: UIButton) {
         
@@ -79,7 +100,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
             self?.imagePickerController.sourceType = .camera
             self?.present(self!.imagePickerController, animated: true)
         }
-        let phototLibararyAction = UIAlertAction(title: "Photo Libarary", style: .default)
+        let phototLibararyAction = UIAlertAction(title: "Photo Library", style: .default)
         { [weak self] alertAction in
             self?.imagePickerController.sourceType = .photoLibrary
             self?.present(self!.imagePickerController, animated: true)
@@ -131,6 +152,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
                     // let price = priceTextField.text, !price.isEmpty,
                     let description = self.descriptionTextView.text, !description.isEmpty,
                     let amenities = self.amenititesTextView.text,
+                    let numberOfGuests = Int(self.numberOfGuestsTextField.text ?? ""),
                     let mainImage = self.selectedImage,
                     let price = Double(self.priceTextField.text ?? ""),
                     let streetAddr = self.streetTextField.text,
@@ -167,7 +189,7 @@ class PostViewController: UIViewController, UIScrollViewDelegate {
 //                ]
                 let imageId = UUID().uuidString
                 let apartmentNum = self.apartmentTextField.text
-                let post = Post(postId: postId, price: price, postTitle:postTitle, userId: userId, listedDate: listedDate, mainImage: nil, images: nil, description: description, amenities: amenitiesArray, country: nil, streetAddress: streetAddr, apartmentNumber: apartmentNum, city: city, state: state, zip: zip, longitude: coordinate.longitude, latitude: coordinate.latitude, rating: nil, ratingImgURL: nil)
+                let post = Post(postId: postId, price: price, postTitle:postTitle, userId: userId, listedDate: listedDate, mainImage: nil, images: nil, description: description, amenities: amenitiesArray, numberOfGuests: numberOfGuests, country: nil, streetAddress: streetAddr, apartmentNumber: apartmentNum, city: city, state: state, zip: zip, longitude: coordinate.longitude, latitude: coordinate.latitude, rating: nil, ratingImgURL: nil)
                 
                 DatabaseService.shared.postSpace(post: post)
                 { [weak self] (result) in
@@ -265,6 +287,8 @@ extension PostViewController: UITextViewDelegate {
         return true
     }
 }
+
+
 
 extension String {
     func toDouble() -> Double? {

@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Photos
 
 
 
@@ -84,6 +85,8 @@ class ListingDetailViewController: UIViewController {
         amenitiesLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray, thickness: 1)
     
     }
+    
+
     
     
     override func viewDidLoad() {
@@ -174,7 +177,7 @@ class ListingDetailViewController: UIViewController {
         descriptionTV.text = selectedPost.description
         locationLabel.text = "\(selectedPost.cityState ?? "" )"
         amenitiesLabel.text = "Amenities: \(selectedPost.amenities.joined(separator: ", "))"
-        priceRatingLAbel.text = "\(String(format: "%.0f", selectedPost.price))$/DAY"
+        priceRatingLAbel.text = "$\(String(format: "%.0f", selectedPost.price))/DAY"
     }
     
     private func configureCollectionView() {

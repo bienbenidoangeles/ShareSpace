@@ -37,6 +37,7 @@ class ChatVC: UIViewController {
   override func loadView() {
     view = chatView
     view.backgroundColor = .systemGroupedBackground
+
   }
 
     override func viewDidLoad() {

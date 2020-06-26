@@ -15,16 +15,16 @@ class ReservationDetailView: UIView {
     public lazy var reservationStatusLabel: UILabel = {
         let label = UILabel()
         label.text = "status"
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.font = .preferredFont(forTextStyle: .body)
         label.numberOfLines = 1
-        label.textAlignment = .left
-        label.backgroundColor = .systemGroupedBackground
+        label.textAlignment = .center
+        //label.backgroundColor = .systemGroupedBackground
         return label
     }()
     
     lazy var userInfoView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemGroupedBackground
+       // view.backgroundColor = .systemGroupedBackground
         return view
     }()
     
@@ -40,7 +40,7 @@ class ReservationDetailView: UIView {
     public lazy var userLocationLabel: UILabel = {
         let label = UILabel()
         label.text = "Lives in:"
-        label.font = .preferredFont(forTextStyle: .subheadline)
+        label.font = .preferredFont(forTextStyle: .body)
         label.numberOfLines = 1
         label.textAlignment = .left
         return label
@@ -49,7 +49,7 @@ class ReservationDetailView: UIView {
     public lazy var userRatingLabel: UILabel = {
         let label = UILabel()
         label.text = "Reviews:"
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.font = .preferredFont(forTextStyle: .body)
         label.numberOfLines = 1
         label.textAlignment = .left
         return label
@@ -74,6 +74,10 @@ class ReservationDetailView: UIView {
         acceptButton.layer.cornerRadius = 13
         declineButton.clipsToBounds = true
         declineButton.layer.cornerRadius = 13
+        userInfoView.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        postInfoView.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        reservationDetailsView.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+       
     }
     
     public lazy var profileImageView: UIImageView = {
@@ -91,14 +95,14 @@ class ReservationDetailView: UIView {
     
     lazy var postInfoView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemGroupedBackground
+       // view.backgroundColor = .systemGroupedBackground
         return view
     }()
     
     public lazy var postTitelLabel: UILabel = {
         let label = UILabel()
         label.text = "Title"
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.font = .preferredFont(forTextStyle: .title3)
         label.numberOfLines = 0
         label.textAlignment = .left
         return label
@@ -107,7 +111,7 @@ class ReservationDetailView: UIView {
     public lazy var postDescriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "Description"
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.font = .preferredFont(forTextStyle: .body)
         label.numberOfLines = 3
         label.textAlignment = .left
         return label
@@ -116,8 +120,8 @@ class ReservationDetailView: UIView {
     public lazy var postLocationLabel: UILabel = {
         let label = UILabel()
         label.text = "Location"
-        label.font = .preferredFont(forTextStyle: .headline)
-        label.numberOfLines = 1
+        label.font = .preferredFont(forTextStyle: .body)
+        label.numberOfLines = 2
         label.textAlignment = .left
         return label
     }()
@@ -133,14 +137,14 @@ class ReservationDetailView: UIView {
     
     lazy var reservationDetailsView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemGroupedBackground
+       // view.backgroundColor = .systemGroupedBackground
         return view
     }()
     
     public lazy var checkInDateLabel: UILabel = {
         let label = UILabel()
         label.text = "CheckIn"
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.font = .preferredFont(forTextStyle: .body)
         label.numberOfLines = 1
         label.textAlignment = .left
         return label
@@ -148,34 +152,34 @@ class ReservationDetailView: UIView {
     public lazy var checkOutDateLabel: UILabel = {
         let label = UILabel()
         label.text = "CheckOut"
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.font = .preferredFont(forTextStyle: .body)
         label.numberOfLines = 1
         label.textAlignment = .left
         return label
     }()
     
-    public lazy var checkInTimeLabel: UILabel = {
+    public lazy var totalDaysLabel: UILabel = {
         let label = UILabel()
-        label.text = "CheckInTime"
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.text = "check in time"
+        label.font = .preferredFont(forTextStyle: .body)
         label.numberOfLines = 1
         label.textAlignment = .left
         return label
     }()
     
-    public lazy var checkOutTimeLabel: UILabel = {
+    public lazy var totalPriceLabel: UILabel = {
         let label = UILabel()
-        label.text = "CheckOutTime"
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.text = "check out time"
+        label.font = .preferredFont(forTextStyle: .body)
         label.numberOfLines = 1
         label.textAlignment = .left
         return label
     }()
     
-    public lazy var numberOfGuestsLabel: UILabel = {
+    public lazy var pricePerDayLabel: UILabel = {
         let label = UILabel()
-        label.text = "Number of Guests"
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.text = "number of guests"
+        label.font = .preferredFont(forTextStyle: .body)
         label.numberOfLines = 1
         label.textAlignment = .left
         return label
@@ -395,32 +399,32 @@ class ReservationDetailView: UIView {
     }
     
     private func setupCheckInTimeLabelConstraints() {
-        reservationDetailsView.addSubview(checkInTimeLabel)
-        checkInTimeLabel.translatesAutoresizingMaskIntoConstraints = false
+        reservationDetailsView.addSubview(totalDaysLabel)
+        totalDaysLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            checkInTimeLabel.topAnchor.constraint(equalTo: checkOutDateLabel.bottomAnchor, constant: 16),
-            checkInTimeLabel.leadingAnchor.constraint(equalTo:  reservationDetailsView.leadingAnchor, constant: 16),
-            checkInTimeLabel.trailingAnchor.constraint(equalTo: reservationDetailsView.trailingAnchor, constant: -16)
+            totalDaysLabel.topAnchor.constraint(equalTo: checkOutDateLabel.bottomAnchor, constant: 16),
+            totalDaysLabel.leadingAnchor.constraint(equalTo:  reservationDetailsView.leadingAnchor, constant: 16),
+            totalDaysLabel.trailingAnchor.constraint(equalTo: reservationDetailsView.trailingAnchor, constant: -16)
         ])
     }
     
     private func setupCheckOutTimeLabelConstraints() {
-        reservationDetailsView.addSubview(checkOutTimeLabel)
-        checkOutTimeLabel.translatesAutoresizingMaskIntoConstraints = false
+        reservationDetailsView.addSubview(totalPriceLabel)
+        totalPriceLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            checkOutTimeLabel.topAnchor.constraint(equalTo: checkInTimeLabel.bottomAnchor, constant: 16),
-            checkOutTimeLabel.leadingAnchor.constraint(equalTo:  reservationDetailsView.leadingAnchor, constant: 16),
-            checkOutTimeLabel.trailingAnchor.constraint(equalTo: reservationDetailsView.trailingAnchor, constant: -16)
+            totalPriceLabel.topAnchor.constraint(equalTo: totalDaysLabel.bottomAnchor, constant: 16),
+            totalPriceLabel.leadingAnchor.constraint(equalTo:  reservationDetailsView.leadingAnchor, constant: 16),
+            totalPriceLabel.trailingAnchor.constraint(equalTo: reservationDetailsView.trailingAnchor, constant: -16)
         ])
     }
     
     private func setupNumberOfGuestsLabelConstraints() {
-        reservationDetailsView.addSubview(numberOfGuestsLabel)
-        numberOfGuestsLabel.translatesAutoresizingMaskIntoConstraints = false
+        reservationDetailsView.addSubview(pricePerDayLabel)
+        pricePerDayLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            numberOfGuestsLabel.bottomAnchor.constraint(equalTo: reservationDetailsView.bottomAnchor, constant: -8),
-            numberOfGuestsLabel.leadingAnchor.constraint(equalTo:  reservationDetailsView.leadingAnchor, constant: 16),
-            numberOfGuestsLabel.trailingAnchor.constraint(equalTo: reservationDetailsView.trailingAnchor, constant: -16)
+            pricePerDayLabel.bottomAnchor.constraint(equalTo: reservationDetailsView.bottomAnchor, constant: -8),
+            pricePerDayLabel.leadingAnchor.constraint(equalTo:  reservationDetailsView.leadingAnchor, constant: 16),
+            pricePerDayLabel.trailingAnchor.constraint(equalTo: reservationDetailsView.trailingAnchor, constant: -16)
         ])
     }
     

@@ -47,6 +47,14 @@ class MyPostsReservationsViewController: UIViewController {
         }
     }
     
+    private var myStays = [Reservation]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.prView.postsReservationsCV.reloadData()
+            }
+        }
+    }
+    
     private var refreshControl: UIRefreshControl!
 
     override func viewDidLoad() {
@@ -71,6 +79,7 @@ class MyPostsReservationsViewController: UIViewController {
     @objc private func loadData() {
          fetchPosts()
          fetchReservations()
+        fetchReservedByMe()
      }
      
      @objc private func fetchPosts() {
@@ -100,7 +109,7 @@ class MyPostsReservationsViewController: UIViewController {
              refreshControl.endRefreshing()
              return
          }
-         DatabaseService.shared.loadReservations(renterId: user.uid) {[weak self] (result) in
+         DatabaseService.shared.loadReservations(hostId: user.uid) {[weak self] (result) in
              switch result {
              case .failure(let error):
                  DispatchQueue.main.async {
@@ -115,6 +124,25 @@ class MyPostsReservationsViewController: UIViewController {
          }
      }
     
+    private func fetchReservedByMe() {
+        guard let user = Auth.auth().currentUser else {
+            refreshControl.endRefreshing()
+            return
+        }
+        DatabaseService.shared.loadReservedByMe(renterId: user.uid) {[weak self] (result) in
+            switch result {
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self?.showAlert(title: "error loading reservations", message: error.localizedDescription)
+                }
+            case .success(let myReservations):
+                guard let myreservations = myReservations else {
+                    return
+                }
+                self?.myStays = myreservations
+            }
+        }
+    }
      
     
     private func segmentedControllChanged() {
@@ -141,8 +169,11 @@ extension MyPostsReservationsViewController: UICollectionViewDataSource {
          if viewState == .myPosts {
                  return myPosts.count
          } else if viewState == .myReservations {
+            return myReservations.count
+         } else if viewState == .reservedByMe {
+            
         }
-        return myReservations.count
+        return myStays.count
              
     }
     
@@ -153,10 +184,14 @@ extension MyPostsReservationsViewController: UICollectionViewDataSource {
          if viewState == .myPosts {
          let myPost = myPosts[indexPath.row]
          cell.configureCell(for: myPost)
-         } else {
+         } else if viewState == .myReservations {
              let reservation = myReservations[indexPath.row]
-             cell.configureCell(for: reservation)
-         }
+            cell.configureCell(for: reservation)
+            
+         } else {
+            let myStay = myStays[indexPath.row]
+            cell.configureCell(for: myStay)
+        }
          cell.backgroundColor = .white
          return cell
     }
