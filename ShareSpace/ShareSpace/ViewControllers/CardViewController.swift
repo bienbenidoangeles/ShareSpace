@@ -249,6 +249,7 @@ class CardViewController: UIViewController {
                 let coorRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>) = (lat: latLower...latUpper, long:longLower...longUpper)
                 
                 self?.loadPosts(given: coorRange, region: region)
+                self?.hideTableViewButNotCV(true)
             }
         }
     }
