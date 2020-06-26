@@ -12,7 +12,6 @@
 		0F01D831248EABDE00B5BEE5 /* FirstProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F01D830248EABDE00B5BEE5 /* FirstProfileViewController.swift */; };
 		0F01D833248EB90D00B5BEE5 /* Post.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F01D832248EB90D00B5BEE5 /* Post.storyboard */; };
 		0F4E4842248FB39900C68CE6 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4E4841248FB39900C68CE6 /* PostViewController.swift */; };
-		0FA8B0E024857B030079A9B4 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA8B0DF24857B030079A9B4 /* ChatViewController.swift */; };
 		0FA8B0E424857D310079A9B4 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA8B0E324857D310079A9B4 /* Message.swift */; };
 		0FA8B0E8248587720079A9B4 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA8B0E7248587720079A9B4 /* Chat.swift */; };
 		5802D7E224882D2200A505FB /* ChatListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5802D7E124882D2200A505FB /* ChatListView.swift */; };
@@ -104,7 +103,6 @@
 		0F01D830248EABDE00B5BEE5 /* FirstProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstProfileViewController.swift; sourceTree = "<group>"; };
 		0F01D832248EB90D00B5BEE5 /* Post.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Post.storyboard; sourceTree = "<group>"; };
 		0F4E4841248FB39900C68CE6 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
-		0FA8B0DF24857B030079A9B4 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		0FA8B0E324857D310079A9B4 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		0FA8B0E7248587720079A9B4 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		4B9AE4FCC44BEC8D4C066FF1 /* Pods_ShareSpaceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShareSpaceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -324,7 +322,6 @@
 				F1684C54247ADECC00AA9A17 /* CardViewController.swift */,
 				8DBA856D247F3C2E0029598C /* ProfileViewController.swift */,
 				8DBA85B2248192520029598C /* ListingDetailViewController.swift */,
-				0FA8B0DF24857B030079A9B4 /* ChatViewController.swift */,
 				58D5E75B2497A6E800B32CFB /* ChatVC.swift */,
 				8D6C2D4D24859CA4001A840D /* ReservePopupController.swift */,
 				F149D4F72486CF2A006D77D2 /* NavBarViewController.swift */,
@@ -617,7 +614,6 @@
 				0FA8B0E424857D310079A9B4 /* Message.swift in Sources */,
 				8DBA85B3248192520029598C /* ListingDetailViewController.swift in Sources */,
 				F15190BF24A44C0A00DD4F32 /* CollectionViewLayout.swift in Sources */,
-				0FA8B0E024857B030079A9B4 /* ChatViewController.swift in Sources */,
 				F149D4D42481B7EB006D77D2 /* UserModel.swift in Sources */,
 				8D6C2D4E24859CA4001A840D /* ReservePopupController.swift in Sources */,
 				F1684BFB247AC6E800AA9A17 /* ViewController.swift in Sources */,

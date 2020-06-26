@@ -39,6 +39,8 @@ class ChatTableView: UIView {
   public lazy var userProfileImageView: UIImageView = {
     let iv = UIImageView()
     iv.image = UIImage(systemName: "photo.fill")
+    iv.translatesAutoresizingMaskIntoConstraints = false
+    iv.layer.cornerRadius = iv.frame.width / 2
     return iv
   }()
   
@@ -80,18 +82,30 @@ class ChatTableView: UIView {
   }()
   
   public lazy var messageField: UITextField = {
-    let tf = UITextField()
-    tf.placeholder = "enter message"
-    tf.backgroundColor = .white
-    return tf
+    let tv = UITextField()
+    tv.returnKeyType = .send
+    tv.rightView = self.sendButton
+    tv.rightViewMode = .always
+    tv.placeholder = "enter message"
+    tv.layer.cornerRadius = 20
+    tv.backgroundColor = .white
+    return tv
+  }()
+  
+  public lazy var messageInput: UITextView = {
+    let tv = UITextView()
+    tv.backgroundColor = .clear
+    tv.font = .preferredFont(forTextStyle: .subheadline)
+    return tv
   }()
   
   public lazy var sendButton: UIButton = {
     let button = UIButton()
-    button.setTitle("Send", for: .normal)
     button.backgroundColor = .purple
     button.isUserInteractionEnabled = true
     button.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
+    button.setImage(UIImage(systemName: "paperplane"), for: .normal)
+    button.layer.borderWidth = 1
     return button
   }()
   
@@ -101,8 +115,14 @@ class ChatTableView: UIView {
     sv.spacing = 4
     //    sv.distribution = .fillEqually
     sv.alignment = .fill
-    //    sv.backgroundColor = .white
+    sv.backgroundColor = .green
     return sv
+  }()
+  
+  public lazy var messageBackView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .systemRed
+    return view
   }()
   
   
@@ -128,7 +148,8 @@ class ChatTableView: UIView {
       tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
       tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
       tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
-      tableView.bottomAnchor.constraint(equalTo: messageStack.topAnchor)
+      //      tableView.bottomAnchor.constraint(equalTo: messageStack.topAnchor),
+      tableView.heightAnchor.constraint(equalTo: layoutMarginsGuide.heightAnchor, multiplier: 0.85)
     ])
   }
   
@@ -192,23 +213,42 @@ class ChatTableView: UIView {
       messageStack.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
       messageStack.leadingAnchor.constraint(equalTo: leadingAnchor),
       messageStack.trailingAnchor.constraint(equalTo: trailingAnchor),
-      messageStack.heightAnchor.constraint(equalToConstant: 45),
-      sendButton.heightAnchor.constraint(equalToConstant: 35)
+      //      messageStack.heightAnchor.constraint(equalToConstant: 88),
+      sendButton.heightAnchor.constraint(equalToConstant: 35),
+      sendButton.widthAnchor.constraint(lessThanOrEqualTo: sendButton.heightAnchor)
     ])
   }
   
-  private func messageFieldConstraints() {
+  private func customMessageStackConstraints() {
+    addSubview(messageBackView)
     addSubview(messageField)
+    addSubview(messageInput)
+//    addSubview(sendButton)
+    messageInput.translatesAutoresizingMaskIntoConstraints = false
+    messageBackView.translatesAutoresizingMaskIntoConstraints = false
     messageField.translatesAutoresizingMaskIntoConstraints = false
+    sendButton.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-      messageField.topAnchor.constraint(equalTo: tableView.bottomAnchor),
-      messageField.leadingAnchor.constraint(equalTo: leadingAnchor),
-      messageField.trailingAnchor.constraint(equalTo: trailingAnchor),
-      messageField.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-      sendButton.heightAnchor.constraint(equalToConstant: 35)
+      messageBackView.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 0),
+      messageBackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+      messageBackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+      messageBackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0),
+      
+      messageField.topAnchor.constraint(equalTo: messageBackView.topAnchor, constant: 4),
+      messageField.leadingAnchor.constraint(equalTo: messageBackView.leadingAnchor, constant: 4),
+      messageField.trailingAnchor.constraint(equalTo: messageBackView.trailingAnchor, constant: -4),
+      messageField.bottomAnchor.constraint(equalTo: messageBackView.bottomAnchor, constant: -20),
+      sendButton.heightAnchor.constraint(equalToConstant: 32),
+      sendButton.widthAnchor.constraint(equalToConstant: 32),
+      messageInput.topAnchor.constraint(equalTo: messageField.topAnchor),
+      messageInput.leadingAnchor.constraint(equalTo: messageField.leadingAnchor),
+      messageInput.trailingAnchor.constraint(equalTo: messageField.trailingAnchor, constant: -33),
+      messageInput.bottomAnchor.constraint(equalTo: messageField.bottomAnchor)
     ])
     
+    
   }
+  
   
 }
 
@@ -216,19 +256,20 @@ class ChatTableView: UIView {
 extension ChatTableView {
   private func constraintLayout() {
     headerViewConstraints()
-    messageStackConstraints()
+//        messageStackConstraints()
     tableViewContraints()
-    //    messageFieldConstraints()
     detailButtonConstraints()
     imageViewConstraints()
     statusStackConstraints()
-//    updateUI()
+    customMessageStackConstraints()
   }
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    userProfileImageView.layer.cornerRadius = userProfileImageView.frame.width / 2
-    sendButton.layer.cornerRadius = 10
+    userProfileImageView.layer.cornerRadius = 5
+    userProfileImageView.layer.borderWidth = 6
+    sendButton.layer.cornerRadius = (sendButton.frame.height / 2)
+    messageInput.layer.cornerRadius = 20
   }
 }
 
@@ -245,41 +286,58 @@ extension ChatTableView {
       case .success(let reservation):
         let reservationDVC = ReservationDetailViewController(reservation)
         controller.navigationController?.pushViewController(reservationDVC, animated: true)
+        
       }
     }
-    
-    
-    print("load details button works")
   }
   
   @objc private func sendMessage() {
-    print("message button works")
     guard let chatId = chatId,
       let user = Auth.auth().currentUser,
-      let text = messageField.text, !text.isEmpty else {
+      let text = messageInput.text, !text.isEmpty else {
         print("missing message")
         return
     }
-    let message = Message(id: UUID().uuidString, content: text, created: Timestamp(date: Date()), senderID: user.uid, senderName: user.displayName ?? "no display name")
+    let message = Message(id: UUID().uuidString, content: text, created: Timestamp(date: Date()), senderID: user.uid, senderName: user.displayName ?? "no display name", wasRead: false)
     
     DatabaseService.shared.sendChatMessage(message, chatId: chatId) { [weak self] (result) in
       switch result {
       case .failure(let error):
         print("failed \(error)")
       case .success:
-        print("check fire base")
-        self?.messageField.text = ""
+        self?.messageInput.text = ""
       }
     }
   }
-  
+  /*
+    private func listenerSetup() {
+       guard let chatId = chat?.id else {
+           return
+       }
+       listener = Firestore.firestore().collection(DatabaseService.chatsCollection).document(chatId).collection(DatabaseService.threadCollection).order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
+          if let error = error {
+            print("error loading messages: \(error)")
+          } else if let snapshot = snapshot {
+            self.thread.removeAll()
+            for message in snapshot.documents {
+              let msg = Message(message.data())
+              self.thread.append(msg)
+             self.chatView.tableView.scrollToNearestSelectedRow(at: .bottom, animated: true)
+   //           print("Message data: \(msg)")
+            }
+          }
+        }
+      }
+   */
   public func updateUI() {
-//    guard let user = Auth.auth().currentUser else { return }
-
-//    userProfileImageView.layer.cornerRadius = userProfileImageView.frame.width / 2
-
-    
     guard let reservationID = reservationId else { return }
+    Firestore.firestore().collection(DatabaseService.reservationCollection).document(reservationID).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
+      if let error = error {
+        print("error: \(error)")
+      } else if let snapshot = snapshot, let data = snapshot.data() {
+        let reservation = Reservation(dict: data)
+      }
+    }
     DatabaseService.shared.readReservation(reservationId: reservationID) { [weak self] (result) in
       switch result {
       case .failure:
@@ -292,21 +350,21 @@ extension ChatTableView {
           self?.statusLabel.backgroundColor = .clear
           self?.rightStatusView.backgroundColor = .clear
           self?.leftStatusView.backgroundColor = .clear
-
+          
         } else if reservation.status == 1  {
           self?.statusLabel.text = "DECLINED"
           self?.statusLabel.textColor = .black
           self?.statusLabel.backgroundColor = .systemRed
           self?.rightStatusView.backgroundColor = .systemRed
           self?.leftStatusView.backgroundColor = .systemRed
-
+          
         } else if reservation.status == 0 {
           self?.statusLabel.text = "ACCEPTED"
           self?.statusLabel.textColor = .black
           self?.statusLabel.backgroundColor = .systemGreen
           self?.rightStatusView.backgroundColor = .systemGreen
           self?.leftStatusView.backgroundColor = .systemGreen
-
+          
         }
       }
     }
