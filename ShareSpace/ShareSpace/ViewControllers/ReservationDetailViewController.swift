@@ -140,7 +140,7 @@ class ReservationDetailViewController: UIViewController {
                 self.reservationDetailView.postTitelLabel.text = self.selectedPost?.postTitle
                 self.reservationDetailView.postDescriptionLabel.text = "\(self.selectedPost?.description ?? "no description")"
                 self.reservationDetailView.totalPriceLabel.text = "$\(Int(self.selectedPost?.price ?? 0)) x \(self.selectedReservation.totalDays) days         $\(self.selectedReservation.totalPrice)"
-                self.reservationDetailView.pricePerDayLabel.text = "number of guests:        \(self.selectedPost?.numberOfGuests.description ?? "0")"
+                self.reservationDetailView.pricePerDayLabel.text = "number of guests:        \(self.selectedPost?.numberOfGuests ?? 0)"
             }
         }
         //FIX: Add if statement for status 1,2,3?

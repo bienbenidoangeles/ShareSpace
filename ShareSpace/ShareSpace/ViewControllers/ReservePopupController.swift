@@ -39,6 +39,8 @@ class ReservePopupController: UIViewController {
     @IBOutlet weak var messageTextView: UITextView!
     
     
+    @IBOutlet weak var numberOgGuestsTextField: UITextField!
+    
     @IBOutlet weak var sendButton: UIButton!
     
     private var hostOfThisListing: UserModel?
