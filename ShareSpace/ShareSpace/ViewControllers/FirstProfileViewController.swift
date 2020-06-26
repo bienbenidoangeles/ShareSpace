@@ -122,7 +122,7 @@ class FirstProfileViewController: UIViewController {
         
         userNameLabel.text = "Hi, I am \(user.displayName)"
         userLocation.text = "I am from \(user.cityState)"
-        occupationLabel.text = "I am working as \(user.work)"
+        occupationLabel.text = "I am working as \(user.work ?? "Mobile Developer")"
         textView.text = user.bio
 //        segmentedControl.insertSegment(withTitle: "My Spaces", at: 0, animated: true)
 //        segmentedControl.insertSegment(withTitle: "My Reservations", at: 1, animated: true)
