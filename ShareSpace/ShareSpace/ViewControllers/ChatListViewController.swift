@@ -19,6 +19,11 @@ class ChatListViewController: UIViewController {
         self.chatList.tableView.reloadData()
         print("Chats List \n\n\(self.userChats)")
       }
+        if userChats.isEmpty {
+            chatList.tableView.backgroundView = EmptyView(title: "Inbox empty", messege: "No reservations found")
+        } else {
+            chatList.tableView.backgroundView = nil
+        }
     }
   }
   
@@ -51,6 +56,7 @@ class ChatListViewController: UIViewController {
 
   override func loadView() {
     view = chatList
+    view.backgroundColor = .systemBackground
   }
   
   override func viewDidAppear(_ animated: Bool) {

@@ -309,6 +309,7 @@ extension CardViewController: RootViewControllerDelegate{
         let postIndex = posts.firstIndex{$0.coordinate == coordinate} ?? 0
         
         let indexPath = IndexPath(row: postIndex, section: 0)
+        hideTableViewButNotCV(true)
         cv.selectItem(at: indexPath, animated: true, scrollPosition: cardState == 0 ? .left : .top)
     }
     

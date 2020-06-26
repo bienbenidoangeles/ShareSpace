@@ -35,6 +35,7 @@ class ChatVC: UIViewController {
   
   override func loadView() {
     view = chatView
+    view.backgroundColor = .systemBackground
 //    chatView.chatId = chat?.id
 //    chatView.reservationId = chat?.reservationId
 //    chatView.controller = self
