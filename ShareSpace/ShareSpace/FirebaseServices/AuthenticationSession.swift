@@ -13,9 +13,11 @@ class AuthenticationSession {
   
   private init() {}
   static let shared = AuthenticationSession()
+    
+    let auth = Auth.auth()
   
   public func createNewUser(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> ()) {
-    Auth.auth().createUser(withEmail: email, password: password) { (authDataResult, error) in
+    auth.createUser(withEmail: email, password: password) { (authDataResult, error) in
       if let error = error {
         completion(.failure(error))
       } else if let authDataResult = authDataResult {
@@ -25,7 +27,7 @@ class AuthenticationSession {
   }
   
   public func signExistingUser(email: String, password: String, completion: @escaping (Result<AuthDataResult, Error>) -> ()) {
-    Auth.auth().signIn(withEmail: email, password: password) { (authDataResult, error) in
+    auth.signIn(withEmail: email, password: password) { (authDataResult, error) in
       if let error = error {
         completion(.failure(error))
       } else if let authDataResult = authDataResult {
@@ -35,7 +37,7 @@ class AuthenticationSession {
   }
   
   public func deleteUser(userId: String, completion: @escaping (Result<Bool, Error>) -> ()) {
-    Auth.auth().currentUser?.delete(completion: { (error) in
+    auth.currentUser?.delete(completion: { (error) in
       if let error = error {
         completion(.failure(error))
       } else {
@@ -43,4 +45,36 @@ class AuthenticationSession {
       }
     })
   }
+    public func logout() throws{
+        do {
+            try auth.signOut()
+        } catch {
+            throw error
+        }
+        
+    }
+    
+    public func isSignedIn() -> Bool {
+        if let _ = auth.currentUser {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    private func promptLoginVC(){
+        UIViewController.showViewController(viewcontroller: LoginViewController())
+    }
+    
+    public func ifSignInOutOrPromptLoginVC() throws{
+        if isSignedIn() == true {
+            do {
+                try logout()
+            } catch {
+                throw error
+            }
+        } else {
+            promptLoginVC()
+        }
+    }
 }

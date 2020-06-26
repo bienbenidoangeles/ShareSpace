@@ -10,24 +10,36 @@ import UIKit
 
 class CardView: UIView {
     
+    override func layoutSubviews() {
+        handleBarView.clipsToBounds = true
+        handleBarView.layer.cornerRadius = 4
+    }
+    
     public lazy var topView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.5)
         return view
     }()
     
     public lazy var handleBarView: UIView = {
         let view = UIView()
-        view.backgroundColor = .darkGray
+        view.backgroundColor = .white
         return view
     }()
     
     public lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
+        layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
-        cv.backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
+        cv.backgroundColor = UIColor.white.withAlphaComponent(0.1)
         return cv
+    }()
+    
+    public lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.1)
+        tableView.isHidden = true
+        return tableView
     }()
             
     override init(frame: CGRect) {
@@ -44,6 +56,7 @@ class CardView: UIView {
         setUpTopView()
         setUpHandleBarView()
         setUpCollectionViewConstrainsts()
+        setupTableViewConstrainsts()
     }
     
     private func setUpTopView(){
@@ -53,7 +66,7 @@ class CardView: UIView {
             topView.leadingAnchor.constraint(equalTo: leadingAnchor),
             topView.trailingAnchor.constraint(equalTo: trailingAnchor),
             topView.topAnchor.constraint(equalTo: topAnchor),
-            topView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.05),
+            topView.heightAnchor.constraint(equalToConstant: 30),
         ])
     }
     
@@ -76,6 +89,17 @@ class CardView: UIView {
             collectionView.topAnchor.constraint(equalTo: topView.bottomAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+    }
+    
+    private func setupTableViewConstrainsts(){
+        addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: topView.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     

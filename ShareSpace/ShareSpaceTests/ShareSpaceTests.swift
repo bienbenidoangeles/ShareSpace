@@ -74,23 +74,24 @@ class ShareSpaceTests: XCTestCase {
     wait(for: [exp], timeout: 6.0)
   }
    
-  func testDBFuncLoadPost() {
-    let exp = XCTestExpectation(description: "Post loaded")
-    DatabaseService.shared.loadPost { (result) in
-      exp.fulfill()
-      switch result {
-      case .failure(let error):
-        XCTFail("Failed to load any post: \(error)")
-      case .success(let post):
-        if post.count > 0 {
-          XCTAssert(true)
-        } else {
-          XCTFail("No post test to load")
-        }
-      }
-    }
-    wait(for: [exp], timeout: 3.0)
-  }
+//  func testDBFuncLoadPost() {
+//    let exp = XCTestExpectation(description: "Post loaded")
+//    DatabaseService.shared.loadPosts(zipcode: "") { (result) in
+//      exp.fulfill()
+//      switch result {
+//      case .failure(let error):
+//        XCTFail("Failed to load any post: \(error)")
+//      case .success(let post):
+//        if post.count > 0 {
+//          XCTAssert(true)
+//        } else {
+//          XCTFail("No post test to load")
+//        }
+//      }
+//    }
+//    wait(for: [exp], timeout: 3.0)
+//  }
+
   
   func testDBFuncDeleteUser() {
     let exp = XCTestExpectation(description: "User deleted")
@@ -136,6 +137,11 @@ class ShareSpaceTests: XCTestCase {
 //          XCTFail("No current user logged in")
 //          return
 //        }
+        
+//        for _ in 1...30 {
+//
+//
+//        }
         let post = Post.generatePostAsDict()
         
           DatabaseService.shared.postSpace(post: post) { (result) in
@@ -151,23 +157,81 @@ class ShareSpaceTests: XCTestCase {
       }
   
 
-  func testChatThread() {
+  func testCreateNewChat() {
     let exp = XCTestExpectation(description: "Chat created")
     guard let user = Auth.auth().currentUser else {
-       XCTFail("no current user")
+      XCTFail("no current user")
       return
     }
-    DatabaseService.shared.createNewChat(user1ID: user.uid, user2ID: "hz7DjrFALvgPBHNS3m4kjDmvQn52") { (result) in
+    DatabaseService.shared.createNewChat(user1ID: "ZjorXCGS6cZAnJY47PHG2Sr8y462", user2ID: "j6NB9Ve4cqQWXyheiqYHkotczQY2") { (result) in
       exp.fulfill()
       switch result {
       case .failure(let error):
-        XCTFail("Failed to load chat")
+        XCTFail("Failed to create chat: \(error)")
       case .success:
         XCTAssert(true)
       }
     }
     wait(for: [exp], timeout: 3.0)
   }
+    
+    
+  
+  func testStartNewChat() {
+    let exp = XCTestExpectation(description: "success")
+    guard let user = Auth.auth().currentUser else {
+      XCTFail("NO current logged user")
+      return
+    }
+    DatabaseService.shared.beginChatConversation(user1ID: user.uid, user2ID: "LdWPXgGHHEeRTtqKvwTWCly97AN2", message: "Testing begin chat batabase function") { (result) in
+      exp.fulfill()
+      switch result {
+      case .failure(let error):
+        XCTFail("Foled to create chat and swend message: \(error)")
+      case .success:
+        XCTAssert(true, "successfully created")
+      }
+    }
+    wait(for: [exp], timeout: 5.0)
+    
+  }
+  
+//  func testChatLoad() {
+//    let exp = XCTestExpectation(description: "chats loaded")
+//    guard let user = Auth.auth().currentUser else {
+//      XCTFail("no current user")
+//      return
+//    }
+//    DatabaseService.shared.loadChatOptions(userId: user.uid) { (result) in
+//      exp.fulfill()
+//      switch result {
+//      case .failure(let error):
+//        XCTFail("Failed to load chat: \(error)")
+//      case .success(let users):
+//        if users.count <= 0 {
+//          XCTFail("no chats loaded")
+//        } else {
+//          XCTAssert(true, "\(users.count) chats loaded")
+//        }
+//      }
+//    }
+//    wait(for: [exp], timeout: 3.0)
+//  }
+  
+//  func testLoadSingleChat() {
+//    let exp = XCTestExpectation(description: "chats loaded")
+//    let id = "iujeuXZDjOjoyeZPvvbC"
+//    DatabaseService.shared.loadChat(chatId: id) { (result) in
+//      exp.fulfill()
+//      switch result {
+//      case .failure(let error):
+//        XCTFail("failed to pass: \(error)")
+//      case .success(let chat):
+//        XCTAssertEqual(chat.id, id)
+//      }
+//    }
+//    wait(for: [exp], timeout: 3.0)
+//  }
   
   
 //  func testSignOut() {

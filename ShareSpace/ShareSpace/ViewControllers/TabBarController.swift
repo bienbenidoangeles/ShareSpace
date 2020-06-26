@@ -10,6 +10,8 @@ import UIKit
 
 class TabBarController: UITabBarController {
     
+    
+    
     private var mainVC: RootViewController = {
         let vc = RootViewController()
         vc.tabBarItem = UITabBarItem(title: "Main", image: UIImage(systemName: "photo"), tag: 0)
@@ -22,16 +24,23 @@ class TabBarController: UITabBarController {
 //        return vc
 //    }()
     
-     private var chatVC: ChatViewController = {
-            let vc = ChatViewController()
+     private var chatVC: ChatListViewController = {
+            let vc =  ChatListViewController()
             vc.tabBarItem = UITabBarItem(title: "Chat", image: UIImage(systemName: "message"), tag: 2)
             return vc
         }()
+    
+    private var mypostReservVC: MyPostsReservationsViewController = {
+        let vc =  MyPostsReservationsViewController()
+        vc.tabBarItem = UITabBarItem(title: "MyCollections", image: UIImage(systemName: "message"), tag: 3)
+        return vc
+    }()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         //let controllers = [mainVC, profileVC]
-        let controllers = [mainVC, chatVC]
+        let controllers = [mainVC, chatVC, mypostReservVC]
         viewControllers = controllers.map{UINavigationController(rootViewController: $0)}
 
     }

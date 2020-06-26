@@ -9,14 +9,21 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Photos
 
 
 
 class ListingDetailViewController: UIViewController {
     
+    let arrayOfImages = [UIImage(named: "office"), UIImage(named: "office1"), UIImage(named: "office2"), UIImage(named: "office3")]
+    
     private let locationSession = CoreLocationSession.shared.locationManager
     private var annotation = MKPointAnnotation()
     private var isShowingNewAnnotation = false
+    
+    
+    @IBOutlet weak var imageView: UIImageView!
+    
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -24,20 +31,35 @@ class ListingDetailViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     
     
-    @IBOutlet weak var descriptionLabel: UITextView!
+    @IBOutlet weak var locationLabel: UILabel!
     
-   
+    @IBOutlet weak var listedByLabel: UILabel!
+    
+    
+    @IBOutlet weak var descriptionTV: UITextView!
+    
+    
+    
+    @IBOutlet weak var amenitiesLabel: UILabel!
+    
+    
+    
+    @IBOutlet weak var priceRatingLAbel: UILabel!
+    
     @IBOutlet weak var map: MKMapView!
     
     
     
     @IBOutlet weak var priceRating: UIBarButtonItem!
     
+    @IBOutlet weak var inquireButton: UIButton!
     
+    
+    @IBOutlet weak var toolBar: UIToolbar!
+    
+    private var host: UserModel?
     
     private var selectedPost: Post
-    
-    
     
     init?(coder: NSCoder, selectedPost: Post) {
         self.selectedPost = selectedPost
@@ -55,16 +77,38 @@ class ListingDetailViewController: UIViewController {
             }
         }
     }
-  
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        titleLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray, thickness: 1)
+        listedByLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray, thickness: 1)
+        descriptionTV.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray, thickness: 1)
+        amenitiesLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray, thickness: 1)
+    
+    }
+    
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         map.delegate = self
         map.showsCompass = true
         map.showsUserLocation = true
+        configureButtonUI()
         updateUI()
         configureCollectionView()
         loadMap()
+    }
+    
+    
+    private func configureButtonUI() {
+        inquireButton.backgroundColor = .sunnyYellow
+        inquireButton.clipsToBounds = true
+        inquireButton.layer.cornerRadius = 13
+        toolBar.barTintColor = .white
+        map.clipsToBounds = true
+        map.layer.cornerRadius = 13
+        
     }
     
     private func loadMap() {
@@ -91,7 +135,7 @@ class ListingDetailViewController: UIViewController {
         selectedPost = post
         let annotation = MKPointAnnotation()
        // let coordinate = CLLocationCoordinate2D
-        returnCoordinates(address: "\(post.location.streetAddress), \(post.location.city), \(post.location.state)", completion: { (result) in
+        returnCoordinates(address: "\(post.streetAddress), \(post.city), \(post.state)", completion: { (result) in
             switch result {
             case .failure(let error):
                 print(error)
@@ -102,7 +146,7 @@ class ListingDetailViewController: UIViewController {
                 let long = coordinates.longitude
                 let coordinate = CLLocationCoordinate2D(latitude: lat , longitude: long )
                 annotation.coordinate = coordinate
-                annotation.title = post.price.total.description
+                annotation.title = post.price.description
                 self.isShowingNewAnnotation = true
                 self.annotation = annotation
                 self.map.addAnnotation(annotation)
@@ -118,8 +162,22 @@ class ListingDetailViewController: UIViewController {
     }
     
     private func updateUI() {
+        
+        DatabaseService.shared.loadUser(userId: selectedPost.userId) { (result) in
+            switch result {
+            case .failure(let error):
+                print("error loading user: \(error.localizedDescription)")
+            case.success(let user):
+                self.host = user
+                self.listedByLabel.text = "Hosted by \(self.host?.displayName ?? "no name")"
+            }
+        }
+        
         titleLabel.text = selectedPost.postTitle
-        descriptionLabel.text = selectedPost.description
+        descriptionTV.text = selectedPost.description
+        locationLabel.text = "\(selectedPost.cityState ?? "" )"
+        amenitiesLabel.text = "Amenities: \(selectedPost.amenities.joined(separator: ", "))"
+        priceRatingLAbel.text = "$\(String(format: "%.0f", selectedPost.price))/DAY"
     }
     
     private func configureCollectionView() {
@@ -127,24 +185,35 @@ class ListingDetailViewController: UIViewController {
         collectionView.delegate = self
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+   // override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //        guard let detailsVC = segue.destination as? ReservePopupController else {
 //                fatalError("unable to segue properly-MainViewController")
 //        }
-        if segue.destination is ReservePopupController {
-            let reserveVC = segue.destination as? ReservePopupController
-            reserveVC?.selectedPost = selectedPost
-        }
+//        if segue.destination is ReservePopupController {
+//            let reserveVC = segue.destination as? ReservePopupController
+//            reserveVC?.selectedPost = selectedPost
+//        }
+//    
+//    }
+//
     
+    
+    @IBAction func inquireUIButtonPressed(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "ListingDetail", bundle: nil)
+         let popupVC = storyboard.instantiateViewController(identifier: "ReservePopupController", creator: { (coder) -> ReservePopupController? in
+            return ReservePopupController(coder: coder, selectedPost: self.selectedPost)
+        })
+        popupVC.modalTransitionStyle = .crossDissolve
+        popupVC.modalPresentationStyle = .fullScreen
+        
+        present(popupVC, animated: true)
+               print("button pressed")
+        
     }
     
-    
     @IBAction func inquireButtonPressed(_ sender: UIBarButtonItem) {
-        
-        
+     
 
-        
-        print("button pressed")
     }
     
     
@@ -152,21 +221,7 @@ class ListingDetailViewController: UIViewController {
         print("pressed")
     }
     
-//    @IBAction func reserveButtonPressed(_ sender: UIBarButtonItem) {
-//        print("pressed reserv button")
-//        let storyboard = UIStoryboard(name: "ListingDetail", bundle: nil)
-//        let detailVC = storyboard.instantiateViewController(identifier: "ReservePopupController")
-//        navigationController?.pushViewController(detailVC, animated:false)
-//
-//        let storyBoard: UIStoryboard = UIStoryboard(name: "ListingDetail", bundle: nil)
-//        let newViewController = storyBoard.instantiateViewController(withIdentifier: "newViewController") as! ReservePopupController
-//
-//
 
-       // self.present(newViewController, animated: true, completion: nil)
-//
- //       }
-    
     
     
 
@@ -174,12 +229,16 @@ class ListingDetailViewController: UIViewController {
 
 extension ListingDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10 //selectedPost.images.count
+        return arrayOfImages.count //selectedPost.images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listingPhotosCell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listingPhotosCell", for: indexPath) as? ListingPhotosCell else {
+            fatalError()
+        }
         cell.backgroundColor = .sunnyYellow
+        
+        cell.imageView.image = arrayOfImages[indexPath.row]
         return cell 
     }
     
@@ -229,3 +288,34 @@ extension ListingDetailViewController: MKMapViewDelegate {
     }
     
 }
+
+extension CALayer {
+
+    func addBorder(edge: UIRectEdge, color: UIColor, thickness: CGFloat) {
+
+        let border = CALayer()
+
+        switch edge {
+        case UIRectEdge.top:
+            border.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: thickness)
+            break
+        case UIRectEdge.bottom:
+            border.frame = CGRect(x: 0, y: self.frame.height - thickness, width: self.frame.width, height: thickness)
+            break
+        case UIRectEdge.left:
+            border.frame = CGRect(x: 0, y: 0, width: thickness, height: self.frame.height)
+            break
+        case UIRectEdge.right:
+            border.frame = CGRect(x: self.frame.width - thickness, y: 0, width: thickness, height: self.frame.height)
+            break
+        default:
+            //For Center Line
+            border.frame = CGRect(x: self.frame.width/2 - thickness, y: 0, width: thickness, height: self.frame.height)
+            break
+        }
+
+        border.backgroundColor = color.cgColor;
+        self.addSublayer(border)
+    }
+}
+

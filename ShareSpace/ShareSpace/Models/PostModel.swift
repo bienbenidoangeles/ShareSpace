@@ -8,45 +8,108 @@
 
 import Foundation
 import Firebase
+import MapKit
 
 struct Post:Codable {
     let postId: String
-    let price: Price
-    let postTitle: String
+    let price: Double // post vc
+    let postTitle: String // post vc
     let userId: String
     let listedDate: Date
-    let mainImage: String
-    let images: [String]?
-    let description: String
-    let location: Location    //let amenities: [String]
-    let rating: Rating?
-    let reviews: [Review]?
+    let mainImage: String?
+    let images: [String]? // sub-collection
+    let description: String // post vc
+    let amenities: [String]
+    let numberOfGuests: Int
+    let country: String?
+    let streetAddress: String
+    let apartmentNumber: String?
+    let city: String
+    let state: String
+    let zip: String
+    //let locationId: String
+    var fullAddress: String? {
+        get {
+            return "\(streetAddress) \(apartmentNumber ?? ""), \(city), \(state) \(zip) \(country ?? "")"
+        }
+    }
+    var cityState: String? {
+        get{
+            return "\(city), \(state)"
+        }
+    }
+    
+    let longitude:Double?
+    let latitude:Double?
+    
+    var coordinate: CLLocationCoordinate2D? {
+        guard let lat = latitude,
+            let long = longitude else {
+                return nil
+        }
+        
+        return CLLocationCoordinate2D(
+            latitude: lat,
+            longitude: long)
+    }
+    let rating: Double?
+    let ratingImgURL: String?
+    var postDict: [String:Any] {
+        return [
+            "postId": postId,
+            "price": price,
+            "postTitle": postTitle,
+            "userId": userId,
+            "listedDate": listedDate,
+            "mainImage": mainImage,
+            "images": images ?? [String](),
+            "description": description,
+            "amenities": amenities,
+            "numberOfGuests": numberOfGuests,
+            "country": country,
+            "streetAddress": streetAddress,
+            "apartmentNumber":apartmentNumber ?? "",
+            "city": city,
+            "state": state,
+            "zip": zip,
+            "fullAddress": fullAddress ?? "",
+            "cityState":cityState ?? "",
+            "latitude": latitude ?? 0.0,
+            "longitude": longitude ?? 0.0,
+            "rating": rating ?? -0.0,
+            "ratingImgURL": ratingImgURL ?? ""
+        ]
+    }
+    //let reviews: [Review]? //sub-collection
     
 //    enum postType: String {
 //        case gym
 //        case other
 //    }
     
-    static func generatePost()-> Post{
-        
-        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        var randomReviewDesc:String = ""
-        for _ in 0...10{
-            randomReviewDesc.append(letters.randomElement()!)
-        }
-        
-        var randomUIDs:String = ""
-        DatabaseService.shared.loadIDs { (result) in
-            switch result {
-            case .failure:
-                break
-            case .success(let uids):
-                randomUIDs = uids.randomElement()!
-            }
-        }
-        
-        return Post(postId: UUID().uuidString, price: Price.generatePrice(), postTitle: randomReviewDesc, userId: randomUIDs, listedDate: Date(), mainImage: "mainImgURL", images: nil, description: randomReviewDesc, location: Location.generateFullLocationWOLatLong(), rating: Rating.generateRating(), reviews: Review.generateReviews())
-    }
+//    static func generatePost()-> Post{
+//        
+//        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+//        var randomReviewDesc:String = ""
+//        for _ in 0...10{
+//            randomReviewDesc.append(letters.randomElement()!)
+//        }
+//        
+//        var randomUIDs:String = ""
+//        DatabaseService.shared.loadIDs { (result) in
+//            switch result {
+//            case .failure:
+//                break
+//            case .success(let uids):
+//                randomUIDs = uids.randomElement()!
+//            }
+//        }
+//        
+//        let locationId:String = UUID().uuidString
+//        let postId: String = UUID().uuidString
+//        //return Post(postId: UUID().uuidString, price: Price.generatePrice(), postTitle: randomReviewDesc, userId: randomUIDs, listedDate: Date(), mainImage: "mainImgURL", images: nil, description: randomReviewDesc,  amenities: ["washing machine", "WiFi"], location: Location.generateFullLocationWOLatLong(locationId: locationId, postId: postId), locationId: locationId, rating: Rating.generateRating(), reviews: Review.generateReviews())
+//        return Post(postId: postId, price: <#T##Double#>, postTitle: <#T##String#>, userId: <#T##String#>, listedDate: <#T##Date#>, mainImage: <#T##String#>, images: <#T##[String]?#>, description: <#T##String#>, amenities: <#T##[String]#>, country: <#T##String#>, streetAddress: <#T##String#>, apartmentNumber: <#T##String?#>, city: <#T##String#>, state: <#T##String#>, zip: <#T##String#>, longitude: <#T##Double?#>, latitude: <#T##Double?#>, rating: <#T##Double?#>)
+//    }
     
     static func generatePostAsDict() -> [String: Any] {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -56,21 +119,37 @@ struct Post:Codable {
         }
         
         let randomUIs:[String] = ["08bULUBwqqNbX6opGlUmUdM2xCH2", "0qtGZ0YxnWgsvX63aq1UBC4fpbC3","8e4XfTNmQAcAUsJs2CeY52XEkRJ3"]
+        let locationId:String = UUID().uuidString
+        let postId: String = UUID().uuidString
         
-        let dict:[String:Any] = ["postId": UUID().uuidString, "price": Price.generatePriceasDict(), "postTitle": randomReviewDesc, "userId": randomUIs.randomElement()!, "listedDate": Date(), "mainImage": "mainImgURL", "images": "nil", "description": randomReviewDesc, "location": Location.generateFullLocationWLatLongAsDict(), "rating": Rating.generateRatingAsDict(), "reviews": Review.generateReviewsAsDict()]
+        let dict:[String:Any] = [
+            "postId": UUID().uuidString,
+            "price": Price.generatePriceasDict(),
+            "postTitle": randomReviewDesc,
+            "userId": randomUIs.randomElement()!,
+            "listedDate": Date(), "mainImage": "mainImgURL",
+            "images": "nil",
+            "description": randomReviewDesc,
+            "location": Location.generateFullLocationWLatLongAsDict(locationId: locationId, postId: postId),
+            "locationId": locationId,
+            "rating": Rating.generateRatingAsDict(),
+            "reviews": Review.generateReviewsAsDict(),
+        ]
         return dict
     }
     
 }
 
 
-struct Location:Codable {
+struct Location: Codable {
     let country: String
     let streetAddress: String
     let apartmentNumber: String?
     let city: String
     let state: String
     let zip: String
+    let locationId: String
+    let postId:String
     var fullAddress: String? {
         get {
             return "\(streetAddress) \(apartmentNumber ?? "") \(city), \(state) \(zip) \(country)"
@@ -82,10 +161,38 @@ struct Location:Codable {
         }
     }
     
-    let longitutude: Double?
+    let longitude: Double?
     let latitude:Double?
     
-    static func generateFullLocationWOLatLong() -> Location{
+    var coordinate: CLLocationCoordinate2D? {
+        guard let lat = latitude,
+            let long = longitude else {
+                return nil
+        }
+        
+        return CLLocationCoordinate2D(
+            latitude: lat,
+            longitude: long)
+    }
+    
+    var locationDictionary: [String:Any]{
+        return [
+            "country":country,
+            "streetAddress":streetAddress,
+            "apartmentNumber":apartmentNumber ?? "",
+            "city":city,
+            "state":state,
+            "zip":zip,
+            "locationId": locationId,
+            "postId":postId,
+            "fullAddress": fullAddress ?? "",
+            "latitude": latitude ?? 0.0,
+            "longitude": longitude ?? 0.0,
+        ]
+    }
+
+    
+    static func generateFullLocationWOLatLong(locationId: String, postId: String) -> Location{
         let countries:[String] = ["US, CA, MEX"]
         let randomStreetNum = Int.random(in: 100...9999)
         let randomStreetNames: [String] = ["Park Avenue", "Mason Street", "Carroll Street", "Pineapple Street"]
@@ -95,7 +202,7 @@ struct Location:Codable {
         let randomZip:[String] = ["10001", "10402", "10043"]
         
         
-        return Location(country: countries.randomElement()!, streetAddress: "\(randomStreetNum) \(randomStreetNames.randomElement()!)", apartmentNumber: randomApartments.randomElement(), city: randomCity.randomElement()!, state: randomState.first!, zip: randomZip.randomElement()!, longitutude: nil, latitude: nil)
+        return Location(country: countries.randomElement()!, streetAddress: "\(randomStreetNum) \(randomStreetNames.randomElement()!)", apartmentNumber: randomApartments.randomElement(), city: randomCity.randomElement()!, state: randomState.first!, zip: randomZip.randomElement()!, locationId: locationId, postId: postId, longitude: nil, latitude: nil)
     }
     
     static func generateLongLatLocation() -> (Double, Double) {
@@ -106,10 +213,10 @@ struct Location:Codable {
             Double.random(in: 73...75) * -1.0
         }
         
-        return (randomLong, randomLat)
+        return (randomLat, randomLong)
     }
     
-    static func generateFullLocationWLatLongAsDict() -> [String: Any] {
+    static func generateFullLocationWLatLongAsDict(locationId: String, postId:String) -> [String: Any] {
         let countries:[String] = ["US", "CA", "MEX"]
         let randomStreetNum = Int.random(in: 100...9999)
         let randomStreetNames: [String] = ["Park Avenue", "Mason Street", "Carroll Street", "Pineapple Street"]
@@ -117,8 +224,18 @@ struct Location:Codable {
         let randomCity:String = ["Bx", "Ny", "Bk", "Q", "SI"].randomElement()!
         let randomState:[String] = ["NY"]
         let randomZip:String = ["10001", "10402", "10043"].randomElement()!
-        
-        let dict:[String: Any] = ["country": countries.randomElement()!, "streetAddress": "\(randomStreetNum) \(randomStreetNames.randomElement()!)", "apartmentNumber": randomApartments, "city": randomCity, "state": "NY", "zip": randomZip, "longitutde": Location.generateLongLatLocation().0, "latitude": Location.generateLongLatLocation().1]
+        let dict:[String: Any] = [
+            "country": countries.randomElement()!,
+            "streetAddress": "\(randomStreetNum) \(randomStreetNames.randomElement()!)",
+            "apartmentNumber": randomApartments,
+            "city": randomCity,
+            "state": "NY",
+            "zip": randomZip,
+            "longitutde": Location.generateLongLatLocation().0,
+            "latitude": Location.generateLongLatLocation().1,
+            "locationId": locationId,
+            "postId":postId,
+        ]
         return dict
     }
     
@@ -131,37 +248,55 @@ extension Location {
         self.city = dictionary["city"] as? String ?? ""
         self.state = dictionary["city"] as? String ?? ""
         self.zip = dictionary["zip"] as? String ?? ""
-        self.longitutude = dictionary["longitutude"] as? Double ?? 0.0
+        self.longitude = dictionary["longitutude"] as? Double ?? 0.0
         self.latitude = dictionary["latitude"] as? Double ?? 0.0
-    }
-    
-    var coordinate: (longitutde: Double, latitude: Double){
-        get {
-            guard let long = longitutude, let lat = latitude else { return (0,0) }
-            return (long, lat)
-        }
+        self.locationId = dictionary["locationId"] as? String ?? "nil"
+        self.postId = dictionary["postId"] as? String ?? "nil"
     }
 }
 extension Post {
     
     init(_ dictionary: [String: Any]) {
         self.postId = dictionary["postId"] as? String ?? "nil"
-        self.price = dictionary["price"] as? Price ?? Price(["subtotal": -1.0, "spaceCut": -1.0, "tax": -1.0, "taxRate": -1.0, "total": -1.0])
+        //self.price = dictionary["price"] as? Price ?? Price(["subtotal": -1.0, "spaceCut": -1.0, "tax": -1.0, "taxRate": -1.0, "total": -1.0])
+        self.price = dictionary["price"] as? Double ?? -1.0
         self.postTitle = dictionary["postTitle"] as? String ?? "nil"
-        self.userId = dictionary["hostId"] as? String ?? ""
+        self.userId = dictionary["userId"] as? String ?? ""
         self.listedDate = dictionary["listedDate"] as? Date ?? Date()
         self.mainImage = dictionary["mainImage"] as? String ?? "nil"
         self.images = dictionary["images"] as? [String] ?? ["nil"]
-        self.location = dictionary["location"] as? Location ?? Location(["country": "nil", "streetAddress": "nil", "city": "nil", "state": "nil", "zip": -1.0])
+        //self.location = dictionary["location"] as? Location ?? Location(["country": "nil", "streetAddress": "nil", "city": "nil", "state": "nil", "zip": -1.0])
         self.description = dictionary["description"] as? String ?? ""
-        self.rating = dictionary["rating"] as? Rating ?? Rating(["rating": -1.0, "ratingImage": "nil"])
-        self.reviews = dictionary["reviews"] as? [Review] ?? [Review]()
+        
+        self.amenities = dictionary["amenities"] as? [String] ?? [""]
+        self.numberOfGuests = dictionary["numberOfGuests"] as? Int ?? 0
+        //self.rating = dictionary["rating"] as? Rating ?? Rating(["rating": -1.0, "ratingImage": "nil"])
+        //self.reviews = dictionary["reviews"] as? [Review] ?? [Review]()
+       // self.locationId = dictionary["locationId"] as? String ?? "nil"
+        self.country = dictionary["country"] as? String ?? ""
+        self.streetAddress = dictionary["streetAddress"] as? String ?? ""
+        self.apartmentNumber = dictionary["apartmentNumber"] as? String ?? ""
+        self.city = dictionary["city"] as? String ?? ""
+        self.state = dictionary["state"] as? String ?? ""
+        self.zip = dictionary["zip"] as? String ?? ""
+        //self.fullAddress = dictionary["fullAddress"] as? String ?? ""
+        //self.cityState = dictionary["cityState"] as? String ?? ""
+        self.latitude = dictionary["latitude"] as? Double ?? 0.0
+        self.longitude = dictionary["longitude"] as? Double ?? 0.0
+        self.rating = dictionary["rating"] as? Double ?? -1.0
+        self.ratingImgURL = dictionary["ratingImgURL"] as? String ?? ""
     }
 }
 
 struct Rating:Codable {
     let ratingNum: Double
     let ratingImage: String
+    var ratingDict: [String:Any] {
+        return [
+            "rantingNum": ratingNum,
+            "ratingImage": ratingImage,
+        ]
+    }
     
     static func generateRating() -> Rating{
         let randomRatingImage:[String] = ["afafafa", "afag", "ghehagbhwe"]
@@ -185,12 +320,14 @@ extension Rating {
 }
 
 struct Price:Codable {
-    let subtotal:Double
-    let spaceRate: Double
+    var subtotal:Double {
+        return spaceRate+spaceCut
+    }// postVC
+    let spaceRate: Double //postVC
+    private var shareSpaceRate:Double?
     var spaceCut: Double {
-        get {
-            return subtotal*self.spaceRate
-        }
+        return spaceRate * 0.05 //self.spaceCut
+                //subtotal*self.spaceRate
     }
     let taxRate: Double
     var tax: Double {
@@ -200,11 +337,24 @@ struct Price:Codable {
         return subtotal + spaceCut + tax
     }
     
+    var priceDict:[String:Any]{
+        return [
+            "spaceRate":spaceRate,
+            
+        ]
+    }
+    
+    mutating func setShareSpaceRate(percentageZeroThroughOne: Double){
+        self.shareSpaceRate = percentageZeroThroughOne
+    }
+    
+    
+    
     static func generatePrice() -> Price {
         
         let randomAmount = Double(round(Double.random(in: 0.0...999.99))/100.0)
         let randomPercentage = Double(round(Double.random(in: 0.0...1.0))/100.0)
-        return Price(subtotal: randomAmount, spaceRate: randomPercentage, taxRate: randomPercentage)
+        return Price(spaceRate: randomPercentage, taxRate: randomPercentage)
     }
     
     static func generatePriceasDict() -> [String: Any] {
@@ -217,7 +367,7 @@ struct Price:Codable {
 
 extension Price {
     init(_ dictionary: [String: Any]) {
-        self.subtotal = dictionary["subtotal"] as? Double ?? -1.0
+        //self.subtotal = dictionary["subtotal"] as? Double ?? -1.0
         self.spaceRate = dictionary["spaceRate"] as? Double ?? -1.0
         self.taxRate = dictionary["taxRate"] as? Double ?? -1.0
     }

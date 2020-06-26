@@ -16,7 +16,7 @@ class StorageService {
   private init() {}
   static let shared = StorageService()
   
-  public func uploadPhoto(userId: String? = nil, postId: String? = nil, image: UIImage, completion: @escaping (Result<URL, Error>) -> ()) {
+    public func uploadPhoto(userId: String? = nil, userPhotoId: String? = nil, postId:String? = nil, postPhotoId: String? = nil, image: UIImage, completion: @escaping (Result<URL, Error>) -> ()) {
     
     guard let imageData = image.jpegData(compressionQuality: 1.0) else {
       return
@@ -25,10 +25,13 @@ class StorageService {
     var photoReference: StorageReference! // nil
     
     //MARK:- Subject to change
-    if let userId = userId { // coming from ProfileViewController
-      photoReference = storageRef.child("UserProfilePhotos/\(userId).jpg")
-    } else if let postId = postId { // coming from AddPostsVC
-      photoReference = storageRef.child("Photos/\(postId).jpg")
+
+    if  let userId = userId { // coming from ProfileViewController
+      photoReference = storageRef.child("UserProfilePhotos/\(userId)/.jpg")
+        //let userPhotoId = userPhotoId,
+      //  \(userPhotoId)
+    } else if let postPhotoId = postPhotoId, let postId = postId { // coming from AddPostsVC
+      photoReference = storageRef.child("Photos/\(postId)/\(postPhotoId).jpg")
     }
     
     // configure metatdata for the object being uploaded

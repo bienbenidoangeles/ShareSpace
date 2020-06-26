@@ -23,9 +23,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         
         if let _ = Auth.auth().currentUser {
-            UIViewController.showViewController(viewcontroller: TabBarController())
+            UIViewController.showViewController(viewcontroller: UINavigationController(rootViewController: RootViewController()))
         } else { // no logged in user
           UIViewController.showViewController(viewcontroller: LoginViewController())
+            AppState.shared.setAppState(userType: .guest)
         }
         
         window?.makeKeyAndVisible()
