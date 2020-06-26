@@ -39,6 +39,8 @@ class ChatTableView: UIView {
   public lazy var userProfileImageView: UIImageView = {
     let iv = UIImageView()
     iv.image = UIImage(systemName: "photo.fill")
+    iv.translatesAutoresizingMaskIntoConstraints = false
+    iv.layer.cornerRadius = iv.frame.width / 2
     return iv
   }()
   
@@ -84,23 +86,26 @@ class ChatTableView: UIView {
     tv.returnKeyType = .send
     tv.rightView = self.sendButton
     tv.rightViewMode = .always
-    
-    //    tv.placeholder = "enter message"
-    //    tv.
+    tv.placeholder = "enter message"
     tv.layer.cornerRadius = 20
     tv.backgroundColor = .white
-    //    tf.linebr
+    return tv
+  }()
+  
+  public lazy var messageInput: UITextView = {
+    let tv = UITextView()
+    tv.backgroundColor = .clear
+    tv.font = .preferredFont(forTextStyle: .subheadline)
     return tv
   }()
   
   public lazy var sendButton: UIButton = {
     let button = UIButton()
-    button.setTitle("Send", for: .normal)
     button.backgroundColor = .purple
     button.isUserInteractionEnabled = true
     button.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
-//    button.
-    button.layer.cornerRadius = 10
+    button.setImage(UIImage(systemName: "paperplane"), for: .normal)
+    button.layer.borderWidth = 1
     return button
   }()
   
@@ -217,7 +222,9 @@ class ChatTableView: UIView {
   private func customMessageStackConstraints() {
     addSubview(messageBackView)
     addSubview(messageField)
-    addSubview(sendButton)
+    addSubview(messageInput)
+//    addSubview(sendButton)
+    messageInput.translatesAutoresizingMaskIntoConstraints = false
     messageBackView.translatesAutoresizingMaskIntoConstraints = false
     messageField.translatesAutoresizingMaskIntoConstraints = false
     sendButton.translatesAutoresizingMaskIntoConstraints = false
@@ -230,10 +237,16 @@ class ChatTableView: UIView {
       messageField.topAnchor.constraint(equalTo: messageBackView.topAnchor, constant: 4),
       messageField.leadingAnchor.constraint(equalTo: messageBackView.leadingAnchor, constant: 4),
       messageField.trailingAnchor.constraint(equalTo: messageBackView.trailingAnchor, constant: -4),
-      messageField.bottomAnchor.constraint(equalTo: messageBackView.bottomAnchor, constant: -20)
-//      sendButton.trailingAnchor.constraint(equalTo: messageField.trailingAnchor, constant: -4),
-//      sendButton.bottomAnchor.constraint(equalToSystemSpacingBelow: messageField.bottomAnchor, multiplier: -4)
+      messageField.bottomAnchor.constraint(equalTo: messageBackView.bottomAnchor, constant: -20),
+      sendButton.heightAnchor.constraint(equalToConstant: 32),
+      sendButton.widthAnchor.constraint(equalToConstant: 32),
+      messageInput.topAnchor.constraint(equalTo: messageField.topAnchor),
+      messageInput.leadingAnchor.constraint(equalTo: messageField.leadingAnchor),
+      messageInput.trailingAnchor.constraint(equalTo: messageField.trailingAnchor, constant: -33),
+      messageInput.bottomAnchor.constraint(equalTo: messageField.bottomAnchor)
     ])
+    
+    
   }
   
   
@@ -243,7 +256,7 @@ class ChatTableView: UIView {
 extension ChatTableView {
   private func constraintLayout() {
     headerViewConstraints()
-    //    messageStackConstraints()
+//        messageStackConstraints()
     tableViewContraints()
     detailButtonConstraints()
     imageViewConstraints()
@@ -253,7 +266,10 @@ extension ChatTableView {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    userProfileImageView.layer.cornerRadius = userProfileImageView.frame.width / 2
+    userProfileImageView.layer.cornerRadius = 5
+    userProfileImageView.layer.borderWidth = 6
+    sendButton.layer.cornerRadius = (sendButton.frame.height / 2)
+    messageInput.layer.cornerRadius = 20
   }
 }
 
@@ -270,6 +286,7 @@ extension ChatTableView {
       case .success(let reservation):
         let reservationDVC = ReservationDetailViewController(reservation)
         controller.navigationController?.pushViewController(reservationDVC, animated: true)
+        
       }
     }
   }
@@ -277,7 +294,7 @@ extension ChatTableView {
   @objc private func sendMessage() {
     guard let chatId = chatId,
       let user = Auth.auth().currentUser,
-      let text = messageField.text, !text.isEmpty else {
+      let text = messageInput.text, !text.isEmpty else {
         print("missing message")
         return
     }
@@ -288,13 +305,39 @@ extension ChatTableView {
       case .failure(let error):
         print("failed \(error)")
       case .success:
-        self?.messageField.text = ""
+        self?.messageInput.text = ""
       }
     }
   }
-  
+  /*
+    private func listenerSetup() {
+       guard let chatId = chat?.id else {
+           return
+       }
+       listener = Firestore.firestore().collection(DatabaseService.chatsCollection).document(chatId).collection(DatabaseService.threadCollection).order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
+          if let error = error {
+            print("error loading messages: \(error)")
+          } else if let snapshot = snapshot {
+            self.thread.removeAll()
+            for message in snapshot.documents {
+              let msg = Message(message.data())
+              self.thread.append(msg)
+             self.chatView.tableView.scrollToNearestSelectedRow(at: .bottom, animated: true)
+   //           print("Message data: \(msg)")
+            }
+          }
+        }
+      }
+   */
   public func updateUI() {
     guard let reservationID = reservationId else { return }
+    Firestore.firestore().collection(DatabaseService.reservationCollection).document(reservationID).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
+      if let error = error {
+        print("error: \(error)")
+      } else if let snapshot = snapshot, let data = snapshot.data() {
+        let reservation = Reservation(dict: data)
+      }
+    }
     DatabaseService.shared.readReservation(reservationId: reservationID) { [weak self] (result) in
       switch result {
       case .failure:
