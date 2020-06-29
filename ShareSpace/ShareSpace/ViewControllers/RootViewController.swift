@@ -518,7 +518,7 @@ extension RootViewController: UITextFieldDelegate{
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
+        didSearchViewBGColorOrange(view: rootView.searchBarView, textField: rootView.searchLabel, dateTimeButton: rootView.dateTimeButton, eval: true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -536,6 +536,7 @@ extension RootViewController: UITextFieldDelegate{
         if let address = textField.text, !address.isEmpty{
             NotificationCenterManager.shared.nfc.post(name: NotificationCenterManager.textFieldshouldChangeCharactersIn, object: nil, userInfo: [NotificationCenterManager.textFieldshouldChangeCharactersIn: address])
             //searchCompletor.queryFragment = address
+            //didSearchViewBGColorOrange(view: rootView.searchBarView, textField: rootView.searchLabel, dateTimeButton: rootView.dateTimeButton, eval: false)
         }
         return true
     }
