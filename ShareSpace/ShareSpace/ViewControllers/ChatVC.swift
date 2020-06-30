@@ -20,6 +20,7 @@ class ChatVC: UIViewController {
   private var messageViewConstraint: NSLayoutConstraint!
   
   private var listener: ListenerRegistration?
+   
   var chat: Chat?
   var user2ID = String() {
     didSet {
@@ -44,6 +45,7 @@ class ChatVC: UIViewController {
         super.viewDidLoad()
 //      chatView.userProfileImageView.layer.cornerRadius = chatView.userProfileImageView.frame.width / 2
       listenerSetup()
+       
       tableViewSetup()
 //      messageStachConstraint = chatView.messageStack.constraintsAffectingLayout(for: .horizontal)
       chatView.chatId = chat?.id
@@ -57,6 +59,7 @@ class ChatVC: UIViewController {
   override func viewDidDisappear(_ animated: Bool) {
      super.viewDidDisappear(true)
      listener?.remove()
+   
    }
   
   private func tableViewSetup() {
@@ -137,11 +140,12 @@ class ChatVC: UIViewController {
     }
   }
   
-  
+ 
   private func listenerSetup() {
     guard let chatId = chat?.id else {
         return
     }
+    
     listener = Firestore.firestore().collection(DatabaseService.chatsCollection).document(chatId).collection(DatabaseService.threadCollection).order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
        if let error = error {
          print("error loading messages: \(error)")

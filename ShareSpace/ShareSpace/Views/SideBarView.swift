@@ -29,18 +29,21 @@ class SideBarView: UIView {
     public lazy var chatLabel: UILabel = {
         let label = UILabel()
         label.text = "Chat"
+        label.textColor = .systemOrange
         return label
     }()
     
     public lazy var myProfileLabel: UILabel = {
         let label = UILabel()
         label.text = "My Collections"
+        label.textColor = .systemOrange
         return label
     }()
     
     public lazy var settingsLabel: UILabel = {
         let label = UILabel()
         label.text = "Settings"
+        label.textColor = .systemOrange
         return label
     }()
     
@@ -58,7 +61,7 @@ class SideBarView: UIView {
         let stackView: UIStackView = UIStackView(arrangedSubviews: coreLabels)
         stackView.axis = .vertical
         stackView.distribution = .equalSpacing
-        stackView.spacing = 4
+        stackView.spacing = 16
         return stackView
     }()
     
