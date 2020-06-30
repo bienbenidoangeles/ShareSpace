@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 import FirebaseAuth
 import FirebaseStorage
 import Kingfisher
@@ -14,6 +15,8 @@ import Kingfisher
 class FirstProfileViewController: UIViewController {
     
     private var user: UserModel?
+    
+    private var listener: ListenerRegistration?
     
     private let userId: String
     init?(coder: NSCoder, userId: String) {
@@ -73,24 +76,67 @@ class FirstProfileViewController: UIViewController {
         editButtonOutlet.isHidden = true
         navigationItem.rightBarButtonItem?.isEnabled = false
         navigationItem.rightBarButtonItem?.tintColor = .clear
-       // navigationItem.leftBarButtonItem?.tintColor = .systemTeal
+        // navigationItem.leftBarButtonItem?.tintColor = .systemTeal
         navigationController?.navigationBar.tintColor = .systemTeal
         
         textView.font = .preferredFont(forTextStyle: .body)
         
-//        profileView.userSegmentedControl.addTarget(self, action: #selector(segmentAction), for: .valueChanged)
-//        profileView.userSegmentedControl.selectedSegmentIndex = 0
+        //        profileView.userSegmentedControl.addTarget(self, action: #selector(segmentAction), for: .valueChanged)
+        //        profileView.userSegmentedControl.selectedSegmentIndex = 0
         
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(loadUser), for: .valueChanged)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let user = user else {
+            return
+        }
+        listener = Firestore.firestore().collection(DatabaseService.usersCollection).document(userId).addSnapshotListener(includeMetadataChanges: true, listener: { (snapshot, error) in
+            if let error = error {
+                print("unable to update: \(error)")
+            } else if let snapshot = snapshot {
+            let userModel = UserModel(snapshot.data()!)
+            if let userModel = Auth.auth().currentUser {
+                if userModel.uid == self.userId {
+                //let reservation = Reservation(dict: snapshot.data()!)
+                //                let userModel = UserModel(snapshot.data()!)
+                //               if reservation.status == 2 {
+                //                 self.chatView.statusLabel.text = "PENDING"
+                //                 self.chatView.statusLabel.textColor = .systemRed
+                //                 self.chatView.statusLabel.backgroundColor = .clear
+                //                 self.chatView.rightStatusView.backgroundColor = .clear
+                //                 self.chatView.leftStatusView.backgroundColor = .clear
+                //             }
+                    self.userNameLabel.text = userModel.displayName
+               // self.userLocation.text = user.
+//                    self.occupationLabel.text = userModel.work
+                DispatchQueue.main.async {
+
+                          self.userImage.kf.setImage(with: URL(string: user.profileImage ?? "no image url"))
+                      }
+            }
+                
+                }
+                 self.occupationLabel.text = userModel.work
+                self.userLocation.text = userModel.cityState
+                self.textView.text = userModel.bio
+                
+                DispatchQueue.main.async {
+                    self.userImage.kf.setImage(with: URL(string: userModel.profileImage ?? "no image url"))
+                }
+            }
+        })
+
+    }
+    
     override func viewDidLayoutSubviews() {
-      super.viewDidLayoutSubviews()
+        super.viewDidLayoutSubviews()
         textView.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
-//        userNameLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
-//        userLocation.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
-//        occupationLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //        userNameLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //        userLocation.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
+        //        occupationLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray4, thickness: 1)
         
     }
     
@@ -105,7 +151,7 @@ class FirstProfileViewController: UIViewController {
             }
         }
     }
-        
+    
     func updateUI() {
         guard let user = user else {
             refreshControl.endRefreshing()
@@ -113,10 +159,10 @@ class FirstProfileViewController: UIViewController {
         }
         if let currentUser = Auth.auth().currentUser {
             if currentUser.uid == self.userId {
-                          editButtonOutlet.isHidden = false
-                          //navigationItem.rightBarButtonItem != nil
-                      navigationItem.rightBarButtonItem?.isEnabled = true
-                          navigationItem.rightBarButtonItem?.tintColor = .systemTeal
+                editButtonOutlet.isHidden = false
+                //navigationItem.rightBarButtonItem != nil
+                navigationItem.rightBarButtonItem?.isEnabled = true
+                navigationItem.rightBarButtonItem?.tintColor = .systemTeal
             }
         }
         
@@ -124,8 +170,8 @@ class FirstProfileViewController: UIViewController {
         userLocation.text = "I am from \(user.cityState)"
         occupationLabel.text = "I am working as \(user.work ?? "Mobile Developer")"
         textView.text = user.bio
-//        segmentedControl.insertSegment(withTitle: "My Spaces", at: 0, animated: true)
-//        segmentedControl.insertSegment(withTitle: "My Reservations", at: 1, animated: true)
+        //        segmentedControl.insertSegment(withTitle: "My Spaces", at: 0, animated: true)
+        //        segmentedControl.insertSegment(withTitle: "My Reservations", at: 1, animated: true)
         
         segmentedControl.selectedSegmentTintColor = .yummyOrange
         segmentedControl.backgroundColor = .oceanBlue
@@ -138,16 +184,16 @@ class FirstProfileViewController: UIViewController {
         }
     }
     
-//    public lazy var segmentedControl: UISegmentedControl = {
-//           let sc = UISegmentedControl()
-//           sc.insertSegment(withTitle: "My Listings", at: 0, animated: true)
-//           sc.insertSegment(withTitle: "My reservations", at: 1, animated: true)
-//           sc.insertSegment(withTitle: "My Stays", at: 2, animated: true)
-//           sc.selectedSegmentTintColor = .yummyOrange
-//           sc.backgroundColor = .oceanBlue
-//           sc.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
-//           sc.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
-//           return sc
+    //    public lazy var segmentedControl: UISegmentedControl = {
+    //           let sc = UISegmentedControl()
+    //           sc.insertSegment(withTitle: "My Listings", at: 0, animated: true)
+    //           sc.insertSegment(withTitle: "My reservations", at: 1, animated: true)
+    //           sc.insertSegment(withTitle: "My Stays", at: 2, animated: true)
+    //           sc.selectedSegmentTintColor = .yummyOrange
+    //           sc.backgroundColor = .oceanBlue
+    //           sc.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
+    //           sc.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
+    //           return sc
     
     
     func loadImage(imageURL: String) {
@@ -155,7 +201,7 @@ class FirstProfileViewController: UIViewController {
             self.userImage.kf.setImage(with: URL(string: imageURL))
         }
     }
-  
+    
     
     @objc func loadUser() {
         DatabaseService.shared.loadUser(userId: userId) {

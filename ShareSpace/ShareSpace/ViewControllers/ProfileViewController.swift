@@ -207,6 +207,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
             !userFirstName.isEmpty,
             let userLastName = profileView.userLastNameTextfield.text,
             !userLastName.isEmpty,
+            let userCityState = profileView.userLocationTextfield.text,
+            !userCityState.isEmpty,
             let userPhoneNumber = profileView.userPhoneNumberTextfield.text,
             !userPhoneNumber.isEmpty,
             let userBio = profileView.userBioTextview.text,
@@ -252,7 +254,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                     self?.showAlert(title: "Error uploading photo", message: "\(error.localizedDescription)")
                 }
             case .success(let url):
-                self?.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId:userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate, cityState: "Brooklyn, NY",  profileImage: url.absoluteString)
+                self?.updateDatabaseUser(firstName: userFirstName, lastName: userLastName, displayName: displayName, phoneNumber: userPhoneNumber, bio: userBio, work: userOccupation, governmentId:userGovenmentId, creditCard: userCardNumber, cardCVV: userCardCVVNumber, cardExpDate: userCardExpDate, cityState: userCityState,  profileImage: url.absoluteString)
                 
                 let request = Auth.auth().currentUser?.createProfileChangeRequest()
                 request?.displayName = displayName
