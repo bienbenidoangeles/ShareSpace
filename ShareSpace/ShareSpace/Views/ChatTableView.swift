@@ -36,19 +36,19 @@ class ChatTableView: UIView {
     return button
   }()
   
-  public lazy var userProfileImageView: UIImageView = {
-    let iv = UIImageView()
-    iv.image = UIImage(systemName: "photo.fill")
-    iv.translatesAutoresizingMaskIntoConstraints = false
-    iv.layer.cornerRadius = iv.frame.width / 2
-    return iv
-  }()
+//  public lazy var userProfileImageView: UIImageView = {
+//    let iv = UIImageView()
+//   iv.image = UIImage(systemName: "photo.fill")
+//    iv.translatesAutoresizingMaskIntoConstraints = false
+//    iv.layer.cornerRadius = iv.frame.width / 2
+//    return iv
+//  }()
   
   public lazy var statusLabel: UILabel = {
     let label = UILabel()
     label.text = " STATUS "
     label.font = .preferredFont(forTextStyle: .headline)
-    label.backgroundColor = .systemGreen
+    //label.backgroundColor = .systemGreen
     return label
   }()
   
@@ -71,13 +71,13 @@ class ChatTableView: UIView {
   
   public lazy var leftStatusView: UIView = {
     let view = UIView()
-    view.backgroundColor = .systemGreen
+    //view.backgroundColor = .systemGreen
     return view
   }()
   
   public lazy var rightStatusView: UIView = {
     let view = UIView()
-    view.backgroundColor = .systemGreen
+    //view.backgroundColor = .systemGreen
     return view
   }()
   
@@ -86,7 +86,7 @@ class ChatTableView: UIView {
     tv.returnKeyType = .send
     tv.rightView = self.sendButton
     tv.rightViewMode = .always
-    tv.placeholder = "enter message"
+    tv.placeholder = "  enter message"
     tv.layer.cornerRadius = 20
     tv.backgroundColor = .white
     return tv
@@ -101,11 +101,14 @@ class ChatTableView: UIView {
   
   public lazy var sendButton: UIButton = {
     let button = UIButton()
-    button.backgroundColor = .purple
+    //button.backgroundColor = .purple
+    button.backgroundColor = .yummyOrange
     button.isUserInteractionEnabled = true
     button.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
     button.setImage(UIImage(systemName: "paperplane"), for: .normal)
-    button.layer.borderWidth = 1
+    button.tintColor = .white
+    //button.layer.borderWidth = 1
+
     return button
   }()
   
@@ -121,7 +124,8 @@ class ChatTableView: UIView {
   
   public lazy var messageBackView: UIView = {
     let view = UIView()
-    view.backgroundColor = .systemRed
+    //view.backgroundColor = .systemRed
+    //view.backgroundColor = .systemTeal
     return view
   }()
   
@@ -174,16 +178,16 @@ class ChatTableView: UIView {
     ])
   }
   
-  private func imageViewConstraints() {
-    headerView.addSubview(userProfileImageView)
-    userProfileImageView.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      userProfileImageView.heightAnchor.constraint(equalTo: headerView.heightAnchor, multiplier: 0.65),
-      userProfileImageView.widthAnchor.constraint(equalTo: userProfileImageView.heightAnchor),
-      userProfileImageView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-      userProfileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4)
-    ])
-  }
+//  private func imageViewConstraints() {
+//    headerView.addSubview(userProfileImageView)
+//    userProfileImageView.translatesAutoresizingMaskIntoConstraints = false
+//    NSLayoutConstraint.activate([
+//      userProfileImageView.heightAnchor.constraint(equalTo: headerView.heightAnchor, multiplier: 0.65),
+//      userProfileImageView.widthAnchor.constraint(equalTo: userProfileImageView.heightAnchor),
+//      userProfileImageView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
+//      userProfileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 4)
+//    ])
+//  }
   
   
   
@@ -259,15 +263,15 @@ extension ChatTableView {
 //        messageStackConstraints()
     tableViewContraints()
     detailButtonConstraints()
-    imageViewConstraints()
+   // imageViewConstraints()
     statusStackConstraints()
     customMessageStackConstraints()
   }
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    userProfileImageView.layer.cornerRadius = 5
-    userProfileImageView.layer.borderWidth = 6
+    //userProfileImageView.layer.cornerRadius = 5
+   // userProfileImageView.layer.borderWidth = 6
     sendButton.layer.cornerRadius = (sendButton.frame.height / 2)
     messageInput.layer.cornerRadius = 20
   }
@@ -360,10 +364,11 @@ extension ChatTableView {
           
         } else if reservation.status == 0 {
           self?.statusLabel.text = "ACCEPTED"
-          self?.statusLabel.textColor = .black
-          self?.statusLabel.backgroundColor = .systemGreen
-          self?.rightStatusView.backgroundColor = .systemGreen
-          self?.leftStatusView.backgroundColor = .systemGreen
+//          self?.statusLabel.textColor = .black
+            self?.statusLabel.textColor = .systemGreen
+          //self?.statusLabel.backgroundColor = .systemGreen
+          //self?.rightStatusView.backgroundColor = .systemGreen
+          //self?.leftStatusView.backgroundColor = .systemGreen
           
         }
       }
@@ -377,12 +382,12 @@ extension ChatTableView {
       case .success(let user):
         print("user loaded \n\(user.profileImage)")
         if let profileString = user.profileImage {
-          self?.userProfileImageView.kf.setImage(with: URL(string: profileString))
-        } else {
-          self?.userProfileImageView.image = UIImage(systemName: "person.fill")
-        }
+//          self?.userProfileImageView.kf.setImage(with: URL(string: profileString))
+//        } else {
+//          self?.userProfileImageView.image = UIImage(systemName: "person.fill")
+//        }
       }
     }
   }
-  
+    }
 }
