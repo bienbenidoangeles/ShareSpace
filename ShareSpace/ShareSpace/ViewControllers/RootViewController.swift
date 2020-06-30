@@ -110,7 +110,10 @@ class RootViewController: NavBarViewController {
     }
     
     private func addNavButtons(){
-        let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "calendar.badge.plus"), style: .plain, target: self, action: #selector(calenderButtonPressed))
+
+//        let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "calendar.circle"), style: .plain, target: self, action: #selector(calenderButtonPressed))
+        let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(calenderButtonPressed))
+        barButtonItem.tintColor = .systemTeal
         let sideBarButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3"), style: .plain, target: self, action: #selector(sideBarTapped(_:)))
         
         

@@ -124,7 +124,7 @@ class ReservationDetailViewController: UIViewController {
                 print(error.localizedDescription)
             case .success(let userRequesting):
                 self.userWhoIsrequesting = userRequesting
-                self.reservationDetailView.userNameLabel.text = self.userWhoIsrequesting?.firstName
+                self.reservationDetailView.userNameLabel.text = "Hi, i am \(self.userWhoIsrequesting?.displayName ?? "no name")"
                 self.reservationDetailView.userLocationLabel.text =  "Lives in:   \(self.userWhoIsrequesting?.cityState ?? "no info")"
               //  self.reservationDetailView.userLocationLabel.text = self.userWhoIsrequesting.
 

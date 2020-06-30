@@ -13,6 +13,7 @@ class FeedCell: UICollectionViewCell {
     private lazy var postImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "photo.fill")
+        imageView.contentMode = .scaleToFill
         return imageView
     }()
     

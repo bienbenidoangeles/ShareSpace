@@ -83,6 +83,7 @@ class ListingDetailViewController: UIViewController {
         listedByLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray, thickness: 1)
         descriptionTV.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray, thickness: 1)
         amenitiesLabel.layer.addBorder(edge: UIRectEdge.bottom, color: .systemGray, thickness: 1)
+        
     
     }
     
