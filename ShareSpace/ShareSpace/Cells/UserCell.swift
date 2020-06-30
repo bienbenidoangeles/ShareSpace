@@ -12,9 +12,12 @@ import Kingfisher
 
 class UserCell: UITableViewCell {
   
-//  override func layoutSubviews() {
-//    backViewSubview()
-//  }
+  override func layoutSubviews() {
+   userImageView.clipsToBounds = true
+  // userImageView.layer.borderWidth = 1
+   userImageView.layer.cornerRadius = userImageView.frame.height / 2
+    userImageView.contentMode = .scaleAspectFit
+  }
   
   public lazy var cellBackgroundView: UIView = {
     let view = UIView()
@@ -24,8 +27,9 @@ class UserCell: UITableViewCell {
   
   public lazy var userImageView: UIImageView = {
     let iv = UIImageView()
-    iv.image = UIImage(systemName: "photo.fill")
+    iv.image = UIImage(systemName: "person.fill")
     iv.layer.cornerRadius = 4
+    
     return iv
   }()
 
@@ -162,11 +166,11 @@ extension UserCell {
                 print("Error loading user: \(error)")
               case .success(let user):
                 self.nameLabel.text = user.displayName
-                if let profileString = user.profileImage {
-                self.userImageView.kf.setImage(with: URL(string: profileString))
-                } else {
-                  self.userImageView.image = UIImage(systemName: "person.fill")
-                }
+//                if let profileString = user.profileImage {
+//                self.userImageView.kf.setImage(with: URL(string: profileString))
+//                } else {
+//                  self.userImageView.image = UIImage(systemName: "person.fill")
+//                }
               }
             }
             

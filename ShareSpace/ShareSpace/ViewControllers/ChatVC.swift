@@ -22,6 +22,7 @@ class ChatVC: UIViewController {
   private var listener: ListenerRegistration?
   private var statusListener: ListenerRegistration?
 
+
   var chat: Chat?
   var user2ID = String() {
     didSet {
@@ -46,6 +47,7 @@ class ChatVC: UIViewController {
         super.viewDidLoad()
 //      chatView.userProfileImageView.layer.cornerRadius = chatView.userProfileImageView.frame.width / 2
       listenerSetup()
+
       statusListenerSetup()
         tableViewSetup()
 //      messageStachConstraint = chatView.messageStack.constraintsAffectingLayout(for: .horizontal)
@@ -181,6 +183,7 @@ class ChatVC: UIViewController {
     guard let chatId = chat?.id else {
         return
     }
+    
     listener = Firestore.firestore().collection(DatabaseService.chatsCollection).document(chatId).collection(DatabaseService.threadCollection).order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
        if let error = error {
          print("error loading messages: \(error)")

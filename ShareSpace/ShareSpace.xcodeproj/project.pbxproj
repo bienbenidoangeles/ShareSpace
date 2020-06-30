@@ -40,6 +40,7 @@
 		8DBA85B5248196B10029598C /* ListingDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DBA85B4248196B10029598C /* ListingDetail.storyboard */; };
 		8DBA85B72481C4DE0029598C /* ListingPhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DBA85B62481C4DD0029598C /* ListingPhotosCell.swift */; };
 		8DCB76152486BD38005C1C04 /* CoreLocationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCB76142486BD38005C1C04 /* CoreLocationSession.swift */; };
+		8DEE888A24ABCD3400284B5B /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEE888924ABCD3400284B5B /* UITableView+Extension.swift */; };
 		9B3D72C6DCDD76A49585596D /* Pods_ShareSpaceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9AE4FCC44BEC8D4C066FF1 /* Pods_ShareSpaceTests.framework */; };
 		F149D498247F3348006D77D2 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D497247F3348006D77D2 /* FeedCell.swift */; };
 		F149D4D42481B7EB006D77D2 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F149D492247EF94B006D77D2 /* UserModel.swift */; };
@@ -132,6 +133,7 @@
 		8DBA85B4248196B10029598C /* ListingDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ListingDetail.storyboard; sourceTree = "<group>"; };
 		8DBA85B62481C4DD0029598C /* ListingPhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingPhotosCell.swift; sourceTree = "<group>"; };
 		8DCB76142486BD38005C1C04 /* CoreLocationSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocationSession.swift; sourceTree = "<group>"; };
+		8DEE888924ABCD3400284B5B /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		BB5D914FACCC602E321B12DC /* Pods-ShareSpaceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareSpaceTests.debug.xcconfig"; path = "Target Support Files/Pods-ShareSpaceTests/Pods-ShareSpaceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BBE396EC586885A6BD1527B8 /* Pods-ShareSpace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareSpace.release.xcconfig"; path = "Target Support Files/Pods-ShareSpace/Pods-ShareSpace.release.xcconfig"; sourceTree = "<group>"; };
 		D7569AA8C49692E2E6244CB7 /* Pods_ShareSpace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShareSpace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -352,6 +354,7 @@
 				F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */,
 				F15190BC24A4468800DD4F32 /* CL2DCoordinate+Extensions.swift */,
 				F15190BE24A44C0A00DD4F32 /* CollectionViewLayout.swift */,
+				8DEE888924ABCD3400284B5B /* UITableView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -599,6 +602,7 @@
 				F1684C59247AE22200AA9A17 /* CardView.swift in Sources */,
 				F149D4FE2488946A006D77D2 /* DateToString.swift in Sources */,
 				F1684C2D247AD42E00AA9A17 /* LoginViewController.swift in Sources */,
+				8DEE888A24ABCD3400284B5B /* UITableView+Extension.swift in Sources */,
 				8D363F9F24952B94009E4E2B /* ReservationDetailView.swift in Sources */,
 				F149D500248899F9006D77D2 /* IntTimeIntervalAsSecondsToOther.swift in Sources */,
 				F1684C53247ADE1400AA9A17 /* TabBarController.swift in Sources */,
