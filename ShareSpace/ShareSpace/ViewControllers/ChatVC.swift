@@ -163,15 +163,16 @@ class ChatVC: UIViewController {
         self.chatView.statusLabel.text = "DECLINED"
         self.chatView.statusLabel.textColor = .black
         self.chatView.statusLabel.backgroundColor = .systemRed
-        self.chatView.rightStatusView.backgroundColor = .systemRed
-        self.chatView.leftStatusView.backgroundColor = .systemRed
+        self.chatView.rightStatusView.backgroundColor = .clear
+        self.chatView.leftStatusView.backgroundColor = .clear
+        self.chatView.statusLabel.layer.cornerRadius = 40
         
       } else if reservation.status == 0 {
         self.chatView.statusLabel.text = "ACCEPTED"
-        self.chatView.statusLabel.textColor = .black
-        self.chatView.statusLabel.backgroundColor = .systemGreen
-        self.chatView.rightStatusView.backgroundColor = .systemGreen
-        self.chatView.leftStatusView.backgroundColor = .systemGreen
+        self.chatView.statusLabel.textColor = .systemGreen
+        self.chatView.statusLabel.backgroundColor = .clear
+        self.chatView.rightStatusView.backgroundColor = .clear
+        self.chatView.leftStatusView.backgroundColor = .clear
         
       }
       
