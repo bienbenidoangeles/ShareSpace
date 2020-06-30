@@ -20,7 +20,9 @@ class ChatVC: UIViewController {
   private var messageViewConstraint: NSLayoutConstraint!
   
   private var listener: ListenerRegistration?
-   
+  private var statusListener: ListenerRegistration?
+
+
   var chat: Chat?
   var user2ID = String() {
     didSet {
@@ -45,8 +47,9 @@ class ChatVC: UIViewController {
         super.viewDidLoad()
 //      chatView.userProfileImageView.layer.cornerRadius = chatView.userProfileImageView.frame.width / 2
       listenerSetup()
-       
-      tableViewSetup()
+
+      statusListenerSetup()
+        tableViewSetup()
 //      messageStachConstraint = chatView.messageStack.constraintsAffectingLayout(for: .horizontal)
       chatView.chatId = chat?.id
       chatView.reservationId = chat?.reservationId
@@ -59,7 +62,7 @@ class ChatVC: UIViewController {
   override func viewDidDisappear(_ animated: Bool) {
      super.viewDidDisappear(true)
      listener?.remove()
-   
+     statusListener?.remove()
    }
   
   private func tableViewSetup() {
@@ -140,7 +143,42 @@ class ChatVC: UIViewController {
     }
   }
   
- 
+  private func statusListenerSetup() {
+  guard let reservationId = chat?.reservationId else {
+    return
+  }
+  statusListener = Firestore.firestore().collection(DatabaseService.reservationCollection).document(reservationId).addSnapshotListener(includeMetadataChanges: true, listener: { (snapshot, error) in
+    if let error = error {
+      print("unable to update: \(error)")
+    } else if let snapshot = snapshot {
+      let reservation = Reservation(dict: snapshot.data()!)
+      if reservation.status == 2 {
+        self.chatView.statusLabel.text = "PENDING"
+        self.chatView.statusLabel.textColor = .systemRed
+        self.chatView.statusLabel.backgroundColor = .clear
+        self.chatView.rightStatusView.backgroundColor = .clear
+        self.chatView.leftStatusView.backgroundColor = .clear
+        
+      } else if reservation.status == 1  {
+        self.chatView.statusLabel.text = "DECLINED"
+        self.chatView.statusLabel.textColor = .black
+        self.chatView.statusLabel.backgroundColor = .systemRed
+        self.chatView.rightStatusView.backgroundColor = .systemRed
+        self.chatView.leftStatusView.backgroundColor = .systemRed
+        
+      } else if reservation.status == 0 {
+        self.chatView.statusLabel.text = "ACCEPTED"
+        self.chatView.statusLabel.textColor = .black
+        self.chatView.statusLabel.backgroundColor = .systemGreen
+        self.chatView.rightStatusView.backgroundColor = .systemGreen
+        self.chatView.leftStatusView.backgroundColor = .systemGreen
+        
+      }
+      
+    }
+  })
+    }
+    
   private func listenerSetup() {
     guard let chatId = chat?.id else {
         return

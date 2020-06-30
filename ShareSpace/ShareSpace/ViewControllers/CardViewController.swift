@@ -188,7 +188,7 @@ class CardViewController: UIViewController {
                     return
                         
                 }
-                
+                self?.hideTableViewButNotCV(true)
                 self?.posts = posts
                 self?.callDelegate(region: region, coordinateRange: coordinateRange)
                 
@@ -249,7 +249,7 @@ class CardViewController: UIViewController {
                 let coorRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>) = (lat: latLower...latUpper, long:longLower...longUpper)
                 
                 self?.loadPosts(given: coorRange, region: region)
-                self?.hideTableViewButNotCV(true)
+                //self?.hideTableViewButNotCV(true)
             }
         }
     }
