@@ -367,6 +367,18 @@ class RootViewController: NavBarViewController {
             let dateButton = UIAlertAction(title: Date().toString(givenFormat: "E MM.dd"), style: .default) { (action) in
                 //show calendar
                 //selected dates stored on a property and used to filter with location
+                let storyboard = UIStoryboard(name: "Calendar", bundle: nil)
+                guard let calendarVC = storyboard.instantiateViewController(withIdentifier: "CalendarViewController") as? CalendarViewController else {
+                    return
+                }
+                calendarVC.modalPresentationStyle = .formSheet
+                calendarVC.modalTransitionStyle = .crossDissolve
+                //calendarVC.view.frame = CGRect(x: self.view.frame.width/2.0, y: self.view.frame.height/2.0, width: 310, height: 672)
+                calendarVC.preferredContentSize = CGSize(width: 310, height: 672)
+                calendarVC.viewWillLayoutSubviews()
+                //self.definesPresentationContext = true
+                self.present(calendarVC, animated: true, completion: nil)
+                
             }
             let timeButton = UIAlertAction(title: "\(Date().toString(givenFormat: "h:mm a")) - \(Date().addingTimeInterval(Double.hoursToSeconds(hours: 1)).toString(givenFormat: "h:mm a"))", style: .default) { (action) in
                 //show timer
