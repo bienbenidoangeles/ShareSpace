@@ -59,6 +59,7 @@
 		F15190BD24A4468800DD4F32 /* CL2DCoordinate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15190BC24A4468800DD4F32 /* CL2DCoordinate+Extensions.swift */; };
 		F15190BF24A44C0A00DD4F32 /* CollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15190BE24A44C0A00DD4F32 /* CollectionViewLayout.swift */; };
 		F15190C124A48ADA00DD4F32 /* NotificationCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15190C024A48ADA00DD4F32 /* NotificationCenterManager.swift */; };
+		F15190C724AB692300DD4F32 /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F15190C624AB692300DD4F32 /* Calendar.storyboard */; };
 		F1684BF7247AC6E800AA9A17 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */; };
 		F1684BF9247AC6E800AA9A17 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684BF8247AC6E800AA9A17 /* SceneDelegate.swift */; };
 		F1684BFB247AC6E800AA9A17 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684BFA247AC6E800AA9A17 /* ViewController.swift */; };
@@ -155,6 +156,7 @@
 		F15190BC24A4468800DD4F32 /* CL2DCoordinate+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CL2DCoordinate+Extensions.swift"; sourceTree = "<group>"; };
 		F15190BE24A44C0A00DD4F32 /* CollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayout.swift; sourceTree = "<group>"; };
 		F15190C024A48ADA00DD4F32 /* NotificationCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCenterManager.swift; sourceTree = "<group>"; };
+		F15190C624AB692300DD4F32 /* Calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
 		F1684BF3247AC6E800AA9A17 /* ShareSpace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShareSpace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1684BF6247AC6E800AA9A17 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1684BF8247AC6E800AA9A17 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 				8DBA85B4248196B10029598C /* ListingDetail.storyboard */,
 				0F01D82E248EAB9E00B5BEE5 /* FirstProfileStoryboard.storyboard */,
 				0F01D832248EB90D00B5BEE5 /* Post.storyboard */,
+				F15190C624AB692300DD4F32 /* Calendar.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				F1684C00247AC6EC00AA9A17 /* Assets.xcassets in Resources */,
 				F149D5062488E715006D77D2 /* ExpandedCell.xib in Resources */,
 				0F01D833248EB90D00B5BEE5 /* Post.storyboard in Resources */,
+				F15190C724AB692300DD4F32 /* Calendar.storyboard in Resources */,
 				F1684BFE247AC6E800AA9A17 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

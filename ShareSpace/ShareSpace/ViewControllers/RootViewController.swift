@@ -110,18 +110,20 @@ class RootViewController: NavBarViewController {
     }
     
     private func addNavButtons(){
+
 //        let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "calendar.circle"), style: .plain, target: self, action: #selector(calenderButtonPressed))
         let barButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(calenderButtonPressed))
         barButtonItem.tintColor = .systemTeal
         let sideBarButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3"), style: .plain, target: self, action: #selector(sideBarTapped(_:)))
         
         
-        let customView = UIImageView(image: UIImage(systemName: "line.horizontal.3"))
-        customView.isUserInteractionEnabled = true
-        let sideBarButtonC = UIBarButtonItem(customView: customView)
-        sideBarButtonC.action = #selector(sideBarTapped(_:))
-        sideBarButtonC.tintColor = .systemTeal
+//        let customView = UIImageView(image: UIImage(systemName: "line.horizontal.3"))
+//        customView.isUserInteractionEnabled = true
+//        let sideBarButtonC = UIBarButtonItem(customView: customView)
+//        sideBarButtonC.action = #selector(sideBarTapped(_:))
+//        sideBarButtonC.tintColor = .systemTeal
         
+        barButtonItem.tintColor = .systemTeal
         sideBarButton.tintColor = .systemTeal
         navigationItem.leftBarButtonItem = sideBarButton
         navigationItem.rightBarButtonItems?.append(barButtonItem)
@@ -360,32 +362,49 @@ class RootViewController: NavBarViewController {
     }
     
     @objc private func dateTimeButtonPressed(){
-        let actionsheet = UIAlertController(title: "Nope, I mean...", message: nil, preferredStyle: .actionSheet)
-        let dateButton = UIAlertAction(title: Date().toString(givenFormat: "E MM.dd"), style: .default) { (action) in
-            //show calendar
-            //selected dates stored on a property and used to filter with location
-        }
-        let timeButton = UIAlertAction(title: "\(Date().toString(givenFormat: "h:mm a")) - \(Date().addingTimeInterval(Double.hoursToSeconds(hours: 1)).toString(givenFormat: "h:mm a"))", style: .default) { (action) in
-            //show timer
-            //selected time frame stored on a property
-        }
-        let confirmButton = UIAlertAction(title: "Confirm", style: .default) { (action) in
-            self.dismiss(animated: true) {
-                //store and apply both date and time
-            }
-        }
-        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-            self.dismiss(animated: true, completion: nil)
-        }
-        confirmButton.setValuesForKeys(
-            [
-                //"backgroundColor":UIColor.systemOrange,
-                "titleTextColor":UIColor.systemOrange,
-        ])
         
-        let actions = [dateButton, timeButton, confirmButton, cancelButton]
-        actions.forEach{actionsheet.addAction($0)}
-        present(actionsheet, animated: true, completion: nil)
+        if rootView.dateTimeButton.titleLabel?.text == "Search" {
+            textFieldShouldReturn(rootView.searchLabel)
+        } else {
+            let actionsheet = UIAlertController(title: "Nope, I mean...", message: nil, preferredStyle: .actionSheet)
+            let dateButton = UIAlertAction(title: Date().toString(givenFormat: "E MM.dd"), style: .default) { (action) in
+                //show calendar
+                //selected dates stored on a property and used to filter with location
+                let storyboard = UIStoryboard(name: "Calendar", bundle: nil)
+                guard let calendarVC = storyboard.instantiateViewController(withIdentifier: "CalendarViewController") as? CalendarViewController else {
+                    return
+                }
+                calendarVC.modalPresentationStyle = .formSheet
+                calendarVC.modalTransitionStyle = .crossDissolve
+                //calendarVC.view.frame = CGRect(x: self.view.frame.width/2.0, y: self.view.frame.height/2.0, width: 310, height: 672)
+                calendarVC.preferredContentSize = CGSize(width: 310, height: 672)
+                calendarVC.viewWillLayoutSubviews()
+                //self.definesPresentationContext = true
+                self.present(calendarVC, animated: true, completion: nil)
+                
+            }
+            let timeButton = UIAlertAction(title: "\(Date().toString(givenFormat: "h:mm a")) - \(Date().addingTimeInterval(Double.hoursToSeconds(hours: 1)).toString(givenFormat: "h:mm a"))", style: .default) { (action) in
+                //show timer
+                //selected time frame stored on a property
+            }
+            let confirmButton = UIAlertAction(title: "Confirm", style: .default) { (action) in
+                self.dismiss(animated: true) {
+                    //store and apply both date and time
+                }
+            }
+            let cancelButton = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                self.dismiss(animated: true, completion: nil)
+            }
+            confirmButton.setValuesForKeys(
+                [
+                    //"backgroundColor":UIColor.systemOrange,
+                    "titleTextColor":UIColor.systemOrange,
+            ])
+            
+            let actions = [dateButton, timeButton, confirmButton, cancelButton]
+            actions.forEach{actionsheet.addAction($0)}
+            present(actionsheet, animated: true, completion: nil)
+        }
     }
     
     public func makeAnnotations(posts: [Post]) -> [MKPointAnnotation]? {
@@ -442,12 +461,17 @@ class RootViewController: NavBarViewController {
              dateTimeButton.backgroundColor = .systemOrange
              dateTimeButton.tintColor = .systemBackground
              dateTimeButton.setTitleColor(.systemBackground, for: .normal)
+            dateTimeButton.setTitle(" Now?", for: .normal)
+            dateTimeButton.setImage(UIImage(systemName: "clock.fill"), for: .normal)
          } else {
              view.backgroundColor = .systemOrange
              textField.textColor = .systemBackground
              dateTimeButton.backgroundColor = .systemBackground
              dateTimeButton.tintColor = .systemOrange
              dateTimeButton.setTitleColor(.systemOrange, for: .normal)
+            dateTimeButton.setTitle("Search", for: .normal)
+            dateTimeButton.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+            textField.attributedPlaceholder = NSAttributedString(string: "I want to go to...", attributes: [NSAttributedString.Key.foregroundColor : UIColor.systemGray6])
          }
      }
 }
@@ -523,6 +547,7 @@ extension RootViewController: UITextFieldDelegate{
         didSearchViewBGColorOrange(view: rootView.searchBarView, textField: rootView.searchLabel, dateTimeButton: rootView.dateTimeButton, eval: true)
     }
     
+    @discardableResult
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let address = textField.text, !address.isEmpty else {
             return false

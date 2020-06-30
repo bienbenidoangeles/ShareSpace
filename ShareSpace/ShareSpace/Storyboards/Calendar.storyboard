@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NxM-7q-gu5">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Calendar View Controller-->
+        <scene sceneID="tvz-IF-Yfp">
+            <objects>
+                <viewController storyboardIdentifier="CalendarViewController" modalTransitionStyle="crossDissolve" modalPresentationStyle="formSheet" id="NxM-7q-gu5" customClass="CalendarViewController" customModule="ShareSpace" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Fla-6Y-Hr1">
+                        <rect key="frame" x="0.0" y="0.0" width="310" height="672"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZEL-5H-x42">
+                                <rect key="frame" x="0.0" y="44" width="310" height="628"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y93-cj-5iD">
+                                        <rect key="frame" x="0.0" y="0.0" width="310" height="125.5"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eiH-fW-xeO">
+                                                <rect key="frame" x="25" y="25" width="260" height="75.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2020" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X7l-R9-Kag">
+                                                        <rect key="frame" x="0.0" y="0.0" width="260" height="18"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                        <color key="textColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date1 - Date2" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3CR-pT-GWm">
+                                                        <rect key="frame" x="0.0" y="18" width="260" height="57.5"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                                        <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="3CR-pT-GWm" secondAttribute="bottom" id="ADc-AX-oHX"/>
+                                                    <constraint firstItem="3CR-pT-GWm" firstAttribute="top" secondItem="eiH-fW-xeO" secondAttribute="centerY" constant="-20" id="CZa-Nf-OJv"/>
+                                                    <constraint firstAttribute="trailing" secondItem="X7l-R9-Kag" secondAttribute="trailing" id="SsX-DN-WX0"/>
+                                                    <constraint firstAttribute="centerY" secondItem="X7l-R9-Kag" secondAttribute="bottom" constant="20" id="TcE-Lg-Myv"/>
+                                                    <constraint firstItem="3CR-pT-GWm" firstAttribute="leading" secondItem="eiH-fW-xeO" secondAttribute="leading" id="Way-Ey-LtA"/>
+                                                    <constraint firstItem="X7l-R9-Kag" firstAttribute="top" secondItem="eiH-fW-xeO" secondAttribute="top" id="aed-3y-Y0M"/>
+                                                    <constraint firstItem="X7l-R9-Kag" firstAttribute="leading" secondItem="eiH-fW-xeO" secondAttribute="leading" id="atQ-67-wlk"/>
+                                                    <constraint firstAttribute="trailing" secondItem="3CR-pT-GWm" secondAttribute="trailing" id="fC0-3N-yq4"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="eiH-fW-xeO" firstAttribute="top" secondItem="y93-cj-5iD" secondAttribute="top" constant="25" id="8Sw-eO-jdR"/>
+                                            <constraint firstAttribute="trailing" secondItem="eiH-fW-xeO" secondAttribute="trailing" constant="25" id="i1F-hP-fel"/>
+                                            <constraint firstAttribute="bottom" secondItem="eiH-fW-xeO" secondAttribute="bottom" constant="25" id="ofR-vC-s2O"/>
+                                            <constraint firstItem="eiH-fW-xeO" firstAttribute="leading" secondItem="y93-cj-5iD" secondAttribute="leading" constant="25" id="rxv-Be-3QU"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JM0-DB-pGS" customClass="FSCalendar">
+                                        <rect key="frame" x="25" y="125.5" width="260" height="377"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="weekdayTextColor">
+                                                <color key="value" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="headerTitleColor">
+                                                <color key="value" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectionColor">
+                                                <color key="value" red="0.9976682067" green="0.64648967980000005" blue="0.35286432499999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="todayColor">
+                                                <color key="value" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Chy-1l-rEt">
+                                        <rect key="frame" x="0.0" y="502.5" width="310" height="125.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xn4-b2-HFW">
+                                                <rect key="frame" x="264" y="16" width="30" height="93.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                <state key="normal" title="OK">
+                                                    <color key="titleColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="okButtonPressed:" destination="NxM-7q-gu5" eventType="touchUpInside" id="xgh-9f-4Lo"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B6N-bG-Qiz">
+                                                <rect key="frame" x="170" y="16" width="78" height="93.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                <state key="normal" title="CANCEL">
+                                                    <color key="titleColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="cancelButtonPressed:" destination="NxM-7q-gu5" eventType="touchUpInside" id="gS9-HU-fWs"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="Xn4-b2-HFW" firstAttribute="leading" secondItem="B6N-bG-Qiz" secondAttribute="trailing" constant="16" id="Bb2-Pa-zFq"/>
+                                            <constraint firstAttribute="bottom" secondItem="B6N-bG-Qiz" secondAttribute="bottom" constant="16" id="Gts-Nq-xNQ"/>
+                                            <constraint firstItem="Xn4-b2-HFW" firstAttribute="top" secondItem="Chy-1l-rEt" secondAttribute="top" constant="16" id="JC1-s2-eHe"/>
+                                            <constraint firstAttribute="bottom" secondItem="Xn4-b2-HFW" secondAttribute="bottom" constant="16" id="aJM-qw-WQX"/>
+                                            <constraint firstAttribute="trailing" secondItem="Xn4-b2-HFW" secondAttribute="trailing" constant="16" id="lgs-yC-jL4"/>
+                                            <constraint firstItem="B6N-bG-Qiz" firstAttribute="top" secondItem="Chy-1l-rEt" secondAttribute="top" constant="16" id="psM-QV-GJN"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="JM0-DB-pGS" firstAttribute="top" secondItem="y93-cj-5iD" secondAttribute="bottom" id="2uI-CW-u6n"/>
+                                    <constraint firstItem="JM0-DB-pGS" firstAttribute="leading" secondItem="ZEL-5H-x42" secondAttribute="leading" constant="25" id="5Gq-OR-CAh"/>
+                                    <constraint firstAttribute="trailing" secondItem="JM0-DB-pGS" secondAttribute="trailing" constant="25" id="CLh-pT-ny1"/>
+                                    <constraint firstItem="Chy-1l-rEt" firstAttribute="top" secondItem="JM0-DB-pGS" secondAttribute="bottom" id="FDb-mh-2pu"/>
+                                    <constraint firstAttribute="trailing" secondItem="Chy-1l-rEt" secondAttribute="trailing" id="LV7-pf-aco"/>
+                                    <constraint firstItem="y93-cj-5iD" firstAttribute="leading" secondItem="ZEL-5H-x42" secondAttribute="leading" id="OE6-WR-q8f"/>
+                                    <constraint firstAttribute="bottom" secondItem="Chy-1l-rEt" secondAttribute="bottom" id="RHK-tX-cNq"/>
+                                    <constraint firstItem="Chy-1l-rEt" firstAttribute="leading" secondItem="ZEL-5H-x42" secondAttribute="leading" id="c7B-D3-oZl"/>
+                                    <constraint firstAttribute="trailing" secondItem="y93-cj-5iD" secondAttribute="trailing" id="jaG-WR-nCc"/>
+                                    <constraint firstItem="y93-cj-5iD" firstAttribute="height" secondItem="ZEL-5H-x42" secondAttribute="height" multiplier="0.2" id="oA5-bz-Tfp"/>
+                                    <constraint firstItem="y93-cj-5iD" firstAttribute="top" secondItem="ZEL-5H-x42" secondAttribute="top" id="qOV-3e-PZj"/>
+                                    <constraint firstItem="JM0-DB-pGS" firstAttribute="height" secondItem="y93-cj-5iD" secondAttribute="height" multiplier="3" id="xQU-W5-eN2"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="qZr-7L-JUF" firstAttribute="bottom" secondItem="ZEL-5H-x42" secondAttribute="bottom" id="CpU-Us-zoY"/>
+                            <constraint firstItem="ZEL-5H-x42" firstAttribute="leading" secondItem="qZr-7L-JUF" secondAttribute="leading" id="MnS-7d-LoV"/>
+                            <constraint firstItem="qZr-7L-JUF" firstAttribute="trailing" secondItem="ZEL-5H-x42" secondAttribute="trailing" id="QcY-BC-9LD"/>
+                            <constraint firstItem="ZEL-5H-x42" firstAttribute="top" secondItem="qZr-7L-JUF" secondAttribute="top" id="UCT-Wf-WWN"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qZr-7L-JUF"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="310" height="672"/>
+                    <connections>
+                        <outlet property="calendarObj" destination="JM0-DB-pGS" id="3A1-7I-Ztf"/>
+                        <outlet property="datesLabel" destination="3CR-pT-GWm" id="WXk-wt-o7i"/>
+                        <outlet property="yearLabel" destination="X7l-R9-Kag" id="M9j-zn-9Gb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vHN-M0-zfn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-12" y="187"/>
+        </scene>
+    </scenes>
+</document>
