@@ -268,6 +268,11 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate {
                         DispatchQueue.main.async {
                             self?.showAlert(title: "Profile Updated", message: "Profile successfully updated")
                         }
+                        
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+//                            // code to remove your view
+//                             self?.navigationController?.popViewController(animated: true)
+//                        }
                         self?.navigationController?.popViewController(animated: true)
                     }
                 })
