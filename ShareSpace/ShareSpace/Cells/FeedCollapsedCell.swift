@@ -9,6 +9,10 @@
 import UIKit
 import Kingfisher
 
+protocol AccessoryButtonDelegate: AnyObject {
+    func showActionSheetOptions(selectedPost: Post)
+}
+
 class FeedCollapsedCell: UICollectionViewCell {
     
     @IBOutlet weak var feedMainImageView: UIImageView!
@@ -18,7 +22,19 @@ class FeedCollapsedCell: UICollectionViewCell {
     @IBOutlet weak var accessoryButton: UIButton!
     @IBOutlet weak var cellBackGroundView: UIView!
     
+    weak var delegate: AccessoryButtonDelegate?
+    
+    @IBAction func accessoryButtonPressed(_ sender: UIButton) {
+        guard let selectedPost = selectedPost else {
+            return
+        }
+        delegate?.showActionSheetOptions(selectedPost: selectedPost)
+    }
+    
+    var selectedPost: Post?
+    
     public func configureCell(for post: Post){
+        selectedPost = post
         if let mainImgURL = post.mainImage {
 
              let mainImgprocessor = DownsamplingImageProcessor(size: feedMainImageView.bounds.size)
@@ -37,4 +53,5 @@ class FeedCollapsedCell: UICollectionViewCell {
         topLabel.text = post.postTitle
         
     }
+    
 }

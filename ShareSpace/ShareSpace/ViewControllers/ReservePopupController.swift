@@ -96,6 +96,7 @@ class ReservePopupController: UIViewController {
         updateUI()
         setupDismissBar()
         setupCalendarUI()
+        view.backgroundColor = .systemBackground
     }
     
     override func viewWillAppear(_ animated: Bool) {

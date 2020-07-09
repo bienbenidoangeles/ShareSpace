@@ -374,7 +374,7 @@ class RootViewController: NavBarViewController {
                 guard let calendarVC = storyboard.instantiateViewController(withIdentifier: "CalendarViewController") as? CalendarViewController else {
                     return
                 }
-                calendarVC.modalPresentationStyle = .formSheet
+                calendarVC.modalPresentationStyle = .overCurrentContext
                 calendarVC.modalTransitionStyle = .crossDissolve
                 //calendarVC.view.frame = CGRect(x: self.view.frame.width/2.0, y: self.view.frame.height/2.0, width: 310, height: 672)
                 calendarVC.preferredContentSize = CGSize(width: 310, height: 672)

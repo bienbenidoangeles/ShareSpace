@@ -20,6 +20,7 @@ class ChatTableView: UIView {
   var controller: UIViewController?
   var reservationId: String?
   var hostId: String?
+    var chat:Chat?
   
   public lazy var headerView: UIView = {
     let view = UIView()
@@ -29,8 +30,9 @@ class ChatTableView: UIView {
   
   public lazy var detailsButton: UIButton = {
     let button = UIButton()
-    button.setTitle("Details", for: .normal)
-    button.setTitleColor(.orange, for: .normal)
+    //button.setTitle("Details", for: .normal)
+    //button.setTitleColor(.orange, for: .normal)
+    button.setImage(UIImage(systemName: "ellipsis"), for: .normal)
     button.isUserInteractionEnabled = true
     button.addTarget(self, action: #selector(loadDetailsPage), for: .touchUpInside)
     return button
@@ -279,6 +281,61 @@ extension ChatTableView {
 
 
 extension ChatTableView {
+    @objc private func showActionSheet(){
+        let sheet = UIAlertController(title: "Options", message: nil, preferredStyle: .actionSheet)
+        guard let chatUsers = self.chat?.users, let userId = AuthenticationSession.shared.auth.currentUser?.uid else {
+            return
+        }
+        let otherUser = chatUsers.filter{$0 != userId}.first
+        guard let otherValidUser = otherUser else {
+            return
+        }
+        let reportButton = UIAlertAction(title: "Report", style: .default) { (action) in
+            
+            
+            
+            let alertVC = UIAlertController(title: "Would you like to report this listing?", message: nil, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Confirm", style: .default) { (action) in
+                Report.reportUser(userId: otherValidUser) { (result) in
+                    switch result {
+                    case .failure(let error):
+                        self.controller?.showAlert(title: "Error", message: error.localizedDescription)
+                    case .success:
+                        self.controller?.showAlert(title: "User reported", message: "Successful")
+                    }
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let actions = [okAction, cancelAction]
+            actions.forEach{alertVC.addAction($0)}
+            
+            
+            
+        }
+        
+        let detailsButton = UIAlertAction(title: "View Reservation", style: .default) { (action) in
+            self.loadDetailsPage()
+        }
+        
+        let blockButton = UIAlertAction(title: "Block", style: .destructive) { (action) in
+            DatabaseService.shared.blockDBUser(selfId: userId, blockedId: otherValidUser) { (result) in
+                switch result {
+                case .failure(let error):
+                    break
+                case .success(let bool):
+                    break
+                }
+            }
+        }
+        
+        let cancelButton = UIAlertAction(title: "", style: .cancel, handler: nil)
+        
+        let actions = [reportButton,detailsButton,cancelButton]
+        
+        actions.forEach{sheet.addAction($0)}
+        controller?.present(sheet, animated: true, completion: nil)
+    }
+    
   @objc private func loadDetailsPage() {
     guard let reservationId = reservationId, let controller = controller else {
       return
