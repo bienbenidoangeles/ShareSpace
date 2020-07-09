@@ -638,12 +638,16 @@ class DatabaseService {
     }
     
     public func isUserBlocked(selfId: String, blockedId:String, completion: @escaping (Result<Bool, Error>)->()){
-        db.collection(DatabaseService.usersCollection).document(selfId).collection(DatabaseService.blockedDBUsers).whereField("blockedUsers", arrayContainsAny: [blockedId]).getDocuments { (snapshot, error) in
+        db.collection(DatabaseService.usersCollection).document(selfId).collection(DatabaseService.blockedDBUsers).whereField("blockedUsers", isEqualTo: blockedId).getDocuments { (snapshot, error) in
             if let error = error {
                 completion(.failure(error))
             } else if let snapshot = snapshot {
                 let docs = snapshot.documents.map{$0.data()}
-                docs.isEmpty ? completion(.success(false)) : completion(.success(true))
+                if docs.count == 0 {
+                    completion(.success(false))
+                } else {
+                    completion(.success(true))
+                }
             }
         }
     }
@@ -685,7 +689,7 @@ class DatabaseService {
                         }
                     }
                 } else{
-                    self.blockDBUser(selfId: selfId, blockedId: blockedId) { (result) in
+                    self.createblockDBUser(selfId: selfId, blockedId: blockedId) { (result) in
                         switch result{
                         case .failure(let error):
                             completion(.failure(error))

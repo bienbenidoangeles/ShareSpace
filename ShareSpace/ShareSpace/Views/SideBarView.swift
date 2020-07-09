@@ -65,6 +65,15 @@ class SideBarView: UIView {
         return stackView
     }()
     
+    public lazy var buildLabel: UILabel = {
+        let label = UILabel()
+        label.text = "v1.0.0"
+        label.font = .preferredFont(forTextStyle: .caption1)
+        label.textColor = .placeholderText
+        //label.textAlignment = .right
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         commonInit()
@@ -79,6 +88,7 @@ class SideBarView: UIView {
 //        setupSideBarImageView()
         setupStackView()
         setupLoginLabel()
+        setupVersionLabel()
         
     }
     
@@ -115,5 +125,13 @@ class SideBarView: UIView {
         ])
     }
     
+    private func setupVersionLabel(){
+        addSubview(buildLabel)
+        buildLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            buildLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            buildLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+        ])
+    }
     
 }
