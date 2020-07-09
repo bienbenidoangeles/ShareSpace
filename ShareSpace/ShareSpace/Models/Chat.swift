@@ -17,6 +17,10 @@ struct Chat {
   var dictionary: [String: Any] {
     return ["users": users]
   }
+    
+//    var lastUpdatedDate: Date {
+//        return Date() // FIXME: get date and return here
+//    }
 }
 
 extension Chat {

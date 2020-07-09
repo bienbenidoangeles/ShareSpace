@@ -16,6 +16,7 @@ class ChatListViewController: UIViewController {
   var userChats = [Chat]() {
     didSet {
       DispatchQueue.main.async {
+        //userChats = userChats.sorted(by: { $0. })
         self.chatList.tableView.reloadData()
         print("Chats List \n\n\(self.userChats)")
       }

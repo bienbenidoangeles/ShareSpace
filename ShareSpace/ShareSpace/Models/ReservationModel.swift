@@ -27,6 +27,22 @@ struct Reservation {
     let reservationId: String
     let totalPrice: Double
     let totalDays: Int
+    var dict: [String: Any] {
+        return [
+            "renterId": renterId,
+            "hostId":hostId,
+            "postId": postId,
+            "checkIn": checkIn,
+            "checkOut": checkOut,
+            "timeIn":timeIn ?? Date(),
+            "timeOut":timeOut ?? Date(),
+            "chatId":chatId ?? "",
+            "status": status,
+            "reservationId": reservationId,
+            "totalPrice": totalPrice,
+            "totalDays": totalDays
+        ]
+    }
 }
 extension Reservation {
     init(dict: [String:Any]) {

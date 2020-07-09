@@ -78,6 +78,8 @@
 		F1684C55247ADECC00AA9A17 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C54247ADECC00AA9A17 /* CardViewController.swift */; };
 		F1684C57247AE07200AA9A17 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C56247AE07200AA9A17 /* StorageService.swift */; };
 		F1684C59247AE22200AA9A17 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1684C58247AE22200AA9A17 /* CardView.swift */; };
+		F176AF1824B388D9004BEDED /* ReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F176AF1724B388D9004BEDED /* ReportModel.swift */; };
+		F176AF1B24B5F511004BEDED /* AccessoryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F176AF1A24B5F511004BEDED /* AccessoryButton.swift */; };
 		F1DA144A249109CF0067B55B /* CLLocationCoordinate2D+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */; };
 		F1DA144E24920B730067B55B /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA144D24920B730067B55B /* SearchResultsViewController.swift */; };
 		F1DA145224920E360067B55B /* SearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DA145124920E360067B55B /* SearchResultsView.swift */; };
@@ -179,6 +181,8 @@
 		F1684C54247ADECC00AA9A17 /* CardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		F1684C56247AE07200AA9A17 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		F1684C58247AE22200AA9A17 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		F176AF1724B388D9004BEDED /* ReportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportModel.swift; sourceTree = "<group>"; };
+		F176AF1A24B5F511004BEDED /* AccessoryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryButton.swift; sourceTree = "<group>"; };
 		F1DA1449249109CD0067B55B /* CLLocationCoordinate2D+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Extensions.swift"; sourceTree = "<group>"; };
 		F1DA144D24920B730067B55B /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		F1DA145124920E360067B55B /* SearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsView.swift; sourceTree = "<group>"; };
@@ -264,6 +268,7 @@
 				0FA8B0E324857D310079A9B4 /* Message.swift */,
 				0FA8B0E7248587720079A9B4 /* Chat.swift */,
 				8D32684C248AEC8300065CAB /* ReservationModel.swift */,
+				F176AF1724B388D9004BEDED /* ReportModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 		F1684BF5247AC6E800AA9A17 /* ShareSpace */ = {
 			isa = PBXGroup;
 			children = (
+				F176AF1924B5F4BF004BEDED /* Buttons */,
 				F1684C31247AD56300AA9A17 /* Extensions */,
 				F149D48E247EF8EA006D77D2 /* Models */,
 				F149D48D247EF8E7006D77D2 /* Cells */,
@@ -414,6 +420,14 @@
 				F15190C624AB692300DD4F32 /* Calendar.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		F176AF1924B5F4BF004BEDED /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				F176AF1A24B5F511004BEDED /* AccessoryButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -605,6 +619,7 @@
 				8DCB76152486BD38005C1C04 /* CoreLocationSession.swift in Sources */,
 				F1684C59247AE22200AA9A17 /* CardView.swift in Sources */,
 				F149D4FE2488946A006D77D2 /* DateToString.swift in Sources */,
+				F176AF1B24B5F511004BEDED /* AccessoryButton.swift in Sources */,
 				F1684C2D247AD42E00AA9A17 /* LoginViewController.swift in Sources */,
 				8DEE888A24ABCD3400284B5B /* UITableView+Extension.swift in Sources */,
 				8D363F9F24952B94009E4E2B /* ReservationDetailView.swift in Sources */,
@@ -645,6 +660,7 @@
 				F1684C49247ADC6F00AA9A17 /* AuthenticationSession.swift in Sources */,
 				F1DA145224920E360067B55B /* SearchResultsView.swift in Sources */,
 				F149D4FC24886F2C006D77D2 /* RootView.swift in Sources */,
+				F176AF1824B388D9004BEDED /* ReportModel.swift in Sources */,
 				F149D498247F3348006D77D2 /* FeedCell.swift in Sources */,
 				F15190C124A48ADA00DD4F32 /* NotificationCenterManager.swift in Sources */,
 				F1DA146424A1524C0067B55B /* GeohashBox.swift in Sources */,

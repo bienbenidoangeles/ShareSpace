@@ -53,8 +53,32 @@ class UserModel: Codable {
     let cardCVV: String?
     let cardExpDate: String?
     let cityState: String
+    var reportCount: Int
+    var blockedUsers: [String]?
+    var dict: [String: Any] {
+        return [
+            "email": userEmail,
+            "userId": userId,
+            "firstName": firstName,
+            "lastName": lastName,
+            "displayName": displayName,
+            "bio": bio ?? "",
+            "phoneNumber": phoneNumber,
+            "work": work ?? "",
+            "reviews": reviews ?? [Review](),
+            "userType": userType,
+            "profileImage": profileImage ?? "",
+            "governmentId":governmentId ?? "",
+            "creditCard":creditCard ?? "",
+            "cardCVV":cardCVV ?? "",
+            "cardExpDate":cardExpDate ?? "",
+            "cityState": cityState,
+            "reportCount": reportCount,
+            "blockedUsers": blockedUsers ?? [String]()
+        ]
+    }
     
-    internal init(userEmail: String, userId: String, firstName: String, lastName: String, displayName: String, bio: String?, phoneNumber: String, work: String?, reviews: [Review]?, userType: UserType, profileImage: String?, governmentId: String?, creditCard: String?, cardCVV: String?, cardExpDate: String?, cityState: String) {
+    internal init(userEmail: String, userId: String, firstName: String, lastName: String, displayName: String, bio: String?, phoneNumber: String, work: String?, reviews: [Review]?, userType: UserType, profileImage: String?, governmentId: String?, creditCard: String?, cardCVV: String?, cardExpDate: String?, cityState: String, reportCount: Int, blockedUsers: [String]?) {
         self.userEmail = userEmail
         self.userId = userId
         self.firstName = firstName
@@ -71,6 +95,8 @@ class UserModel: Codable {
         self.cardCVV = cardCVV
         self.cardExpDate = cardExpDate
         self.cityState = cityState
+        self.reportCount = reportCount
+        self.blockedUsers = blockedUsers
     }
     
     init(_ dictionary: [String: Any]) {
@@ -91,6 +117,8 @@ class UserModel: Codable {
         self.cardCVV = dictionary["cardCVV"] as? String ?? ""
         self.cardExpDate = dictionary["cardExpDate"] as? String ?? ""
         self.cityState = dictionary["cityState"] as? String ?? ""
+        self.reportCount = dictionary["reportCount"] as? Int ?? 0
+        self.blockedUsers = dictionary["blockedUsers"] as? [String] ?? [String]()
     }
     
 }
@@ -99,9 +127,9 @@ class HostModel: UserModel {
     
     let posts: [Post]
     
-    init(userEmail: String, userId: String, firstName: String, lastName: String, displayName: String, bio: String?, phoneNumber: String, work: String?, reviews: [Review]?, userType: UserType, profileImage: String?, posts: [Post], governmentId: String?, creditCard: String?, cardCVV: String?, cardExpDate: String?, cityState: String) {
+    init(userEmail: String, userId: String, firstName: String, lastName: String, displayName: String, bio: String?, phoneNumber: String, work: String?, reviews: [Review]?, userType: UserType, profileImage: String?, posts: [Post], governmentId: String?, creditCard: String?, cardCVV: String?, cardExpDate: String?, cityState: String, reportCount: Int, blockedUsers: [String]?) {
         self.posts = posts
-        super.init(userEmail: userEmail, userId: userId, firstName: firstName, lastName: lastName, displayName: displayName, bio: bio, phoneNumber: phoneNumber, work: work, reviews: reviews, userType: userType, profileImage: profileImage, governmentId: governmentId, creditCard: creditCard, cardCVV: cardCVV, cardExpDate: cardExpDate, cityState: cityState)
+        super.init(userEmail: userEmail, userId: userId, firstName: firstName, lastName: lastName, displayName: displayName, bio: bio, phoneNumber: phoneNumber, work: work, reviews: reviews, userType: userType, profileImage: profileImage, governmentId: governmentId, creditCard: creditCard, cardCVV: cardCVV, cardExpDate: cardExpDate, cityState: cityState, reportCount: reportCount, blockedUsers: blockedUsers)
     }
     
     override init(_ dictionary: [String : Any]) {

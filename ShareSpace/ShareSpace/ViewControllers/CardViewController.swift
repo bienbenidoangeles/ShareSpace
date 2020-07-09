@@ -267,6 +267,7 @@ extension CardViewController: UICollectionViewDataSource {
         let post = posts[indexPath.row]
         
         cell.configureCell(for: post)
+        cell.delegate = self
         return cell
     }
 }
@@ -376,4 +377,36 @@ extension CardViewController: SearchResultsViewControllerDelegate{
     //        let coorRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>) = (lat: latLower...latUpper, long:longLower...longUpper)
     //        loadPosts(given: coorRange)
     //    }
+}
+
+extension CardViewController: AccessoryButtonDelegate {
+    func showActionSheetOptions(selectedPost: Post) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let reportAction = UIAlertAction(title: "Report", style: .destructive) { (action) in
+            
+            let alertVC = UIAlertController(title: "Why would you like to report this listing?", message: nil, preferredStyle: .alert)
+            alertVC.addTextField { (tf) in
+                tf.placeholder = "Explain here"
+            }
+            let okAction = UIAlertAction(title: "Confirm", style: .default) { (action) in
+                //let report = Report(reportText: alertVC.textFields?.first?.text)
+                Report.reportUser(userId: selectedPost.userId) { (result) in
+                    switch result {
+                    case .failure(let error):
+                        self.showAlert(title: "Error", message: error.localizedDescription)
+                    case .success:
+                        self.showAlert(title: "Item reported", message: nil)
+                    }
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let actions = [okAction, cancelAction]
+            actions.forEach{alertVC.addAction($0)}
+            self.present(alertVC, animated: true, completion: nil)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let actions = [reportAction, cancelAction]
+        actions.forEach{actionSheet.addAction($0)}
+        present(actionSheet, animated: true, completion: nil)
+    }
 }

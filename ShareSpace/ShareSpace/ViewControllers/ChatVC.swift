@@ -55,6 +55,7 @@ class ChatVC: UIViewController {
       chatView.reservationId = chat?.reservationId
       chatView.controller = self
       chatView.hostId = user2ID
+        chatView.chat = chat
       chatView.updateUI()
 //      updateUI()
     }
@@ -218,6 +219,7 @@ extension ChatVC: UITableViewDataSource {
     let message = thread[indexPath.row]
     cell.message = message
     cell.messageLabel.text = message.content
+    cell.layoutIfNeeded()
     if message.senderID == user.uid {
       cell.isIncoming = false
     } else {
