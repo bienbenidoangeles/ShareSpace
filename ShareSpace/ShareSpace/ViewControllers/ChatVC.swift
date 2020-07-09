@@ -46,9 +46,7 @@ class ChatVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //      chatView.userProfileImageView.layer.cornerRadius = chatView.userProfileImageView.frame.width / 2
-      listenerSetup()
-
-      statusListenerSetup()
+      
         tableViewSetup()
 //      messageStachConstraint = chatView.messageStack.constraintsAffectingLayout(for: .horizontal)
       chatView.chatId = chat?.id
@@ -58,6 +56,13 @@ class ChatVC: UIViewController {
         chatView.chat = chat
       chatView.updateUI()
 //      updateUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        listenerSetup()
+        statusListenerSetup()
+
     }
   
   override func viewDidDisappear(_ animated: Bool) {
@@ -148,7 +153,7 @@ class ChatVC: UIViewController {
   guard let reservationId = chat?.reservationId else {
     return
   }
-  statusListener = Firestore.firestore().collection(DatabaseService.reservationCollection).document(reservationId).addSnapshotListener(includeMetadataChanges: true, listener: { (snapshot, error) in
+    statusListener = DatabaseService.shared.db.collection(DatabaseService.reservationCollection).document(reservationId).addSnapshotListener(includeMetadataChanges: true, listener: { (snapshot, error) in
     if let error = error {
       print("unable to update: \(error)")
     } else if let snapshot = snapshot {
@@ -185,7 +190,7 @@ class ChatVC: UIViewController {
         return
     }
     
-    listener = Firestore.firestore().collection(DatabaseService.chatsCollection).document(chatId).collection(DatabaseService.threadCollection).order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
+    listener = DatabaseService.shared.db.collection(DatabaseService.chatsCollection).document(chatId).collection(DatabaseService.threadCollection).order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
        if let error = error {
          print("error loading messages: \(error)")
        } else if let snapshot = snapshot {

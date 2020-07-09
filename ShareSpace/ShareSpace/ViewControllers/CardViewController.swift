@@ -176,6 +176,10 @@ class CardViewController: UIViewController {
     
     private func loadPosts(given coordinateRange: (lat: ClosedRange<CLLocationDegrees>, long: ClosedRange<CLLocationDegrees>), region: MKCoordinateRegion? = nil) {
         
+        guard let selfId = AuthenticationSession.shared.auth.currentUser?.uid else {
+            return
+        }
+        
         DatabaseService.shared.loadPosts(coordinateRange: coordinateRange) {[weak self] (result) in
             switch result {
             case .failure(let error):
@@ -186,11 +190,22 @@ class CardViewController: UIViewController {
                     self?.callDelegate(region: region, coordinateRange: coordinateRange)
                     self?.hideTableViewButNotCV(true)
                     return
-                        
                 }
-                self?.hideTableViewButNotCV(true)
-                self?.posts = posts
-                self?.callDelegate(region: region, coordinateRange: coordinateRange)
+                DatabaseService.shared.loadUser(userId: selfId) { (result) in
+                    switch result {
+                    case .failure(let error):
+                        self?.rootVC.showAlert(title: error.localizedDescription, message: nil)
+                    case .success(let user):
+                        guard let blockedUsers = user.blockedUsers else {
+                            return
+                        }
+                        let postsWOBlockedUser = posts.filter{!blockedUsers.contains($0.userId)}
+                        self?.hideTableViewButNotCV(true)
+                        self?.posts = postsWOBlockedUser
+                        self?.callDelegate(region: region, coordinateRange: coordinateRange)
+                    }
+                }
+                
                 
             }
         }
