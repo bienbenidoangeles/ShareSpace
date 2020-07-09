@@ -407,7 +407,7 @@ extension ChatTableView {
         guard let otherValidUser = otherUser else {
             return
         }
-        Firestore.firestore().collection(DatabaseService.reservationCollection).document(reservationID).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
+        DatabaseService.shared.db.collection(DatabaseService.reservationCollection).document(reservationID).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
             if let error = error {
                 print("error: \(error)")
             } else if let snapshot = snapshot, let data = snapshot.data() {
