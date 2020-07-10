@@ -17,6 +17,7 @@ class NotificationCenterManager{
     public static let textFieldshouldChangeCharactersIn = Notification.Name(rawValue: "textFieldshouldChangeCharactersIn")
     public static let scrollViewDidScroll = Notification.Name(rawValue: "scrollViewDidScroll")
     public static let mapViewDidChangeVisibleRegion = Notification.Name(rawValue: "mapViewDidChangeVisibleRegion")
+    public static let userBlockOrUnblocked = Notification.Name("userBlockOrUnblocked")
     
     let nfc = NotificationCenter.default
 }
