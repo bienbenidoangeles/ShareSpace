@@ -18,6 +18,7 @@ class RootViewController: NavBarViewController {
     private let locationSession = CoreLocationSession.shared.locationManager
     
     let rootView = RootView()
+    let chatTV = ChatTableView()
     
     private lazy var mapView = rootView.mapView
     //lazy var tabBarheight:CGFloat = self.tabBarController!.tabBar.frame.size.height
@@ -72,7 +73,7 @@ class RootViewController: NavBarViewController {
         delegatesAndDataSources()
         addTargets()
         setupCard()
-        setupMap()
+        //setupMap()
         addNavButtons()
         //setupGestures()
         print(
@@ -85,6 +86,32 @@ class RootViewController: NavBarViewController {
             cardHeight \(expandedCardHeight)
             """
         )
+        //loadMapCoor()
+    }
+    
+    private func loadMapCoor(){
+        //let userCoordinate = CoreLocationSession.shared.locationManager.location?.coordinate
+        let latRange:ClosedRange<CLLocationDegrees>
+        let longRange:ClosedRange<CLLocationDegrees>
+        let topRightLat = topRightCoor.latitude
+        let topRightLong = topRightCoor.longitude
+        let bottomLeftLat = bottomLeftCoor.latitude
+        let bottomLeftLong = bottomLeftCoor.longitude
+        
+        if topRightLat > bottomLeftLat {
+            latRange = bottomLeftLat...topRightLat
+        } else {
+            latRange = topRightLat...bottomLeftLat
+        }
+        
+        if topRightLong > bottomLeftLong{
+            longRange = bottomLeftLong...topRightLong
+        } else {
+            longRange = topRightLong...bottomLeftLong
+        }
+        
+        let latLongTuple = (lat: latRange, long: longRange)
+        delegate?.readPostsFromMapView(given: latLongTuple)
     }
     
     private func delegatesAndDataSources(){
@@ -95,6 +122,9 @@ class RootViewController: NavBarViewController {
         //self.searchVC = searchVC
         cardVC = CardViewController(rootVC: self, searchCompletor: searchCompletor)
         cardVC.delegate = self
+        locationSession.delegate = self
+        //chatTV.delegate = self
+        NotificationCenterManager.shared.nfc.addObserver(self, selector: #selector(mapViewButtonPressed), name: NotificationCenterManager.userBlockOrUnblocked, object: nil)
     }
     
     //    private func setupGestures(){
@@ -168,9 +198,11 @@ class RootViewController: NavBarViewController {
     private func setupMap(){
         rootView.mapView.showsCompass = true
         rootView.mapView.showsUserLocation = true
-        let usersLocation = locationSession.location
+        guard let usersLocation = locationSession.location else {
+            return
+        }
         let tempLocation = CLLocation(latitude: 40.8765478, longitude: -73.9089867)
-        rootView.mapView.centerToLocation(tempLocation)
+        rootView.mapView.centerToLocation(usersLocation)
         rootView.searchByMapViewButton.isHidden = true
         topRightCoor = rootView.mapView.convert(CGPoint(x: rootView.mapView.bounds.width, y: 0), toCoordinateFrom: rootView.mapView)
         bottomLeftCoor = rootView.mapView.convert(CGPoint(x: 0, y: rootView.mapView.bounds.height), toCoordinateFrom: rootView.mapView)
@@ -498,6 +530,22 @@ class RootViewController: NavBarViewController {
 //
 //}
 
+extension RootViewController: CLLocationManagerDelegate{
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedWhenInUse:
+            setupMap()
+            loadMapCoor()
+        case .authorizedAlways:
+            setupMap()
+            loadMapCoor()
+        default:
+            setupMap()
+            loadMapCoor()
+        }
+    }
+}
+
 extension RootViewController: MKMapViewDelegate {
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
         guard rootView.searchByMapViewButton.isHidden == true else {
@@ -594,3 +642,9 @@ extension RootViewController: CardViewControllerDelegate{
         //animateTransitionIfNeeded(state: .collapsed, duration: 0.9) : animateTransitionIfNeeded(state: .collapsed, duration: 0.9)
     }
 }
+
+//extension RootViewController: ChatTableViewDelegate{
+//    func userBlocked(isBlocked: Bool, blockedUser: String) {
+//        mapViewButtonPressed()
+//    }
+//}

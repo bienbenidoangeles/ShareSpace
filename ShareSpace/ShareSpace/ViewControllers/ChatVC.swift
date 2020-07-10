@@ -34,6 +34,11 @@ class ChatVC: UIViewController {
     didSet {
       chatView.tableView.reloadData()
 //      chatView.tableView.
+        if thread.isEmpty {
+            chatView.tableView.backgroundView = EmptyView(title: "No message found", messege: "")
+        } else {
+            chatView.tableView.backgroundView = nil
+        }
     }
   }
   
@@ -186,21 +191,37 @@ class ChatVC: UIViewController {
     }
     
   private func listenerSetup() {
-    guard let chatId = chat?.id else {
+    guard let chatId = chat?.id, let selfId = AuthenticationSession.shared.auth.currentUser?.uid else {
         return
     }
     
-    listener = DatabaseService.shared.db.collection(DatabaseService.chatsCollection).document(chatId).collection(DatabaseService.threadCollection).order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) { (snapshot, error) in
+    listener = DatabaseService.shared.db.collection(DatabaseService.chatsCollection).document(chatId).collection(DatabaseService.threadCollection).order(by: "created", descending: false).addSnapshotListener(includeMetadataChanges: true) {[weak self] (snapshot, error) in
        if let error = error {
          print("error loading messages: \(error)")
        } else if let snapshot = snapshot {
-         self.thread.removeAll()
-         for message in snapshot.documents {
-           let msg = Message(message.data())
-           self.thread.append(msg)
-          self.chatView.tableView.scrollToNearestSelectedRow(at: .bottom, animated: true)
-//           print("Message data: \(msg)")
-         }
+        let msgs = snapshot.documents.map{Message($0.data())}
+        self?.chatView.tableView.scrollToNearestSelectedRow(at: .bottom, animated: true)
+        DatabaseService.shared.loadUser(userId: selfId) {[weak self] (result) in
+        switch result {
+        case .failure(let error):
+            self?.showAlert(title: error.localizedDescription, message: nil)
+        case .success(let user):
+            guard let blockedUsers = user.blockedUsers else {
+                return
+            }
+            let msgsWOBlockedUser = msgs.filter{!blockedUsers.contains($0.senderID)}
+            self?.thread = msgsWOBlockedUser
+            }
+        }
+        
+        
+         //self.thread.removeAll()
+//         for message in snapshot.documents {
+//           let msg = Message(message.data())
+//           self.thread.append(msg)
+//          self.chatView.tableView.scrollToNearestSelectedRow(at: .bottom, animated: true)
+////           print("Message data: \(msg)")
+//         }
        }
      }
    }

@@ -93,10 +93,10 @@ class CardViewController: UIViewController {
         addNFCobservers()
     }
     
-    //    override func viewWillAppear(_ animated: Bool) {
-    //        super.viewWillAppear(true)
-    //        addNFCobservers()
-    //    }
+        override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(true)
+//            addNFCobservers()
+        }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)

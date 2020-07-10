@@ -13,6 +13,10 @@ import Firebase
 //  func didSendMessage_(
 //}
 
+//protocol ChatTableViewDelegate: AnyObject {
+//    func userBlocked(isBlocked: Bool, blockedUser: String)
+//}
+
 class ChatTableView: UIView {
     
     public var chatId: String?
@@ -21,6 +25,7 @@ class ChatTableView: UIView {
     var reservationId: String?
     var hostId: String?
     var chat:Chat?
+//    weak var delegate: ChatTableViewDelegate?
     
     public lazy var headerView: UIView = {
         let view = UIView()
@@ -320,9 +325,11 @@ extension ChatTableView {
                     case .failure(let error):
                         self.controller?.showAlert(title: "Error", message: error.localizedDescription)
                     case .success(let bool):
+                        NotificationCenterManager.shared.nfc.post(name: NotificationCenterManager.userBlockOrUnblocked, object: nil)
                         if bool == true {
                             //self.blockButtonTitle = "Unblock"
                             self.controller?.showAlert(title: "Block Successful", message: nil)
+                            
                         } else {
                             self.controller?.showAlert(title: "Unblock Successful", message: nil)
                         }
